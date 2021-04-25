@@ -1,0 +1,14 @@
+name: LG
+version: 1.4.0
+author: Neyuux_
+main: fr.neyuux.lgthierce.Index
+softdepend: [NeyGin_Core]
+commands:
+  ankou:
+    description: Commande de l'Ankou
+#  end:
+#    description: Redemarre la map
+#    permission: end.use
+#  spec:
+#    description: Commande de spectateur
+#    aliases: [s, spectateur, sp, spectateurs, spect]

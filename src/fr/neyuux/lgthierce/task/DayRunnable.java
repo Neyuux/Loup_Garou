@@ -1,13 +1,8 @@
 package fr.neyuux.lgthierce.task;
 
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Random;
-
+import fr.neyuux.lgthierce.*;
+import fr.neyuux.lgthierce.role.RCamp;
+import fr.neyuux.lgthierce.role.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,24 +13,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.neyuux.lgthierce.DeathManager;
-import fr.neyuux.lgthierce.DisplayState;
-import fr.neyuux.lgthierce.Gcycle;
-import fr.neyuux.lgthierce.Index;
-import fr.neyuux.lgthierce.PlayerLG;
-import fr.neyuux.lgthierce.role.RCamp;
-import fr.neyuux.lgthierce.role.Roles;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DayRunnable extends BukkitRunnable {
 	
-	private Index main;
+	private final LG main;
 	
 	private int currentTimer = Integer.MAX_VALUE;
 	private int currentServante = 0;
-	List<Player> DictasInCoupDEtat = new ArrayList<Player>();
-	List<Player> PacifTargets = new ArrayList<Player>();
+	List<Player> DictasInCoupDEtat = new ArrayList<>();
+	List<Player> PacifTargets = new ArrayList<>();
 	
-	public DayRunnable(Index main) {
+	public DayRunnable(LG main) {
 		this.main = main;
 	}
 
@@ -55,7 +46,7 @@ public class DayRunnable extends BukkitRunnable {
 			
 			if (currentTimer == 90) {
 				for (Player player : main.players) {
-					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§3Vote du maire", Arrays.asList("§b>>Clique droit pour ouvrir")));
+					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§3Vote du maire", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 					player.playSound(player.getLocation(), Sound.LEVEL_UP, 8, 0.1f);
 					main.playerlg.get(player.getName()).showArmorStandForAll();
 				}
@@ -66,8 +57,8 @@ public class DayRunnable extends BukkitRunnable {
 			for (Player player : main.players) {
 				Player p = main.playerlg.get(player.getName()).getVotedPlayer();
 				
-				if (p == null) Index.sendActionBar(player, "§3Vous ne votez pour §b§lpersonne§3.");
-				else Index.sendActionBar(player, "§3Vous votez pour §b§l" + p.getName() + "§3.");
+				if (p == null) LG.sendActionBar(player, "§3Vous ne votez pour §b§lpersonne§3.");
+				else LG.sendActionBar(player, "§3Vous votez pour §b§l" + p.getName() + "§3.");
 			}
 			
 			PlayerLG rdmp = main.playerlg.get(main.players.get(new Random().nextInt(main.players.size())).getName());
@@ -79,8 +70,8 @@ public class DayRunnable extends BukkitRunnable {
 			
 			
 			if (currentTimer == 0) {
-				HashMap<Player, Player> votes = new HashMap<Player, Player>();
-				List<Entry<Player, Integer>> votesNumber = new ArrayList<Entry<Player, Integer>>();
+				HashMap<Player, Player> votes = new HashMap<>();
+				List<Entry<Player, Integer>> votesNumber = new ArrayList<>();
 				for (Player player : main.players) {
 					if(main.playerlg.get(player.getName()).getVotedPlayer() != null) votes.put(player, main.playerlg.get(player.getName()).getVotedPlayer());
 					player.getInventory().remove(Material.BOOK);
@@ -106,7 +97,7 @@ public class DayRunnable extends BukkitRunnable {
 					for (Entry<Player, Player> en : votes.entrySet()) {
 						if (en.getValue().equals(player)) pvotes++;
 					}
-					SimpleEntry<Player, Integer> se = new SimpleEntry<Player, Integer>(player, pvotes);
+					SimpleEntry<Player, Integer> se = new SimpleEntry<>(player, pvotes);
 					votesNumber.add(se);
 				}
 				
@@ -155,7 +146,7 @@ public class DayRunnable extends BukkitRunnable {
 			if (currentTimer == 150) {
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
-					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eVote", Arrays.asList("§b>>Clique droit pour ouvrir")));
+					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eVote", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 					
 					if (playerlg.isInCoupDEtat() && playerlg.isRole(Roles.DICTATEUR))
 						DictasInCoupDEtat.add(player);
@@ -215,15 +206,15 @@ public class DayRunnable extends BukkitRunnable {
 						p.playSound(p.getLocation(), Sound.HORSE_ZOMBIE_DEATH, 8, 2f);
 					Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eLe " + Roles.DICTATEUR.getDisplayName() + " §6" + dicta.getName() + " §eeffectue un coup d'état !");
 					Bukkit.broadcastMessage("§9Il sera le seul à pouvoir voter, il pourra donc §céliminer§9 la personne de son choix. Si cette personne fait parti du camp des Loups, §6" + dicta.getName() + " §9récupérera le rôle de maire. Dans le cas inverse, il §cmourra§9.");
-					dicta.getInventory().setItem(1, main.getItem(Material.BOOK, "§4Coup d'état", Arrays.asList("§b>>Clique droit pour ouvrir")));
+					dicta.getInventory().setItem(1, main.getItem(Material.BOOK, "§4Coup d'état", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 				}
 			}
 			
 			for (Player player : main.players) {
 				Player p = main.playerlg.get(player.getName()).getVotedPlayer();
 				
-				if (p == null) Index.sendActionBar(player, "§eVous ne votez pour §6§lpersonne§e.");
-				else Index.sendActionBar(player, "§eVous votez pour §6§l" + p.getName() + "§e.");
+				if (p == null) LG.sendActionBar(player, "§eVous ne votez pour §6§lpersonne§e.");
+				else LG.sendActionBar(player, "§eVous votez pour §6§l" + p.getName() + "§e.");
 			}
 			
 			
@@ -236,8 +227,8 @@ public class DayRunnable extends BukkitRunnable {
 			
 			
 			if (currentTimer == 0 && PacifTargets.isEmpty()) {
-				List<Entry<Player, Integer>> votesNumber = new ArrayList<Entry<Player, Integer>>();
-				List<Entry<Player, Integer>> deletedVotes = new ArrayList<Entry<Player, Integer>>();
+				List<Entry<Player, Integer>> votesNumber = new ArrayList<>();
+				List<Entry<Player, Integer>> deletedVotes = new ArrayList<>();
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
 					player.getInventory().remove(Material.BOOK);
@@ -252,7 +243,7 @@ public class DayRunnable extends BukkitRunnable {
 					}
 				}
 				for (Player player : main.players) {
-					SimpleEntry<Player, Integer> se = new SimpleEntry<Player, Integer>(player, main.playerlg.get(player.getName()).getVotes());
+					SimpleEntry<Player, Integer> se = new SimpleEntry<>(player, main.playerlg.get(player.getName()).getVotes());
 					votesNumber.add(se);
 				}
 				
@@ -260,7 +251,6 @@ public class DayRunnable extends BukkitRunnable {
 				for (Entry<Player, Integer> en : votesNumber) {
 					if (max == 0) max = en.getValue();
 					if (en.getValue() > max) max = en.getValue();
-					continue;
 				}
 				for (Entry<Player, Integer> en : votesNumber) {
 					Integer i1 = max;
@@ -305,24 +295,24 @@ public class DayRunnable extends BukkitRunnable {
 						for (Player player : main.players)
 							if (main.playerlg.get(player.getName()).isMaire()) maire = player;
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y a égalité entre §6" + votesNumber.size() + "§e joueurs. Le maire du village \"" + maire.getDisplayName() + "§e\" va départager entre les joueurs.");
-						String lequals = "";
+						StringBuilder lequals = new StringBuilder();
 						for (Entry<Player, Integer> en : votesNumber) {
 							Player p = en.getKey();
-							if (lequals == "") lequals = "§6" + p.getDisplayName();
-							else lequals = lequals + "§e, §6" + p.getDisplayName();
+							if (lequals.toString().equals("")) lequals = new StringBuilder("§6" + p.getDisplayName());
+							else lequals.append("§e, §6").append(p.getDisplayName());
 						}
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eListe des personnes à égalité : " + lequals + "§e.");
-						maire.getInventory().setItem(1, main.getItem(Material.BOOK, "§bDépartager les joueurs", Arrays.asList("§b>>Clique droit pour ouvrir")));
+						maire.getInventory().setItem(1, main.getItem(Material.BOOK, "§bDépartager les joueurs", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 						maire.sendMessage(main.getPrefix() + main.SendArrow + "§3Vous pouvez sélectionner le joueur que vous souhaitez éliminer dans le livre.");
 						main.setDisplayState(DisplayState.VOTE_MAIRE);
 					}
 					else {
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y égalité dans les votes, il va donc il y en avoir un deuxième qui va départager les habitants à égalité.");
-						String lequals = "";
+						StringBuilder lequals = new StringBuilder();
 						for (Entry<Player, Integer> en : votesNumber) {
 							Player p = en.getKey();
-							if (lequals == "") lequals = "§6" + p.getDisplayName();
-							else lequals = lequals + "§e, §6" + p.getDisplayName();
+							if (lequals.toString().equals("")) lequals = new StringBuilder("§6" + p.getDisplayName());
+							else lequals.append("§e, §6").append(p.getDisplayName());
 						}
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eListe des habitants à égalité : " + lequals + "§e.");
 						
@@ -363,19 +353,19 @@ public class DayRunnable extends BukkitRunnable {
 			
 			if (currentTimer == 150) {
 				for (Player player : main.players)
-					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eDeuxième Vote", Arrays.asList("§b>>Clique droit pour ouvrir")));
+					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eDeuxième Vote", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eC'est l'heure du vote du village ! §r\n§eUtilisez votre livre pour voter pour le joueur qui vous semble le plus susceptible de n'être pas dans votre camp.");
 				Bukkit.broadcastMessage("§9Le joueur qui aura reçu le plus de votes se verra §céliminé §9de la partie...");
 			}
 			
 			for (Player player : main.players) {
 				if (!player.getInventory().contains(Material.BOOK))
-					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eDeuxième Vote", Arrays.asList("§b>>Clique droit pour ouvrir")));
+					player.getInventory().setItem(1, main.getItem(Material.BOOK, "§eDeuxième Vote", Collections.singletonList("§b>>Clique droit pour ouvrir")));
 				
 				Player p = main.playerlg.get(player.getName()).getVotedPlayer();
 				
-				if (p == null) Index.sendActionBar(player, "§eVous ne votez pour §6§lpersonne§e.");
-				else Index.sendActionBar(player, "§eVous votez pour §6§l" + p.getName() + "§e.");
+				if (p == null) LG.sendActionBar(player, "§eVous ne votez pour §6§lpersonne§e.");
+				else LG.sendActionBar(player, "§eVous votez pour §6§l" + p.getName() + "§e.");
 			}
 			
 			
@@ -388,8 +378,8 @@ public class DayRunnable extends BukkitRunnable {
 			
 			
 			if (currentTimer == 0) {
-				List<Entry<Player, Integer>> votesNumber = new ArrayList<Entry<Player, Integer>>();
-				List<Entry<Player, Integer>> deletedVotes = new ArrayList<Entry<Player, Integer>>();
+				List<Entry<Player, Integer>> votesNumber = new ArrayList<>();
+				List<Entry<Player, Integer>> deletedVotes = new ArrayList<>();
 				for (Player player : main.players) {
 					player.getInventory().remove(Material.BOOK);
 					player.closeInventory();
@@ -404,7 +394,7 @@ public class DayRunnable extends BukkitRunnable {
 					}
 				}
 				for (Player player : main.players) {
-					SimpleEntry<Player, Integer> se = new SimpleEntry<Player, Integer>(player, main.playerlg.get(player.getName()).getVotes());
+					SimpleEntry<Player, Integer> se = new SimpleEntry<>(player, main.playerlg.get(player.getName()).getVotes());
 					votesNumber.add(se);
 				}
 				
@@ -412,7 +402,6 @@ public class DayRunnable extends BukkitRunnable {
 				for (Entry<Player, Integer> en : votesNumber) {
 					if (max == 0) max = en.getValue();
 					if (en.getValue() > max) max = en.getValue();
-					continue;
 				}
 				for (Entry<Player, Integer> en : votesNumber) {
 					Integer i1 = max;
@@ -466,7 +455,7 @@ public class DayRunnable extends BukkitRunnable {
 			if (main.playerlg.get(maire.getName()).hasUsedPower()) currentTimer = 0;
 			
 			if (currentTimer == 0) {
-				Boolean hasChoosed = false;
+				boolean hasChoosed = false;
 				Player targeted = null;
 				for (Player player : main.players)
 					if (main.playerlg.get(player.getName()).isDayTargeted()) targeted = player;
@@ -529,7 +518,7 @@ public class DayRunnable extends BukkitRunnable {
 					targetedlg.setDayTargeted(false);
 					
 				
-				if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime((long)23000);
+				if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime(23000);
 				Bukkit.broadcastMessage("");
 
 				if (targetedlg.isDayTargeted()) {
@@ -540,8 +529,7 @@ public class DayRunnable extends BukkitRunnable {
 								main.playerlg.get(p.getName()).setRole(Roles.SIMPLE_VILLAGEOIS);
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§fL'" + Roles.ANCIEN.getDisplayName() + " §f est mort ! C'est honteux ! Tous les villageois perdent leur pouvoirs...");
 					}
-					if (DictasInCoupDEtat.isEmpty()) new DeathManager(main).eliminate(targeted, true);
-					else new DeathManager(main).eliminate(targeted, false);
+					new DeathManager(main).eliminate(targeted, DictasInCoupDEtat.isEmpty());
 					
 					if (!DictasInCoupDEtat.isEmpty()) {
 						Player dicta = DictasInCoupDEtat.get(0);
@@ -642,7 +630,7 @@ public class DayRunnable extends BukkitRunnable {
 				}
 			}
 			
-			Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SERVANTE_DÉVOUÉE.getDisplayName() + "§f.");
+			LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SERVANTE_DÉVOUÉE.getDisplayName() + "§f.");
 			
 			if (main.playerlg.get(player.getName()).hasUsedPower()) {
 				currentTimer = Integer.MAX_VALUE;

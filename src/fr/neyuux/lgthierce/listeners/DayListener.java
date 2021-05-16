@@ -18,16 +18,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class DayListener implements Listener {
 	
-	private final Index main;
+	private final LG main;
 	
-	public DayListener(Index main) {
+	public DayListener(LG main) {
 		this.main = main;
 	}
 	
@@ -106,20 +103,16 @@ public class DayListener implements Listener {
 				 } else {
 					 Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§9" + player.getName() + " §3vote pour élire §b§l" + p.getName() + "§3 en tant que maire.");
 					 plg.addVote();
-					
-					 if (playerlg.getVotedPlayer() == null) {
-						 playerlg.setVote(p);
-					 } else {
+
+					 if (playerlg.getVotedPlayer() != null) {
 						 Player vp = playerlg.getVotedPlayer();
 						 main.playerlg.get(vp.getName()).removeVote();
-						 playerlg.setVote(p);
 					 }
+					 playerlg.setVote(p);
 				 }
-				 
-				 List<Player> ps = new ArrayList<Player>();
+
 				 int votes = 0;
-					for (Player psp : main.players)
-						 ps.add(psp);
+				 List<Player> ps = new ArrayList<>(main.players);
 					for (Player psp : ps)
 						votes = votes + main.playerlg.get(psp.getName()).getVotes();
 					if (votes == ps.size())
@@ -151,17 +144,15 @@ public class DayListener implements Listener {
 				 } else {
 					 Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§6" + player.getName() + " §evote pour §6§l" + p.getName());
 					 plg.addVote();
-					
-					 if (playerlg.getVotedPlayer() == null) {
-				   	     playerlg.setVote(p);
-					 } else {
-						Player vp = playerlg.getVotedPlayer();
-						main.playerlg.get(vp.getName()).removeVote();
-						playerlg.setVote(p);
+
+					 if (playerlg.getVotedPlayer() != null) {
+						 Player vp = playerlg.getVotedPlayer();
+						 main.playerlg.get(vp.getName()).removeVote();
 					 }
+					 playerlg.setVote(p);
 				 }
 				 
-				 List<Player> ps = new ArrayList<Player>();
+				 List<Player> ps = new ArrayList<>();
 				 int votes = 0;
 				 for (Player psp : main.players)
 					 if (main.playerlg.get(psp.getName()).canVote())
@@ -177,7 +168,7 @@ public class DayListener implements Listener {
 					return;
 				 }
 				 
-				 List<Player> votable = new ArrayList<Player>();
+				 List<Player> votable = new ArrayList<>();
 				 for (Player p : main.players)
 					 if (!main.playerlg.get(p.getName()).isInEqual())
 						 votable.add(p);
@@ -202,26 +193,22 @@ public class DayListener implements Listener {
 				 } else {
 					 Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§6" + player.getName() + " §evote pour §6§l" + p.getName());
 					 plg.addVote();
-					
-					 if (playerlg.getVotedPlayer() == null) {
-						 playerlg.setVote(p);
-					} else {
-						Player vp = playerlg.getVotedPlayer();
-						main.playerlg.get(vp.getName()).removeVote();
-						playerlg.setVote(p);
-					}
+
+					 if (playerlg.getVotedPlayer() != null) {
+						 Player vp = playerlg.getVotedPlayer();
+						 main.playerlg.get(vp.getName()).removeVote();
+					 }
+					 playerlg.setVote(p);
 				 }
-				 
-				 List<Player> ps = new ArrayList<Player>();
+
 				 int votes = 0;
-					for (Player psp : main.players)
-						 ps.add(psp);
+				 List<Player> ps = new ArrayList<>(main.players);
 					for (Player psp : ps)
 						votes = votes + main.playerlg.get(psp.getName()).getVotes();
 					if (votes == ps.size())
 						for (Player psp : ps) main.playerlg.get(psp.getName()).setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.VOTE_MAIRE)) {
-				 List<Player> votable = new ArrayList<Player>();
+				 List<Player> votable = new ArrayList<>();
 				 for (Player p : main.players)
 					 if (!main.playerlg.get(p.getName()).isInEqual())
 						 votable.add(p);
@@ -235,7 +222,7 @@ public class DayListener implements Listener {
 				 plg.setDayTargeted(true);
 				 playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.TIR_CHASSEUR)) {
-				 List<Player> votable = new ArrayList<Player>();
+				 List<Player> votable = new ArrayList<>();
 				 for (Player p : main.players)
 					 if (!p.getUniqueId().equals(player.getUniqueId()))
 						 votable.add(p);
@@ -249,7 +236,7 @@ public class DayListener implements Listener {
 				playerlg.setHasUsedPower(true);
 				player.getInventory().remove(Material.INK_SACK);
 			 } else if (main.isDisplayState(DisplayState.CHOIX_FOSSOYEUR)) {
-				 List<Player> votable = new ArrayList<Player>();
+				 List<Player> votable = new ArrayList<>();
 				 for (Player p : main.players)
 					 if (!p.getUniqueId().equals(player.getUniqueId()))
 						 votable.add(p);
@@ -307,7 +294,7 @@ public class DayListener implements Listener {
 						
 						inv.addItem(it);
 					}
-					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 					
 					player.openInventory(inv);
 					
@@ -339,14 +326,12 @@ public class DayListener implements Listener {
 				
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§9" + player.getName() + " §3vote pour élire §b§l" + p.getName() + "§3 en tant que maire.");
 				plg.addVote();
-				
-				if (playerlg.getVotedPlayer() == null) {
-					playerlg.setVote(p);
-				} else {
+
+				if (playerlg.getVotedPlayer() != null) {
 					Player vp = playerlg.getVotedPlayer();
 					main.playerlg.get(vp.getName()).removeVote();
-					playerlg.setVote(p);
 				}
+				playerlg.setVote(p);
 				player.closeInventory();
 				
 				try {
@@ -368,12 +353,10 @@ public class DayListener implements Listener {
 							
 						}
 					}
-				} catch (NullPointerException e) {}
-				
-				
-				List<Player> ps = new ArrayList<Player>();
-				for (Player psp : main.players)
-					 ps.add(psp);
+				} catch (NullPointerException ignored) {}
+
+
+				List<Player> ps = new ArrayList<>(main.players);
 				for (Player psp : ps)
 					votes = votes + main.playerlg.get(psp.getName()).getVotes();
 				if (votes == ps.size()) {
@@ -411,7 +394,7 @@ public class DayListener implements Listener {
 								
 							}
 						}
-					} catch (NullPointerException e) {}
+					} catch (NullPointerException ignored) {}
 					main.playerlg.get(player.getName()).setVote(null);
 				}
 				
@@ -464,7 +447,7 @@ public class DayListener implements Listener {
 						
 						inv.addItem(it);
 					}
-					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 					
 					player.openInventory(inv);
 					
@@ -485,7 +468,7 @@ public class DayListener implements Listener {
 							inv.addItem(it);
 						}
 					}
-					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+					inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 					
 					player.openInventory(inv);
 					
@@ -523,15 +506,13 @@ public class DayListener implements Listener {
 				
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§6" + player.getName() + " §evote pour §6§l" + p.getName());
 				plg.addVote();
-				
-				if (playerlg.getVotedPlayer() == null) {
-					playerlg.setVote(p);
-				} else {
+
+				if (playerlg.getVotedPlayer() != null) {
 					Player vp = playerlg.getVotedPlayer();
 					main.playerlg.get(vp.getName()).removeVote();
-					playerlg.setVote(p);
 				}
-				
+				playerlg.setVote(p);
+
 				try {
 					for (Player pl : main.players) {
 						if (pl.getOpenInventory().getTopInventory().getName().equals("§6Inv §eVote")) {
@@ -547,10 +528,10 @@ public class DayListener implements Listener {
 									}
 						}
 					}
-				} catch (NullPointerException e) {}
+				} catch (NullPointerException ignored) {}
 				
 				
-				List<Player> ps = new ArrayList<Player>();
+				List<Player> ps = new ArrayList<>();
 				for (Player psp : main.players)
 					if (main.playerlg.get(psp.getName()).canVote())
 						ps.add(psp);
@@ -590,7 +571,7 @@ public class DayListener implements Listener {
 								
 							}
 						}
-					} catch (NullPointerException e) {}
+					} catch (NullPointerException ignored) {}
 					main.playerlg.get(player.getName()).setVote(null);
 				}
 				
@@ -695,7 +676,7 @@ public class DayListener implements Listener {
 		if (current.getType().equals(Material.INK_SACK)) {
 			if (current.getItemMeta().getDisplayName().equals("§2Fusil")) {
 				Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.CHASSEUR.getDisplayName());
-				inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+				inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 				
 				for (Player p : main.players) {
 					if (!p.getUniqueId().equals(player.getUniqueId())) {
@@ -758,7 +739,7 @@ public class DayListener implements Listener {
 		if (current.getType().equals(Material.STONE_SPADE)) {
 			if (current.getItemMeta().getDisplayName().equals("§7Pelle")) {
 				Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.FOSSOYEUR.getDisplayName());
-				inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+				inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 				
 				for (Player p : main.players) {
 					if (!p.getUniqueId().equals(player.getUniqueId())) {
@@ -858,15 +839,9 @@ public class DayListener implements Listener {
 					tlg.setServante(false);
 					player.getInventory().setItem(19, main.getItem(Material.STONE_BUTTON, "", null));
 					playerlg.setHasUsedPower(true);
-					player.closeInventory();
-					
-				} else {
-					
-					player.getInventory().addItem(current);
-					player.closeInventory();
-					
-				}
-				
+
+				} else player.getInventory().addItem(current);
+				player.closeInventory();
 			}
 		}
 	}

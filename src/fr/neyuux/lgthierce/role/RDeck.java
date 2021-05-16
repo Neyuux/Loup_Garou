@@ -13,8 +13,8 @@ public enum RDeck {
 		this.alias = alias;
 	}
 	
-	private String crédit;
-	private String alias;
+	private final String crédit;
+	private final String alias;
 	
 	public String getCreator() {
 		return this.crédit;
@@ -23,7 +23,7 @@ public enum RDeck {
 	public String getAlias() {
 		return this.alias;
 	}
-	public static final RDeck getByAlias(String alias) {
+	public static RDeck getByAlias(String alias) {
 		RDeck d = null;
 		
 		for (RDeck decks : RDeck.values()) {

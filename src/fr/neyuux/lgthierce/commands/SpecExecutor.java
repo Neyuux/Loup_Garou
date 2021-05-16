@@ -1,6 +1,6 @@
 package fr.neyuux.lgthierce.commands;
 
-import fr.neyuux.lgthierce.Index;
+import fr.neyuux.lgthierce.LG;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,9 +20,9 @@ import java.util.UUID;
 
 public class SpecExecutor implements Listener {
 
-	private final Index main;
+	private final LG main;
 	
-	public SpecExecutor(Index main) {
+	public SpecExecutor(LG main) {
 		this.main = main;
 	}
 	
@@ -36,11 +36,11 @@ public class SpecExecutor implements Listener {
 		
 		if (arg0.equalsIgnoreCase("list")) {
 			
-			String specs = "";
+			StringBuilder specs = new StringBuilder();
 			for (Player player : main.spectators) {
-				if (specs.equalsIgnoreCase("")) {
-					specs = "§b" + player.getName();
-				} else specs = specs + "§7, §b" + player.getName();
+				if (specs.toString().equalsIgnoreCase("")) {
+					specs = new StringBuilder("§b" + player.getName());
+				} else specs.append("§7, §b").append(player.getName());
 			}
 			sender.sendMessage(main.getPrefix() + main.SendArrow + "§7Liste des §lspectateurs §7: " + specs);
 			
@@ -90,22 +90,20 @@ public class SpecExecutor implements Listener {
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(main.getPrefix() + main.SendArrow + "§cTu dois être un joueur pour faire cette commande !");
 			}
-			
-			Player player = sender;
-			
-			if (!main.spectators.contains(player)) {
-				main.players.remove(player);
-				main.spectators.add(player);
-				
-				player.getInventory().clear();
-				player.setGameMode(GameMode.SPECTATOR);
-				player.setDisplayName("§8[§7Spectateur§8]" + player.getName());
-				player.setPlayerListName(player.getDisplayName());
-				Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§9Votre mode de jeu a été établi en §7spectateur§9.");
-				player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
 
-			} else player.sendMessage(main.getPrefix() + main.SendArrow + "§cT'es déjà un spectateur ! §4DOMMAGE §lBOOMER");
+			if (!main.spectators.contains(sender)) {
+				main.players.remove(sender);
+				main.spectators.add(sender);
+				
+				sender.getInventory().clear();
+				sender.setGameMode(GameMode.SPECTATOR);
+				sender.setDisplayName("§8[§7Spectateur§8]" + sender.getName());
+				sender.setPlayerListName(sender.getDisplayName());
+				Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(sender.getName()).removeEntry(sender.getName());
+				sender.sendMessage(main.getPrefix() + main.SendArrow + "§9Votre mode de jeu a été établi en §7spectateur§9.");
+				sender.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
+
+			} else sender.sendMessage(main.getPrefix() + main.SendArrow + "§cT'es déjà un spectateur ! §4DOMMAGE §lBOOMER");
 			
 		} 
 		

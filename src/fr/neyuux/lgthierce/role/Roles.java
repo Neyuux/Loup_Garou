@@ -95,7 +95,7 @@ public enum Roles {
 	}
 	
 	
-	public static final Roles getByDisplayName(String displayname) {
+	public static Roles getByDisplayName(String displayname) {
 		Roles r = null;
 		
 		for (Roles roles : Roles.values()) {

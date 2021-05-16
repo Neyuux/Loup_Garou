@@ -20,7 +20,7 @@ public class Anvil {
         FakeAnvil fakeAnvil = new FakeAnvil(entityPlayer);
         int containerId = entityPlayer.nextContainerCounter();
    
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutOpenWindow(containerId, "minecraft:anvil", new ChatMessage("Repairing", new Object[]{}), 0));
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutOpenWindow(containerId, "minecraft:anvil", new ChatMessage("Repairing"), 0));
    
         entityPlayer.activeContainer = fakeAnvil;
         entityPlayer.activeContainer.windowId = containerId;

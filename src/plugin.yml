@@ -1,5 +1,5 @@
 name: LG
-version: 1.4.0
+version: 1.4.1
 author: Neyuux_
 main: fr.neyuux.lgthierce.Index
 softdepend: [NeyGin_Core]

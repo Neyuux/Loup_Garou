@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -22,16 +21,16 @@ import java.util.Random;
 
 public class GameRunnable extends BukkitRunnable {
 
-	private Index main;
+	private final LG main;
 	private int LectureDesRolesTimer = 7;
 	private int AnnoncesDesMortsTimer = Integer.MAX_VALUE;
 	private int TirTimer = Integer.MAX_VALUE;
 	private int FossoTimer = Integer.MAX_VALUE;
-	private List<List<Entry<Integer, String>>> scoreboards = new ArrayList<List<Entry<Integer, String>>>();
+	private List<List<Entry<Integer, String>>> scoreboards = new ArrayList<>();
 	private int displayedScoreboard = 0;
 	private int ScoreboardTimer = 0;
 	
-	public GameRunnable(Index main) {
+	public GameRunnable(LG main) {
 		this.main = main;
 	}
 	
@@ -101,9 +100,9 @@ public class GameRunnable extends BukkitRunnable {
 					main.setMaçonScoreboard(p);
 					Team t = null;
 					for (Team team : p.getScoreboard().getTeams()) if (team.getName().startsWith("RSoeur")) t = team;
-					String sma = "§r\n";
+					StringBuilder sma = new StringBuilder("§r\n");
 					for (Player ps : main.getPlayersByRole(Roles.MAÇON)) {
-						sma = sma + "§6§l" + ps.getName() + "§r\n";
+						sma.append("§6§l").append(ps.getName()).append("§r\n");
 						t.addEntry(ps.getName());
 					}
 					p.sendMessage(main.getPrefix() + main.SendArrow + "§6Liste des maçons : " + sma);
@@ -155,8 +154,8 @@ public class GameRunnable extends BukkitRunnable {
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
 					if (main.nights == 0) {
-						playerlg.setBlock(new ArrayList<Block>(main.BlockList.keySet()).get(blockI));
-						main.UsedBlockList.put(new ArrayList<Block>(main.BlockList.keySet()).get(blockI), main.BlockList.get(new ArrayList<Block>(main.BlockList.keySet()).get(blockI)));
+						playerlg.setBlock(new ArrayList<>(main.BlockList.keySet()).get(blockI));
+						main.UsedBlockList.put(new ArrayList<>(main.BlockList.keySet()).get(blockI), main.BlockList.get(new ArrayList<>(main.BlockList.keySet()).get(blockI)));
 					}
 					player.teleport(new Location(Bukkit.getWorld("LG"), playerlg.getBlock().getX() + 0.5, 16.01564, playerlg.getBlock().getZ() + 0.5));
 					blockI++;
@@ -175,7 +174,7 @@ public class GameRunnable extends BukkitRunnable {
 			if (AnnoncesDesMortsTimer == Integer.MAX_VALUE) AnnoncesDesMortsTimer = 3;
 			
 			if (AnnoncesDesMortsTimer == 3) {
-				if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime((long)23000);
+				if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime(23000);
 				
 				for (Player p : main.players) {
 					PlayerLG plg = main.playerlg.get(p.getName());
@@ -214,16 +213,16 @@ public class GameRunnable extends BukkitRunnable {
 				
 				DeathManager dm = new DeathManager(main);
 				Player lgtarget = null;
-				List<Player> sosotargets = new ArrayList<Player>();
-				List<Player> lgbtargets = new ArrayList<Player>();
-				List<Player> gmltargets = new ArrayList<Player>();
-				List<Player> diedfdjs = new ArrayList<Player>();
-				List<Player> diedpf2 = new ArrayList<Player>();
-				List<Player> pretretargets = new ArrayList<Player>();
-				List<Player> pyrotargets = new ArrayList<Player>();
-				List<Player> celtargets = new ArrayList<Player>();
-				List<Player> diedDACs = new ArrayList<Player>();
-				List<Player> rézPlayers = new ArrayList<Player>();
+				List<Player> sosotargets = new ArrayList<>();
+				List<Player> lgbtargets = new ArrayList<>();
+				List<Player> gmltargets = new ArrayList<>();
+				List<Player> diedfdjs = new ArrayList<>();
+				List<Player> diedpf2 = new ArrayList<>();
+				List<Player> pretretargets = new ArrayList<>();
+				List<Player> pyrotargets = new ArrayList<>();
+				List<Player> celtargets = new ArrayList<>();
+				List<Player> diedDACs = new ArrayList<>();
+				List<Player> rézPlayers = new ArrayList<>();
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
 					
@@ -234,7 +233,7 @@ public class GameRunnable extends BukkitRunnable {
 					if (playerlg.isFDJDied()) diedfdjs.add(player);
 					if (playerlg.isPF2Died()) diedpf2.add(player);
 					if (playerlg.getPretreThrower() != null) pretretargets.add(player);
-					if (playerlg.isHuilé()) pyrotargets.add(player);
+					if (playerlg.isPyroTargeted()) pyrotargets.add(player);
 					if (lgtarget != null)
 						if (main.playerlg.get(lgtarget.getName()).isRole(Roles.CHEVALIER_À_L$ÉPÉE_ROUILLÉE)) {
 							Player targeted = playerlg.get2NearestPlayers().get(0);
@@ -388,13 +387,13 @@ public class GameRunnable extends BukkitRunnable {
 					PlayerLG plg = main.playerlg.get(p.getName());
 					
 					if (plg.isCharmed() || plg.isRole(Roles.JOUEUR_DE_FLÛTE)) {
-						String scharmes = "";
-						List<Player> charmeds = new ArrayList<Player>();
+						StringBuilder scharmes = new StringBuilder();
+						List<Player> charmeds = new ArrayList<>();
 						for (Player p2 : main.players) if (main.playerlg.get(p2.getName()).isCharmed()) charmeds.add(p2);
 						for (Player p2 : charmeds) {
-							if (scharmes.equals("")) {
-								scharmes = "§5" + p2.getName();
-							} else scharmes = scharmes + "§d, §5" + p2.getName();
+							if (scharmes.toString().equals("")) {
+								scharmes = new StringBuilder("§5" + p2.getName());
+							} else scharmes.append("§d, §5").append(p2.getName());
 						}
 						p.sendMessage(main.getPrefix() + main.SendArrow + "§dListe des Charmés : " + scharmes);
 						
@@ -413,7 +412,7 @@ public class GameRunnable extends BukkitRunnable {
 						
 						pmlg.getTargetOf().add(p);
 						p.sendMessage(main.getPrefix() + main.SendArrow + "§cVotre cible pour ce tour est : §5§l" + main.getPlayerNameByAttributes(pm, p) + "§c.");
-						main.sendTitle(p, "§cVotre cible est §5§l" + pm.getDisplayName(), "§4Tuez le pour gagner la partie !", 15, 50, 15);
+						LG.sendTitle(p, "§cVotre cible est §5§l" + pm.getDisplayName(), "§4Tuez le pour gagner la partie !", 15, 50, 15);
 					}
 					
 					if (plg.isRole(Roles.FILLE_DE_JOIE))
@@ -472,7 +471,7 @@ public class GameRunnable extends BukkitRunnable {
 			
 			if (main.playerlg.get(c.getName()).hasUsedPower()) TirTimer = 0;
 			
-			Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CHASSEUR.getDisplayName());
+			LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CHASSEUR.getDisplayName());
 			
 			if (TirTimer == 0) {
 				c.closeInventory();
@@ -542,7 +541,7 @@ public class GameRunnable extends BukkitRunnable {
 			
 			if (main.playerlg.get(f.getName()).hasUsedPower()) FossoTimer = 0;
 			
-			Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.FOSSOYEUR.getDisplayName());
+			LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.FOSSOYEUR.getDisplayName());
 			
 			if (FossoTimer == 0) {
 				f.closeInventory();
@@ -596,32 +595,32 @@ public class GameRunnable extends BukkitRunnable {
 	
 	
 	public void createScoreboardList() {
-		List<List<Entry<Integer, String>>> list = new ArrayList<List<Entry<Integer, String>>>();
-		Boolean thereComédien = false;
+		List<List<Entry<Integer, String>>> list = new ArrayList<>();
+		boolean thereComédien = false;
 		if (main.AliveRoles.containsKey(Roles.COMÉDIEN))
 			thereComédien = true;
 		
-		List<Entry<Integer, String>> s = new ArrayList<Entry<Integer,String>>();
+		List<Entry<Integer, String>> s = new ArrayList<>();
 		int line = 15;
 		
 		for (Entry<Roles, Integer> en : main.AliveRoles.entrySet()) {
-			SimpleEntry<Integer, String> se = new SimpleEntry<Integer, String>(line, en.getKey().getDisplayName() + " §f» §e" + en.getValue());
+			SimpleEntry<Integer, String> se = new SimpleEntry<>(line, en.getKey().getDisplayName() + " §f» §e" + en.getValue());
 			s.add(se);
 			line--;
 		}
-		SimpleEntry<Integer, String> fin1 = new SimpleEntry<Integer, String>(1, "§8------------");
-		SimpleEntry<Integer, String> fin2 = new SimpleEntry<Integer, String>(0, "§e§oMap by §c§l§oNeyuux_");
+		SimpleEntry<Integer, String> fin1 = new SimpleEntry<>(1, "§8------------");
+		SimpleEntry<Integer, String> fin2 = new SimpleEntry<>(0, "§e§oMap by §c§l§oNeyuux_");
 		s.add(fin1);
 		s.add(fin2);
 		
 		list.add(s);
 		
 		if (main.AliveRoles.size() >= 13) {
-			List<Entry<Integer, String>> s2 = new ArrayList<Entry<Integer,String>>();
+			List<Entry<Integer, String>> s2 = new ArrayList<>();
 			line = 15;
 			
 			for (Entry<Roles, Integer> en : main.AliveRoles.entrySet()) {
-				SimpleEntry<Integer, String> se = new SimpleEntry<Integer, String>(line, en.getKey().getDisplayName() + " §f» §e" + en.getValue());
+				SimpleEntry<Integer, String> se = new SimpleEntry<>(line, en.getKey().getDisplayName() + " §f» §e" + en.getValue());
 				if (!s.contains(se)) s2.add(se);
 				line--;
 			}
@@ -632,11 +631,11 @@ public class GameRunnable extends BukkitRunnable {
 		}
 			
 		if (thereComédien) {
-			List<Entry<Integer, String>> sc = new ArrayList<Entry<Integer,String>>();
+			List<Entry<Integer, String>> sc = new ArrayList<>();
 			line = 15;
 			
 			for (Roles r : main.pouvoirsComédien) {
-				SimpleEntry<Integer, String> se = new SimpleEntry<Integer, String>(line, r.getDisplayName());
+				SimpleEntry<Integer, String> se = new SimpleEntry<>(line, r.getDisplayName());
 				sc.add(se);
 				line--;
 			}

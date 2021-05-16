@@ -1,16 +1,10 @@
 package fr.neyuux.lgthierce.listeners;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import fr.neyuux.lgthierce.*;
+import fr.neyuux.lgthierce.role.Roles;
+import fr.neyuux.lgthierce.task.LGAutoStart;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
@@ -21,33 +15,19 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.neyuux.lgthierce.DeathManager;
-import fr.neyuux.lgthierce.Gcycle;
-import fr.neyuux.lgthierce.Gstate;
-import fr.neyuux.lgthierce.Index;
-import fr.neyuux.lgthierce.PlayerLG;
-import fr.neyuux.lgthierce.SimpleScoreboard;
-import fr.neyuux.lgthierce.role.Roles;
-import fr.neyuux.lgthierce.task.LGAutoStart;
-import net.minecraft.server.v1_8_R3.BlockPosition;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class LGThierceListener implements Listener {
 	
-	private Index main;
+	private final LG main;
 	
-	public LGThierceListener(Index main) {
+	public LGThierceListener(LG main) {
 		this.main = main;
 	}
 	
@@ -82,7 +62,6 @@ public class LGThierceListener implements Listener {
 			player.sendMessage(main.getPrefix() + main.SendArrow + "§9Le jeu a déjà démarré !");
 			player.sendMessage(main.getPrefix() + main.SendArrow + "§9Votre mode de jeu a été établi en §7spectateur§9.");
 			main.spectators.add(player);
-			return;
 		} else {
 			player.teleport( new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f));
 			
@@ -192,11 +171,11 @@ public class LGThierceListener implements Listener {
 			player.sendMessage("§4Vous n'êtes pas autorisé à me péter les couilles.");
 			return;
 		}
-		
-		if (Bukkit.getPluginCommand("tell").getAliases().contains(cmd.toLowerCase().substring(1).split(" ",2)[0]) || cmd.toLowerCase().startsWith("/tell") || Bukkit.getPluginCommand("respond").getAliases().contains(cmd.toLowerCase().substring(1).split(" ",2)[0]) || cmd.toLowerCase().startsWith("/respond")) {
+
+		final String[] strings = cmd.toLowerCase().substring(1).split(" ", 2);
+		if (Bukkit.getPluginCommand("tell").getAliases().contains(strings[0]) || cmd.toLowerCase().startsWith("/tell") || Bukkit.getPluginCommand("respond").getAliases().contains(strings[0]) || cmd.toLowerCase().startsWith("/respond")) {
 			ev.setCancelled(true);
 			player.sendMessage("§4§lNey§6G§ei§2n§4§l_" + main.SendArrow + " §4Cette commande est désactivée en " + main.getPrefix() + "§4.");
-			return;
 		}
 	}
 	
@@ -266,14 +245,14 @@ public class LGThierceListener implements Listener {
 					if (main.players.size() != 1) s = "s";
 					
 					player.getInventory().remove(current);
-					main.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
+					LG.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
 					player.playSound(player.getLocation(), Sound.NOTE_PLING, 9, 1);
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous avez été ajouté à la liste des joueurs.");
-					String splayers = "";
+					StringBuilder splayers = new StringBuilder();
 					for (Player p : main.players) {
-						if (splayers.equalsIgnoreCase("")) {
-							splayers = p.getDisplayName();
-						} else splayers = splayers + ", " + p.getDisplayName();
+						if (splayers.toString().equalsIgnoreCase("")) {
+							splayers = new StringBuilder(p.getDisplayName());
+						} else splayers.append(", ").append(p.getDisplayName());
 					}
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§fListe des joueurs : " + splayers);
 					break;
@@ -300,14 +279,14 @@ public class LGThierceListener implements Listener {
 					if (main.players.size() != 1) s = "s";
 					
 					player.getInventory().remove(current);
-					main.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
+					LG.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
 					player.playSound(player.getLocation(), Sound.NOTE_PLING, 9, 1);
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous avez été ajouté à la liste des joueurs.");
-					String splayers2 = "";
+					StringBuilder splayers2 = new StringBuilder();
 					for (Player p : main.players) {
-						if (splayers2.equalsIgnoreCase("")) {
-							splayers2 = p.getDisplayName();
-						} else splayers2 = splayers2 + ", " + p.getDisplayName();
+						if (splayers2.toString().equalsIgnoreCase("")) {
+							splayers2 = Optional.ofNullable(p.getDisplayName()).map(StringBuilder::new).orElse(null);
+						} else splayers2.append(", ").append(p.getDisplayName());
 					}
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§fListe des joueurs : " + splayers2);
 
@@ -320,7 +299,7 @@ public class LGThierceListener implements Listener {
 				if (main.players.size() >= 3) {
 					if (main.isState(Gstate.PREPARING)) {
 						if ((main.players.size() + main.spectators.size()) == Bukkit.getOnlinePlayers().size()) {
-							List<Roles> roles = new ArrayList<Roles>();
+							List<Roles> roles = new ArrayList<>();
 							for (java.util.Map.Entry<Roles, Integer> en : main.AddedRoles.entrySet()) {
 								if (en.getValue() > 1) {
 									int fois = en.getValue();
@@ -362,8 +341,8 @@ public class LGThierceListener implements Listener {
 					main.updateScoreboard(p);
 				
 			} else if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§7§lDevenir Spectateur") && current.getType().equals(Material.GHAST_TEAR)) {
-				
-				if (main.players.contains(player)) main.players.remove(player);
+
+				main.players.remove(player);
 				main.spectators.add(player);
 				
 				player.getInventory().clear();

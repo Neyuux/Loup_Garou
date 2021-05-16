@@ -1,7 +1,8 @@
 package fr.neyuux.lgthierce;
 
-import java.util.Map.Entry;
-
+import fr.neyuux.lgthierce.role.RCamp;
+import fr.neyuux.lgthierce.role.Roles;
+import fr.neyuux.lgthierce.task.LGAutoStop;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -9,15 +10,13 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-import fr.neyuux.lgthierce.role.RCamp;
-import fr.neyuux.lgthierce.role.Roles;
-import fr.neyuux.lgthierce.task.LGAutoStop;
+import java.util.Map.Entry;
 
 public class DeathManager {
 	
-	private Index main;
+	private final LG main;
 	
-	public DeathManager(Index main) {
+	public DeathManager(LG main) {
 		this.main = main;
 	}
 	
@@ -62,7 +61,7 @@ public class DeathManager {
 			player.showPlayer(p);
 		
 		if (r.equals(Roles.PRÉSIDENT)) {
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire des§r §c§lLoups-Garous §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire des§r §c§lLoups-Garous §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire des §c§lLoups-Garous §e!");
 			Bukkit.broadcastMessage("§6Survivant(s) §7("+main.players.size()+") §f:");
 			for (Player p : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
@@ -114,7 +113,7 @@ public class DeathManager {
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dÉtant donné que la Voyante est morte, la " + Roles.VOYANTE_APPRENTIE.getDisplayName() + " §dva prendre sa place.");
 			Player p = main.getPlayersByRole(Roles.VOYANTE_APPRENTIE).get(0);
 			player.sendMessage(main.getPrefix() + main.SendArrow + r.getDescription());
-			main.sendTitle(player, "§fVous êtes " + r.getDisplayName(), "§fVotre camp : §e" + main.playerlg.get(p.getName()).getCamp(), 10, 60, 10);
+			LG.sendTitle(player, "§fVous êtes " + r.getDisplayName(), "§fVotre camp : §e" + main.playerlg.get(p.getName()).getCamp(), 10, 60, 10);
 			main.playerlg.get(p.getName()).setRole(r);
 			player.getInventory().setItem(4, main.getRoleMap(r));
 		}
@@ -180,7 +179,7 @@ public class DeathManager {
 	
 	
 	private void winAnge(Player p) {
-		main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire de l'"+Roles.ANGE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
+		LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire de l'"+Roles.ANGE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
 		Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire de l'"+Roles.ANGE.getDisplayName()+" §e!");
 		Bukkit.broadcastMessage("§6Vainqueur §f:");
 		Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
@@ -193,7 +192,7 @@ public class DeathManager {
 	}
 	
 	private void winMercenaire(Player p) {
-		main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.MERCENAIRE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
+		LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.MERCENAIRE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
 		Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.MERCENAIRE.getDisplayName()+" §e!");
 		Bukkit.broadcastMessage("§6Vainqueur §f:");
 		Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
@@ -222,7 +221,7 @@ public class DeathManager {
 			
 			if (main.players.size() == 0) {
 				
-				main.sendTitleForAllPlayers("§5§kaa§r §7§l§nÉgalité§5 §kaa", "§cAucun survivant.", 10, 90, 20);
+				LG.sendTitleForAllPlayers("§5§kaa§r §7§l§nÉgalité§5 §kaa", "§cAucun survivant.", 10, 90, 20);
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§cAucun membre du village n'a survécu à l'épopée des loups. Le village de Thiercelieux est désormais entièrement vide d'habitant...");
 				for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 10, 1);
 				main.setState(Gstate.FINISH);
@@ -276,7 +275,7 @@ public class DeathManager {
 		main.setDisplayState(DisplayState.DISTRIBUTION_DES_ROLES);
 		
 		if (victoryCamp.equals(RCamp.LOUP_GAROU)) {
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire des§r §c§lLoups-Garous §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire des§r §c§lLoups-Garous §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire des §c§lLoups-Garous §e!");
 			Bukkit.broadcastMessage("§6Survivant(s) §7("+main.players.size()+") §f:");
 			for (Player player : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(player.getName()));
@@ -285,7 +284,7 @@ public class DeathManager {
 		}
 		
 		else if (victoryCamp.equals(RCamp.LOUP_GAROU_BLANC)) {
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du "+Roles.LOUP_GAROU_BLANC.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + main.players.get(0).getName(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du "+Roles.LOUP_GAROU_BLANC.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + main.players.get(0).getName(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.LOUP_GAROU_BLANC.getDisplayName()+" §e!");
 			Bukkit.broadcastMessage("§6Survivant §f:");
 			for (Player player : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(player.getName()));
@@ -299,7 +298,7 @@ public class DeathManager {
 			for (Player player : main.players)
 				if (!main.playerlg.get(player.getName()).getCouple().isEmpty()) p = player;
 			
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r §d§lCouple §c§l§n§kaa", "§6§l§nSurvivants §f: §e" + p.getName() + "§f et §e" + main.playerlg.get(p.getName()).getCouple().get(0).getName(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r §d§lCouple §c§l§n§kaa", "§6§l§nSurvivants §f: §e" + p.getName() + "§f et §e" + main.playerlg.get(p.getName()).getCouple().get(0).getName(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du §d§lCouple §e!");
 			Bukkit.broadcastMessage("§6Survivants §f:");
 			for (Player player : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(player.getName()));
@@ -313,7 +312,7 @@ public class DeathManager {
 			for (Player player : main.players)
 				if (main.playerlg.get(player.getName()).isRole(Roles.JOUEUR_DE_FLÛTE)) p = player;
 			
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.JOUEUR_DE_FLÛTE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.JOUEUR_DE_FLÛTE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.JOUEUR_DE_FLÛTE.getDisplayName()+" §e!");
 			Bukkit.broadcastMessage("§6Survivant §f:");
 			Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
@@ -327,7 +326,7 @@ public class DeathManager {
 			for (Player player : main.players)
 				if (main.playerlg.get(player.getName()).isRole(Roles.PYROMANE)) p = player;
 			
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.PYROMANE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.PYROMANE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.PYROMANE.getDisplayName()+" §e!");
 			Bukkit.broadcastMessage("§6Survivant §f:");
 			Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
@@ -337,7 +336,7 @@ public class DeathManager {
 		
 		
 		else if (victoryCamp.equals(RCamp.VILLAGE)) {
-			main.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r §e§lVillage §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r §e§lVillage §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du §e§lVillage §e!");
 			Bukkit.broadcastMessage("§6Survivant(s) §7("+main.players.size()+") §f:");
 			for (Player player : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(player.getName()));

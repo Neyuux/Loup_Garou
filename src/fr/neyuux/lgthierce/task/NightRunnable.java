@@ -1,16 +1,14 @@
 package fr.neyuux.lgthierce.task;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import fr.neyuux.lgthierce.*;
+import fr.neyuux.lgthierce.role.RCamp;
+import fr.neyuux.lgthierce.role.Roles;
+import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,41 +31,21 @@ import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-
-import fr.neyuux.lgthierce.DisplayState;
-import fr.neyuux.lgthierce.Gcycle;
-import fr.neyuux.lgthierce.Gtype;
-import fr.neyuux.lgthierce.Index;
-import fr.neyuux.lgthierce.PlayerLG;
-import fr.neyuux.lgthierce.role.RCamp;
-import fr.neyuux.lgthierce.role.Roles;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntity;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityHeadRotation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import net.minecraft.server.v1_8_R3.PlayerInteractManager;
-import net.minecraft.server.v1_8_R3.World;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import java.io.IOException;
+import java.net.URL;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class NightRunnable extends BukkitRunnable {
 
-	private Index main;
+	private final LG main;
 	
 	private int currentTimer = Integer.MAX_VALUE;
 	private int currentPlayerInPlayerList = 0;
 	public static Map<Player, List<EntityPlayer>> fakeplayers = new HashMap<>();
 	
-	public NightRunnable(Index main) {
+	public NightRunnable(LG main) {
 		this.main = main;
 	}
 	
@@ -82,7 +60,7 @@ public class NightRunnable extends BukkitRunnable {
 		
 		if (main.isDisplayState(DisplayState.TOMBEE_DE_LA_NUIT)) {
 			main.setDisplayState(DisplayState.DEMARRAGE_DE_LA_NUIT);
-			if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime((long)18000);
+			if (main.cycleJourNuit) Bukkit.getWorld("LG").setTime(18000);
 		}
 		
 
@@ -140,7 +118,7 @@ public class NightRunnable extends BukkitRunnable {
 							}
 						}
 						
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.VOLEUR.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.VOLEUR.getDisplayName());
 						
 						if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.VOLEUR.getDisplayName()) && !main.playerlg.get(player.getName()).hasUsedPower()) {
 							Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.VOLEUR.getDisplayName());
@@ -210,7 +188,7 @@ public class NightRunnable extends BukkitRunnable {
 						currentTimer = 30;
 						
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CUPIDON.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CUPIDON.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.CUPIDON)) {
 							Player player = main.getPlayersByRole(Roles.CUPIDON).get(currentPlayerInPlayerList);
@@ -220,7 +198,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.CUPIDON.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.CUPIDON.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										for (Player p : main.players) {
 											ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
 											SkullMeta itm = (SkullMeta) it.getItemMeta();
@@ -242,14 +220,14 @@ public class NightRunnable extends BukkitRunnable {
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 30 secondes pour choisir votre couple. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
 										if (main.cupiEnCouple) player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous serez forcément en couple, cela a été paramétré dans la configuration de la partie, vous devez cliquer sur le joueur qui sera votre amant pendant cette partie.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 								
 								if (main.playerlg.get(player.getName()).hasUsedPower()) currentTimer = 0;
 								
 								if (currentTimer == 0) {
-									Boolean isCoupleAlive = false;
+									boolean isCoupleAlive = false;
 									if (main.playerlg.get(player.getName()).hasUsedPower()) isCoupleAlive = true;
 									
 									if (!isCoupleAlive) {
@@ -331,7 +309,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l'" + Roles.ENFANT_SAUVAGE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l'" + Roles.ENFANT_SAUVAGE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.ENFANT_SAUVAGE)) {
 							Player player = main.getPlayersByRole(Roles.ENFANT_SAUVAGE).get(currentPlayerInPlayerList);
@@ -341,7 +319,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.ENFANT_SAUVAGE.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.ENFANT_SAUVAGE.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										for (Player p : main.players) {
 											if (!p.getName().equals(player.getName())) {
 												ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
@@ -371,7 +349,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.playerlg.get(player.getName()).hasUsedPower()) currentTimer = 0;
 								
 								if (currentTimer == 0) {
-									Boolean isMaitreAlive = false;
+									boolean isMaitreAlive = false;
 									if (main.playerlg.get(player.getName()).hasUsedPower()) isMaitreAlive = true;
 									
 									if (!isMaitreAlive) {
@@ -447,7 +425,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CHIEN_LOUP.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CHIEN_LOUP.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.CHIEN_LOUP)) {
 							Player player = main.getPlayersByRole(Roles.CHIEN_LOUP).get(currentPlayerInPlayerList);
@@ -510,7 +488,7 @@ public class NightRunnable extends BukkitRunnable {
 					
 					currentTimer = 20;
 				} else {
-					Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.JUMEAU.getDisplayName());
+					LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.JUMEAU.getDisplayName());
 					
 					if (!main.RolesVoleur.contains(Roles.JUMEAU)) {
 						Player player = main.getPlayersByRole(Roles.JUMEAU).get(currentPlayerInPlayerList);
@@ -518,7 +496,7 @@ public class NightRunnable extends BukkitRunnable {
 						if (main.isType(Gtype.LIBRE)) {
 							if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.JUMEAU.getDisplayName())) {
 								Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.JUMEAU.getDisplayName());
-								inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+								inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 								
 								for (Player p : main.players) {
 									if (!p.getName().equals(player.getName())) {
@@ -580,7 +558,7 @@ public class NightRunnable extends BukkitRunnable {
 					
 					currentTimer = 22;
 				} else {
-					Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.NOCTAMBULE.getDisplayName());
+					LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.NOCTAMBULE.getDisplayName());
 					
 					if (!main.RolesVoleur.contains(Roles.NOCTAMBULE)) {
 						Player player = main.getPlayersByRole(Roles.NOCTAMBULE).get(currentPlayerInPlayerList);
@@ -588,7 +566,7 @@ public class NightRunnable extends BukkitRunnable {
 						if (main.isType(Gtype.LIBRE)) {
 							if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.NOCTAMBULE.getDisplayName())) {
 								Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.NOCTAMBULE.getDisplayName());
-								inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+								inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 								
 								for (Player p : main.players) {
 									if (!p.getName().equals(player.getName())) {
@@ -606,7 +584,7 @@ public class NightRunnable extends BukkitRunnable {
 									player.showPlayer(p);
 								
 								player.sendMessage(main.getPrefix() + main.SendArrow + "§3Vous avez 22 secondes choisir chez qui passer la nuit. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-								player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+								player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 							}
 						}
 						
@@ -651,7 +629,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.COMÉDIEN.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.COMÉDIEN.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.COMÉDIEN)) {
 							try {
@@ -686,7 +664,7 @@ public class NightRunnable extends BukkitRunnable {
 									
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.COMÉDIEN.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 9, "§6Inv " + Roles.COMÉDIEN.getDisplayName());
-									inv.setItem(8, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(8, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Roles r : main.pouvoirsComédien) {
 										ItemStack it = new ItemStack(Material.MAP, 1, main.getRoleMap(r).getDurability());
@@ -740,7 +718,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 22;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.VOYANTE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.VOYANTE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.VOYANTE)) {
 							Player player = main.getPlayersByRole(Roles.VOYANTE).get(currentPlayerInPlayerList);
@@ -753,7 +731,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.VOYANTE.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.VOYANTE.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!p.getName().equals(player.getName())) {
@@ -771,7 +749,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 22 secondes pour espionner quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -816,7 +794,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 22;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.VOYANTE_D$AURA.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.VOYANTE_D$AURA.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.VOYANTE_D$AURA)) {
 							Player player = main.getPlayersByRole(Roles.VOYANTE_D$AURA).get(currentPlayerInPlayerList);
@@ -829,7 +807,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.VOYANTE_D$AURA.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.VOYANTE_D$AURA.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players)
 										if (!p.getName().equals(player.getName()))
@@ -845,7 +823,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 22 secondes pour espionner quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -890,7 +868,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 22;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l' " + Roles.ENCHANTEUR.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l' " + Roles.ENCHANTEUR.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.ENCHANTEUR)) {
 							Player player = main.getPlayersByRole(Roles.ENCHANTEUR).get(currentPlayerInPlayerList);
@@ -903,7 +881,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.ENCHANTEUR.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.ENCHANTEUR.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!p.getName().equals(player.getName()) && !player.getScoreboard().getTeam("LG").hasEntry(p.getName())) {
@@ -921,7 +899,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 22 secondes pour enchanter quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -966,7 +944,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 28;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.DÉTECTIVE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.DÉTECTIVE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.DÉTECTIVE)) {
 							Player player = main.getPlayersByRole(Roles.DÉTECTIVE).get(currentPlayerInPlayerList);
@@ -979,7 +957,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.DÉTECTIVE.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.DÉTECTIVE.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!p.getName().equals(player.getName())) {
@@ -997,7 +975,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§8Vous avez 22 secondes pour comparer les camps de deux personnes. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1041,7 +1019,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 40;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.RENARD.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.RENARD.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.RENARD)) {
 							Player player = main.getPlayersByRole(Roles.RENARD).get(currentPlayerInPlayerList);
@@ -1056,8 +1034,8 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.RENARD.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.RENARD.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
-										List<String> splayers = new ArrayList<String>();
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
+										List<String> splayers = new ArrayList<>();
 										int i = 0;
 										for (Player p : main.players) splayers.add(p.getName());
 										
@@ -1090,7 +1068,7 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§6Vous avez 40 secondes pour renifler quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 								
@@ -1142,7 +1120,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PACIFISTE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PACIFISTE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.PACIFISTE)) {
 							Player player = main.getPlayersByRole(Roles.PACIFISTE).get(currentPlayerInPlayerList);
@@ -1157,7 +1135,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.PACIFISTE.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.RENARD.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										
 										for (Player p : main.players) {
 											if (p.equals(player)) continue;
@@ -1181,7 +1159,7 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 20 secondes pour sélectionner quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 								
@@ -1233,7 +1211,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.FILLE_DE_JOIE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.FILLE_DE_JOIE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.FILLE_DE_JOIE)) {
 							Player player = main.getPlayersByRole(Roles.FILLE_DE_JOIE).get(currentPlayerInPlayerList);
@@ -1246,7 +1224,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.FILLE_DE_JOIE.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.FILLE_DE_JOIE.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
@@ -1269,7 +1247,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous avez 20 secondes pour choisir quelqu'un chez qui dormir. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1313,7 +1291,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.GARDE_DU_CORPS.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.GARDE_DU_CORPS.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.GARDE_DU_CORPS)) {
 							Player player = main.getPlayersByRole(Roles.GARDE_DU_CORPS).get(currentPlayerInPlayerList);
@@ -1326,7 +1304,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.GARDE_DU_CORPS.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.GARDE_DU_CORPS.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
@@ -1349,7 +1327,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§7Vous avez 20 secondes pour protéger quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1393,7 +1371,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.SALVATEUR.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.SALVATEUR.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.SALVATEUR)) {
 							Player player = main.getPlayersByRole(Roles.SALVATEUR).get(currentPlayerInPlayerList);
@@ -1406,7 +1384,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.SALVATEUR.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.SALVATEUR.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
@@ -1429,7 +1407,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§eVous avez 20 secondes pour protéger quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1473,7 +1451,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 35;
 					} else {
-						List<Player> lgs = new ArrayList<Player>();
+						List<Player> lgs = new ArrayList<>();
 						for (Player player : main.players) {
 							if (main.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
 								if (!main.playerlg.get(player.getName()).isNoctaTargeted())
@@ -1482,7 +1460,7 @@ public class NightRunnable extends BukkitRunnable {
 							main.playerlg.get(player.getName()).showArmorStandOnlyForLG();
 						}
 						
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des §c§lLoups-Garous");
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des §c§lLoups-Garous");
 						
 						if (!lgs.isEmpty()) {
 							
@@ -1505,10 +1483,10 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.playerlg.get(lgs.get(0).getName()).hasUsedPower() && currentTimer > 5) currentTimer = 5;
 							
 							if (currentTimer == 0) {
-								List<Entry<Player, Integer>> votes = new ArrayList<Entry<Player, Integer>>();
-								Boolean isGrailled = false;
+								List<Entry<Player, Integer>> votes = new ArrayList<>();
+								boolean isGrailled = false;
 								for (Player player : main.players) {
-									SimpleEntry<Player, Integer> se = new SimpleEntry<Player, Integer>(player, main.playerlg.get(player.getName()).getVotes());
+									SimpleEntry<Player, Integer> se = new SimpleEntry<>(player, main.playerlg.get(player.getName()).getVotes());
 									votes.add(se);
 									main.playerlg.get(player.getName()).resetVotes();
 									main.playerlg.get(player.getName()).setVote(null);
@@ -1612,7 +1590,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l'" + Roles.INFECT_PÈRE_DES_LOUPS.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de l'" + Roles.INFECT_PÈRE_DES_LOUPS.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.INFECT_PÈRE_DES_LOUPS)) {
 							Player player = main.getPlayersByRole(Roles.INFECT_PÈRE_DES_LOUPS).get(currentPlayerInPlayerList);
@@ -1698,7 +1676,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.GRAND_MÉCHANT_LOUP.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.GRAND_MÉCHANT_LOUP.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.GRAND_MÉCHANT_LOUP)) {
 							Player player = main.getPlayersByRole(Roles.GRAND_MÉCHANT_LOUP).get(currentPlayerInPlayerList);
@@ -1711,7 +1689,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.GRAND_MÉCHANT_LOUP.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.GRAND_MÉCHANT_LOUP.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) && !main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) {
@@ -1737,7 +1715,7 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§4Vous avez 25 secondes pour dévorer un villageois. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1780,7 +1758,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.LOUP_GAROU_BLANC.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.LOUP_GAROU_BLANC.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.LOUP_GAROU_BLANC)) {
 							Player player = main.getPlayersByRole(Roles.LOUP_GAROU_BLANC).get(currentPlayerInPlayerList);
@@ -1790,7 +1768,7 @@ public class NightRunnable extends BukkitRunnable {
 								main.playerlg.get(player.getName()).setHasUsedPower(true);
 							}
 							
-							List<Player> lgs = new ArrayList<Player>();
+							List<Player> lgs = new ArrayList<>();
 							for (Player p : main.players) {
 								if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
 									lgs.add(p);
@@ -1804,7 +1782,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.LOUP_GAROU_BLANC.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.LOUP_GAROU_BLANC.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : lgs) {
 										if (!p.getName().equals(player.getName())) {
@@ -1830,7 +1808,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§4Vous avez 25 secondes pour tuer un Loup-Garou. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -1875,7 +1853,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.PETITE_FILLE2.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.PETITE_FILLE2.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.PETITE_FILLE2)) {
 							Player player = main.getPlayersByRole(Roles.PETITE_FILLE2).get(currentPlayerInPlayerList);
@@ -1888,7 +1866,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.PETITE_FILLE2.getDisplayName())) {
 								Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.PETITE_FILLE2.getDisplayName());
 								inv.setItem(1, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)4, "§eRegarder", Arrays.asList("§7Observe le village cette nuit :", "§7il y a 20% de chance que vous trouviez un Loup.", "§7Mais également 5% de chance que vous mourrez.")));
-								inv.setItem(3, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)11, "§cNe rien faire", Arrays.asList("§7N'observe pas le village cette nuit.")));
+								inv.setItem(3, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)11, "§cNe rien faire", Collections.singletonList("§7N'observe pas le village cette nuit.")));
 								
 								setWake(player);
 								player.openInventory(inv);	
@@ -1937,7 +1915,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 30;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SORCIÈRE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SORCIÈRE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.SORCIÈRE)) {
 							Player player = main.getPlayersByRole(Roles.SORCIÈRE).get(currentPlayerInPlayerList);
@@ -1951,11 +1929,11 @@ public class NightRunnable extends BukkitRunnable {
 								Player grailled = null;
 								for (Player p : main.players) if (main.playerlg.get(p.getName()).isLGTargeted()) grailled = p;
 								Inventory binv = Bukkit.createInventory(null, InventoryType.BREWING, "§6Inv " + Roles.SORCIÈRE.getDisplayName());
-								binv.setItem(1, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+								binv.setItem(1, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 								
 								if (grailled != null)binv.setItem(3, getHeadItem(grailled, "§c" + grailled.getName(), Arrays.asList("§7En cette nuitée, §c" + grailled.getName() + "§7 a été englouti par les loups.", "§7Vous pouvez le réssusciter et/ou tuer quelqu'un d'autre.")));
 								if (grailled == null)binv.setItem(3, main.getItem(Material.SKULL_ITEM, "§cPersonne", Arrays.asList("§7En cette nuitée, personne n'a été attaqué.", "§7Vous pouvez tout de même tuer quelqu'un.")));
-								if (!main.SosoRézPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Arrays.asList("§cVous n'avez plus de potion pour §aréssuciter.")));
+								if (!main.SosoRézPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Collections.singletonList("§cVous n'avez plus de potion pour §aréssuciter.")));
 								
 								if (grailled != null && main.SosoRézPots.get(player)) {
 									Potion potréz = new Potion(PotionType.INSTANT_HEAL, 1);
@@ -2029,7 +2007,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PRÊTRE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PRÊTRE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.PRÊTRE)) {
 							Player player = main.getPlayersByRole(Roles.PRÊTRE).get(currentPlayerInPlayerList);
@@ -2044,7 +2022,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.PRÊTRE.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.PRÊTRE.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										
 										for (Player p : main.players)
 											if (!p.getName().equals(player.getName()))
@@ -2060,7 +2038,7 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§eVous avez 25 secondes pour jeter de l'eau bénite sur quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 							} else {
@@ -2113,7 +2091,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.NÉCROMANCIEN.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.NÉCROMANCIEN.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.NÉCROMANCIEN)) {
 							Player player = main.getPlayersByRole(Roles.NÉCROMANCIEN).get(currentPlayerInPlayerList);
@@ -2137,7 +2115,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.NÉCROMANCIEN.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.NÉCROMANCIEN.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										
 										for (Player p : main.players) {
 											if (p.equals(player) || main.playerlg.get(p.getName()).isVivant()) continue;
@@ -2157,7 +2135,7 @@ public class NightRunnable extends BukkitRunnable {
 								} else {
 									if (!main.playerlg.get(player.getName()).hasUsedPower()) setWake(player);
 									if (currentTimer == 24) {
-										fakeplayers.put(player, new ArrayList<EntityPlayer>());
+										fakeplayers.put(player, new ArrayList<>());
 										for (PlayerLG plg : main.playerlg.values())
 											if (!plg.isVivant() && Bukkit.getOnlinePlayers().contains(plg.player)) {
 												Player p = plg.player;
@@ -2186,7 +2164,7 @@ public class NightRunnable extends BukkitRunnable {
 											}
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§bVous avez 25 secondes pour réssuciter quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 							} else {
@@ -2249,7 +2227,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 25;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.VILAIN_GARÇON.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.VILAIN_GARÇON.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.VILAIN_GARÇON)) {
 							Player player = main.getPlayersByRole(Roles.VILAIN_GARÇON).get(currentPlayerInPlayerList);
@@ -2264,7 +2242,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (main.isType(Gtype.LIBRE)) {
 									if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.VILAIN_GARÇON.getDisplayName())) {
 										Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.VILAIN_GARÇON.getDisplayName());
-										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+										inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 										
 										for (Player p : main.players)
 											if (!p.getName().equals(player.getName()))
@@ -2280,7 +2258,7 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 										
 										player.sendMessage(main.getPrefix() + main.SendArrow + "§bVous avez 25 secondes pour échanger les rôles de deux personnes. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
-										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+										player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 									}
 								}
 							} else {
@@ -2333,7 +2311,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.DICTATEUR.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.DICTATEUR.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.DICTATEUR)) {
 							Player player = main.getPlayersByRole(Roles.DICTATEUR).get(currentPlayerInPlayerList);
@@ -2349,7 +2327,7 @@ public class NightRunnable extends BukkitRunnable {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.DICTATEUR.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.DICTATEUR.getDisplayName());
 									inv.setItem(1, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)5, "§aFaire un coup d'état", Arrays.asList("§7Fait un coup d'état :", "§7vous serez le seul à pouvoir voter au jour prochain.", "§7Si vous votez un §c§lLoup§7, vous obtiendrez le rôle de maire, sinon,", "§7si vous votez, un villageois, vous vous suiciderez.")));
-									inv.setItem(3, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)14, "§cNe rien faire", Arrays.asList("§7Ne fait pas de coup d'état.")));
+									inv.setItem(3, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)14, "§cNe rien faire", Collections.singletonList("§7Ne fait pas de coup d'état.")));
 									
 									setWake(player);
 									player.openInventory(inv);
@@ -2410,7 +2388,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 20;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.MAMIE_GRINCHEUSE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.MAMIE_GRINCHEUSE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.MAMIE_GRINCHEUSE)) {
 							Player player = main.getPlayersByRole(Roles.MAMIE_GRINCHEUSE).get(currentPlayerInPlayerList);
@@ -2423,7 +2401,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.MAMIE_GRINCHEUSE.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.MAMIE_GRINCHEUSE.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players)
 										if (!p.getName().equals(player.getName()))
@@ -2439,7 +2417,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous avez 20 secondes pour retirer le droit de vote à quelqu'un pour un tour. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -2484,7 +2462,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 22;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CORBEAU.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.CORBEAU.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.CORBEAU)) {
 							Player player = main.getPlayersByRole(Roles.CORBEAU).get(currentPlayerInPlayerList);
@@ -2497,7 +2475,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.CORBEAU.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.CORBEAU.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!p.getName().equals(player.getName())) {
@@ -2515,7 +2493,7 @@ public class NightRunnable extends BukkitRunnable {
 										player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous avez 22 secondes pour rendre visite à quelqu'un. Pour faire cela, il suffit de cliquer sur le joueur voulu.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
@@ -2560,7 +2538,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 30;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.JOUEUR_DE_FLÛTE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.JOUEUR_DE_FLÛTE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.JOUEUR_DE_FLÛTE)) {
 							Player player = main.getPlayersByRole(Roles.JOUEUR_DE_FLÛTE).get(currentPlayerInPlayerList);
@@ -2573,11 +2551,11 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.isType(Gtype.LIBRE)) {
 								if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.JOUEUR_DE_FLÛTE.getDisplayName())) {
 									Inventory inv = Bukkit.createInventory(null, 27, "§6Inv " + Roles.JOUEUR_DE_FLÛTE.getDisplayName());
-									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+									inv.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Player p : main.players) {
 										if (!main.playerlg.get(p.getName()).isCharmed() && !p.getName().equals(player.getName())) {
-											inv.addItem(getHeadItem(p, "§d" + p.getName(), Arrays.asList("§7Charme le joueur §d" + p.getName() + "§7.")));
+											inv.addItem(getHeadItem(p, "§d" + p.getName(), Collections.singletonList("§7Charme le joueur §d" + p.getName() + "§7.")));
 										}
 									}
 									setWake(player);
@@ -2592,14 +2570,14 @@ public class NightRunnable extends BukkitRunnable {
 											player.showPlayer(p);
 									
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§5Vous avez 30 secondes pour charmer 2 personnes. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
-									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+									player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 								}
 							}
 							
 							if (main.playerlg.get(player.getName()).hasUsedPower()) currentTimer = 0;
 							
 							if (currentTimer == 0) {
-								Boolean isChoosed = false;
+								boolean isChoosed = false;
 								if (main.playerlg.get(player.getName()).hasUsedPower()) isChoosed = true;
 								
 								if (!isChoosed) {
@@ -2637,7 +2615,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 30;
 					} else {
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PYROMANE.getDisplayName());
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour du " + Roles.PYROMANE.getDisplayName());
 						
 						if (!main.RolesVoleur.contains(Roles.PYROMANE)) {
 							Player player = main.getPlayersByRole(Roles.PYROMANE).get(currentPlayerInPlayerList);
@@ -2649,11 +2627,11 @@ public class NightRunnable extends BukkitRunnable {
 							
 							if (!player.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§6Inv " + Roles.PYROMANE.getDisplayName()) && currentTimer == 30) {
 								Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.PYROMANE.getDisplayName());
-								inv.setItem(2, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+								inv.setItem(2, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 								
 								inv.setItem(0, main.getItem(Material.LAVA_BUCKET, "§6Mettre de l'essence sur 2 joueurs", Arrays.asList("§7Sélectionner 2 joueurs qui", "§7seront recouvert d'essence jusqu'à la fin de la partie.", "", "§b>>Clique pour sélectionner")));
 								
-								List<String> lore = new ArrayList<String>();
+								List<String> lore = new ArrayList<>();
 								lore.add("§7Tuer tous les joueurs qui sont couvert d'essence.");
 								for (PlayerLG plg : main.playerlg.values())
 									if (plg.isHuilé() && plg.isVivant())
@@ -2672,7 +2650,7 @@ public class NightRunnable extends BukkitRunnable {
 							if (main.playerlg.get(player.getName()).hasUsedPower()) currentTimer = 0;
 							
 							if (currentTimer == 0) {
-								Boolean isChoosed = false;
+								boolean isChoosed = false;
 								if (main.playerlg.get(player.getName()).hasUsedPower()) isChoosed = true;
 								
 								if (!isChoosed) {
@@ -2711,7 +2689,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 35;
 					} else {
-						List<Player> soeurs = new ArrayList<Player>();
+						List<Player> soeurs = new ArrayList<>();
 						int ps = 0;
 						while (soeurs.size() != 1) {
 							Player player = main.players.get(ps);
@@ -2720,7 +2698,7 @@ public class NightRunnable extends BukkitRunnable {
 						}
 						soeurs.add(main.playerlg.get(soeurs.get(0).getName()).getsoeur().get(0));
 						
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des " + Roles.SOEUR.getDisplayName() + "s");
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des " + Roles.SOEUR.getDisplayName() + "s");
 						
 						for (Player player : soeurs) {
 							if (main.sleepingPlayers.contains(player)) {
@@ -2759,7 +2737,7 @@ public class NightRunnable extends BukkitRunnable {
 						
 						currentTimer = 35;
 					} else {
-						List<Player> frères = new ArrayList<Player>();
+						List<Player> frères = new ArrayList<>();
 						int ps = 0;
 						while (frères.size() != 1) {
 							Player player = main.players.get(ps);
@@ -2769,7 +2747,7 @@ public class NightRunnable extends BukkitRunnable {
 						frères.add(main.playerlg.get(frères.get(0).getName()).getfrère().get(0));
 						frères.add(main.playerlg.get(frères.get(0).getName()).getfrère().get(1));
 						
-						Index.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des " + Roles.FRÈRE.getDisplayName() + "s");
+						LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour des " + Roles.FRÈRE.getDisplayName() + "s");
 						
 						for (Player player : frères) {
 							if (main.sleepingPlayers.contains(player)) {
@@ -2814,15 +2792,13 @@ public class NightRunnable extends BukkitRunnable {
 			player.teleport(block.getLocation());
 			((CraftPlayer) player).getHandle().a(new BlockPosition(b.getX(), b.getY(), b.getZ()));
 			player.setSleepingIgnored(false);
-			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 2, false, false));
-		} else {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 2, false, false));
 		}
-		
+		player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 2, false, false));
+
 		for (Player p : main.players) {
 			player.hidePlayer(p);
 		}
-		if (player.getInventory().contains(main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")))) player.getInventory().remove(main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+		if (player.getInventory().contains(main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")))) player.getInventory().remove(main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 		if (!main.sleepingPlayers.contains(player)) main.sleepingPlayers.add(player);
 	}
 	

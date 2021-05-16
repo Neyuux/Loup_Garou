@@ -6,14 +6,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.neyuux.lgthierce.Gcycle;
 import fr.neyuux.lgthierce.Gstate;
-import fr.neyuux.lgthierce.Index;
+import fr.neyuux.lgthierce.LG;
 
 public class LGAutoStop extends BukkitRunnable {
 	
 	private int timer = 30;
-	private Index main;
+	private final LG main;
 	
-	public LGAutoStop(Index main) {
+	public LGAutoStop(LG main) {
 		this.main = main;
 	}
 

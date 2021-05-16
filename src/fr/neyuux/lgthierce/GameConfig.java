@@ -30,9 +30,9 @@ import java.util.UUID;
 
 public class GameConfig implements Listener {
 	
-	private final Index main;
+	private final LG main;
 	
-	public GameConfig(Index main) {
+	public GameConfig(LG main) {
 		this.main = main;
 	}
 
@@ -298,13 +298,17 @@ public class GameConfig implements Listener {
 			int i = 0;
 			
 			if (current.getType().equals(Material.WOOL)) {
-				
-				if (current.getItemMeta().getDisplayName().equals("§cCamp des §lLoups-Garous")) {
-					rinv = getRolesCampInv(deck, "lg");
-				} else if (current.getItemMeta().getDisplayName().equals("§aCamp du §lVillage")) {
-					rinv = getRolesCampInv(deck, "village");
-				} else if (current.getItemMeta().getDisplayName().equals("§6Camp des §lAutres")) {
-					rinv = getRolesCampInv(deck, "autres");
+
+				switch (current.getItemMeta().getDisplayName()) {
+					case "§cCamp des §lLoups-Garous":
+						rinv = getRolesCampInv(deck, "lg");
+						break;
+					case "§aCamp du §lVillage":
+						rinv = getRolesCampInv(deck, "village");
+						break;
+					case "§6Camp des §lAutres":
+						rinv = getRolesCampInv(deck, "autres");
+						break;
 				}
 				for (ItemStack it : rinv.getContents())
 					if (it != null)
@@ -809,7 +813,7 @@ public class GameConfig implements Listener {
 				v = mainObj.toString().replace("[", "").replace("]", "");
 			}
 		}
-		List<String> offlore = new ArrayList<String>();
+		List<String> offlore = new ArrayList<>();
 		offlore.add("§bValeur : §c" + v);
 		offlore.add("");
 		offlore.addAll(lore);
@@ -869,7 +873,7 @@ public class GameConfig implements Listener {
 	
 	private void setGameType(Player player, String stype, Gtype type) {
 		main.setType(type);
-		main.sendTitleForAllPlayers("§fLe §2type §fde jeu "+stype+"§f a été choisi !", "§b" + player.getName() + " §ea choisi le §2type de jeu §e!", 20, 60, 20);
+		LG.sendTitleForAllPlayers("§fLe §2type §fde jeu "+stype+"§f a été choisi !", "§b" + player.getName() + " §ea choisi le §2type de jeu §e!", 20, 60, 20);
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			if (p.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("§2§lType §cde la Partie")) p.closeInventory();
 		
@@ -984,7 +988,7 @@ public class GameConfig implements Listener {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
 			SkullMeta itm = (SkullMeta) it.getItemMeta();
-			List<String> lore = new ArrayList<String>();
+			List<String> lore = new ArrayList<>();
 			itm.setDisplayName(player.getDisplayName());
 			itm.setOwner(player.getName());
 			lore.add("");
@@ -1040,7 +1044,7 @@ public class GameConfig implements Listener {
 		Inventory inv;
 		String invName = null;
 		Integer invsize = null;
-		List<Roles> Roles = new ArrayList<Roles>();
+		List<Roles> Roles = new ArrayList<>();
 		
 		for (Roles r : main.DeckRoles.get(deck)) {
 			

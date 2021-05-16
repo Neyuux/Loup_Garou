@@ -8,14 +8,14 @@ import org.bukkit.entity.Player;
 
 import fr.neyuux.lgthierce.DisplayState;
 import fr.neyuux.lgthierce.Gstate;
-import fr.neyuux.lgthierce.Index;
+import fr.neyuux.lgthierce.LG;
 import fr.neyuux.lgthierce.PlayerLG;
 import fr.neyuux.lgthierce.role.Roles;
 
 public class CommandAnkou implements CommandExecutor {
 	
-	private Index main;
-	public CommandAnkou(Index main) {
+	private final LG main;
+	public CommandAnkou(LG main) {
 		this.main = main;
 	}
 

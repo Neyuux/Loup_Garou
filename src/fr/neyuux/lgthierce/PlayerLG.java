@@ -18,15 +18,15 @@ import java.util.List;
 
 public class PlayerLG {
 	
-	private Index main;
+	private final LG main;
 	
-	public PlayerLG(Index main, Player player) {
+	public PlayerLG(LG main, Player player) {
 		this.main = main;
 		this.player = player;
 	}
 	
 	
-	public Player player = null;
+	public Player player;
 	
 	private Block block = null;
 	
@@ -60,43 +60,43 @@ public class PlayerLG {
 	
 	private Boolean isVoleur = Boolean.FALSE;
 	
-	private Boolean isComédien = Boolean.valueOf(false);
+	private Boolean isComédien = Boolean.FALSE;
 	
-	private Boolean isServante = Boolean.valueOf(false);
+	private Boolean isServante = Boolean.FALSE;
 	
-	private Boolean isSalvated = Boolean.valueOf(false);
+	private Boolean isSalvated = Boolean.FALSE;
 	
-	private Boolean isCharmed = Boolean.valueOf(false);
+	private Boolean isCharmed = Boolean.FALSE;
 	
-	private Boolean isHuilé = Boolean.valueOf(false);
+	private Boolean isHuilé = Boolean.FALSE;
 	
-	private Boolean isInfected = Boolean.valueOf(false);
+	private Boolean isInfected = Boolean.FALSE;
 	
-	private Boolean isSosoTargeted = Boolean.valueOf(false);
+	private Boolean isSosoTargeted = Boolean.FALSE;
 	
-	private Boolean isNécroTargeted = Boolean.valueOf(false);
+	private Boolean isNécroTargeted = Boolean.FALSE;
 	
-	private Boolean isLGTargeted = Boolean.valueOf(false);
+	private Boolean isLGTargeted = Boolean.FALSE;
 	
-	private Boolean isGMLTargeted = Boolean.valueOf(false);
+	private Boolean isGMLTargeted = Boolean.FALSE;
 	
-	private Boolean isLGBTargeted = Boolean.valueOf(false);
+	private Boolean isLGBTargeted = Boolean.FALSE;
 	
-	private Boolean isDayTargeted = Boolean.valueOf(false);
+	private Boolean isDayTargeted = Boolean.FALSE;
 	
-	private Boolean isPacifTargeted = Boolean.valueOf(false);
+	private Boolean isPacifTargeted = Boolean.FALSE;
 	
-	private Boolean isMamieTargeted = Boolean.valueOf(false);
+	private Boolean isMamieTargeted = Boolean.FALSE;
 	
-	private Boolean isCorbeauTargeted = Boolean.valueOf(false);
+	private Boolean isCorbeauTargeted = Boolean.FALSE;
 	
-	private Boolean isNoctaTargeted = Boolean.valueOf(false);
+	private Boolean isNoctaTargeted = Boolean.FALSE;
 	
-	private Boolean isPyroTargeted = Boolean.valueOf(false);
+	private Boolean isPyroTargeted = Boolean.FALSE;
 	
-	private Boolean isPF2Died = Boolean.valueOf(false);
+	private Boolean isPF2Died = Boolean.FALSE;
 	
-	private Boolean isFDJDied = Boolean.valueOf(false);
+	private Boolean isFDJDied = Boolean.FALSE;
 	
 	private int daysBeforeDieOfCEL = -1;
 	
@@ -110,15 +110,15 @@ public class PlayerLG {
 	
 	private Player pretreThrower = null;
 	
-	private final List<Player> soeurOf = new ArrayList<Player>();
+	private final List<Player> soeurOf = new ArrayList<>();
 	
-	private final List<Player> frèreOf = new ArrayList<Player>();
+	private final List<Player> frèreOf = new ArrayList<>();
 	
 	private final List<Player> maitreof = new ArrayList<>();
 	
-	private final List<Player> targetOf = new ArrayList<Player>();
+	private final List<Player> targetOf = new ArrayList<>();
 	
-	private final List<Player> jumeauOf = new ArrayList<Player>();
+	private final List<Player> jumeauOf = new ArrayList<>();
 	
 	private Player protector = null;
 	
@@ -134,28 +134,25 @@ public class PlayerLG {
 					if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
 						p.getScoreboard().getTeam("LG").addEntry(this.player.getName());
 			}
-		}
-		
-		if (!main.isDisplayState(DisplayState.LECTURE_DES_ROLES) && !main.isDisplayState(DisplayState.DISTRIBUTION_DES_ROLES)) {
-			if (camp.equals(RCamp.LOUP_GAROU) || camp.equals(RCamp.LOUP_GAROU_BLANC)) {
+			if (!main.isDisplayState(DisplayState.LECTURE_DES_ROLES) && !main.isDisplayState(DisplayState.DISTRIBUTION_DES_ROLES)) {
 				main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c§l" + player.getName() + " §ca rejoint le camp des Loups !", Roles.LOUP_GAROU);
-				
+
 				player.getScoreboard().getTeam("LG").addEntry(player.getName());
 				for (Player p : main.players) {
 					PlayerLG plg = main.playerlg.get(p.getName());
-					
-					if (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC)) {
+
+					if (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC))
 						player.getScoreboard().getTeam("LG").addEntry(p.getName());
-					}
 				}
 			}
 		}
+
 		
 	    this.camp = camp;
 	 }
 	
 	public boolean isCamp(RCamp camp) {
-	    return Boolean.valueOf(this.camp.equals(camp));
+	    return this.camp.equals(camp);
 	  }
 	
 	public RCamp getCamp() {
@@ -293,10 +290,10 @@ public class PlayerLG {
 		if (role.equals(Roles.SERVANTE_DÉVOUÉE)) this.setServante(true);
 		
 		if (role.equals(Roles.COMÉDIEN)) {
-			String pouvoirs = "";
+			StringBuilder pouvoirs = new StringBuilder();
 			for (Roles r : main.pouvoirsComédien) {
-				if (pouvoirs.equalsIgnoreCase("")) pouvoirs = r.getDisplayName();
-				else pouvoirs = pouvoirs + "§f, " + r.getDisplayName();
+				if (pouvoirs.toString().equalsIgnoreCase("")) pouvoirs = new StringBuilder(r.getDisplayName());
+				else pouvoirs.append("§f, ").append(r.getDisplayName());
 			}
 			player.sendMessage(main.getPrefix() + main.SendArrow + "§dVos pouvoirs : " + pouvoirs);
 		}
@@ -310,7 +307,7 @@ public class PlayerLG {
 	  }
 	
 	public Boolean isRole(Roles role) {
-	    return Boolean.valueOf(this.role.equals(role));
+	    return this.role.equals(role);
 	  }
 	
 	
@@ -663,12 +660,12 @@ public class PlayerLG {
 	
 	
 	public List<Player> get2NearestPlayers() {
-		List<Player> nearby = new ArrayList<Player>();
+		List<Player> nearby = new ArrayList<>();
 		
 		if (main.isType(Gtype.LIBRE)) {
-			List<String> splayers = new ArrayList<String>();
+			List<String> splayers = new ArrayList<>();
 			int i = 0;
-			Boolean isMo = false;
+			boolean isMo = false;
 			for (Player player : main.players) splayers.add(player.getName());
 			
 			java.util.Collections.sort(splayers);
@@ -691,7 +688,7 @@ public class PlayerLG {
 				
 				int i2 = i - 1;
 				int i3 = i + 1;
-				List<Integer> listi = new ArrayList<Integer>(main.UsedBlockList.values());
+				List<Integer> listi = new ArrayList<>(main.UsedBlockList.values());
 				listi.sort(Collections.reverseOrder());
 				
 				if (i2 == 0)
@@ -712,7 +709,7 @@ public class PlayerLG {
 					if (i == listi.get(0))
 						i3 = listi.get(listi.size() - 1);
 					else {
-						List<Integer> listj = new ArrayList<Integer>(listi);
+						List<Integer> listj = new ArrayList<>(listi);
 						Collections.sort(listj);
 						i3 = i;
 						for (Integer j : listj) {
@@ -776,10 +773,7 @@ public class PlayerLG {
 	}
 	
 	private void resetArmorStand() {
-		if (this.getArmorStand() == null) {
-			return;
-		}
-		else {
+		if (this.getArmorStand() != null) {
 			this.getArmorStand().remove();
 			this.setArmorStand(null);
 		}

@@ -1,11 +1,10 @@
 package fr.neyuux.lgthierce.listeners;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
+import fr.neyuux.lgthierce.*;
+import fr.neyuux.lgthierce.role.RCamp;
+import fr.neyuux.lgthierce.role.Roles;
+import fr.neyuux.lgthierce.task.NightRunnable;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,28 +28,19 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scoreboard.Team;
 
-import fr.neyuux.lgthierce.DisplayState;
-import fr.neyuux.lgthierce.Gcycle;
-import fr.neyuux.lgthierce.Gstate;
-import fr.neyuux.lgthierce.Gtype;
-import fr.neyuux.lgthierce.Index;
-import fr.neyuux.lgthierce.PlayerLG;
-import fr.neyuux.lgthierce.role.RCamp;
-import fr.neyuux.lgthierce.role.Roles;
-import fr.neyuux.lgthierce.task.NightRunnable;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
+import java.util.*;
 
 public class NightListener implements Listener {
 	
-	private final Index main;
-	private final HashMap<Player, Player> firstCupidonChoice = new HashMap<Player, Player>();
-	private final HashMap<Player, Player> firstDétectiveChoice = new HashMap<Player, Player>();
-	private final HashMap<Player, Player> firstVilainGarçonChoice = new HashMap<Player, Player>();
-	private final List<Player> ActionsSosos = new ArrayList<Player>();
-	private final List<Player> JDFHadCharmedSomeone = new ArrayList<Player>();
-	private final List<Player> PyroHadChoosedSomeone = new ArrayList<Player>();
+	private final LG main;
+	private final HashMap<Player, Player> firstCupidonChoice = new HashMap<>();
+	private final HashMap<Player, Player> firstDétectiveChoice = new HashMap<>();
+	private final HashMap<Player, Player> firstVilainGarçonChoice = new HashMap<>();
+	private final List<Player> ActionsSosos = new ArrayList<>();
+	private final List<Player> JDFHadCharmedSomeone = new ArrayList<>();
+	private final List<Player> PyroHadChoosedSomeone = new ArrayList<>();
 	
-	public NightListener(Index main) {
+	public NightListener(LG main) {
 		this.main = main;
 	}
 	
@@ -96,7 +86,7 @@ public class NightListener implements Listener {
 						player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 					} else {
 						Player p1 = firstCupidonChoice.get(player);
-						List<Player> choosable = new ArrayList<Player>();
+						List<Player> choosable = new ArrayList<>();
 						for (Player p : main.players)
 							if (!p.getName().equals(p1.getName()))
 								choosable.add(p);
@@ -135,7 +125,7 @@ public class NightListener implements Listener {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§dVos 2 flèches ont bien transpercé §5" + main.getPlayerNameByAttributes(p1, player) + " §det §5" + main.getPlayerNameByAttributes(p2, player) + "§d. Ils ne se quitteront plus désormais...");
 					}
 			 } else if (main.isDisplayState(DisplayState.NUIT_ES)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
 					if (!p.getUniqueId().equals(player.getUniqueId()))
 						choosable.add(p);
@@ -149,7 +139,7 @@ public class NightListener implements Listener {
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§eVous avez bien choisi §6" + main.getPlayerNameByAttributes(p, player) + "§e en modèle.");
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_JUMEAU)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -164,7 +154,7 @@ public class NightListener implements Listener {
 				
 				playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_NOCTA)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -181,7 +171,7 @@ public class NightListener implements Listener {
 				
 				playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_VOVO)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -200,14 +190,14 @@ public class NightListener implements Listener {
 				
 				playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_VOVO_D$AURA)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
 				Player p = playerlg.getPlayerOnCursor(choosable);
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
-				Boolean isLG = false;
+				boolean isLG = false;
 				if (plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC)) isLG = true;
 				
 				if (isLG)
@@ -227,7 +217,7 @@ public class NightListener implements Listener {
 				
 				playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_ENCHANT)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -247,7 +237,7 @@ public class NightListener implements Listener {
 				
 				playerlg.setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_DÉTEC)) {
-				 List<Player> choosable = new ArrayList<Player>();
+				 List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstDétectiveChoice.containsValue(p))
 							choosable.add(p);
@@ -266,7 +256,7 @@ public class NightListener implements Listener {
 					PlayerLG p2lg = main.playerlg.get(p2.getName());
 					firstDétectiveChoice.remove(player);
 					
-					Boolean sameCamp = Boolean.valueOf(false);
+					boolean sameCamp = Boolean.FALSE;
 					if (p1lg.isCamp(p2lg.getCamp()) || p1lg.getCouple().contains(p2))
 						sameCamp = true;
 					
@@ -285,7 +275,7 @@ public class NightListener implements Listener {
 				Player p2 = plg.get2NearestPlayers().get(0);
 				Player p3 = plg.get2NearestPlayers().get(1);
 				
-				Boolean thereALG = false;
+				boolean thereALG = false;
 				if (main.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p2.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p3.getName()).isCamp(RCamp.LOUP_GAROU)) thereALG = true;
 				if (main.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU_BLANC) || main.playerlg.get(p2.getName()).isCamp(RCamp.LOUP_GAROU_BLANC) || main.playerlg.get(p3.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) thereALG = true;
 			
@@ -301,7 +291,7 @@ public class NightListener implements Listener {
 				}
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_PACIF)) {
-				 	List<Player> choosable = new ArrayList<Player>();
+				 	List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -325,7 +315,7 @@ public class NightListener implements Listener {
 						
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_GDC)) {
-				 	List<Player> choosable = new ArrayList<Player>();
+				 	List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()))
 							choosable.add(p);
@@ -366,15 +356,13 @@ public class NightListener implements Listener {
 					 if (!playerlg.getVotedPlayer().getUniqueId().equals(p.getUniqueId())) {
 						main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6vote pour dévorer §e" + p.getName(), Roles.LOUP_GAROU);
 						plg.addVote();
-						
-						if (playerlg.getVotedPlayer() == null) {
-							playerlg.setVote(p);
-						} else {
-							Player vp = playerlg.getVotedPlayer();
-							main.playerlg.get(vp.getName()).removeVote();
-							playerlg.setVote(p);
-						}
-					} else {
+
+						 if (playerlg.getVotedPlayer() != null) {
+							 Player vp = playerlg.getVotedPlayer();
+							 main.playerlg.get(vp.getName()).removeVote();
+						 }
+						 playerlg.setVote(p);
+					 } else {
 						main.playerlg.get(playerlg.getVotedPlayer().getName()).removeVote();
 						playerlg.setVote(null);
 						main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6a annulé son vote.", Roles.LOUP_GAROU);
@@ -382,17 +370,15 @@ public class NightListener implements Listener {
 				 } else {
 					main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6vote pour dévorer §e" + p.getName(), Roles.LOUP_GAROU);
 					plg.addVote();
-					
-					if (playerlg.getVotedPlayer() == null) {
-						playerlg.setVote(p);
-					} else {
+
+					if (playerlg.getVotedPlayer() != null) {
 						Player vp = playerlg.getVotedPlayer();
 						main.playerlg.get(vp.getName()).removeVote();
-						playerlg.setVote(p);
 					}
-				 }
+					playerlg.setVote(p);
+				}
 				
-				List<Player> lgs = new ArrayList<Player>();
+				List<Player> lgs = new ArrayList<>();
 				int votes = 0;
 				for (Player lgp : main.players)
 					if (main.playerlg.get(lgp.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(lgp.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) lgs.add(lgp);
@@ -401,7 +387,7 @@ public class NightListener implements Listener {
 				if (votes == lgs.size())
 					for (Player lgp : lgs) main.playerlg.get(lgp.getName()).setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_GML)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
 					if (!main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) && !main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
 						choosable.add(p);
@@ -414,7 +400,7 @@ public class NightListener implements Listener {
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§cN'étant pas répu de votre précédent repas, vous avez dévoré §4" + main.getPlayerNameByAttributes(p, player) + "§c...");
 			 } else if (main.isDisplayState(DisplayState.NUIT_LGB)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
 					if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
 						choosable.add(p);
@@ -463,7 +449,7 @@ public class NightListener implements Listener {
 				player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_VG)) {
-				 List<Player> choosable = new ArrayList<Player>();
+				 List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
 						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstVilainGarçonChoice.containsValue(p))
 							choosable.add(p);
@@ -485,9 +471,9 @@ public class NightListener implements Listener {
 					firstVilainGarçonChoice.remove(player);
 					
 					p1lg.setRole(r2);
-					exchangeCamps(p1lg, r1, p2lg, r2);
+					exchangeCamps(p1lg, p2lg, r2);
 					p2lg.setRole(r1);
-					exchangeCamps(p2lg, r2, p1lg, r1);
+					exchangeCamps(p2lg, p1lg, r1);
 					
 					player.closeInventory();
 					main.playerlg.get(player.getName()).setHasUsedPower(true);
@@ -501,9 +487,9 @@ public class NightListener implements Listener {
 					p1.getInventory().setItem(4, main.getRoleMap(r2));
 					p2.getInventory().setItem(4, main.getRoleMap(r1));
 					p1.sendMessage(main.getPrefix() + main.SendArrow + r2.getDescription());
-					main.sendTitle(p1, "§fVous êtes " + r2.getDisplayName(), "§fVotre camp : §e" + p1lg.getCamp(), 10, 60, 10);
+					LG.sendTitle(p1, "§fVous êtes " + r2.getDisplayName(), "§fVotre camp : §e" + p1lg.getCamp(), 10, 60, 10);
 					p2.sendMessage(main.getPrefix() + main.SendArrow + r1.getDescription());
-					main.sendTitle(p2, "§fVous êtes " + r1.getDisplayName(), "§fVotre camp : §e" + p2lg.getCamp(), 10, 60, 10);
+					LG.sendTitle(p2, "§fVous êtes " + r1.getDisplayName(), "§fVotre camp : §e" + p2lg.getCamp(), 10, 60, 10);
 				}
 			 } else if (main.isDisplayState(DisplayState.NUIT_MAMIE)) {
 				Player p = playerlg.getPlayerOnCursor(main.players);
@@ -526,7 +512,7 @@ public class NightListener implements Listener {
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				 
 			 } else if (main.isDisplayState(DisplayState.NUIT_JDF)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
 					if (!main.playerlg.get(p.getName()).isCharmed() && !p.getUniqueId().equals(player.getUniqueId()))
 						choosable.add(p);
@@ -534,8 +520,8 @@ public class NightListener implements Listener {
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				List<Player> charmeds = new ArrayList<Player>();
-				String scharmes = "";
+				List<Player> charmeds = new ArrayList<>();
+				StringBuilder scharmes = new StringBuilder();
 				if (p.equals(player)) {
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous ne pouvez pas vous charmer vous même !");
 					player.playSound(player.getLocation(), Sound.ITEM_BREAK, 10, 1);
@@ -545,9 +531,9 @@ public class NightListener implements Listener {
 				plg.setCharmed(true);
 				for (Player p2 : main.players) if (main.playerlg.get(p2.getName()).isCharmed()) charmeds.add(p2);
 				for (Player p2 : charmeds) {
-					if (scharmes.equals("")) {
-						scharmes = "§5" + p2.getName();
-					} else scharmes = scharmes + "§d, §5" + p2.getName();
+					if (scharmes.toString().equals("")) {
+						scharmes = new StringBuilder("§5" + p2.getName());
+					} else scharmes.append("§d, §5").append(p2.getName());
 				}
 				if (JDFHadCharmedSomeone.contains(player)) {
 					playerlg.setHasUsedPower(true);
@@ -560,7 +546,7 @@ public class NightListener implements Listener {
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§dA l'aide de votre flûte et de sa mélodie, vous charmez §5" + main.getPlayerNameByAttributes(p, player) + "§d.");
 			 } else if (main.isDisplayState(DisplayState.NUIT_PYRO)) {
-				List<Player> choosable = new ArrayList<Player>();
+				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
 					if (!main.playerlg.get(p.getName()).isHuilé() && !p.getUniqueId().equals(player.getUniqueId()))
 						choosable.add(p);
@@ -568,7 +554,7 @@ public class NightListener implements Listener {
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				plg.setCharmed(true);
+				plg.setHuilé(true);
 				if (PyroHadChoosedSomeone.contains(player))
 					playerlg.setHasUsedPower(true);
 				else PyroHadChoosedSomeone.add(player);
@@ -591,7 +577,7 @@ public class NightListener implements Listener {
 		if (current.getType().equals(Material.AIR)) return;
 		
 		if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
-			if (current.equals(main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")))) {
+			if (current.equals(main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")))) {
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			}
@@ -1013,7 +999,7 @@ public class NightListener implements Listener {
 					PlayerLG p2lg = main.playerlg.get(p2.getName());
 					firstDétectiveChoice.remove(player);
 					
-					Boolean sameCamp = Boolean.valueOf(false);
+					boolean sameCamp = Boolean.FALSE;
 					if (p1lg.isCamp(p2lg.getCamp()) || p1lg.getCouple().contains(p2))
 						sameCamp = true;
 					
@@ -1053,7 +1039,7 @@ public class NightListener implements Listener {
 				Player p2 = main.playerlg.get(p.getName()).get2NearestPlayers().get(0);
 				Player p3 = main.playerlg.get(p.getName()).get2NearestPlayers().get(1);
 				
-				Boolean thereALG = false;
+				boolean thereALG = false;
 				if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p2.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p3.getName()).isCamp(RCamp.LOUP_GAROU)) thereALG = true;
 				if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC) || main.playerlg.get(p2.getName()).isCamp(RCamp.LOUP_GAROU_BLANC) || main.playerlg.get(p3.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) thereALG = true;
 			
@@ -1263,7 +1249,7 @@ public class NightListener implements Listener {
 		if (!main.playerlg.get(player.getName()).isVivant()) return;
 		if (main.chatDesLg) {
 			String msg = ev.getMessage();
-			List<Player> lgs = new ArrayList<Player>();
+			List<Player> lgs = new ArrayList<>();
 			for (Player p : main.players)
 				if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) lgs.add(p);
 			
@@ -1303,16 +1289,14 @@ public class NightListener implements Listener {
 				
 				main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6vote pour dévorer §e" + p.getName(), Roles.LOUP_GAROU);
 				plg.addVote();
-				
-				if (playerlg.getVotedPlayer() == null) {
-					playerlg.setVote(p);
-				} else {
+
+				if (playerlg.getVotedPlayer() != null) {
 					Player vp = playerlg.getVotedPlayer();
 					main.playerlg.get(vp.getName()).removeVote();
-					playerlg.setVote(p);
 				}
-				
-				List<Player> lgs = new ArrayList<Player>();
+				playerlg.setVote(p);
+
+				List<Player> lgs = new ArrayList<>();
 				for (Player lgp : main.players)
 					if (main.playerlg.get(lgp.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(lgp.getName()).isCamp(RCamp.LOUP_GAROU_BLANC)) lgs.add(lgp);
 				for (Player lgp : lgs)
@@ -1535,7 +1519,7 @@ public class NightListener implements Listener {
 				SkullMeta itm = (SkullMeta) current.getItemMeta();
 				Player p = Bukkit.getPlayer(itm.getOwner());
 				
-				main.playerlg.get(p.getName()).setSosoTargeted(true);;
+				main.playerlg.get(p.getName()).setSosoTargeted(true);
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous jetez une potion de mort sur le joueur §4" + main.getPlayerNameByAttributes(p, player) + "§c il sera retrouvé mort au petit matin...");
 				player.playSound(player.getLocation(), Sound.SPLASH2, 8, 1f);
@@ -1548,11 +1532,11 @@ public class NightListener implements Listener {
 				Player grailled = null;
 				for (Player p : main.players) if (main.playerlg.get(p.getName()).isLGTargeted()) grailled = p;
 				Inventory binv = Bukkit.createInventory(null, InventoryType.BREWING, "§6Inv " + Roles.SORCIÈRE.getDisplayName());
-				binv.setItem(1, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+				binv.setItem(1, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 				
 				if (grailled != null && main.SosoRézPots.get(player))binv.setItem(3, NightRunnable.getHeadItem(grailled, "§c" + main.getPlayerNameByAttributes(grailled, player), Arrays.asList("§7En cette nuitée, §c" + main.getPlayerNameByAttributes(grailled, player) + "§7 a été englouti par les loups.", "§7Vous pouvez le réssusciter et/ou tuer quelqu'un d'autre.")));
 				if (grailled == null)binv.setItem(3, main.getItem(Material.SKULL_ITEM, "§cPersonne", Arrays.asList("§7En cette nuitée, personne n'a été attaqué.", "§7Vous pouvez tout de même tuer quelqu'un.")));
-				if (!main.SosoRézPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Arrays.asList("§cVous n'avez plus de potion pour §aréssuciter.")));
+				if (!main.SosoRézPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Collections.singletonList("§cVous n'avez plus de potion pour §aréssuciter.")));
 				
 				if (grailled != null && main.SosoRézPots.get(player)) {
 					Potion potréz = new Potion(PotionType.INSTANT_HEAL, 1);
@@ -1675,17 +1659,11 @@ public class NightListener implements Listener {
 			
 			if (current.getType().equals(Material.STAINED_CLAY)) {
 				if (current.getDurability() == 5) {
-					
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§aVous allez effectuer un coup d'état pendant le jour.");
 					main.playerlg.get(player.getName()).setInCoupDEtat(true);
-					main.playerlg.get(player.getName()).setHasUsedPower(true);
-					
-				} else {
-					
+				} else
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous n'effectuerez pas de coup d'état pendant le jour.");
-					main.playerlg.get(player.getName()).setHasUsedPower(true);
-					
-				}
+				main.playerlg.get(player.getName()).setHasUsedPower(true);
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				player.closeInventory();
 			}
@@ -1791,8 +1769,8 @@ public class NightListener implements Listener {
 					
 					SkullMeta itm = (SkullMeta) current.getItemMeta();
 					Player p = Bukkit.getPlayer(itm.getOwner());
-					List<Player> charmeds = new ArrayList<Player>();
-					String scharmes = "";
+					List<Player> charmeds = new ArrayList<>();
+					StringBuilder scharmes = new StringBuilder();
 					if (p.equals(player)) {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous ne pouvez pas vous charmer vous même !");
 						player.playSound(player.getLocation(), Sound.ITEM_BREAK, 10, 1);
@@ -1802,9 +1780,9 @@ public class NightListener implements Listener {
 					main.playerlg.get(p.getName()).setCharmed(true);
 					for (Player p2 : main.players) if (main.playerlg.get(p2.getName()).isCharmed()) charmeds.add(p2);
 					for (Player p2 : charmeds) {
-						if (scharmes.equals("")) {
-							scharmes = "§5" + p2.getName();
-						} else scharmes = scharmes + "§d, §5" + p2.getName();
+						if (scharmes.toString().equals("")) {
+							scharmes = new StringBuilder("§5" + p2.getName());
+						} else scharmes.append("§d, §5").append(p2.getName());
 					}
 					if (JDFHadCharmedSomeone.contains(player)) {
 						main.playerlg.get(player.getName()).setHasUsedPower(true);
@@ -1859,7 +1837,7 @@ public class NightListener implements Listener {
 						for (Player p : main.players)
 							if (!p.equals(player))
 								invPyro.addItem(NightRunnable.getHeadItem(p, "§6" + p.getName(), Arrays.asList("§7Recouvre §6" + p.getName() + " §7d'essence.", "§7Il saura qu'il a été huilé.")));
-						invPyro.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Arrays.asList("§7N'effectue pas l'action en cours.")));
+						invPyro.setItem(26, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 						player.openInventory(invPyro);
 					} else {
 						for (Player p : main.players)
@@ -1867,7 +1845,7 @@ public class NightListener implements Listener {
 								player.showPlayer(p);
 						
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§6Vous avez "+player.getLevel()+" secondes pour huiler 2 personnes. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
-						player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Arrays.asList("§7Annule l'action en cours.")));
+						player.getInventory().setItem(8, main.getItem(Material.BARRIER, "§cAnnuler", Collections.singletonList("§7Annule l'action en cours.")));
 					}
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 					player.closeInventory();
@@ -1980,12 +1958,12 @@ public class NightListener implements Listener {
 		
 		
 		
-		private void exchangeCamps(PlayerLG p1lg, Roles r1, PlayerLG p2lg, Roles r2) {
+		private void exchangeCamps(PlayerLG p1lg, PlayerLG p2lg, Roles r2) {
 			p1lg.setRole(r2);
 			if (r2.getCamp().equals(p2lg.getCamp()))
 				p1lg.setCamp(r2.getCamp());
 			else
-				if (!p2lg.isInfected())
+				if (!p2lg.isInfected()) {
 					if (r2.getCamp().equals(RCamp.ANGE) || r2.getCamp().equals(RCamp.MERCENAIRE))
 						if (main.days == 0)
 							p1lg.setCamp(r2.getCamp());
@@ -1995,7 +1973,7 @@ public class NightListener implements Listener {
 						p1lg.setCamp(p2lg.getChoosenCampCL());
 					else if (r2.getCamp().equals(RCamp.VOLEUR))
 						p1lg.setCamp(RCamp.VILLAGE);
-				else
+				} else {
 					if (r2.getCamp().equals(RCamp.VILLAGE))
 						p1lg.setCamp(RCamp.VILLAGE);
 					else if (r2.getCamp().equals(RCamp.CHIEN_LOUP))
@@ -2007,6 +1985,7 @@ public class NightListener implements Listener {
 							p1lg.setCamp(RCamp.VILLAGE);
 					else
 						p1lg.setCamp(r2.getCamp());
+				}
 			
 			if (p1lg.isInfected() && !p1lg.isCamp(RCamp.LOUP_GAROU_BLANC)) p1lg.setCamp(RCamp.LOUP_GAROU);
 		}

@@ -1,7 +1,10 @@
 package fr.neyuux.lgthierce.commands;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.neyuux.lgthierce.Gstate;
+import fr.neyuux.lgthierce.LG;
+import fr.neyuux.lgthierce.role.Roles;
+import fr.neyuux.lgthierce.task.GameRunnable;
+import fr.neyuux.lgthierce.task.LGAutoStart;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -11,17 +14,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
-import fr.neyuux.lgthierce.Gstate;
-import fr.neyuux.lgthierce.Index;
-import fr.neyuux.lgthierce.role.Roles;
-import fr.neyuux.lgthierce.task.GameRunnable;
-import fr.neyuux.lgthierce.task.LGAutoStart;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartExecutor implements Listener {
 
-	private Index main;
+	private final LG main;
 	
-	public StartExecutor(Index main) {
+	public StartExecutor(LG main) {
 		this.main = main;
 	}
 	
@@ -37,7 +37,7 @@ public class StartExecutor implements Listener {
 				main.setState(Gstate.PLAYING);
 				
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eLancement du jeu !");
-				main.sendTitleForAllPlayers("§b§lGO !", "", 20, 20, 20);
+				LG.sendTitleForAllPlayers("§b§lGO !", "", 20, 20, 20);
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 10, 1);
 					p.closeInventory();
@@ -61,7 +61,7 @@ public class StartExecutor implements Listener {
 				if (main.players.size() >= 5) {
 					if (main.isState(Gstate.PREPARING)) {
 						if ((main.players.size() + main.spectators.size()) == Bukkit.getOnlinePlayers().size()) {
-							List<Roles> roles = new ArrayList<Roles>();
+							List<Roles> roles = new ArrayList<>();
 							for (java.util.Map.Entry<Roles, Integer> en : main.AddedRoles.entrySet()) {
 								if (en.getValue() > 1) {
 									int fois = en.getValue();

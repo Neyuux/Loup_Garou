@@ -20,6 +20,6 @@ public class Soeur extends Role {
 
     @Override
     public void onDistribution(Player player) {
-
+        //send message votre soeur est ...
     }
 }

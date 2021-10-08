@@ -51,16 +51,16 @@ HUMAIN_MAUDIT(HumainMaudit.class),
 JUMEAU(Jumeau.class),
 MAMIE_GRINCHEUSE(MamieGrincheuse.class),
 MACON(Macon.class),
-NECROMANCIEN,
-PACIFISTE,
-PETITE_FILLE_WO,
-PORTEUR_DE_L_AMULETTE,
-PRESIDENT,
-PRETRE,
-PYROMANE,
-VILAIN_GARCON,
-VOYANTE_APPRENTIE,
-VOYANTE_D_AURA;
+NECROMANCIEN(Necromancien.class),
+PACIFISTE(Pacifiste.class),
+PETITE_FILLE_WO(PetiteFilleWO.class),
+PORTEUR_DE_L_AMULETTE(PorteurDeLAmulette.class),
+PRESIDENT(President.class),
+PRETRE(Pretre.class),
+PYROMANE(Pyromane.class),
+VILAIN_GARCON(VilainGarcon.class),
+VOYANTE_APPRENTIE(VoyanteApprentie.class),
+VOYANTE_D_AURA(VoyanteDAura.class);
 
     RoleEnum(Class<? extends Role> clazz) {
         this.roleClass = clazz;

@@ -34,26 +34,21 @@ public class Chaman extends Role {
 
     @Override
     public Camps getBaseCamp() {
-        return null;
+        return Camps.VILLAGE;
     }
 
     @Override
     public Decks getDeck() {
-        return null;
+        return Decks.ONLINE;
     }
 
     @Override
     public int getTimeout() {
-        return 0;
-    }
-
-    @Override
-    public String getAnnounce() {
-        return null;
+        return -1;
     }
 
     @Override
     public String getActionMessage() {
-        return null;
+        return "";
     }
 }

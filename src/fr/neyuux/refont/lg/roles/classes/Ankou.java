@@ -49,11 +49,6 @@ public class Ankou extends Role {
     }
 
     @Override
-    public String getAnnounce() {
-        return "";
-    }
-
-    @Override
     public String getActionMessage() {
         return "";
     }

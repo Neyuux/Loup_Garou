@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -7,12 +8,47 @@ import org.bukkit.entity.Player;
 
 public class EnfantSauvage extends Role {
 
-    public EnfantSauvage() {
-
+    public EnfantSauvage(GameLG gameLG) {
+        super(gameLG);
     }
 
     @Override
-    public void onDistribution(Player player) {
+    public String getDisplayName() {
+        return "§6§lEnfant Sauvage";
+    }
 
+    @Override
+    public String getScoreboardName() {
+        return "§6§lEnfant Sauvage";
+    }
+
+    @Override
+    public String getConfigName() {
+        return "Enfant Sauvage";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§fVous êtes "+this.getTimeout()+"§f, vous allez, au début de la partie, devoir choisir votre maître. Si celui-ci §9meurt§f, vous devenez un §c§lLoup-Garou§f. Tant que cela ne s'est pas passé, votre but est d'éliminer est §9d'éliminer tous les loups-garous (ou rôles solos)§f.";
+    }
+
+    @Override
+    public Camps getBaseCamp() {
+        return Camps.VILLAGE;
+    }
+
+    @Override
+    public Decks getDeck() {
+        return null;
+    }
+
+    @Override
+    public int getTimeout() {
+        return 0;
+    }
+
+    @Override
+    public String getActionMessage() {
+        return null;
     }
 }

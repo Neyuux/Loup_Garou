@@ -67,8 +67,6 @@ public abstract class Role implements Listener {
 
     public abstract int getTimeout();
 
-    public abstract String getAnnounce();
-
     public abstract String getActionMessage();
 }
 

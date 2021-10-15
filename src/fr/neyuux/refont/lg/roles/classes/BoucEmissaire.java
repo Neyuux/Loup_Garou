@@ -1,25 +1,59 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import fr.neyuux.refont.lg.roles.RoleEnum;
 import org.bukkit.entity.Player;
 
 public class BoucEmissaire extends Role {
 
-    public BoucEmissaire() {
-        super("ßcßlBouc ßaßl…missaire",
-                "ßcßlBouc ßaßl…missaire",
-                "Bouc …missaire",
-                "ßfVous Ítes ßcßlBouc ßaßl…missaireßf, votre but est d'Èliminer tous les ßcßlLoups-Garousßf (ou rÙles solos). Si, pendant la partie, il y a ÈgalitÈ dans les votes, ß9vous mourrezßf. (ß8ßlßnßmßoGROSSE VICTIMEßf)",
-                RoleEnum.BOUC_EMISSAIRE,
-                Camps.VILLAGE,
-                Decks.THIERCELIEUX);
+    public BoucEmissaire(GameLG gameLG) {
+        super(gameLG);
     }
 
     @Override
-    public void onDistribution(Player player) {
+    public String getDisplayName() {
+        return "ßcßlBouc ßaßl…missaire";
+    }
 
+    @Override
+    public String getScoreboardName() {
+        return "ßcßlBouc ßaßl…missaire";
+    }
+
+    @Override
+    public String getConfigName() {
+        return "Bouc …missaire";
+    }
+
+    @Override
+    public String getDescription() {
+        return "ßfVous Ítes "+this.getDisplayName()+"ßf, votre but est d'Èliminer tous les ßcßlLoups-Garousßf (ou rÙles solos). Si, pendant la partie, il y a ÈgalitÈ dans les votes, ß9vous mourrezßf.";
+    }
+
+    @Override
+    public Camps getBaseCamp() {
+        return Camps.VILLAGE;
+    }
+
+    @Override
+    public Decks getDeck() {
+        return Decks.THIERCELIEUX;
+    }
+
+    @Override
+    public int getTimeout() {
+        return -1;
+    }
+
+    @Override
+    public String getAnnounce() {
+        return "";
+    }
+
+    @Override
+    public String getActionMessage() {
+        return "";
     }
 }

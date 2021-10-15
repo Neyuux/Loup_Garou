@@ -1,25 +1,60 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import fr.neyuux.refont.lg.roles.RoleEnum;
 import org.bukkit.entity.Player;
 
 public class Ange extends Role {
 
-    public Ange() {
-        super("§b§lAnge",
-                "§b§lAnge",
-                "Ange",
-                "§fVous êtes §b§lAnge§f, votre but est de vous faire lyncher(tuer) par le village au premier tour. Si vous réussissez : la victoire sera votre, mais dans le cas contraire : vous deviendrez §e§lSimple §a§lVillageois§f.",
-                RoleEnum.ANGE,
-                Camps.AUTRE,
-                Decks.THIERCELIEUX);
+    public Ange(GameLG gameLG) {
+        super(gameLG);
     }
 
     @Override
-    public void onDistribution(Player player) {
-
+    public String getDisplayName() {
+        return "§b§lAnge";
     }
+
+    @Override
+    public String getScoreboardName() {
+        return "§b§lAnge";
+    }
+
+    @Override
+    public String getConfigName() {
+        return "Ange";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est de vous faire voter par le village au premier tour. Si vous réussissez : la victoire sera votre, mais dans le cas contraire : vous deviendrez §e§lSimple §a§lVillageois§f.";
+    }
+
+    @Override
+    public Camps getBaseCamp() {
+        return Camps.AUTRE;
+    }
+
+    @Override
+    public Decks getDeck() {
+        return Decks.THIERCELIEUX;
+    }
+
+    @Override
+    public int getTimeout() {
+        return -1;
+    }
+
+    @Override
+    public String getAnnounce() {
+        return "";
+    }
+
+    @Override
+    public String getActionMessage() {
+        return "";
+    }
+
 }

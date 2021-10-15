@@ -1,53 +1,108 @@
 package fr.neyuux.refont.lg.roles;
 
-import org.bukkit.entity.Player;
+import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 
-public abstract class Role {
+import java.util.ArrayList;
+import java.util.logging.Level;
 
-    private final String displayName, scoreboardName, configName;
-    private final String description;
-    private final RoleEnum role;
-    private final Camps baseCamp;
-    private final Decks deck;
+public abstract class Role implements Listener {
 
-    protected Role(String displayName, String scoreboardName, String configName, String description, RoleEnum role, Camps baseCamp, Decks deck) {
-        this.displayName = displayName;
-        this.scoreboardName = scoreboardName;
-        this.configName = configName;
-        this.description = description;
-        this.role = role;
-        this.baseCamp = baseCamp;
-        this.deck = deck;
+    private final ArrayList<PlayerLG> players = new ArrayList<>();
+    private final GameLG gameLG;
+
+
+    public Role(GameLG gameLG) {
+        this.gameLG = gameLG;
+        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
     }
 
-    public abstract void onDistribution(Player player);
-
-
-    public String getDisplayName() {
-        return displayName;
+    public void onDistribution(PlayerLG player) {
+        this.players.add(player);
     }
 
-    public String getScoreboardName() {
-        return scoreboardName;
+    public void onNightTurn() {
+
     }
 
-    public String getConfigName() {
-        return configName;
+    public void onFinishNightTurn() {
+
     }
 
-    public String getDescription() {
-        return description;
+    public int getTurnNumber() {
+        String className = this.getClass().getSimpleName().toUpperCase();
+        try {
+            RoleNightOrder roleNightOrder = RoleNightOrder.valueOf(className);
+            return roleNightOrder.ordinal();
+        } catch (IllegalArgumentException e) {
+            LG.getInstance().getLogger().log(Level.SEVERE, className + " n'a pas le meme nom dans RoleNightOrder");
+            return -1;
+        }
     }
 
-    public RoleEnum getRole() {
-        return role;
+    public ArrayList<PlayerLG> getPlayers() {
+        return players;
     }
 
-    public Camps getBaseCamp() {
-        return baseCamp;
+
+    public GameLG getGame() {
+        return gameLG;
     }
 
-    public Decks getDeck() {
-        return deck;
-    }
+
+    public abstract String getDisplayName();
+
+    public abstract String getScoreboardName();
+
+    public abstract String getConfigName();
+
+    public abstract String getDescription();
+
+    public abstract Camps getBaseCamp();
+
+    public abstract Decks getDeck();
+
+    public abstract int getTimeout();
+
+    public abstract String getAnnounce();
+
+    public abstract String getActionMessage();
+}
+
+enum RoleNightOrder {
+    VOLEUR,
+    CUPIDON,
+    ENFANTSAUVAGE,
+    CHIENLOUP,
+    JUMEAU,
+    NOCTAMBULE,
+    COMEDIEN,
+    VOYANTE,
+    VOYANTEDAURA,
+    ENCHANTEUR,
+    DETECTIVE,
+    RENARD,
+    PACIFISTE,
+    FILLEDEJOIE,
+    GARDEDUCORPS,
+    SALVATEUR,
+    LOUPGAROU,
+    INFECTPEREDESLOUPS,
+    GRANDMECHANTLOUP,
+    LOUPGAROUBLANC,
+    PETITEFILLEWO,
+    SORCIERE,
+    PRETRE,
+    NECROMANCIEN,
+    VILAINGARCON,
+    DICTATEUR,
+    MAMIEGRINCHEUSE,
+    CORBEAU,
+    JOUEURDEFLUTE,
+    PYROMANE,
+    SOEUR,
+    FRERE
 }

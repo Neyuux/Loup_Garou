@@ -29,7 +29,7 @@ public class EnfantSauvage extends Role {
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getTimeout()+"§f, vous allez, au début de la partie, devoir choisir votre maître. Si celui-ci §9meurt§f, vous devenez un §c§lLoup-Garou§f. Tant que cela ne s'est pas passé, votre but est d'éliminer est §9d'éliminer tous les loups-garous (ou rôles solos)§f.";
+        return "§fVous êtes "+this.getDisplayName()+"§f, vous allez, au début de la partie, devoir choisir votre maître. Si celui-ci §9meurt§f, vous devenez un §c§lLoup-Garou§f. Tant que cela ne s'est pas passé, votre but est d'éliminer est §9d'éliminer tous les loups-garous (ou rôles solos)§f.";
     }
 
     @Override
@@ -39,16 +39,16 @@ public class EnfantSauvage extends Role {
 
     @Override
     public Decks getDeck() {
-        return null;
+        return Decks.THIERCELIEUX;
     }
 
     @Override
     public int getTimeout() {
-        return 0;
+        return 20;
     }
 
     @Override
     public String getActionMessage() {
-        return null;
+        return "§fVous avez §6" + this.getTimeout() + " secondes §fpour choisir votre modèle.";
     }
 }

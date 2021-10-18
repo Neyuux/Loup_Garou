@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -7,19 +8,47 @@ import org.bukkit.entity.Player;
 
 public class HumainMaudit extends Role {
 
-    public HumainMaudit()  {
-        super(
-                "§e§lHumain §4§lMaudit",
-                "Humain Maudit",
-                "§fVous êtes §e§lHumain §4§lMaudit§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Si vous vous faites cibler par les Loups, vous ne mourrez pas et devenez l'un d'entre-eux.",
-                RoleEnum.HUMAIN_MAUDIT,
-                Camps.VILLAGE,
-                Decks.WEREWOLF_ONLINE
-                );
+    public HumainMaudit(GameLG gameLG)  {
+        super(gameLG);
     }
 
     @Override
-    public void onDistribution(Player player) {
+    public String getDisplayName() {
+        return "§e§lHumain §c§lMaudit";
+    }
 
+    @Override
+    public String getScoreboardName() {
+        return "§e§lHumain §c§lMaudit";
+    }
+
+    @Override
+    public String getConfigName() {
+        return "Humain Maudit";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Si vous vous faites cibler par les Loups, vous ne mourrez pas et devenez l'un d'entre-eux.";
+    }
+
+    @Override
+    public Camps getBaseCamp() {
+        return Camps.VILLAGE;
+    }
+
+    @Override
+    public Decks getDeck() {
+        return Decks.WEREWOLF_ONLINE;
+    }
+
+    @Override
+    public int getTimeout() {
+        return -1;
+    }
+
+    @Override
+    public String getActionMessage() {
+        return "";
     }
 }

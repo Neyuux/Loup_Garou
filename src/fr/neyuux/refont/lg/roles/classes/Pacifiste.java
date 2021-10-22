@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -7,12 +8,47 @@ import org.bukkit.entity.Player;
 
 public class Pacifiste extends Role {
 
-    public Pacifiste() {
-
+    public Pacifiste(GameLG gameLG) {
+        super(gameLG);
     }
 
     @Override
-    public void onDistribution(Player player) {
+    public String getDisplayName() {
+        return "§d§lPacifiste";
+    }
 
+    @Override
+    public String getScoreboardName() {
+        return "§d§lPacifiste";
+    }
+
+    @Override
+    public String getConfigName() {
+        return "Pacifiste";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Une fois dans la partie, vous pourrez révéler le rôle d'un joueur et empêcher tous les joueurs de voter ce jour là.";
+    }
+
+    @Override
+    public Camps getBaseCamp() {
+        return Camps.VILLAGE;
+    }
+
+    @Override
+    public Decks getDeck() {
+        return Decks.WEREWOLF_ONLINE;
+    }
+
+    @Override
+    public int getTimeout() {
+        return 20;
+    }
+
+    @Override
+    public String getActionMessage() {
+        return "§fVous avez §d" + this.getTimeout() + " secondes §fpour choisir quelqu'un.";
     }
 }

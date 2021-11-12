@@ -18,11 +18,6 @@ public class ChienLoup extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§a§lChien§e-§c§lLoup";
-    }
-
-    @Override
     public String getConfigName() {
         return "Chien-Loup";
     }

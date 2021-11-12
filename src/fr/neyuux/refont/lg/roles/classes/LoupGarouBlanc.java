@@ -19,11 +19,6 @@ public class LoupGarouBlanc extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§c§lLoup-Garou §f§lBlanc";
-    }
-
-    @Override
     public String getConfigName() {
         return "Loup-Garou Blanc";
     }

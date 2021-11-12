@@ -18,11 +18,6 @@ public class Corbeau extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§8§lCorbeau";
-    }
-
-    @Override
     public String getConfigName() {
         return "Corbeau";
     }

@@ -55,8 +55,6 @@ public abstract class Role implements Listener {
 
     public abstract String getDisplayName();
 
-    public abstract String getScoreboardName();
-
     public abstract String getConfigName();
 
     public abstract String getDescription();

@@ -19,11 +19,6 @@ public class ChaperonRouge extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§b§lChaperon §c§lRouge";
-    }
-
-    @Override
     public String getConfigName() {
         return "Chaperon Rouge";
     }

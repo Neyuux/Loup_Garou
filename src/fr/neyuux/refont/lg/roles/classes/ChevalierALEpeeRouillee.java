@@ -19,11 +19,6 @@ public class ChevalierALEpeeRouillee extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§7§lChevalier §eà l'§7Épée §6§lRouillée";
-    }
-
-    @Override
     public String getConfigName() {
         return "Chevalier a l'Épée Rouillée";
     }

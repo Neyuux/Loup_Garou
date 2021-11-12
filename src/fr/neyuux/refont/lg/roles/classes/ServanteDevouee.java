@@ -18,11 +18,6 @@ public class ServanteDevouee extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§d§lServante Dévouée";
-    }
-
-    @Override
     public String getConfigName() {
         return "Servante Dévouée";
     }

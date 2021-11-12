@@ -18,11 +18,6 @@ public class Macon extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lMaçon";
-    }
-
-    @Override
     public String getConfigName() {
         return "Macon";
     }

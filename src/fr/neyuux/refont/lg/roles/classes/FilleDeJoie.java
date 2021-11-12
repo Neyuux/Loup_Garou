@@ -18,11 +18,6 @@ public class FilleDeJoie extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§d§lFille de Joie";
-    }
-
-    @Override
     public String getConfigName() {
         return "Fille de Joie";
     }

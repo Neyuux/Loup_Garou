@@ -18,11 +18,6 @@ public class Pretre extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§e§lPrêtre";
-    }
-
-    @Override
     public String getConfigName() {
         return "Pretre";
     }

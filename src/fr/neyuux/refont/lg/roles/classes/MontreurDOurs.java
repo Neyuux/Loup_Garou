@@ -18,11 +18,6 @@ public class MontreurDOurs extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lMontreur d'Ours";
-    }
-
-    @Override
     public String getConfigName() {
         return "Montreur d'Ours";
     }

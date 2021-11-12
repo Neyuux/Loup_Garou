@@ -18,11 +18,6 @@ public class SimpleVillageois extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§e§lSimple §a§lVillageois";
-    }
-
-    @Override
     public String getConfigName() {
         return "Simple Villageois";
     }

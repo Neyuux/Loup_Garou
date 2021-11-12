@@ -18,11 +18,6 @@ public class GrandMechantLoup extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§4§lGrand Méchant §c§lLoup";
-    }
-
-    @Override
     public String getConfigName() {
         return "Grand Méchant Loup";
     }

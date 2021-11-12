@@ -18,11 +18,6 @@ public class DurACuire extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§c§lDur §cà §6§lCuire";
-    }
-
-    @Override
     public String getConfigName() {
         return "Dur a Cuire";
     }

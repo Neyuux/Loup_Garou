@@ -18,11 +18,6 @@ public class Renard extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lRenard";
-    }
-
-    @Override
     public String getConfigName() {
         return "Renard";
     }

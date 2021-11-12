@@ -18,11 +18,6 @@ public class Pacifiste extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§d§lPacifiste";
-    }
-
-    @Override
     public String getConfigName() {
         return "Pacifiste";
     }

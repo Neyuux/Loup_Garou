@@ -18,11 +18,6 @@ public class Noctambule extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§9§lNoctambule";
-    }
-
-    @Override
     public String getConfigName() {
         return "Noctambule";
     }

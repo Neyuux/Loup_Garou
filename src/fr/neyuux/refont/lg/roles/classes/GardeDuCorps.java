@@ -18,11 +18,6 @@ public class GardeDuCorps extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§7§lGarde §e§ldu Corps";
-    }
-
-    @Override
     public String getConfigName() {
         return "Garde du Corps";
     }

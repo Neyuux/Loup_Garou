@@ -18,11 +18,6 @@ public class Enchanteur extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§c§lEnchanteur";
-    }
-
-    @Override
     public String getConfigName() {
         return "Enchanteur";
     }

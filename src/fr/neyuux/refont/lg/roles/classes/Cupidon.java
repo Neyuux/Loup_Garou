@@ -18,11 +18,6 @@ public class Cupidon extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§9§lCupi§d§ldon";
-    }
-
-    @Override
     public String getConfigName() {
         return "Cupidon";
     }

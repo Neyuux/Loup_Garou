@@ -18,11 +18,6 @@ public class Comedien extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§5§lComédien";
-    }
-
-    @Override
     public String getConfigName() {
         return "Comédien";
     }

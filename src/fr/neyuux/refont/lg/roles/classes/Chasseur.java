@@ -19,11 +19,6 @@ public class Chasseur extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§2§lChasseur";
-    }
-
-    @Override
     public String getConfigName() {
         return "Chasseur";
     }

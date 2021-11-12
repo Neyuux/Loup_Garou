@@ -18,11 +18,6 @@ public class IdiotDuVillage extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§d§lIdiot §e§ldu Village";
-    }
-
-    @Override
     public String getConfigName() {
         return "Idiot du Village";
     }

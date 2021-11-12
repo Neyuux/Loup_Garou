@@ -18,11 +18,6 @@ public class EnfantSauvage extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lEnfant Sauvage";
-    }
-
-    @Override
     public String getConfigName() {
         return "Enfant Sauvage";
     }

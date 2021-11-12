@@ -18,11 +18,6 @@ public class JoueurDeFlute extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§5§lJoueur de Flûte";
-    }
-
-    @Override
     public String getConfigName() {
         return "Joueur de Flute";
     }

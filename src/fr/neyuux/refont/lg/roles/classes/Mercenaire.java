@@ -18,11 +18,6 @@ public class Mercenaire extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§c§lMerce§5§lnaire";
-    }
-
-    @Override
     public String getConfigName() {
         return "Mercenaire";
     }

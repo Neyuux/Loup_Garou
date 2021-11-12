@@ -18,11 +18,6 @@ public class Detective extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§7§lDétective";
-    }
-
-    @Override
     public String getConfigName() {
         return "Détective";
     }

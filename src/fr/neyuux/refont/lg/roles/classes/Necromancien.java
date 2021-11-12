@@ -18,11 +18,6 @@ public class Necromancien extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§9§lNécromancien";
-    }
-
-    @Override
     public String getConfigName() {
         return "Nécromancien";
     }

@@ -18,11 +18,6 @@ public class InfectPereDesLoups extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§2§lInfect Père §c§ldes Loups";
-    }
-
-    @Override
     public String getConfigName() {
         return "Infect Pere des Loups";
     }

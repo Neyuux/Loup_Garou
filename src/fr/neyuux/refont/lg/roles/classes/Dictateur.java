@@ -18,11 +18,6 @@ public class Dictateur extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§4§lDicta§2§lteur";
-    }
-
-    @Override
     public String getConfigName() {
         return "Dictateur";
     }

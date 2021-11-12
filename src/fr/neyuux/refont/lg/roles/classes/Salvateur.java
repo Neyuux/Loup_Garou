@@ -18,11 +18,6 @@ public class Salvateur extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§e§lSalvateur";
-    }
-
-    @Override
     public String getConfigName() {
         return "Salvateur";
     }

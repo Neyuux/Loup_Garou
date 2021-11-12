@@ -18,11 +18,6 @@ public class Ancien extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§7§lAncien";
-    }
-
-    @Override
     public String getConfigName() {
         return "Ancien";
     }

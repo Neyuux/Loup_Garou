@@ -18,11 +18,6 @@ public class President extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§e§lPrésident";
-    }
-
-    @Override
     public String getConfigName() {
         return "Président";
     }

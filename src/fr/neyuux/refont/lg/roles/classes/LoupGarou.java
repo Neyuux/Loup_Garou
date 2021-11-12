@@ -18,11 +18,6 @@ public class LoupGarou extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§c§lLoup-Garou";
-    }
-
-    @Override
     public String getConfigName() {
         return "Loup-Garou";
     }

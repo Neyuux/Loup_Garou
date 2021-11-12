@@ -18,11 +18,6 @@ public class Ange extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§b§lAnge";
-    }
-
-    @Override
     public String getConfigName() {
         return "Ange";
     }

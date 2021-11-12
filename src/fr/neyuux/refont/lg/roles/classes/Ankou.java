@@ -19,11 +19,6 @@ public class Ankou extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lAnkou";
-    }
-
-    @Override
     public String getConfigName() {
         return "Ankou";
     }

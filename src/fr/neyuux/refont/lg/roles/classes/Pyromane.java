@@ -18,11 +18,6 @@ public class Pyromane extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lPyromane";
-    }
-
-    @Override
     public String getConfigName() {
         return "Pyromane";
     }

@@ -18,11 +18,6 @@ public class Jumeau extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§5§lJumeau";
-    }
-
-    @Override
     public String getConfigName() {
         return "Jumeau";
     }

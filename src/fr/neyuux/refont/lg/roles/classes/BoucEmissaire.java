@@ -18,11 +18,6 @@ public class BoucEmissaire extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "ßcßlBouc ßaßl…missaire";
-    }
-
-    @Override
     public String getConfigName() {
         return "Bouc …missaire";
     }

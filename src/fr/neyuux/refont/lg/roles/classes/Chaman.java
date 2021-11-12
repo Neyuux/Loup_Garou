@@ -18,11 +18,6 @@ public class Chaman extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§b§lCha§a§lman";
-    }
-
-    @Override
     public String getConfigName() {
         return "Chaman";
     }

@@ -18,11 +18,6 @@ public class MamieGrincheuse extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§d§lMamie §6§lGrincheuse";
-    }
-
-    @Override
     public String getConfigName() {
         return "Mamie Grincheuse";
     }

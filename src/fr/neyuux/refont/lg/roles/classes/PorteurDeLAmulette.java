@@ -18,11 +18,6 @@ public class PorteurDeLAmulette extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§6§lPorteur de §d§lL'Amulette";
-    }
-
-    @Override
     public String getConfigName() {
         return "Porteur de L'Amulette";
     }

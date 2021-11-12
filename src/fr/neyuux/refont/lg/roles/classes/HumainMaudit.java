@@ -18,11 +18,6 @@ public class HumainMaudit extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§e§lHumain §c§lMaudit";
-    }
-
-    @Override
     public String getConfigName() {
         return "Humain Maudit";
     }

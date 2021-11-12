@@ -18,11 +18,6 @@ public class Fossoyeur extends Role {
     }
 
     @Override
-    public String getScoreboardName() {
-        return "§8§lFossoyeur";
-    }
-
-    @Override
     public String getConfigName() {
         return "Fossoyeur";
     }

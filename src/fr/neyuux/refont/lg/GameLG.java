@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -22,6 +23,11 @@ public class GameLG implements Listener {
     private final ArrayList<Role> aliveRoles = new ArrayList<>();
 
     private final ArrayList<PlayerLG> playersInGame = new ArrayList<>();
+
+    private ChatLG spectatorChat = new ChatLG((sender, msg) -> {
+        return sender.getDisplayName() + " §8» §f" + msg;
+    });
+
 
     public GameLG() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());

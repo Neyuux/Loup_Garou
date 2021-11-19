@@ -78,6 +78,18 @@ public class PlayerLG {
         }
     }
 
+    public String getName() {
+        if (this.player != null)
+            return this.player.getName();
+        return null;
+    }
+
+    public String getDisplayName() {
+        if (this.player != null)
+            return this.player.getDisplayName();
+        return null;
+    }
+
     public Player getPlayer() {
         return player;
     }

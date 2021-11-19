@@ -28,6 +28,9 @@ public class GameLG implements Listener {
         return sender.getDisplayName() + " §8» §f" + msg;
     });
 
+    private ChatLG dayChat = new ChatLG((sender, msg) -> {
+    })
+
 
     public GameLG() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());

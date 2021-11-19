@@ -90,6 +90,12 @@ public class PlayerLG {
         return null;
     }
 
+    public String getNameWithAttributes(PlayerLG playerLG) {
+        String name = "";
+
+        if ()
+    }
+
     public Player getPlayer() {
         return player;
     }

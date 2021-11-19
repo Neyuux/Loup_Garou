@@ -17,8 +17,6 @@ public class ChatLG {
 
     public void sendMessage(PlayerLG sender, String msg) {
         String sending = this.getViewers().get(sender).send(sender, msg);
-
-
         for (Map.Entry<PlayerLG, ChatLGCallback> entry : this.getViewers().entrySet())
             entry.getKey().sendMessage(sending != null ? sending : entry.getValue().receive(sender, msg));
     }
@@ -26,6 +24,10 @@ public class ChatLG {
     public void join(PlayerLG playerLG, ChatLGCallback callback) {
         if (this.getViewers().containsKey(playerLG)) this.getViewers().replace(playerLG, callback);
         else this.getViewers().put(playerLG, callback);
+    }
+
+    public void leave(PlayerLG playerLG) {
+        this.getViewers().remove(playerLG);
     }
 
     public ChatLGCallback getDefaultCallback() {

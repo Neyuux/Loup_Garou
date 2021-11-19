@@ -18,6 +18,7 @@ public class ChatLG {
     public void sendMessage(PlayerLG sender, String msg) {
         String sending = this.getViewers().get(sender).send(sender, msg);
 
+
         for (Map.Entry<PlayerLG, ChatLGCallback> entry : this.getViewers().entrySet())
             entry.getKey().sendMessage(sending != null ? sending : entry.getValue().receive(sender, msg));
     }

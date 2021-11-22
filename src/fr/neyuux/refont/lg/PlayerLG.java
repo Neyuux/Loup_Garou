@@ -90,10 +90,10 @@ public class PlayerLG {
         return null;
     }
 
-    public String getNameWithAttributes(PlayerLG playerLG) {
+    public String getNameWithAttributes(PlayerLG receiver) {
         String name = "";
 
-        if ()
+        if (LG.getInstance().getGame())
     }
 
     public Player getPlayer() {
@@ -106,6 +106,14 @@ public class PlayerLG {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Camps getCamp() {
+        return this.camp;
+    }
+
+    public void setCamp(Camps camp) {
+        this.camp = camp;
     }
 
     public boolean isDead() {

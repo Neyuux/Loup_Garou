@@ -9,6 +9,8 @@ public class LG extends JavaPlugin {
     private static final String prefix = "§c§lLoups§e§l-§6§lGarous";
 
 
+    private GameLG gameLG;
+
     public static LG getInstance() {
         return INSTANCE;
     }
@@ -20,11 +22,17 @@ public class LG extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
+        this.gameLG = new GameLG();
+
         super.onEnable();
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
+    }
+
+    public GameLG getGameLG() {
+        return gameLG;
     }
 }

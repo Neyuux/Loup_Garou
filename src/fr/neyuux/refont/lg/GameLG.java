@@ -1,7 +1,9 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.chat.ChatLG;
+import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -25,11 +27,12 @@ public class GameLG implements Listener {
     private final ArrayList<PlayerLG> playersInGame = new ArrayList<>();
 
     private ChatLG spectatorChat = new ChatLG((sender, msg) -> {
-        return sender.getDisplayName() + " §8» §f" + msg;
+        return sender.getDisplayName() + " §8» §7" + msg;
     });
 
     private ChatLG dayChat = new ChatLG((sender, msg) -> {
-    })
+        return "§e" + sender.getName() + " §6» §f" + msg;
+    });
 
 
     public GameLG() {
@@ -60,6 +63,17 @@ public class GameLG implements Listener {
                 alive.add(playerLG);
 
         return alive;
+    }
+
+    public List<PlayerLG> getLGs() {
+        ArrayList<PlayerLG> lgs = new ArrayList<>();
+
+        for (PlayerLG playerLG : this.playersInGame)
+            if (playerLG.getCamp().equals(Camps.LOUP_GAROU)
+                || playerLG.getRole().getClass().equals(LoupGarouBlanc.class))
+                lgs.add(playerLG);
+
+        return lgs;
     }
 
     public GameState getGameState() {

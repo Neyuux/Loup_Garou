@@ -2,9 +2,12 @@ package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.lg.roles.classes.*;
+import fr.neyuux.refont.lg.utils.CacheLG;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -26,13 +29,17 @@ public class PlayerLG {
 
     private Role role;
 
-    private int place;
+    private final CacheLG cache = new CacheLG();
+
+    private Block block;
 
     private Camps camp;
 
     private boolean isDead;
 
-    private List<PlayerLG> blacklistChoice = new ArrayList<>();
+    private boolean isMayor;
+
+    private final List<PlayerLG> blacklistChoice = new ArrayList<>();
 
 
     public void sendMessage(String msg) {
@@ -93,7 +100,59 @@ public class PlayerLG {
     public String getNameWithAttributes(PlayerLG receiver) {
         String name = "";
 
-        if (LG.getInstance().getGame())
+        if (this.isLG() && receiver.isLG()) {
+            if (receiver.getPlayer().getScoreboard().getTeam("LG").hasEntry(this.getPlayer().getName())) {
+                name = "§c§lLG §c";
+            }
+        }
+
+        if (receiver.getRole() instanceof Soeur) {
+            PlayerLG soeur = (PlayerLG) receiver.getCache().get("soeur");
+
+            if (soeur != null && soeur.equals(this))
+                name += "§d§lSoeur §d";
+        }
+
+        if (receiver.getRole() instanceof Frere) {
+            List<PlayerLG> brothers = (List<PlayerLG>) receiver.getCache().get("frere");
+
+            if (brothers != null && brothers.contains(this)) {
+                name += "§3§lFrère §d";
+            }
+        }
+
+        if (this.getRole() instanceof VillageoisVillageois) {
+            name += name + "§a§lV§e-§a§lV §a";
+        }
+
+        if (this.isMayor()) {
+            name += "§6§lMaire §e";
+        }
+
+        if (this.getCache().has("couple") && this.getCache().get("couple") != null) {
+            PlayerLG couple = (PlayerLG) this.getCache().get("couple");
+
+            if (couple.equals(receiver) || receiver.getRole() instanceof Cupidon) {
+                name += "§d§lCouple §d";
+            }
+        }
+
+        if (receiver.getRole() instanceof Mercenaire && LG.getInstance().getGame().getDay() == 1) {
+            PlayerLG target = (PlayerLG) receiver.getCache().get("target");
+
+            if (target != null && target.equals(this))
+                name += "§c§lCible §5";
+        }
+
+        if (receiver.getRole() instanceof Jumeau) {
+            PlayerLG twin = (PlayerLG) receiver.getCache().get("twin");
+
+            if (twin != null && twin.equals(this))
+                name += "§5§lJumeau §d";
+        }
+
+        name += player.getName();
+        return name;
     }
 
     public Player getPlayer() {
@@ -106,6 +165,10 @@ public class PlayerLG {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isLG () {
+        return LG.getInstance().getGame().getLGs().contains(this);
     }
 
     public Camps getCamp() {
@@ -124,10 +187,27 @@ public class PlayerLG {
         isDead = dead;
     }
 
+    public boolean isMayor() {
+        return isMayor;
+    }
+
+    public void setMayor(boolean mayor) {
+        isMayor = mayor;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+
 
     public static PlayerLG createPlayerLG(Player player) {
         if (playerHashMap.containsKey(player))
             return playerHashMap.get(player);
+
         PlayerLG plg = new PlayerLG(player);
         playerHashMap.put(player, plg);
         return plg;
@@ -135,6 +215,10 @@ public class PlayerLG {
 
     public static PlayerLG removePlayerLG(Player player) {
         return playerHashMap.remove(player);
+    }
+
+    public CacheLG getCache() {
+        return cache;
     }
 
     private void sendPacket(Object packet) {

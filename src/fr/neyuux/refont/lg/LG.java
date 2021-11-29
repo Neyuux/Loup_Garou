@@ -32,7 +32,7 @@ public class LG extends JavaPlugin {
         super.onDisable();
     }
 
-    public GameLG getGameLG() {
+    public GameLG getGame() {
         return gameLG;
     }
 }

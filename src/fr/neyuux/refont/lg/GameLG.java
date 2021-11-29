@@ -1,6 +1,5 @@
 package fr.neyuux.refont.lg;
 
-import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
@@ -25,14 +24,6 @@ public class GameLG implements Listener {
     private final ArrayList<Role> aliveRoles = new ArrayList<>();
 
     private final ArrayList<PlayerLG> playersInGame = new ArrayList<>();
-
-    private ChatLG spectatorChat = new ChatLG((sender, msg) -> {
-        return sender.getDisplayName() + " §8» §7" + msg;
-    });
-
-    private ChatLG dayChat = new ChatLG((sender, msg) -> {
-        return "§e" + sender.getName() + " §6» §f" + msg;
-    });
 
 
     public GameLG() {

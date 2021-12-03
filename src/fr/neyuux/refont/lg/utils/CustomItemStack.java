@@ -12,6 +12,10 @@ import java.util.*;
 
 public class CustomItemStack {
 
+    private static final CustomItemStack returnArrow = new CustomItemStack(Material.ARROW, "§cRetour", "§7Revenir au menu", "§7précédant.");
+    private static final CustomItemStack cancelBarrier = new CustomItemStack(Material.BARRIER, "§cAnnuler", "§7Annule l'action", "§7en cours.");
+
+
     Material material;
     String name;
     List<String> lore = new ArrayList<>();
@@ -325,5 +329,14 @@ public class CustomItemStack {
 
     public void setDurability(short durability) {
         this.durabilite = durability;
+    }
+
+
+    public static CustomItemStack getReturnArrow() {
+        return returnArrow;
+    }
+
+    public static CustomItemStack getCancelBarrier() {
+        return cancelBarrier;
     }
 }

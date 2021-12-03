@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg.config;
 
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ConfigItem extends CustomItemStack {
@@ -47,7 +48,7 @@ public class ConfigItem extends CustomItemStack {
     }
 
 
-    public void onClick() {
-
+    public void onClick(InventoryClickEvent ev) {
+        ev.setCancelled(true);
     }
 }

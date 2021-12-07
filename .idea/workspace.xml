@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="CustomItemStack &amp; ConfigItem">
+    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="CustomItemStack &amp; ConfigItem 2">
+      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/ReturnArrowItemStack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/utils/AbstractCustomInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/leomelki/leomelki.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/utils/CustomItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/utils/CustomItemStack.java" afterDir="false" />
     </list>
-    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/LG.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_8_8.xml" afterDir="false" />
+    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="Non Project Files">
       <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Les Loups-Garous de Thiercelieux.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Les Loups-Garous de Thiercelieux.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +70,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="0d570cb2-96df-43cc-80da-7f777e6d0afe" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -217,7 +213,21 @@
       <option name="project" value="LOCAL" />
       <updated>1638266132482</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="CustomItemStack &amp; ConfigItem 2">
+      <created>1638521475700</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1638521475700</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Non Project Files">
+      <created>1638521664813</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1638521664813</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -250,7 +260,9 @@
     <MESSAGE value="start getNameWithAttributes" />
     <MESSAGE value="finish getPlayerNameByAttributes&#10;start config" />
     <MESSAGE value="CustomItemStack &amp; ConfigItem" />
-    <option name="LAST_COMMIT_MESSAGE" value="CustomItemStack &amp; ConfigItem" />
+    <MESSAGE value="CustomItemStack &amp; ConfigItem 2" />
+    <MESSAGE value="Non Project Files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Non Project Files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

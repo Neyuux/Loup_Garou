@@ -25,6 +25,8 @@ public class GameLG implements Listener {
 
     private final ArrayList<PlayerLG> playersInGame = new ArrayList<>();
 
+    private final ArrayList<PlayerLG> opList = new ArrayList<>();
+
 
     public GameLG() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
@@ -65,6 +67,20 @@ public class GameLG implements Listener {
                 lgs.add(playerLG);
 
         return lgs;
+    }
+
+    public void OP(PlayerLG playerLG) {
+        this.opList.add(playerLG);
+        //TODO
+    }
+
+    public void unOP(PlayerLG playerLG) {
+        this.opList.remove(playerLG);
+        //TODO
+    }
+
+    public List<PlayerLG> getOPs() {
+        return this.opList;
     }
 
     public GameState getGameState() {

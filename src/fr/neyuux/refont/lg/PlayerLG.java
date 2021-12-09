@@ -159,6 +159,10 @@ public class PlayerLG {
         return player;
     }
 
+    public boolean isOP() {
+        return LG.getInstance().getGame().getOPs().contains(this);
+    }
+
     public Role getRole() {
         return role;
     }

@@ -1,22 +1,19 @@
 package fr.neyuux.refont.lg.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class CustomItemStack extends ItemStack {
-
-    //private static final CustomItemStack returnArrow = new CustomItemStack(Material.ARROW, "§cRetour", "§7Revenir au menu", "§7précédant.");
-    //private static final CustomItemStack cancelBarrier = new CustomItemStack(Material.BARRIER, "§cAnnuler", "§7Annule l'action", "§7en cours.");
 
     public CustomItemStack(Material m){
         super(m);
@@ -39,7 +36,7 @@ public class CustomItemStack extends ItemStack {
         super(i);
     }
 
-    public void use(Player player, ClickType clickType) {}
+    public void use(HumanEntity player, ClickType clickType) {}
 
     public CustomItemStack putAmount(int amount){
         this.setAmount(amount);
@@ -79,6 +76,20 @@ public class CustomItemStack extends ItemStack {
         return this;
     }
 
+    public CustomItemStack addItemFlags(ItemFlag... flags) {
+        ItemMeta meta = this.getItemMeta();
+        meta.addItemFlags(flags);
+        this.setItemMeta(meta);
+        return this;
+    }
+
+    public CustomItemStack removeItemFlags(ItemFlag... flags) {
+        ItemMeta meta = this.getItemMeta();
+        meta.removeItemFlags(flags);
+        this.setItemMeta(meta);
+        return this;
+    }
+
     public CustomItemStack setEnchantments(Map<Enchantment, Integer> enchantments){
         this.addUnsafeEnchantments(enchantments);
         return this;
@@ -87,6 +98,10 @@ public class CustomItemStack extends ItemStack {
     public CustomItemStack addEnchantmentV(Enchantment ench, int lvl){
         this.addUnsafeEnchantment(ench, lvl);
         return this;
+    }
+
+    public CustomItemStack addGlowEffect() {
+        return this.addEnchantmentV(Enchantment.DURABILITY, 1).addItemFlags(ItemFlag.HIDE_ENCHANTS);
     }
 
     public CustomItemStack setUnbreakable(boolean unbreakable){
@@ -111,13 +126,4 @@ public class CustomItemStack extends ItemStack {
     public CustomItemStack clone(){
         return new CustomItemStack(this);
     }
-    
-
-    /*public static CustomItemStack getReturnArrow() {
-        return returnArrow;
-    }
-
-    public static CustomItemStack getCancelBarrier() {
-        return cancelBarrier;
-    }*/
 }

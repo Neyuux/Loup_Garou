@@ -66,7 +66,7 @@ public abstract class AbstractCustomInventory {
     }
 
 
-    private void setCorner(byte color, int slot, byte direction) {
+    public void setCorner(byte color, int slot, byte direction) {
         CustomItemStack glass = new CustomItemStack(Material.STAINED_GLASS, 1, color);
 
         this.setItem((slot), glass);
@@ -82,7 +82,7 @@ public abstract class AbstractCustomInventory {
             this.setItem((slot + 1), glass);
     }
 
-    private void setAllCorners(byte color) {
+    public void setAllCorners(byte color) {
         setCorner(color, 0, (byte)1);
 
         setCorner(color, 8, (byte)2);

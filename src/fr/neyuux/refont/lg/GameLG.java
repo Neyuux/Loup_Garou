@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.items.config.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
@@ -12,6 +13,8 @@ import java.util.List;
 public class GameLG implements Listener {
 
     private GameState gameState;
+
+    private GameType gameType;
 
     private int day = 0;
 
@@ -71,12 +74,13 @@ public class GameLG implements Listener {
 
     public void OP(PlayerLG playerLG) {
         this.opList.add(playerLG);
-        //TODO
+        playerLG.getPlayer().getInventory().setItem(6, new OpComparatorItemStack());
+
     }
 
     public void unOP(PlayerLG playerLG) {
         this.opList.remove(playerLG);
-        //TODO
+        playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
     }
 
     public List<PlayerLG> getOPs() {
@@ -121,5 +125,13 @@ public class GameLG implements Listener {
 
     public ArrayList<Role> getAliveRoles() {
         return aliveRoles;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 }

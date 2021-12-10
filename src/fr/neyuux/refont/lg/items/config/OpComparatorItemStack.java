@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.items.config;
 
+import fr.neyuux.refont.lg.inventories.ConfigurationInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -15,6 +16,6 @@ public class OpComparatorItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, ClickType clickType) {
-        //TODO open config inv
+        new ConfigurationInv().open(player);
     }
 }

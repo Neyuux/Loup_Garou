@@ -20,9 +20,12 @@ import java.util.Objects;
 public class PlayerLG {
 
     private static final HashMap<Player, PlayerLG> playerHashMap = new HashMap<>();
+    
+    private final GameLG game;
 
-    public PlayerLG(Player player) {
+    public PlayerLG(Player player, GameLG game) {
         this.player = player;
+        this.game = game;
     }
 
     private final Player player;
@@ -137,7 +140,7 @@ public class PlayerLG {
             }
         }
 
-        if (receiver.getRole() instanceof Mercenaire && LG.getInstance().getGame().getDay() == 1) {
+        if (receiver.getRole() instanceof Mercenaire && this.game.getDay() == 1) {
             PlayerLG target = (PlayerLG) receiver.getCache().get("target");
 
             if (target != null && target.equals(this))
@@ -160,7 +163,7 @@ public class PlayerLG {
     }
 
     public boolean isOP() {
-        return LG.getInstance().getGame().getOPs().contains(this);
+        return this.game.getOPs().contains(this);
     }
 
     public Role getRole() {
@@ -172,7 +175,7 @@ public class PlayerLG {
     }
 
     public boolean isLG () {
-        return LG.getInstance().getGame().getLGs().contains(this);
+        return this.game.getLGs().contains(this);
     }
 
     public Camps getCamp() {
@@ -212,7 +215,7 @@ public class PlayerLG {
         if (playerHashMap.containsKey(player))
             return playerHashMap.get(player);
 
-        PlayerLG plg = new PlayerLG(player);
+        PlayerLG plg = new PlayerLG(player, LG.getInstance().getGame());
         playerHashMap.put(player, plg);
         return plg;
     }
@@ -223,6 +226,12 @@ public class PlayerLG {
 
     public CacheLG getCache() {
         return cache;
+    }
+    
+    public void updateRank() {
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(this.getName());
+
+        if (this.isOP()) this.game.OP(this);
     }
 
     private void sendPacket(Object packet) {

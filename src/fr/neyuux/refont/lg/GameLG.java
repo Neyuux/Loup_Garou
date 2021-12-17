@@ -5,7 +5,12 @@ import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +78,46 @@ public class GameLG implements Listener {
     }
 
     public void OP(PlayerLG playerLG) {
-        this.opList.add(playerLG);
+        if (!opList.contains(playerLG)) this.opList.add(playerLG);
         playerLG.getPlayer().getInventory().setItem(6, new OpComparatorItemStack());
-
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("AOP").addEntry(playerLG.getName());
     }
 
     public void unOP(PlayerLG playerLG) {
         this.opList.remove(playerLG);
         playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
+    }
+
+    public void addNightVision(PlayerLG playerLG) {
+        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+    }
+
+    public void addSaturation(PlayerLG playerLG) {
+        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false));
+    }
+
+    public void resetGame() {
+        this.playersInGame.clear();
+        this.day = 0;
+        this.night = 0;
+        this.mayor = null;
+        this.rolesAtStart.clear();
+        this.aliveRoles.clear();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+            player.getInventory().clear();
+            player.setExp(0f);
+            player.setLevel(0);
+            player.setMaxHealth(20);
+            player.setHealth(20);
+            for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
+            this.addNightVision(playerLG);
+            this.addSaturation(playerLG);
+            player.setGameMode(GameMode.ADVENTURE);
+            //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
+        }
     }
 
     public List<PlayerLG> getOPs() {

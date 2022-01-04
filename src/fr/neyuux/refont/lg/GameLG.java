@@ -33,6 +33,8 @@ public class GameLG implements Listener {
 
     private final ArrayList<PlayerLG> playersInGame = new ArrayList<>();
 
+    private final ArrayList<PlayerLG> spectators = new ArrayList<>();
+
     private final ArrayList<PlayerLG> opList = new ArrayList<>();
 
 
@@ -88,6 +90,10 @@ public class GameLG implements Listener {
         playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
     }
 
+    public void addSpectator(PlayerLG playerLG) {
+
+    }
+
     public void addNightVision(PlayerLG playerLG) {
         playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
     }
@@ -116,12 +122,17 @@ public class GameLG implements Listener {
             this.addNightVision(playerLG);
             this.addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
+            //TODO tp config locations.mainSpawn
             //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
         }
     }
 
     public List<PlayerLG> getOPs() {
         return this.opList;
+    }
+
+    public List<PlayerLG> getSpectators() {
+        return this.spectators;
     }
 
     public GameState getGameState() {

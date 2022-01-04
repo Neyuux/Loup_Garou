@@ -20,7 +20,7 @@ public class ReturnArrowItemStack extends CustomItemStack {
 
 
     @Override
-    public void use(HumanEntity player, ClickType clickType) {
+    public void use(HumanEntity player, Event event) {
         this.previousInv.open(player);
     }
 }

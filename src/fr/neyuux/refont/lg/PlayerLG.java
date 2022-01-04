@@ -166,6 +166,10 @@ public class PlayerLG {
         return this.game.getOPs().contains(this);
     }
 
+    public boolean isSpectator() {
+        return this.game.getSpectators().contains(this);
+    }
+
     public Role getRole() {
         return role;
     }

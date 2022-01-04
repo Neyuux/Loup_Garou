@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.listeners.PlayerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -20,6 +21,8 @@ public class LG extends JavaPlugin {
 
     private GameLG gameLG;
 
+    private ItemsManager itemsManager;
+
     public static LG getInstance() {
         return INSTANCE;
     }
@@ -32,6 +35,7 @@ public class LG extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
         this.gameLG = new GameLG();
+        this.itemsManager = new ItemsManager(gameLG);
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 

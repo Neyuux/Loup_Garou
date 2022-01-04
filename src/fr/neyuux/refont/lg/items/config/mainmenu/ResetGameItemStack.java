@@ -14,7 +14,7 @@ public class ResetGameItemStack extends CustomItemStack {
     }
 
     @Override
-    public void use(HumanEntity player, ClickType clickType) {
+    public void use(HumanEntity player, Event event) {
         //TODO open reset game inv
     }
 }

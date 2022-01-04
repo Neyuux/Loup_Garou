@@ -15,7 +15,7 @@ public class OpComparatorItemStack extends CustomItemStack {
     }
 
     @Override
-    public void use(HumanEntity player, ClickType clickType) {
+    public void use(HumanEntity player, Event event) {
         new ConfigurationInv().open(player);
     }
 }

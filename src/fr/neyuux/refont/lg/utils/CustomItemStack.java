@@ -3,6 +3,7 @@ package fr.neyuux.refont.lg.utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class CustomItemStack extends ItemStack {
         super(i);
     }
 
-    public void use(HumanEntity player, ClickType clickType) {}
+    public void use(HumanEntity player, Event event) {}
 
     public CustomItemStack putAmount(int amount){
         this.setAmount(amount);

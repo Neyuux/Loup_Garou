@@ -48,19 +48,13 @@ public class SpecExecutor implements Listener {
 		
 		
 		else if (arg0.equalsIgnoreCase("off")) {
-			
-			if (sender == null) {
-				return;
-			}
 
 			if (main.spectators.contains(sender)) {
 				main.spectators.remove(sender);
 				sender.getInventory().clear();
 				sender.setMaxHealth(20);
 				sender.setHealth(20);
-				for (PotionEffect pe : sender.getActivePotionEffects()) {
-					sender.removePotionEffect(pe.getType());
-				}
+				sender.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(sender::removePotionEffect);
 				PotionEffect saturation = new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false);
 				sender.addPotionEffect(saturation);
 				main.clearArmor(sender);
@@ -74,23 +68,13 @@ public class SpecExecutor implements Listener {
 				
 				Bukkit.getScoreboardManager().getMainScoreboard().getTeam("AGJoueur").addEntry(sender.getName());
 				main.setPlayerGrade(sender);
-				
-				for (Entry<String, List<UUID>> en : main.getGrades().entrySet())
-					if (en.getValue().contains(sender.getUniqueId()))
-						sender.getInventory().setItem(6, main.config.getComparator());
+
+				main.getGrades().entrySet().stream().filter(en -> en.getValue().contains(sender.getUniqueId())).forEach(en -> sender.getInventory().setItem(6, main.config.getComparator()));
 			} else sender.sendMessage(main.getPrefix() + main.SendArrow + "§cTu n'es pas spectateur, §4DOMMAGE ESSAYE DE TROUVER UN AUTRE BUG, §lBOOMER§c.");
 				
 				
 		}
-		
-		
-		
 		else if (arg0.equalsIgnoreCase("on")) {
-			
-			if (!(sender instanceof Player)) {
-				sender.sendMessage(main.getPrefix() + main.SendArrow + "§cTu dois être un joueur pour faire cette commande !");
-			}
-
 			if (!main.spectators.contains(sender)) {
 				main.players.remove(sender);
 				main.spectators.add(sender);
@@ -104,20 +88,12 @@ public class SpecExecutor implements Listener {
 				sender.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
 
 			} else sender.sendMessage(main.getPrefix() + main.SendArrow + "§cT'es déjà un spectateur ! §4DOMMAGE §lBOOMER");
-			
-		} 
-		
-		
-		else if (arg0.equalsIgnoreCase("help")) sender.sendMessage(main.getPrefix() + main.SendArrow + "§fAide pour la commmande §aspec§f :\n§e§l/spec on §8(Vous met en spectateur)§r\n§e§l/spec off §8(Vous retire du mode spectateur)§r\n§e§l/spec list §8(Affiche la liste des spectateurs)");
-		
-		
-		else {
-			sender.sendMessage(main.getPrefix() + main.SendArrow + "§cArgument inconnu pour la commande §e/spec §c: Essayez de faire §a/spec help §c!");
 		}
-		
-		for (Player p : Bukkit.getOnlinePlayers())
-			main.updateScoreboard(p);
-		
+		else if (arg0.equalsIgnoreCase("help")) sender.sendMessage(main.getPrefix() + main.SendArrow + "§fAide pour la commmande §aspec§f :\n§e§l/spec on §8(Vous met en spectateur)§r\n§e§l/spec off §8(Vous retire du mode spectateur)§r\n§e§l/spec list §8(Affiche la liste des spectateurs)");
+		else
+			sender.sendMessage(main.getPrefix() + main.SendArrow + "§cArgument inconnu pour la commande §e/spec §c: Essayez de faire §a/spec help §c!");
+
+		Bukkit.getOnlinePlayers().forEach(main::updateScoreboard);
 		}
 	}
 	

@@ -163,8 +163,10 @@ public class DayRunnable extends BukkitRunnable {
 							main.playerlg.get(p.getName()).setCanVote(false);
 							p.playSound(p.getLocation(), Sound.LEVEL_UP, 8, 1);
 						}
-						currentTimer = 5;
-						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eLe " + Roles.PACIFISTE.getName() + " §ea décidé de révéler le rôle de §5§l" + player.getName() + "§e : il est " + playerlg.getRole().getName() + "§e. §cPersonne ne pourra voter pendant ce tour.");	
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eLe " + Roles.PACIFISTE.getName() + " §ea décidé de révéler le rôle de §5§l" + player.getName() + "§e : il est " + playerlg.getRole().getName() + "§e. §cPersonne ne pourra voter pendant ce tour.");
+						currentTimer = Integer.MAX_VALUE;
+						main.setDisplayState(DisplayState.TOMBEE_DE_LA_NUIT);
+						return;
 					}
 				}
 				
@@ -270,9 +272,9 @@ public class DayRunnable extends BukkitRunnable {
 				System.out.println(max + " §e" + votesNumber.toString());
 				
 				if (max == 0) {
-					if (main.AliveRoles.containsKey(Roles.BOUC_ÉMISSAIRE) && DictasInCoupDEtat.isEmpty()) {
-						Player bc = main.getPlayersByRole(Roles.BOUC_ÉMISSAIRE).get(0);
-						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y a égalité dans le vote, et ne sachant qui éliminer, le village décider de pendre le " + Roles.BOUC_ÉMISSAIRE.getDisplayName() + " §e... Paix à son âme §4de victime§e...");
+					if (main.AliveRoles.containsKey(Roles.BOUC_EMISSAIRE) && DictasInCoupDEtat.isEmpty()) {
+						Player bc = main.getPlayersByRole(Roles.BOUC_EMISSAIRE).get(0);
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y a égalité dans le vote, et ne sachant qui éliminer, le village décider de pendre le " + Roles.BOUC_EMISSAIRE.getDisplayName() + " §e... Paix à son âme §4de victime§e...");
 						new DeathManager(main).eliminate(bc, true);
 					} else {
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§cAucun vote n'a été enregistré pour un habitant. Il n'y aura donc aucune exécution :(");
@@ -283,9 +285,9 @@ public class DayRunnable extends BukkitRunnable {
 				}
 				
 				if (votesNumber.size() > 1) {
-					if (main.AliveRoles.containsKey(Roles.BOUC_ÉMISSAIRE)) {
-						Player bc = main.getPlayersByRole(Roles.BOUC_ÉMISSAIRE).get(0);
-						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y a égalité dans le vote, et ne sachant qui éliminer, le village décider de pendre le " + Roles.BOUC_ÉMISSAIRE.getDisplayName() + " §e... Paix à son âme §4de victime§e...");
+					if (main.AliveRoles.containsKey(Roles.BOUC_EMISSAIRE)) {
+						Player bc = main.getPlayersByRole(Roles.BOUC_EMISSAIRE).get(0);
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eIl y a égalité dans le vote, et ne sachant qui éliminer, le village décider de pendre le " + Roles.BOUC_EMISSAIRE.getDisplayName() + " §e... Paix à son âme §4de victime§e...");
 						new DeathManager(main).eliminate(bc, true);
 						currentTimer = Integer.MAX_VALUE;
 						main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
@@ -327,7 +329,7 @@ public class DayRunnable extends BukkitRunnable {
 					main.playerlg.get(targeted.getName()).setDayTargeted(true);
 					currentTimer = Integer.MAX_VALUE;
 					main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
-					if (main.AliveRoles.containsKey(Roles.SERVANTE_DÉVOUÉE) && targeted != null) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
+					if (main.AliveRoles.containsKey(Roles.SERVANTE_DEVOUEE)) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
 					if (main.isDisplayState(DisplayState.CHOIX_SERVANTE)) {
 						if (main.playerlg.get(targeted.getName()).isRole(Roles.IDIOT_DU_VILLAGE) && main.playerlg.get(targeted.getName()).canVote()) main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
 						if (!DictasInCoupDEtat.isEmpty()) main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
@@ -435,7 +437,7 @@ public class DayRunnable extends BukkitRunnable {
 					main.playerlg.get(targeted.getName()).setDayTargeted(true);
 					currentTimer = Integer.MAX_VALUE;
 					main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
-					if (main.AliveRoles.containsKey(Roles.SERVANTE_DÉVOUÉE) && targeted != null) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
+					if (main.AliveRoles.containsKey(Roles.SERVANTE_DEVOUEE) && targeted != null) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
 					if (main.isDisplayState(DisplayState.CHOIX_SERVANTE)) 
 						if (main.playerlg.get(targeted.getName()).isRole(Roles.IDIOT_DU_VILLAGE) && main.playerlg.get(targeted.getName()).canVote()) main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
 				}
@@ -476,7 +478,7 @@ public class DayRunnable extends BukkitRunnable {
 				}
 				currentTimer = Integer.MAX_VALUE;
 				main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
-				if (main.AliveRoles.containsKey(Roles.SERVANTE_DÉVOUÉE) && targeted != null) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
+				if (main.AliveRoles.containsKey(Roles.SERVANTE_DEVOUEE) && targeted != null) main.setDisplayState(DisplayState.CHOIX_SERVANTE);
 				if (main.isDisplayState(DisplayState.CHOIX_SERVANTE)) 
 					if (main.playerlg.get(targeted.getName()).isRole(Roles.IDIOT_DU_VILLAGE) && main.playerlg.get(targeted.getName()).canVote()) main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
 			}
@@ -593,9 +595,9 @@ public class DayRunnable extends BukkitRunnable {
 			if (currentTimer == Integer.MAX_VALUE) currentTimer = 15;
 			
 			Player player = null;
-			if (main.getPlayersByRole(Roles.SERVANTE_DÉVOUÉE).size() > currentServante)
-				if (main.playerlg.get(main.getPlayersByRole(Roles.SERVANTE_DÉVOUÉE).get(currentServante).getName()).isServante())
-					player = main.getPlayersByRole(Roles.SERVANTE_DÉVOUÉE).get(currentServante);
+			if (main.getPlayersByRole(Roles.SERVANTE_DEVOUEE).size() > currentServante)
+				if (main.playerlg.get(main.getPlayersByRole(Roles.SERVANTE_DEVOUEE).get(currentServante).getName()).isServante())
+					player = main.getPlayersByRole(Roles.SERVANTE_DEVOUEE).get(currentServante);
 			
 			if (player == null)
 				for (Player p : main.players)
@@ -604,11 +606,11 @@ public class DayRunnable extends BukkitRunnable {
 			for (Player p : main.players) if (main.playerlg.get(p.getName()).isDayTargeted()) targeted = p;
 			
 			if (currentTimer == 15) {
-				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dLa " + Roles.SERVANTE_DÉVOUÉE.getDisplayName() + " §dpeut désormais choisir de prendre le rôle du joueur ciblé.");
+				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dLa " + Roles.SERVANTE_DEVOUEE.getDisplayName() + " §dpeut désormais choisir de prendre le rôle du joueur ciblé.");
 			}
 			
-			if (!player.getOpenInventory().getTopInventory().getName().equals("§6Inv " + Roles.SERVANTE_DÉVOUÉE.getDisplayName()) && main.playerlg.get(player.getName()).getCouple().isEmpty() && !player.getInventory().contains(Material.STONE_BUTTON)) {
-				Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.SERVANTE_DÉVOUÉE.getDisplayName());
+			if (!player.getOpenInventory().getTopInventory().getName().equals("§6Inv " + Roles.SERVANTE_DEVOUEE.getDisplayName()) && main.playerlg.get(player.getName()).getCouple().isEmpty() && !player.getInventory().contains(Material.STONE_BUTTON)) {
+				Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Inv " + Roles.SERVANTE_DEVOUEE.getDisplayName());
 				inv.setItem(0, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)5, "§a§lPrendre le rôle de §d" + targeted.getName(), Arrays.asList("§7Prendre le rôle de §d" + targeted.getName() + "§7.", "§7Vous obtiendrez ses pouvoirs.", "", "§b>>Clique pour sélectionner")));
 				
 				inv.setItem(4, main.config.getColoredItem(Material.STAINED_CLAY, 1, (short)14, "§cNe §lpas§c prendre le rôle de §d" + targeted.getName(), Arrays.asList("§7Ne prend pas le rôle de §d" + targeted.getName() + "§7.", "", "§b>>Clique pour sélectionner")));
@@ -630,11 +632,12 @@ public class DayRunnable extends BukkitRunnable {
 				}
 			}
 			
-			LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SERVANTE_DÉVOUÉE.getDisplayName() + "§f.");
+			LG.sendActionBarForAllPlayers(main.getPrefix() + main.SendArrow + "§fAu tour de la " + Roles.SERVANTE_DEVOUEE.getDisplayName() + "§f.");
 			
 			if (main.playerlg.get(player.getName()).hasUsedPower()) {
 				currentTimer = Integer.MAX_VALUE;
 				main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
+				GameRunnable.CURRENT_ANNOUNCE = DisplayState.ANNONCES_DES_MORTS_JOUR;
 			}
 			
 			if (player.getInventory().contains(Material.STAINED_CLAY)) {
@@ -646,7 +649,7 @@ public class DayRunnable extends BukkitRunnable {
 				currentTimer = Integer.MAX_VALUE;
 				currentServante++;
 				player.closeInventory();
-				if (currentServante == main.getPlayersByRole(Roles.SERVANTE_DÉVOUÉE).size()) {
+				if (currentServante == main.getPlayersByRole(Roles.SERVANTE_DEVOUEE).size()) {
 					main.setDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR);
 				}
 				main.GRunnable.createScoreboardList();

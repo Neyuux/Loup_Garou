@@ -1,20 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="LG" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="" />
+    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/LG.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Index.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../Serv/spigot.jar!/org/bukkit/potion/PotionEffect.class" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectId" id="1hCBbxVkGi0SQmu8HWgKXe1Bw9Z" />
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Serv/plugins" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -26,5 +115,29 @@
       <updated>1599505276319</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

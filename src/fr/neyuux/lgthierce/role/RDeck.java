@@ -8,16 +8,16 @@ public enum RDeck {
 	WEREWOLF_ONLINE("Philipp Eichhorn", "Werewolf")
 	;
 	
-	RDeck(String crédit, String alias) {
-		this.crédit = crédit;
+	RDeck(String credit, String alias) {
+		this.credit = credit;
 		this.alias = alias;
 	}
 	
-	private final String crédit;
+	private final String credit;
 	private final String alias;
 	
 	public String getCreator() {
-		return this.crédit;
+		return this.credit;
 	}
 	
 	public String getAlias() {

@@ -30,9 +30,9 @@ public class LGAutoStart extends BukkitRunnable {
 			main.setState(Gstate.PREPARING);
 		}
 		
-		if (main.isType(Gtype.RÉUNION) && main.players.size() > 12) {
+		if (main.isType(Gtype.REUNION) && main.players.size() > 12) {
 			main.setState(Gstate.PREPARING);
-			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§c§l12 JOUEURS MAXIMUM POUR LE MODE RÉUNION");
+			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§c§l12 JOUEURS MAXIMUM POUR LE MODE REUNION");
 		}
 		
 		if (!main.isState(Gstate.STARTING)) {
@@ -143,8 +143,8 @@ public class LGAutoStart extends BukkitRunnable {
 			
 			int rv1 = rdmv.nextInt(roles.size());
 			Roles role = roles.get(rv1);
-			if (role.equals(Roles.VOLEUR) || role.equals(Roles.SOEUR) || role.equals(Roles.FRÈRE)) {
-				while (role.equals(Roles.VOLEUR) || role.equals(Roles.SOEUR) || role.equals(Roles.FRÈRE)) {
+			if (role.equals(Roles.VOLEUR) || role.equals(Roles.SOEUR) || role.equals(Roles.FRERE)) {
+				while (role.equals(Roles.VOLEUR) || role.equals(Roles.SOEUR) || role.equals(Roles.FRERE)) {
 					rv1 = rdmv.nextInt(roles.size());
 					role = roles.get(rv1);
 				}
@@ -154,8 +154,8 @@ public class LGAutoStart extends BukkitRunnable {
 			
 			int rv2 = rdmv.nextInt(roles.size());
 			Roles role2 = roles.get(rv2);
-			if (role2.equals(Roles.VOLEUR) || role2.equals(Roles.SOEUR) || role2.equals(Roles.FRÈRE)) {
-				while (role2.equals(Roles.VOLEUR) || role2.equals(Roles.SOEUR) || role2.equals(Roles.FRÈRE)) {
+			if (role2.equals(Roles.VOLEUR) || role2.equals(Roles.SOEUR) || role2.equals(Roles.FRERE)) {
+				while (role2.equals(Roles.VOLEUR) || role2.equals(Roles.SOEUR) || role2.equals(Roles.FRERE)) {
 					rv2 = rdmv.nextInt(roles.size());
 					role2 = roles.get(rv2);
 				}
@@ -224,8 +224,8 @@ public class LGAutoStart extends BukkitRunnable {
 					player.sendMessage("§dVotre " + Roles.SOEUR.getDisplayName() + " §dest §l" + playerlg.getsoeur().get(0).getName() + "§d.");
 				}
 
-				else if (role.equals(Roles.FRÈRE)) {
-					if (playerlg.getfrère().isEmpty()) {
+				else if (role.equals(Roles.FRERE)) {
+					if (playerlg.getfrere().isEmpty()) {
 						int rdm2 = new Random().nextInt(playersWithoutRole.size());
 						Player p = playersWithoutRole.get(rdm2);
 						PlayerLG plg = main.playerlg.get(p.getName());
@@ -235,16 +235,16 @@ public class LGAutoStart extends BukkitRunnable {
 						PlayerLG p2lg = main.playerlg.get(p2.getName());
 
 
-						if (player.getUniqueId().equals(p.getUniqueId()) || !plg.getfrère().isEmpty()) {
-							while (player.getUniqueId().equals(p.getUniqueId()) || !plg.getfrère().isEmpty()) {
+						if (player.getUniqueId().equals(p.getUniqueId()) || !plg.getfrere().isEmpty()) {
+							while (player.getUniqueId().equals(p.getUniqueId()) || !plg.getfrere().isEmpty()) {
 								rdm2 = new Random().nextInt(playersWithoutRole.size());
 								p = playersWithoutRole.get(rdm2);
 								plg = main.playerlg.get(p.getName());
 							}
 						}
 
-						if (player.getUniqueId().equals(p2.getUniqueId()) || !p2lg.getfrère().isEmpty()) {
-							while (player.getUniqueId().equals(p2.getUniqueId()) || !p2lg.getfrère().isEmpty()) {
+						if (player.getUniqueId().equals(p2.getUniqueId()) || !p2lg.getfrere().isEmpty()) {
+							while (player.getUniqueId().equals(p2.getUniqueId()) || !p2lg.getfrere().isEmpty()) {
 								rdm3 = new Random().nextInt(playersWithoutRole.size());
 								p = playersWithoutRole.get(rdm3);
 								p2lg = main.playerlg.get(p2.getName());
@@ -259,22 +259,22 @@ public class LGAutoStart extends BukkitRunnable {
 							}
 						}
 
-						plg.setRole(Roles.FRÈRE);
-						p2lg.setRole(Roles.FRÈRE);
+						plg.setRole(Roles.FRERE);
+						p2lg.setRole(Roles.FRERE);
 
-						plg.addfrère(player);
-						p2lg.addfrère(player);
+						plg.addfrere(player);
+						p2lg.addfrere(player);
 
-						playerlg.addfrère(p);
-						p2lg.addfrère(p);
+						playerlg.addfrere(p);
+						p2lg.addfrere(p);
 
-						playerlg.addfrère(p2);
-						plg.addfrère(p2);
+						playerlg.addfrere(p2);
+						plg.addfrere(p2);
 
 						roles.remove(role);
 						roles.remove(role);
-				}
-					player.sendMessage("§dVos " + Roles.FRÈRE.getDisplayName() + "s §dsont §l" + playerlg.getfrère().get(0).getName() + " §det §l" + playerlg.getfrère().get(1).getName() + "§d.");
+					}
+					player.sendMessage("§dVos " + Roles.FRERE.getDisplayName() + "s §dsont §l" + playerlg.getfrere().get(0).getName() + " §det §l" + playerlg.getfrere().get(1).getName() + "§d.");
 				}
 
 				System.out.println(player.getName() + " ---> " + role.getDisplayName());
@@ -293,9 +293,9 @@ public class LGAutoStart extends BukkitRunnable {
 					}
 				}
 
-				if (role.equals(Roles.FRÈRE)) {
-					if (!playerlg.getfrère().isEmpty()) {
-						player.sendMessage("§dVos " + Roles.FRÈRE.getDisplayName() + "s §dsont §l" + playerlg.getfrère().get(0).getName() + "§d et §l" + playerlg.getfrère().get(1).getName() + "§d.");
+				if (role.equals(Roles.FRERE)) {
+					if (!playerlg.getfrere().isEmpty()) {
+						player.sendMessage("§dVos " + Roles.FRERE.getDisplayName() + "s §dsont §l" + playerlg.getfrere().get(0).getName() + "§d et §l" + playerlg.getfrere().get(1).getName() + "§d.");
 					}
 				}
 

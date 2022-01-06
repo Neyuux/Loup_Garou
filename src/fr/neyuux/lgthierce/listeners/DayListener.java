@@ -50,7 +50,7 @@ public class DayListener implements Listener {
 	
 	@EventHandler
 	public void onMoove(PlayerMoveEvent ev) {
-		if (!main.isType(Gtype.RÉUNION)) return;
+		if (!main.isType(Gtype.REUNION)) return;
 		if (!main.isState(Gstate.PLAYING)) return;
 		if (main.isCycle(Gcycle.NONE)) return;
 		
@@ -66,7 +66,7 @@ public class DayListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent ev) {
-		if (!main.isCycle(Gcycle.JOUR) && !main.isType(Gtype.RÉUNION)) return;
+		if (!main.isCycle(Gcycle.JOUR) && !main.isType(Gtype.REUNION)) return;
 		if (!main.isState(Gstate.PLAYING)) return;
 		if (!main.isCycle(Gcycle.JOUR)) return;
 		
@@ -612,7 +612,7 @@ public class DayListener implements Listener {
 					Inventory inv = Bukkit.createInventory(null, 27, "§6Inv §3Choix Maire");
 					
 					for (Player p : main.players) {
-						if (!main.playerlg.get(p.getName()).isInEqual()) {
+						if (main.playerlg.get(p.getName()).isInEqual()) {
 							ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
 							SkullMeta itm = (SkullMeta) it.getItemMeta();
 							itm.setOwner(p.getName());
@@ -773,14 +773,11 @@ public class DayListener implements Listener {
 			if (current.getType().equals(Material.SKULL_ITEM)) {
 				Player p = Bukkit.getPlayer(((SkullMeta) current.getItemMeta()).getOwner());
 				Player p2 = main.players.get(new Random().nextInt(main.players.size()));
-				if (main.playerlg.get(p.getName()).isCamp(main.playerlg.get(p2.getName()).getCamp())) {
-					while (main.playerlg.get(p.getName()).isCamp(main.playerlg.get(p2.getName()).getCamp())) {
+				if (main.playerlg.get(p.getName()).isCamp(main.playerlg.get(p2.getName()).getCamp()))
+					while (main.playerlg.get(p.getName()).isCamp(main.playerlg.get(p2.getName()).getCamp()))
 						p2 = main.players.get(new Random().nextInt(main.players.size()));
-					}
-				}
-				
 				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§fAvant de mourir, le " + Roles.FOSSOYEUR.getDisplayName() + " §fcreuse les tombes de §8" + p.getDisplayName() + "§f et §8" + p2.getDisplayName() + ".§r\n§f§7Cela veut dire qu'ils ne sont pas dans le même camp.");
-				
+
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 				player.getInventory().remove(Material.STONE_SPADE);
 				player.closeInventory();
@@ -805,7 +802,7 @@ public class DayListener implements Listener {
 		
 		if (current == null) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.SERVANTE_DÉVOUÉE.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.SERVANTE_DEVOUEE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.STAINED_CLAY)) {
@@ -815,7 +812,6 @@ public class DayListener implements Listener {
 				PlayerLG tlg = main.playerlg.get(targeted.getName());
 				
 				if (current.getDurability() == 5) {
-					
 					playerlg.setRole(tlg.getRole());
 					playerlg.setCamp(playerlg.getRole().getCamp());
 					if (playerlg.isCamp(RCamp.VOLEUR)) playerlg.setCamp(RCamp.VILLAGE);
@@ -835,7 +831,7 @@ public class DayListener implements Listener {
 					}
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous avez bien subtilisé le rôle \"" + tlg.getRole().getDisplayName() + "\" §dde §5" + targeted.getDisplayName() + "§d.");
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 9, 2f);
-					tlg.setRole(Roles.SERVANTE_DÉVOUÉE);
+					tlg.setRole(Roles.SERVANTE_DEVOUEE);
 					tlg.setServante(false);
 					player.getInventory().setItem(19, main.getItem(Material.STONE_BUTTON, "", null));
 					playerlg.setHasUsedPower(true);

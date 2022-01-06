@@ -11,6 +11,7 @@ import fr.neyuux.lgthierce.role.RDeck;
 import fr.neyuux.lgthierce.role.Roles;
 import fr.neyuux.lgthierce.task.GameRunnable;
 import fr.neyuux.lgthierce.task.LGAutoStart;
+import fr.neyuux.lgthierce.task.NightRunnable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.*;
@@ -42,9 +43,9 @@ public class LG extends JavaPlugin {
 	public HashMap<Roles, Integer> AliveRoles = new HashMap<>();
 	public List<Roles> RolesVoleur = new ArrayList<>();
 	public HashMap<Player, Boolean> SosoKillPots = new HashMap<>();
-	public HashMap<Player, Boolean> SosoRézPots = new HashMap<>();
+	public HashMap<Player, Boolean> SosoRezPots = new HashMap<>();
 	public List<Player> sleepingPlayers = new ArrayList<>();
-	public HashMap<Player, Player> lastSalvaté = new HashMap<>();
+	public HashMap<Player, Player> lastSalvate = new HashMap<>();
 	
 	private Gstate state;
 	private Gcycle cycle;
@@ -58,6 +59,7 @@ public class LG extends JavaPlugin {
 	public GameConfig config = new GameConfig(this);
 	public GameRunnable GRunnable = null;
 	public LGAutoStart StartRunnable = null;
+	public NightRunnable NightRunnable = null;
 
 	public HashMap<RDeck, List<Roles>> DeckRoles = new HashMap<>();
 	public HashMap<Roles, Integer> AddedRoles = new HashMap<>();
@@ -70,7 +72,7 @@ public class LG extends JavaPlugin {
 	public Boolean maire = true;
 	public Boolean paroleChaman = false;
 	public Boolean voyanteBavarde = false;
-	public List<Roles> pouvoirsComédien = new ArrayList<>();
+	public List<Roles> pouvoirsComedien = new ArrayList<>();
 	
 	
 	public double LibreSpawnX = 363.5;
@@ -272,7 +274,7 @@ public class LG extends JavaPlugin {
 		List<UUID> DieuxM = new ArrayList<>();
 		List<UUID> DieuxX = new ArrayList<>();
 		List<UUID> DieuE = new ArrayList<>();
-		List<UUID> Démons = new ArrayList<>();
+		List<UUID> Demons = new ArrayList<>();
 		List<UUID> Leaders = new ArrayList<>();
 		for (Player p : Bukkit.getOnlinePlayers())  {
 		if (p.getUniqueId().toString().equals("0234db8c-e6e5-45e5-8709-ea079fa575bb")) {
@@ -290,10 +292,10 @@ public class LG extends JavaPlugin {
 		}
 												//Goteix																			//OffColor															//Newiland																			//Kaul																		//Davyre																	//Gwen / TryHardeuse													Eternel
 		if (p.getUniqueId().toString().equals("ac5ec348-baf0-4ad9-b8d2-e5fc817414f7") || p.getUniqueId().toString().equals("41ba0eb8-5d55-4aaa-9a57-b6cd9ee6e301") || p.getUniqueId().toString().equals("ada86697-6253-4ccf-9121-9e19c5288cf1") || p.getUniqueId().toString().equals("e08c6ffd-f577-422d-9dcd-a8d22c20be97") || p.getUniqueId().toString().equals("9c9e3477-d951-431b-ac11-344ec8a5a919") || p.getUniqueId().toString().equals("6a29cae9-c3f0-4e9d-8249-90227a1c669a") || p.getUniqueId().toString().equals("3a8ed81d-d284-4b1c-86b9-d835c27b2a33")) {
-			Démons.add(p.getUniqueId());
+			Demons.add(p.getUniqueId());
 		}
 		
-		if (p.isOp() && !Dieux.contains(p.getUniqueId()) && !DieuxM.contains(p.getUniqueId()) && !DieuxX.contains(p.getUniqueId()) && !Démons.contains(p.getUniqueId())) {
+		if (p.isOp() && !Dieux.contains(p.getUniqueId()) && !DieuxM.contains(p.getUniqueId()) && !DieuxX.contains(p.getUniqueId()) && !Demons.contains(p.getUniqueId())) {
 			Leaders.add(p.getUniqueId());
 		}
 		}
@@ -301,7 +303,7 @@ public class LG extends JavaPlugin {
 		Grades.put("DieuM", DieuxM);
 		Grades.put("DieuX", DieuxX);
 		Grades.put("DieuE", DieuE);
-		Grades.put("Démon", Démons);
+		Grades.put("Démon", Demons);
 		Grades.put("Leader", Leaders);
 	}
 	
@@ -379,7 +381,7 @@ public class LG extends JavaPlugin {
 		player.setScoreboard(s);
 	}
 	
-	public void setMaçonScoreboard(Player player) {
+	public void setMaconScoreboard(Player player) {
 		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
 		Scoreboard ms = player.getScoreboard();
 		for (Team t : ms.getTeams()) {
@@ -394,20 +396,15 @@ public class LG extends JavaPlugin {
 		}
 		
 		String tname = "RMaçon";
-		if (!RoleScoreboard.containsKey(Roles.MAÇON)) {
-			RoleScoreboard.put(Roles.MAÇON, 1);
-		} else RoleScoreboard.put(Roles.MAÇON, RoleScoreboard.get(Roles.MAÇON) + 1);
-		if (RoleScoreboard.get(Roles.MAÇON) != 1) tname = "RSoeur" + RoleScoreboard.get(Roles.MAÇON);
- 		
 		s.registerNewTeam(tname);
 		Team tso = s.getTeam(tname);
-		tso.setPrefix(Roles.MAÇON.getDisplayName() + " §6");
+		tso.setPrefix(Roles.MACON.getDisplayName() + " §6");
 		tso.setSuffix("§r");
 		
 		player.setScoreboard(s);
 	}
 	
-	public void setFrèreScoreboard(Player player) {
+	public void setFrereScoreboard(Player player) {
 		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
 		Scoreboard ms = player.getScoreboard();
 		for (Team t : ms.getTeams()) {
@@ -422,14 +419,14 @@ public class LG extends JavaPlugin {
 		}
 		
 		String tname = "RFrère";
-		if (!RoleScoreboard.containsKey(Roles.FRÈRE)) {
-			RoleScoreboard.put(Roles.FRÈRE, 1);
-		} else RoleScoreboard.put(Roles.FRÈRE, RoleScoreboard.get(Roles.FRÈRE) + 1);
-		if (RoleScoreboard.get(Roles.FRÈRE) != 1) tname = "RFrère" + RoleScoreboard.get(Roles.FRÈRE);
+		if (!RoleScoreboard.containsKey(Roles.FRERE)) {
+			RoleScoreboard.put(Roles.FRERE, 1);
+		} else RoleScoreboard.put(Roles.FRERE, RoleScoreboard.get(Roles.FRERE) + 1);
+		if (RoleScoreboard.get(Roles.FRERE) != 1) tname = "RFrère" + RoleScoreboard.get(Roles.FRERE);
  		
 		s.registerNewTeam(tname);
 		Team tfrr = s.getTeam(tname);
-		tfrr.setPrefix(Roles.FRÈRE.getDisplayName() + " §d");
+		tfrr.setPrefix(Roles.FRERE.getDisplayName() + " §d");
 		tfrr.setSuffix("§r");
 		
 		player.setScoreboard(s);
@@ -484,7 +481,7 @@ public class LG extends JavaPlugin {
 		BedList.add(w.getBlockAt(344, 87, 640));
 		BedList.add(w.getBlockAt(345, 87, 640));
 		BedList.add(w.getBlockAt(331, 85, 645));
-		BedList.add(w.getBlockAt(337, 88, 649));
+		BedList.add(w.getBlockAt(338, 88, 648));
 		BedList.add(w.getBlockAt(360, 83, 647));
 		BedList.add(w.getBlockAt(357, 87, 643));
 		BedList.add(w.getBlockAt(359, 86, 660));
@@ -495,8 +492,8 @@ public class LG extends JavaPlugin {
 		BedList.add(w.getBlockAt(373, 83, 634));
 		BedList.add(w.getBlockAt(376, 86, 661));
 		BedList.add(w.getBlockAt(384, 82, 661));
-		BedList.add(w.getBlockAt(367, 82, 678));
-		BedList.add(w.getBlockAt(371, 85, 673));
+		BedList.add(w.getBlockAt(402, 79, 619));
+		BedList.add(w.getBlockAt(416, 83, 631));
 		BedList.add(w.getBlockAt(371, 80, 577)); //20
 		BedList.add(w.getBlockAt(345, 87, 640));
 		BedList.add(w.getBlockAt(391, 86, 602));
@@ -524,71 +521,74 @@ public class LG extends JavaPlugin {
 	
 	
 	public void fillCalledRoles() {
+		List<Roles> aroles = new ArrayList<>();
+		for (PlayerLG plg : playerlg.values())
+			if (plg.isVivant()) aroles.add(plg.getRole());
 		
-		if (AliveRoles.containsKey(Roles.VOLEUR) && this.nights == 1) addAFillCalledRole(Roles.VOLEUR);
-		if (AliveRoles.containsKey(Roles.CUPIDON) && this.nights == 1) addAFillCalledRole(Roles.CUPIDON);
-		if (AliveRoles.containsKey(Roles.ENFANT_SAUVAGE) && this.nights == 1) addAFillCalledRole(Roles.ENFANT_SAUVAGE);
-		if (AliveRoles.containsKey(Roles.CHIEN_LOUP) && this.nights == 1) addAFillCalledRole(Roles.CHIEN_LOUP);
-		if (AliveRoles.containsKey(Roles.JUMEAU) && this.nights == 1) addAFillCalledRole(Roles.JUMEAU);
-		if (AliveRoles.containsKey(Roles.NOCTAMBULE)) addAFillCalledRole(Roles.NOCTAMBULE);
-		if (AliveRoles.containsKey(Roles.COMÉDIEN)) 
-			if (!pouvoirsComédien.isEmpty()) addAFillCalledRole(Roles.COMÉDIEN);
-		if (AliveRoles.containsKey(Roles.VOYANTE)) addAFillCalledRole(Roles.VOYANTE);
-		if (AliveRoles.containsKey(Roles.VOYANTE_D$AURA)) addAFillCalledRole(Roles.VOYANTE_D$AURA);
-		if (AliveRoles.containsKey(Roles.ENCHANTEUR)) addAFillCalledRole(Roles.ENCHANTEUR);
-		if (AliveRoles.containsKey(Roles.DÉTECTIVE)) addAFillCalledRole(Roles.DÉTECTIVE);
-		if (AliveRoles.containsKey(Roles.RENARD)) addAFillCalledRole(Roles.RENARD);
-		if (AliveRoles.containsKey(Roles.PACIFISTE)) addAFillCalledRole(Roles.PACIFISTE);
-		if (AliveRoles.containsKey(Roles.FILLE_DE_JOIE)) addAFillCalledRole(Roles.FILLE_DE_JOIE);
-		if (AliveRoles.containsKey(Roles.GARDE_DU_CORPS)) addAFillCalledRole(Roles.GARDE_DU_CORPS);
-		if (AliveRoles.containsKey(Roles.SALVATEUR)) addAFillCalledRole(Roles.SALVATEUR);
-		if (AliveRoles.containsKey(Roles.LOUP_GAROU)) {
+		if (aroles.contains(Roles.VOLEUR) && this.nights == 1) addAFillCalledRole(Roles.VOLEUR);
+		if (aroles.contains(Roles.CUPIDON) && this.nights == 1) addAFillCalledRole(Roles.CUPIDON);
+		if (aroles.contains(Roles.ENFANT_SAUVAGE) && this.nights == 1) addAFillCalledRole(Roles.ENFANT_SAUVAGE);
+		if (aroles.contains(Roles.CHIEN_LOUP) && this.nights == 1) addAFillCalledRole(Roles.CHIEN_LOUP);
+		if (aroles.contains(Roles.JUMEAU) && this.nights == 1) addAFillCalledRole(Roles.JUMEAU);
+		if (aroles.contains(Roles.NOCTAMBULE)) addAFillCalledRole(Roles.NOCTAMBULE);
+		if (aroles.contains(Roles.COMEDIEN))
+			if (!pouvoirsComedien.isEmpty()) addAFillCalledRole(Roles.COMEDIEN);
+		if (aroles.contains(Roles.VOYANTE)) addAFillCalledRole(Roles.VOYANTE);
+		if (aroles.contains(Roles.VOYANTE_D$AURA)) addAFillCalledRole(Roles.VOYANTE_D$AURA);
+		if (aroles.contains(Roles.ENCHANTEUR)) addAFillCalledRole(Roles.ENCHANTEUR);
+		if (aroles.contains(Roles.DETECTIVE)) addAFillCalledRole(Roles.DETECTIVE);
+		if (aroles.contains(Roles.RENARD)) addAFillCalledRole(Roles.RENARD);
+		if (aroles.contains(Roles.PACIFISTE)) addAFillCalledRole(Roles.PACIFISTE);
+		if (aroles.contains(Roles.FILLE_DE_JOIE)) addAFillCalledRole(Roles.FILLE_DE_JOIE);
+		if (aroles.contains(Roles.GARDE_DU_CORPS)) addAFillCalledRole(Roles.GARDE_DU_CORPS);
+		if (aroles.contains(Roles.SALVATEUR)) addAFillCalledRole(Roles.SALVATEUR);
+		if (aroles.contains(Roles.LOUP_GAROU)) {
 			addAFillCalledRole(Roles.LOUP_GAROU);
 		} else {
-			if (AliveRoles.containsKey(Roles.INFECT_PÈRE_DES_LOUPS) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
-			if (AliveRoles.containsKey(Roles.GRAND_MÉCHANT_LOUP) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
-			if (AliveRoles.containsKey(Roles.LOUP_GAROU_BLANC) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
-			if (AliveRoles.containsKey(Roles.CHIEN_LOUP))
+			if (aroles.contains(Roles.INFECT_PERE_DES_LOUPS) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
+			if (aroles.contains(Roles.GRAND_MECHANT_LOUP) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
+			if (aroles.contains(Roles.LOUP_GAROU_BLANC) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
+			if (aroles.contains(Roles.CHIEN_LOUP))
 				for (Player player : this.getPlayersByRole(Roles.CHIEN_LOUP))
 					if (this.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
-			if (AliveRoles.containsKey(Roles.ENFANT_SAUVAGE))
+			if (aroles.contains(Roles.ENFANT_SAUVAGE))
 				for (Player player : this.getPlayersByRole(Roles.ENFANT_SAUVAGE))
 					if (this.playerlg.get(player.getName()).isCamp(RCamp.LOUP_GAROU) && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
-			if (AddedRoles.containsKey(Roles.INFECT_PÈRE_DES_LOUPS))
+			if (AddedRoles.containsKey(Roles.INFECT_PERE_DES_LOUPS))
 				for (Player player : this.players)
 					if (this.playerlg.get(player.getName()).isInfected() && !this.CalledRoles.contains(Roles.LOUP_GAROU)) addAFillCalledRole(Roles.LOUP_GAROU);
 		}
-		if (AliveRoles.containsKey(Roles.INFECT_PÈRE_DES_LOUPS)) addAFillCalledRole(Roles.INFECT_PÈRE_DES_LOUPS);
-		if (AliveRoles.containsKey(Roles.GRAND_MÉCHANT_LOUP)) {
+		if (aroles.contains(Roles.INFECT_PERE_DES_LOUPS)) addAFillCalledRole(Roles.INFECT_PERE_DES_LOUPS);
+		if (aroles.contains(Roles.GRAND_MECHANT_LOUP)) {
 			boolean isAllLGAlive = true;
 			for (Entry<String, PlayerLG> en : this.playerlg.entrySet())
 				if (en.getValue().isCamp(RCamp.LOUP_GAROU) || en.getValue().isCamp(RCamp.LOUP_GAROU_BLANC))
 					if (!en.getValue().isVivant()) isAllLGAlive = false;
-			if (isAllLGAlive) addAFillCalledRole(Roles.GRAND_MÉCHANT_LOUP);
+			if (isAllLGAlive) addAFillCalledRole(Roles.GRAND_MECHANT_LOUP);
 		}
 			
-		if (AliveRoles.containsKey(Roles.LOUP_GAROU_BLANC)) 
+		if (aroles.contains(Roles.LOUP_GAROU_BLANC)) 
 			if (this.nights % 2 == 0) addAFillCalledRole(Roles.LOUP_GAROU_BLANC);
-		if (AliveRoles.containsKey(Roles.PETITE_FILLE2)) addAFillCalledRole(Roles.PETITE_FILLE2);
-		if (AliveRoles.containsKey(Roles.SORCIÈRE)) addAFillCalledRole(Roles.SORCIÈRE);
-		if (AliveRoles.containsKey(Roles.PRÊTRE)) addAFillCalledRole(Roles.PRÊTRE);
-		if (AliveRoles.containsKey(Roles.NÉCROMANCIEN)) addAFillCalledRole(Roles.NÉCROMANCIEN);
-		if (AliveRoles.containsKey(Roles.VILAIN_GARÇON)) addAFillCalledRole(Roles.VILAIN_GARÇON);
-		if (AliveRoles.containsKey(Roles.DICTATEUR)) addAFillCalledRole(Roles.DICTATEUR);
-		if (AliveRoles.containsKey(Roles.MAMIE_GRINCHEUSE)) addAFillCalledRole(Roles.MAMIE_GRINCHEUSE);
-		if (AliveRoles.containsKey(Roles.CORBEAU)) addAFillCalledRole(Roles.CORBEAU);
-		if (AliveRoles.containsKey(Roles.JOUEUR_DE_FLÛTE)) addAFillCalledRole(Roles.JOUEUR_DE_FLÛTE);
-		if (AliveRoles.containsKey(Roles.PYROMANE)) addAFillCalledRole(Roles.PYROMANE);
-		if (AliveRoles.containsKey(Roles.SOEUR)) addAFillCalledRole(Roles.SOEUR);
-		if (AliveRoles.containsKey(Roles.FRÈRE)) addAFillCalledRole(Roles.FRÈRE);
+		if (aroles.contains(Roles.PETITE_FILLE2)) addAFillCalledRole(Roles.PETITE_FILLE2);
+		if (aroles.contains(Roles.SORCIERE)) addAFillCalledRole(Roles.SORCIERE);
+		if (aroles.contains(Roles.PRETRE)) addAFillCalledRole(Roles.PRETRE);
+		if (aroles.contains(Roles.NECROMANCIEN)) addAFillCalledRole(Roles.NECROMANCIEN);
+		if (aroles.contains(Roles.VILAIN_GARCON)) addAFillCalledRole(Roles.VILAIN_GARCON);
+		if (aroles.contains(Roles.DICTATEUR)) addAFillCalledRole(Roles.DICTATEUR);
+		if (aroles.contains(Roles.MAMIE_GRINCHEUSE)) addAFillCalledRole(Roles.MAMIE_GRINCHEUSE);
+		if (aroles.contains(Roles.CORBEAU)) addAFillCalledRole(Roles.CORBEAU);
+		if (aroles.contains(Roles.JOUEUR_DE_FLUTE)) addAFillCalledRole(Roles.JOUEUR_DE_FLUTE);
+		if (aroles.contains(Roles.PYROMANE)) addAFillCalledRole(Roles.PYROMANE);
+		if (aroles.contains(Roles.SOEUR)) addAFillCalledRole(Roles.SOEUR);
+		if (aroles.contains(Roles.FRERE)) addAFillCalledRole(Roles.FRERE);
 		
 		System.out.println(this.CalledRoles.toString());
 	}
 	
 	private void addAFillCalledRole(Roles r) {
 		int i = 1;
-		if (!r.equals(Roles.LOUP_GAROU)) i = AliveRoles.get(r);
-		if (r.equals(Roles.SOEUR) || r.equals(Roles.FRÈRE)) i = i/ 2;
+		if (!r.equals(Roles.LOUP_GAROU) && AliveRoles.containsKey(r)) i = AliveRoles.get(r);
+		if (r.equals(Roles.SOEUR) || r.equals(Roles.FRERE)) i = i/ 2;
 		
 		while (i != 0) {
 			CalledRoles.add(r);
@@ -621,8 +621,8 @@ public class LG extends JavaPlugin {
 		if (rlg.isRole(Roles.SOEUR))
 			if (plg.isRole(Roles.SOEUR))
 				name = name + "§d§lSoeur §d";
-		if (rlg.isRole(Roles.FRÈRE))
-			if (plg.isRole(Roles.FRÈRE))
+		if (rlg.isRole(Roles.FRERE))
+			if (plg.isRole(Roles.FRERE))
 				name = name + "§3§lFrère §3";
 		if (plg.isRole(Roles.VILLAGEOIS_VILLAGEOIS))
 			name = name + "§a§lV§e-§a§lV §a";
@@ -650,19 +650,15 @@ public class LG extends JavaPlugin {
 
 		for (Block block : chests) {
 			org.bukkit.block.Chest chest = (org.bukkit.block.Chest)  block.getState();
-	
 			Inventory inventory = chest.getInventory();
-
-			for (ItemStack its : inventory.getContents()) {
-				if (its != null)  {
+			for (ItemStack its : inventory.getContents())
+				if (its != null)
 					if (its.hasItemMeta()) {
 						if (its.getItemMeta().getDisplayName().equalsIgnoreCase(r.getName())) {
 							it = new ItemStack(its.getType(), its.getAmount(), its.getDurability());
 							itm = its.getItemMeta();
 						}
 					}
-				}
-			}
 		}
 		
 		it.setItemMeta(itm);
@@ -703,9 +699,9 @@ public class LG extends JavaPlugin {
 		AliveRoles.clear();
 		RolesVoleur.clear();
 		SosoKillPots.clear();
-		SosoRézPots.clear();
+		SosoRezPots.clear();
 		sleepingPlayers.clear();
-		lastSalvaté.clear();
+		lastSalvate.clear();
 		GRunnable = null;
 		
 		updateGrades();

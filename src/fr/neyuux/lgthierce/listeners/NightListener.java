@@ -4,6 +4,7 @@ import fr.neyuux.lgthierce.*;
 import fr.neyuux.lgthierce.role.RCamp;
 import fr.neyuux.lgthierce.role.Roles;
 import fr.neyuux.lgthierce.task.NightRunnable;
+import javafx.print.PageLayout;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,8 +35,8 @@ public class NightListener implements Listener {
 	
 	private final LG main;
 	private final HashMap<Player, Player> firstCupidonChoice = new HashMap<>();
-	private final HashMap<Player, Player> firstDétectiveChoice = new HashMap<>();
-	private final HashMap<Player, Player> firstVilainGarçonChoice = new HashMap<>();
+	private final HashMap<Player, Player> firstDetectiveChoice = new HashMap<>();
+	private final HashMap<Player, Player> firstVilainGarconChoice = new HashMap<>();
 	private final List<Player> ActionsSosos = new ArrayList<>();
 	private final List<Player> JDFHadCharmedSomeone = new ArrayList<>();
 	private final List<Player> PyroHadChoosedSomeone = new ArrayList<>();
@@ -63,7 +64,7 @@ public class NightListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent ev) {
-		if (!main.isCycle(Gcycle.JOUR) && !main.isType(Gtype.RÉUNION)) return;
+		if (!main.isCycle(Gcycle.JOUR) && !main.isType(Gtype.REUNION)) return;
 		if (!main.isState(Gstate.PLAYING)) return;
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
@@ -136,7 +137,7 @@ public class NightListener implements Listener {
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 				
 				player.closeInventory();
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§eVous avez bien choisi §6" + main.getPlayerNameByAttributes(p, player) + "§e en modèle.");
+				player.sendMessage(main.getPrefix() + main.SendArrow + "§eVous avez bien choisi §6" + main.getPlayerNameByAttributes(p, player) + "§e en mod§le.");
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_JUMEAU)) {
 				List<Player> choosable = new ArrayList<>();
@@ -197,13 +198,12 @@ public class NightListener implements Listener {
 				Player p = playerlg.getPlayerOnCursor(choosable);
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
-				boolean isLG = false;
-				if (plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC)) isLG = true;
-				
+				boolean isLG = plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC);
+
 				if (isLG)
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §cfait parti des §c§lLoups-Garous§d.");
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §cfait partie des §c§lLoups-Garous§d.");
 				else
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §ane fait pas parti des §a§lLoups-Garous§d.");
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §ane fait pas partie des §a§lLoups-Garous§d.");
 				if (main.voyanteBavarde) {
 					if (isLG)
 						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dLa " + Roles.VOYANTE_D$AURA.getDisplayName() + " §da observé un joueur qui §cfait parti des §c§lLoups-Garous §d!");
@@ -236,25 +236,25 @@ public class NightListener implements Listener {
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				
 				playerlg.setHasUsedPower(true);
-			 } else if (main.isDisplayState(DisplayState.NUIT_DÉTEC)) {
+			 } else if (main.isDisplayState(DisplayState.NUIT_DETEC)) {
 				 List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
-						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstDétectiveChoice.containsValue(p))
+						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstDetectiveChoice.containsValue(p))
 							choosable.add(p);
-				if (!firstDétectiveChoice.containsKey(player)) {
+				if (!firstDetectiveChoice.containsKey(player)) {
 					Player p = playerlg.getPlayerOnCursor(choosable);
 					if (p == null) return;
-					firstDétectiveChoice.put(player, p);
+					firstDetectiveChoice.put(player, p);
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				} else {
-					Player p1 = firstDétectiveChoice.get(player);
+					Player p1 = firstDetectiveChoice.get(player);
 					Player p2 = playerlg.getPlayerOnCursor(choosable);
 					if (p2 == null) return;
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 					
 					PlayerLG p1lg = main.playerlg.get(p1.getName());
 					PlayerLG p2lg = main.playerlg.get(p2.getName());
-					firstDétectiveChoice.remove(player);
+					firstDetectiveChoice.remove(player);
 					
 					boolean sameCamp = Boolean.FALSE;
 					if (p1lg.isCamp(p2lg.getCamp()) || p1lg.getCouple().contains(p2))
@@ -291,27 +291,28 @@ public class NightListener implements Listener {
 				}
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 			 } else if (main.isDisplayState(DisplayState.NUIT_PACIF)) {
-				 	List<Player> choosable = new ArrayList<>();
-					for (Player p : main.players)
-						if (!p.getUniqueId().equals(player.getUniqueId()))
-							choosable.add(p);
-					Player p = playerlg.getPlayerOnCursor(choosable);
-					if (p == null) return;
-					PlayerLG plg = main.playerlg.get(p.getName());
+				 List<Player> choosable = new ArrayList<>();
+				 for (Player p : main.players)
+				 	if (!p.getUniqueId().equals(player.getUniqueId()))
+				 		choosable.add(p);
+				 Player p = playerlg.getPlayerOnCursor(choosable);
+				 if (p == null) return;
+				 PlayerLG plg = main.playerlg.get(p.getName());
 					
-					plg.setPacifTargeted(true);
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§dLe rôle de §5§l" + main.getPlayerNameByAttributes(p, player) + " §dva être révélé au début du jour.");
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous §cperdez §fvotre pouvoir.");
-					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
-					main.playerlg.get(player.getName()).setUsedDefinitivePower(true);
-					player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
-					main.playerlg.get(player.getName()).setHasUsedPower(true);
-				 } else if (main.isDisplayState(DisplayState.NUIT_FDJ)) {
+				 plg.setPacifTargeted(true);
+				 player.sendMessage(main.getPrefix() + main.SendArrow + "§dLe rôle de §5§l" + main.getPlayerNameByAttributes(p, player) + " §dva être révélé au début du jour.");
+				 player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous §cperdez §fvotre pouvoir.");
+				 player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
+				 playerlg.setUsedDefinitivePower(true);
+				 player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
+				 playerlg.setHasUsedPower(true);
+			} else if (main.isDisplayState(DisplayState.NUIT_FDJ)) {
 					Player p = playerlg.getPlayerOnCursor(main.players);
 					if (p == null) return;
 					
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous décidez de dormir chez §5" + main.getPlayerNameByAttributes(p, player) + "§d pour cette nuit. Si vous vous faites attaquer par les Loups, vous survivrez, mais, s'il est Loup ou attaqué par les Loups, vous mourrez.");
 					playerlg.setOtherPlayerHouse(p);
+					playerlg.setHasUsedPower(true);
 						
 					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_GDC)) {
@@ -332,12 +333,12 @@ public class NightListener implements Listener {
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				if (!main.lastSalvaté.containsKey(player)) {
+				if (!main.lastSalvate.containsKey(player)) {
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous décidez de protéger §e" + main.getPlayerNameByAttributes(p, player) + "§f pour cette nuit. S'il se fait attaquer par les loups, il survivra.");
 					plg.setSalvation(true);
 					playerlg.setHasUsedPower(true);
 				} else {
-					if (main.lastSalvaté.get(player).equals(p)) {
+					if (main.lastSalvate.get(player).equals(p)) {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous ne pouvez pas protéger deux fois de suite la même personne !");
 					} else {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous décidez de protéger §e" + main.getPlayerNameByAttributes(p, player) + "§f pour cette nuit. S'il se fait attaquer par les loups, il survivra.");
@@ -346,7 +347,7 @@ public class NightListener implements Listener {
 					}
 				}
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
-				main.lastSalvaté.put(player, p);
+				main.lastSalvate.put(player, p);
 			 } else if (main.isDisplayState(DisplayState.NUIT_LG)) {
 				Player p = playerlg.getPlayerOnCursor(main.players);
 				if (p == null) return;
@@ -398,7 +399,7 @@ public class NightListener implements Listener {
 				plg.setGMLTargeted(true);
 				playerlg.setHasUsedPower(true);
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§cN'étant pas répu de votre précédent repas, vous avez dévoré §4" + main.getPlayerNameByAttributes(p, player) + "§c...");
+				player.sendMessage(main.getPrefix() + main.SendArrow + "§cN'étant pas repu de votre précédant repas, vous avez dévoré §4" + main.getPlayerNameByAttributes(p, player) + "§c...");
 			 } else if (main.isDisplayState(DisplayState.NUIT_LGB)) {
 				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
@@ -412,7 +413,7 @@ public class NightListener implements Listener {
 				playerlg.setHasUsedPower(true);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§cD'un grand coup de griffe, vous poignardez §4" + p.getName() + "§c : il meurt sur le coup...");
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
-			 } else if (main.isDisplayState(DisplayState.NUIT_PRÊTRE)) {
+			 } else if (main.isDisplayState(DisplayState.NUIT_PRETRE)) {
 				Player p = playerlg.getPlayerOnCursor(main.players);
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
@@ -423,7 +424,7 @@ public class NightListener implements Listener {
 				player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§f" + p.getName() + " §ca reçu de l'eau bénite.");
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
-				} else if (main.isDisplayState(DisplayState.NUIT_NÉCRO)) {
+				} else if (main.isDisplayState(DisplayState.NUIT_NECRO)) {
 				Location loc = player.getLocation();
 				EntityPlayer fakeplayer = null;
 				for (int i = 0; i < 50; i++) {
@@ -441,48 +442,45 @@ public class NightListener implements Listener {
 				}
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§1§l" + main.getPlayerNameByAttributes(p, player) + " §9sera réssucité au début du jour !");
-				plg.setNécroTargeted(true);
+				player.sendMessage(main.getPrefix() + main.SendArrow + "§1§l" + main.getPlayerNameByAttributes(p, player) + " §9sera réssuscité au début du jour !");
+				plg.setNecroTargeted(true);
 				
 				playerlg.setHasUsedPower(true);
 				playerlg.setUsedDefinitivePower(true);
 				player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
-				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
+				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
 			 } else if (main.isDisplayState(DisplayState.NUIT_VG)) {
 				 List<Player> choosable = new ArrayList<>();
 					for (Player p : main.players)
-						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstVilainGarçonChoice.containsValue(p))
+						if (!p.getUniqueId().equals(player.getUniqueId()) && !firstVilainGarconChoice.containsValue(p))
 							choosable.add(p);
-				if (!firstVilainGarçonChoice.containsKey(player)) {
+				if (!firstVilainGarconChoice.containsKey(player)) {
 					Player p = playerlg.getPlayerOnCursor(choosable);
 					if (p == null) return;
-					firstVilainGarçonChoice.put(player, p);
-					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
+					firstVilainGarconChoice.put(player, p);
+					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
 				} else {
-					Player p1 = firstVilainGarçonChoice.get(player);
+					Player p1 = firstVilainGarconChoice.get(player);
 					Player p2 = playerlg.getPlayerOnCursor(choosable);
 					if (p2 == null) return;
-					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
+					player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
 					
 					PlayerLG p1lg = main.playerlg.get(p1.getName());
 					Roles r1 = p1lg.getRole();
 					PlayerLG p2lg = main.playerlg.get(p2.getName());
 					Roles r2 = p2lg.getRole();
-					firstVilainGarçonChoice.remove(player);
+					firstVilainGarconChoice.remove(player);
 					
-					p1lg.setRole(r2);
-					exchangeCamps(p1lg, p2lg, r2);
-					p2lg.setRole(r1);
-					exchangeCamps(p2lg, p1lg, r1);
+					exchangeCamps(p1lg, p2lg, r1, r2, p1lg.getCamp(), p2lg.getCamp());
 					
 					player.closeInventory();
 					main.playerlg.get(player.getName()).setHasUsedPower(true);
 					main.playerlg.get(player.getName()).setUsedDefinitivePower(true);
 					player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§bVous avez échangé les rôles de §c§l" + main.getPlayerNameByAttributes(p1, player) + " §bet §c§l" + main.getPlayerNameByAttributes(p2, player) + "§b.");
-					p1.sendMessage(main.getPrefix() + main.SendArrow + "§bVotre rôle a été échangé avec quelqu'un d'autre par le " + Roles.VILAIN_GARÇON.getDisplayName() + "§b. Vous êtes maintenant " + r2.getDisplayName() + "§b.");
+					p1.sendMessage(main.getPrefix() + main.SendArrow + "§bVotre rôle a été échangé avec quelqu'un d'autre par le " + Roles.VILAIN_GARCON.getDisplayName() + "§b. Vous êtes maintenant " + r2.getDisplayName() + "§b.");
 					p1.playSound(p1.getLocation(), Sound.CLICK, 8, 1.5f);
-					p2.sendMessage(main.getPrefix() + main.SendArrow + "§bVotre rôle a été échangé avec quelqu'un d'autre par le " + Roles.VILAIN_GARÇON.getDisplayName() + "§b. Vous êtes maintenant " + r1.getDisplayName() + "§b.");
+					p2.sendMessage(main.getPrefix() + main.SendArrow + "§bVotre rôle a été échangé avec quelqu'un d'autre par le " + Roles.VILAIN_GARCON.getDisplayName() + "§b. Vous êtes maintenant " + r1.getDisplayName() + "§b.");
 					p2.playSound(p2.getLocation(), Sound.CLICK, 8, 1.5f);
 					p1.getInventory().setItem(4, main.getRoleMap(r2));
 					p2.getInventory().setItem(4, main.getRoleMap(r1));
@@ -541,26 +539,26 @@ public class NightListener implements Listener {
 				}
 				JDFHadCharmedSomeone.add(player);
 				if (playerlg.hasUsedPower()) JDFHadCharmedSomeone.remove(player);
-				p.sendMessage(main.getPrefix() + main.SendArrow + "§dLe " + Roles.JOUEUR_DE_FLÛTE.getDisplayName() + " §dvous a charmé. Liste des charmés : " + scharmes);
+				p.sendMessage(main.getPrefix() + main.SendArrow + "§dLe " + Roles.JOUEUR_DE_FLUTE.getDisplayName() + " §dvous a charmé. Liste des charmés : " + scharmes);
 				
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§dA l'aide de votre flûte et de sa mélodie, vous charmez §5" + main.getPlayerNameByAttributes(p, player) + "§d.");
 			 } else if (main.isDisplayState(DisplayState.NUIT_PYRO)) {
 				List<Player> choosable = new ArrayList<>();
 				for (Player p : main.players)
-					if (!main.playerlg.get(p.getName()).isHuilé() && !p.getUniqueId().equals(player.getUniqueId()))
+					if (!main.playerlg.get(p.getName()).isHuile() && !p.getUniqueId().equals(player.getUniqueId()))
 						choosable.add(p);
 				Player p = playerlg.getPlayerOnCursor(choosable);
 				if (p == null) return;
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				plg.setHuilé(true);
+				plg.setHuile(true);
 				if (PyroHadChoosedSomeone.contains(player))
 					playerlg.setHasUsedPower(true);
 				else PyroHadChoosedSomeone.add(player);
 				p.sendMessage(main.getPrefix() + main.SendArrow + "§eLe " + Roles.PYROMANE.getDisplayName() + " §evous a huilé.");
 				
-				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
+				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§eA l'aide de votre fidèle essence, vous huilez §6" + main.getPlayerNameByAttributes(p, player) + "§e.");
 			}
 		 }
@@ -839,7 +837,7 @@ public class NightListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onComédienInv(InventoryClickEvent ev) {
+	public void onComedienInv(InventoryClickEvent ev) {
 		Player player = (Player) ev.getWhoClicked();
 		Inventory inv = ev.getInventory();
 		ItemStack current = ev.getCurrentItem();
@@ -848,29 +846,23 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.COMÉDIEN.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.COMEDIEN.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.MAP)) {
 				Roles r = Roles.getByDisplayName(current.getItemMeta().getDisplayName());
 				PlayerLG playerlg = main.playerlg.get(player.getName());
-				
+
 				playerlg.setRole(r);
-				playerlg.setComédien(true);
-				main.pouvoirsComédien.remove(r);
+				playerlg.setComedien(true);
+				main.pouvoirsComedien.remove(r);
 				
 				if (main.AliveRoles.containsKey(r))
 						main.AliveRoles.put(r, main.AliveRoles.get(r) + 1);
 				else main.AliveRoles.put(r, 1);
 				main.CalledRoles.clear();
 				main.fillCalledRoles();
-				while (!main.CalledRoles.get(0).equals(Roles.COMÉDIEN)) {
-					main.CalledRoles.remove(main.CalledRoles.get(0));
-				}
-				main.CalledRoles.remove(Roles.COMÉDIEN);
-				if (main.AliveRoles.get(Roles.COMÉDIEN) > 1) {
-					main.AliveRoles.put(Roles.COMÉDIEN, main.AliveRoles.get(Roles.COMÉDIEN) - 1);
-				} else main.AliveRoles.remove(Roles.COMÉDIEN);
+				main.AliveRoles.remove(Roles.COMEDIEN);
 				
 				main.GRunnable.createScoreboardList();
 				
@@ -924,6 +916,53 @@ public class NightListener implements Listener {
 			player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 		}
 	}
+
+	@EventHandler
+	public void onVovoAuraInv(InventoryClickEvent ev) {
+		Player player = (Player) ev.getWhoClicked();
+		Inventory inv = ev.getInventory();
+		ItemStack current = ev.getCurrentItem();
+
+		if (current == null) return;
+
+		if (!main.isCycle(Gcycle.NUIT)) return;
+
+		if (inv.getName().equals("§6Inv " + Roles.VOYANTE_D$AURA.getDisplayName())) {
+			ev.setCancelled(true);
+
+			if (current.getType().equals(Material.SKULL_ITEM)) {
+				SkullMeta itm = (SkullMeta) current.getItemMeta();
+				Player p = Bukkit.getPlayer(itm.getOwner());
+				PlayerLG playerlg = main.playerlg.get(player.getName());
+				PlayerLG plg = main.playerlg.get(p.getName());
+				boolean isLG = plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC);
+
+				if (isLG)
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §cfait partie des §c§lLoups-Garous§d.");
+				else
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§dTu découvres dans ton boule magique que §5" + main.getPlayerNameByAttributes(p, player) + "§d §ane fait pas partie des §a§lLoups-Garous§d.");
+				if (main.voyanteBavarde) {
+					if (isLG)
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dLa " + Roles.VOYANTE_D$AURA.getDisplayName() + " §da observé un joueur qui §cfait parti des §c§lLoups-Garous §d!");
+					else
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dLa " + Roles.VOYANTE_D$AURA.getDisplayName() + " §da observé un joueur qui §ane fait pas parti des §a§lLoups-Garous §d!");
+					for (Player pl : main.players)
+						if (!pl.getUniqueId().equals(player.getUniqueId()))
+							pl.playSound(pl.getLocation(), Sound.PORTAL, 0.6f, 2f);
+				}
+				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
+
+				playerlg.setHasUsedPower(true);
+				player.closeInventory();
+
+			} else if (current.getType().equals(Material.BARRIER)) {
+				player.closeInventory();
+				main.playerlg.get(player.getName()).setHasUsedPower(true);
+			}
+
+			player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
+		}
+	}
 	
 	@EventHandler
 	public void onEnchantInv(InventoryClickEvent ev) {
@@ -965,7 +1004,7 @@ public class NightListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onDétecInv(InventoryClickEvent ev) {
+	public void onDetecInv(InventoryClickEvent ev) {
 		Player player = (Player) ev.getWhoClicked();
 		Inventory inv = ev.getInventory();
 		ItemStack current = ev.getCurrentItem();
@@ -974,14 +1013,14 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.DÉTECTIVE.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.DETECTIVE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
 				SkullMeta itm = (SkullMeta) current.getItemMeta();
-				if (!firstDétectiveChoice.containsKey(player)) {
+				if (!firstDetectiveChoice.containsKey(player)) {
 					Player p = Bukkit.getPlayer(itm.getOwner());
-					firstDétectiveChoice.put(player, p);
+					firstDetectiveChoice.put(player, p);
 					
 					for (ItemStack it : inv.getContents())
 						if (it != null)
@@ -991,13 +1030,13 @@ public class NightListener implements Listener {
 								it.setItemMeta(meta);
 							}
 				} else {
-					Player p1 = firstDétectiveChoice.get(player);
+					Player p1 = firstDetectiveChoice.get(player);
 					Player p2 = Bukkit.getPlayer(itm.getOwner());
 					if (p2 == null) return;
 					
 					PlayerLG p1lg = main.playerlg.get(p1.getName());
 					PlayerLG p2lg = main.playerlg.get(p2.getName());
-					firstDétectiveChoice.remove(player);
+					firstDetectiveChoice.remove(player);
 					
 					boolean sameCamp = Boolean.FALSE;
 					if (p1lg.isCamp(p2lg.getCamp()) || p1lg.getCouple().contains(p2))
@@ -1076,7 +1115,7 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.RENARD.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.PACIFISTE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1104,6 +1143,7 @@ public class NightListener implements Listener {
 	@EventHandler
 	public void onFDJInv(InventoryClickEvent ev) {
 		Player player = (Player) ev.getWhoClicked();
+		PlayerLG playerLG = main.playerlg.get(player.getName());
 		Inventory inv = ev.getInventory();
 		ItemStack current = ev.getCurrentItem();
 		
@@ -1119,17 +1159,16 @@ public class NightListener implements Listener {
 				Player p = Bukkit.getPlayer(itm.getOwner());
 				
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§dVous décidez de dormir chez §5" + main.getPlayerNameByAttributes(p, player) + "§d pour cette nuit. Si vous vous faites attaquer par les Loups, vous survivrez, mais, s'il est Loup ou attaqué par les Loups, vous mourrez.");
-				main.playerlg.get(player.getName()).setOtherPlayerHouse(p);
-				main.playerlg.get(player.getName()).setHasUsedPower(true);
+				playerLG.setOtherPlayerHouse(p);
+				playerLG.setHasUsedPower(true);
 				player.closeInventory();
 				
-			}
-			 else if (current.getType().equals(Material.BARRIER)) {
-					player.closeInventory();
-					main.playerlg.get(player.getName()).setHasUsedPower(true);
+			} else if (current.getType().equals(Material.BARRIER)) {
+			 	player.closeInventory();
+			 	main.playerlg.get(player.getName()).setHasUsedPower(true);
 			}
 			
-			player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
+			player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 1.0f, 2f);
 		}
 	}
 	
@@ -1157,8 +1196,8 @@ public class NightListener implements Listener {
 				
 			}
 			 else if (current.getType().equals(Material.BARRIER)) {
-					player.closeInventory();
-					main.playerlg.get(player.getName()).setHasUsedPower(true);
+			 	player.closeInventory();
+			 	main.playerlg.get(player.getName()).setHasUsedPower(true);
 			}
 			
 			player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
@@ -1182,12 +1221,12 @@ public class NightListener implements Listener {
 				SkullMeta itm = (SkullMeta) current.getItemMeta();
 				Player p = Bukkit.getPlayer(itm.getOwner());
 				
-				if (!main.lastSalvaté.containsKey(player)) {
+				if (!main.lastSalvate.containsKey(player)) {
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous décidez de protéger §e" + main.getPlayerNameByAttributes(p, player) + "§f pour cette nuit. S'il se fait attaquer par les loups, il survivra.");
 					main.playerlg.get(p.getName()).setSalvation(true);
 					main.playerlg.get(player.getName()).setHasUsedPower(true);
 				} else {
-					if (main.lastSalvaté.get(player).equals(p)) {
+					if (main.lastSalvate.get(player).equals(p)) {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous ne pouvez pas protéger deux fois de suite la même personne !");
 					} else {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§fVous décidez de protéger §e" + main.getPlayerNameByAttributes(p, player) + "§f pour cette nuit. S'il se fait attaquer par les loups, il survivra.");
@@ -1195,7 +1234,7 @@ public class NightListener implements Listener {
 						main.playerlg.get(player.getName()).setHasUsedPower(true);
 					}
 				}
-				main.lastSalvaté.put(player, p);
+				main.lastSalvate.put(player, p);
 				player.closeInventory();
 				
 			}
@@ -1286,14 +1325,20 @@ public class NightListener implements Listener {
 				PlayerLG plg = main.playerlg.get(p.getName());
 				PlayerLG playerlg = main.playerlg.get(player.getName());
 				int votes = 0;
-				
-				main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6vote pour dévorer §e" + p.getName(), Roles.LOUP_GAROU);
-				plg.addVote();
 
 				if (playerlg.getVotedPlayer() != null) {
 					Player vp = playerlg.getVotedPlayer();
 					main.playerlg.get(vp.getName()).removeVote();
+					if (playerlg.getVotedPlayer().equals(p)) {
+						main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6a annulé son vote.", Roles.LOUP_GAROU);
+						playerlg.setVote(null);
+						player.closeInventory();
+						return;
+					}
 				}
+				
+				main.sendRoleMessage(main.getPrefix() + main.SendArrow + "§c" + player.getName() + " §6vote pour dévorer §e" + p.getName(), Roles.LOUP_GAROU);
+				plg.addVote();
 				playerlg.setVote(p);
 
 				List<Player> lgs = new ArrayList<>();
@@ -1322,27 +1367,25 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.INFECT_PÈRE_DES_LOUPS.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.INFECT_PERE_DES_LOUPS.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.STAINED_CLAY)) {
 				Player grailled = null;
 				for (Player p : main.players) if (main.playerlg.get(p.getName()).isLGTargeted()) grailled = p;
-				
-				if (current.getDurability() == (short)5) {
-					PlayerLG plg = main.playerlg.get(grailled.getName());
-					plg.setCamp(RCamp.LOUP_GAROU);
-					plg.setInfected(true);
-					plg.setLGTargeted(false);
-					grailled.sendMessage(main.getPrefix() + main.SendArrow + "§cL'" + Roles.INFECT_PÈRE_DES_LOUPS.getDisplayName() + " §ca décidé de vous tranformer en §c§lLoup-Garou§c. Vous vous réveillerez désormais avec vos compères lycanthropes pour dévorer un joueur. Vous gardez tout de même les pouvoirs de votre rôle.");
-					main.playerlg.get(player.getName()).setUsedDefinitivePower(true);
-					player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous avez bien infecté §e" + main.getPlayerNameByAttributes(grailled, player) + "§c.");
-					
-					
-				} else if (current.getDurability() == (short)14) {
-					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous n'avez pas infecté §e" + main.getPlayerNameByAttributes(grailled, player) + "§c.");
-				}
+				if (grailled != null)
+					if (current.getDurability() == (short) 5) {
+						player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous avez bien infecté §e" + main.getPlayerNameByAttributes(grailled, player) + "§c.");
+						PlayerLG plg = main.playerlg.get(grailled.getName());
+						plg.setCamp(RCamp.LOUP_GAROU);
+						plg.setInfected(true);
+						plg.setLGTargeted(false);
+						grailled.sendMessage(main.getPrefix() + main.SendArrow + "§cL'" + Roles.INFECT_PERE_DES_LOUPS.getDisplayName() + " §ca décidé de vous tranformer en §c§lLoup-Garou§c. Vous vous réveillerez désormais avec vos compères lycanthropes pour dévorer un joueur. Vous gardez tout de même les pouvoirs de votre rôle.");
+						main.playerlg.get(player.getName()).setUsedDefinitivePower(true);
+						player.getInventory().setItem(18, main.getItem(Material.STONE_BUTTON, "", null));
+
+					} else if (current.getDurability() == (short) 14)
+						player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous n'avez pas infecté §e" + main.getPlayerNameByAttributes(grailled, player) + "§c.");
 				player.playSound(player.getLocation(), Sound.IRONGOLEM_WALK, 10, 2f);
 				
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
@@ -1362,7 +1405,7 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.GRAND_MÉCHANT_LOUP.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.GRAND_MECHANT_LOUP.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1371,7 +1414,7 @@ public class NightListener implements Listener {
 				
 				main.playerlg.get(p.getName()).setGMLTargeted(true);
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§cN'étant pas répu de votre précédent repas, vous avez dévoré §4" + main.getPlayerNameByAttributes(p, player) + "§c...");
+				player.sendMessage(main.getPrefix() + main.SendArrow + "§cN'étant pas repu de votre précédant repas, vous avez dévoré §4" + main.getPlayerNameByAttributes(p, player) + "§c...");
 				player.closeInventory();
 			}
 			
@@ -1470,7 +1513,7 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.SORCIÈRE.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.SORCIERE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.POTION)) {
@@ -1482,12 +1525,12 @@ public class NightListener implements Listener {
 					main.playerlg.get(grailled.getName()).setLGTargeted(false);
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§aVous soignez les blessures de §2" + main.getPlayerNameByAttributes(grailled, player) + "§a.");
 					player.playSound(player.getLocation(), Sound.CAT_HIT, 5, 2f);
-					main.SosoRézPots.put(player, false);
+					main.SosoRezPots.put(player, false);
 					if (ActionsSosos.contains(player)) main.playerlg.get(player.getName()).setHasUsedPower(true);
 					if (!ActionsSosos.contains(player)) ActionsSosos.add(player);
 					inv.remove(current);
 				} else {
-					Inventory invKill = Bukkit.createInventory(null, 27, "§6Inv  §4kill " + Roles.SORCIÈRE.getDisplayName());
+					Inventory invKill = Bukkit.createInventory(null, 27, "§6Inv  §4kill " + Roles.SORCIERE.getDisplayName());
 					
 					for (Player p : main.players) {
 						if (!p.getName().equals(player.getName())) {
@@ -1495,13 +1538,13 @@ public class NightListener implements Listener {
 							SkullMeta itm = (SkullMeta) it.getItemMeta();
 							itm.setOwner(p.getName());
 							itm.setDisplayName("§c" + main.getPlayerNameByAttributes(p, player));
-							itm.setLore(Arrays.asList("§7Tue le joueur §c" + main.getPlayerNameByAttributes(p, player) + "§7.", "§7Il sera éliminé de la partie.", "", "§b>>Clique pour sélecionner"));
+							itm.setLore(Arrays.asList("§7Tue le joueur §c" + main.getPlayerNameByAttributes(p, player) + "§7.", "§7Il sera éliminé de la partie.", "", "§b>>Clique pour sélectionner"));
 							it.setItemMeta(itm);
 							
 							invKill.addItem(it);
 						}
 					}
-					invKill.setItem(26, main.config.getFlècheRetour());
+					invKill.setItem(26, main.config.getFlecheRetour());
 					player.openInventory(invKill);
 				}
 				
@@ -1511,7 +1554,7 @@ public class NightListener implements Listener {
 				main.playerlg.get(player.getName()).setHasUsedPower(true);
 			}
 			
-		} else if (inv.getName().equals("§6Inv  §4kill " + Roles.SORCIÈRE.getDisplayName())) {
+		} else if (inv.getName().equals("§6Inv  §4kill " + Roles.SORCIERE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1531,23 +1574,23 @@ public class NightListener implements Listener {
 			} else if (current.getType().equals(Material.ARROW)) {
 				Player grailled = null;
 				for (Player p : main.players) if (main.playerlg.get(p.getName()).isLGTargeted()) grailled = p;
-				Inventory binv = Bukkit.createInventory(null, InventoryType.BREWING, "§6Inv " + Roles.SORCIÈRE.getDisplayName());
+				Inventory binv = Bukkit.createInventory(null, InventoryType.BREWING, "§6Inv " + Roles.SORCIERE.getDisplayName());
 				binv.setItem(1, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 				
-				if (grailled != null && main.SosoRézPots.get(player))binv.setItem(3, NightRunnable.getHeadItem(grailled, "§c" + main.getPlayerNameByAttributes(grailled, player), Arrays.asList("§7En cette nuitée, §c" + main.getPlayerNameByAttributes(grailled, player) + "§7 a été englouti par les loups.", "§7Vous pouvez le réssusciter et/ou tuer quelqu'un d'autre.")));
-				if (grailled == null)binv.setItem(3, main.getItem(Material.SKULL_ITEM, "§cPersonne", Arrays.asList("§7En cette nuitée, personne n'a été attaqué.", "§7Vous pouvez tout de même tuer quelqu'un.")));
-				if (!main.SosoRézPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Collections.singletonList("§cVous n'avez plus de potion pour §aréssuciter.")));
+				if (grailled != null && main.SosoRezPots.get(player))binv.setItem(3, NightRunnable.getHeadItem(grailled, "§c" + main.getPlayerNameByAttributes(grailled, player), Arrays.asList("§7En cette nuit§e, §c" + main.getPlayerNameByAttributes(grailled, player) + "§7 a été englouti par les loups.", "§7Vous pouvez le réssusciter et/ou tuer quelqu'un d'autre.")));
+				if (grailled == null)binv.setItem(3, main.getItem(Material.SKULL_ITEM, "§cPersonne", Arrays.asList("§7En cette nuit§e, personne n'a été attaqué.", "§7Vous pouvez tout de même tuer quelqu'un.")));
+				if (!main.SosoRezPots.get(player))binv.setItem(3, main.getItem(Material.BARRIER, "§cPlus de potions", Collections.singletonList("§cVous n'avez plus de potion pour §aréssusciter.")));
 				
-				if (grailled != null && main.SosoRézPots.get(player)) {
-					Potion potréz = new Potion(PotionType.INSTANT_HEAL, 1);
-					ItemStack itréz = potréz.toItemStack(1);
-					ItemMeta itrézm = itréz.getItemMeta();
-					itrézm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-					itrézm.setDisplayName("§aRéssusciter §c" + main.getPlayerNameByAttributes(grailled, player));
-					itrézm.setLore(Arrays.asList("§7Réssucite le joueur §c" + main.getPlayerNameByAttributes(grailled, player) + "§7.", "§7Il ne sera donc pas éliminé.", "", "§b>>Clique pour sélectionner"));
-					itréz.setItemMeta(itrézm);
+				if (grailled != null && main.SosoRezPots.get(player)) {
+					Potion potrez = new Potion(PotionType.INSTANT_HEAL, 1);
+					ItemStack itrez = potrez.toItemStack(1);
+					ItemMeta itrezm = itrez.getItemMeta();
+					itrezm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+					itrezm.setDisplayName("§aRéssusciter §c" + main.getPlayerNameByAttributes(grailled, player));
+					itrezm.setLore(Arrays.asList("§7Réssuscite le joueur §c" + main.getPlayerNameByAttributes(grailled, player) + "§7.", "§7Il ne sera donc pas éliminé.", "", "§b>>Clique pour sélectionner"));
+					itrez.setItemMeta(itrezm);
 					
-					binv.setItem(0, itréz);
+					binv.setItem(0, itrez);
 				}
 					
 				if (main.SosoKillPots.get(player)) {
@@ -1580,7 +1623,7 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.PRÊTRE.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.PRETRE.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1608,7 +1651,7 @@ public class NightListener implements Listener {
 	
 	
 	@EventHandler
-	public void onNécroInv(InventoryClickEvent ev) {
+	public void onNecroInv(InventoryClickEvent ev) {
 		Player player = (Player) ev.getWhoClicked();
 		Inventory inv = ev.getInventory();
 		ItemStack current = ev.getCurrentItem();
@@ -1617,7 +1660,7 @@ public class NightListener implements Listener {
 		
 		if (!main.isCycle(Gcycle.NUIT)) return;
 		
-		if (inv.getName().equals("§6Inv " + Roles.NÉCROMANCIEN.getDisplayName())) {
+		if (inv.getName().equals("§6Inv " + Roles.NECROMANCIEN.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1626,8 +1669,8 @@ public class NightListener implements Listener {
 				PlayerLG playerlg = main.playerlg.get(player.getName());
 				PlayerLG plg = main.playerlg.get(p.getName());
 				
-				player.sendMessage(main.getPrefix() + main.SendArrow  + "§1§l" + main.getPlayerNameByAttributes(p, player) + " §9 sera réssucité au début du jour !");
-				plg.setNécroTargeted(true);
+				player.sendMessage(main.getPrefix() + main.SendArrow  + "§1§l" + main.getPlayerNameByAttributes(p, player) + " §9 sera réssuscité au début du jour !");
+				plg.setNecroTargeted(true);
 				
 				playerlg.setHasUsedPower(true);
 				playerlg.setUsedDefinitivePower(true);
@@ -1762,7 +1805,7 @@ public class NightListener implements Listener {
 			
 			if (!main.isCycle(Gcycle.NUIT)) return;
 			
-			if (inv.getName().equals("§6Inv " + Roles.JOUEUR_DE_FLÛTE.getDisplayName())) {
+			if (inv.getName().equals("§6Inv " + Roles.JOUEUR_DE_FLUTE.getDisplayName())) {
 				ev.setCancelled(true);
 			
 				if (current.getType().equals(Material.SKULL_ITEM)) {
@@ -1792,7 +1835,7 @@ public class NightListener implements Listener {
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§dListe des Charmés : " + scharmes);
 					} else JDFHadCharmedSomeone.add(player);
 					inv.remove(current);
-					p.sendMessage(main.getPrefix() + main.SendArrow + "§dLe " + Roles.JOUEUR_DE_FLÛTE.getDisplayName() + " §dvous a charmé. Liste des charmés : " + scharmes);
+					p.sendMessage(main.getPrefix() + main.SendArrow + "§dLe " + Roles.JOUEUR_DE_FLUTE.getDisplayName() + " §dvous a charmé. Liste des charmés : " + scharmes);
 					
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§dA l'aide de votre flûte et de sa mélodie, vous charmez §5" + main.getPlayerNameByAttributes(p, player) + "§d.");
 					
@@ -1816,13 +1859,13 @@ public class NightListener implements Listener {
 			
 			if (!main.isCycle(Gcycle.NUIT)) return;
 			
-			if (inv.getName().equals("§6Inv " + Roles.PYROMANE.getName())) {
+			if (inv.getName().equals("§6Inv " + Roles.PYROMANE.getDisplayName())) {
 				ev.setCancelled(true);
 				
 				if (current.getType().equals(Material.FLINT_AND_STEEL)) {
 					
 					for (PlayerLG plg : main.playerlg.values())
-						if (plg.isHuilé())
+						if (plg.isHuile())
 							plg.setPyroTargeted(true);
 					
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§6Vous avez brûlé tous les joueurs huilés.");
@@ -1831,8 +1874,8 @@ public class NightListener implements Listener {
 					main.playerlg.get(player.getName()).setHasUsedPower(true);
 				}
 				else if (current.getType().equals(Material.LAVA_BUCKET)) {
-					
-					if (main.isType(Gtype.RÉUNION)) {
+					player.getInventory().setItem(9, main.getItem(Material.STONE_BUTTON, "", new ArrayList<>()));
+					if (main.isType(Gtype.LIBRE)) {
 						Inventory invPyro = Bukkit.createInventory(null, 27, "§6Inv Choose" + Roles.PYROMANE.getName());
 						for (Player p : main.players)
 							if (!p.equals(player))
@@ -1841,7 +1884,7 @@ public class NightListener implements Listener {
 						player.openInventory(invPyro);
 					} else {
 						for (Player p : main.players)
-							if (!main.playerlg.get(p.getName()).isCharmed())
+							if (!main.playerlg.get(p.getName()).isHuile())
 								player.showPlayer(p);
 						
 						player.sendMessage(main.getPrefix() + main.SendArrow + "§6Vous avez "+player.getLevel()+" secondes pour huiler 2 personnes. Pour faire cela, il suffit de cliquer sur les joueurs voulus.");
@@ -1863,7 +1906,7 @@ public class NightListener implements Listener {
 				if (current.getType().equals(Material.SKULL_ITEM)) {
 					Player p = Bukkit.getPlayer(((SkullMeta) current.getItemMeta()).getOwner());
 					
-					main.playerlg.get(p.getName()).setCharmed(true);
+					main.playerlg.get(p.getName()).setHuile(true);
 					if (PyroHadChoosedSomeone.contains(player)) {
 						main.playerlg.get(player.getName()).setHasUsedPower(true);
 						player.closeInventory();
@@ -1906,7 +1949,7 @@ public class NightListener implements Listener {
 		}
 		
 		@EventHandler
-		public void onFrèreChat(AsyncPlayerChatEvent ev) {
+		public void onFrereChat(AsyncPlayerChatEvent ev) {
 			Player player = ev.getPlayer();
 			String msg = ev.getMessage();
 			
@@ -1916,13 +1959,13 @@ public class NightListener implements Listener {
 			
 			if (!main.players.contains(player)) return;
 			
-			if (main.playerlg.get(player.getName()).isRole(Roles.FRÈRE) && !main.playerlg.get(player.getName()).isNoctaTargeted()) {
+			if (main.playerlg.get(player.getName()).isRole(Roles.FRERE) && !main.playerlg.get(player.getName()).isNoctaTargeted()) {
 				
 				ev.setCancelled(true);
-				for (Player p : main.playerlg.get(player.getName()).getfrère()) {
-					p.sendMessage(Roles.FRÈRE.getDisplayName() + " §d" + player.getName() + " §f: " + msg);
+				for (Player p : main.playerlg.get(player.getName()).getfrere()) {
+					p.sendMessage(Roles.FRERE.getDisplayName() + " §d" + player.getName() + " §f: " + msg);
 				}
-				player.sendMessage(Roles.FRÈRE.getDisplayName() + " §d" + player.getName() + " §f: " + msg);
+				player.sendMessage(Roles.FRERE.getDisplayName() + " §d" + player.getName() + " §f: " + msg);
 				
 			}
 		}
@@ -1958,36 +2001,55 @@ public class NightListener implements Listener {
 		
 		
 		
-		private void exchangeCamps(PlayerLG p1lg, PlayerLG p2lg, Roles r2) {
-			p1lg.setRole(r2);
-			if (r2.getCamp().equals(p2lg.getCamp()))
-				p1lg.setCamp(r2.getCamp());
-			else
-				if (!p2lg.isInfected()) {
-					if (r2.getCamp().equals(RCamp.ANGE) || r2.getCamp().equals(RCamp.MERCENAIRE))
-						if (main.days == 0)
-							p1lg.setCamp(r2.getCamp());
-						else
-							p1lg.setCamp(RCamp.VILLAGE);
-					else if (r2.getCamp().equals(RCamp.CHIEN_LOUP))
-						p1lg.setCamp(p2lg.getChoosenCampCL());
-					else if (r2.getCamp().equals(RCamp.VOLEUR))
-						p1lg.setCamp(RCamp.VILLAGE);
-				} else {
-					if (r2.getCamp().equals(RCamp.VILLAGE))
-						p1lg.setCamp(RCamp.VILLAGE);
-					else if (r2.getCamp().equals(RCamp.CHIEN_LOUP))
-						p1lg.setCamp(p2lg.getChoosenCampCL());
-					else if (r2.getCamp().equals(RCamp.ANGE) || r2.getCamp().equals(RCamp.MERCENAIRE))
-						if (main.days == 0)
-							p1lg.setCamp(r2.getCamp());
-						else
-							p1lg.setCamp(RCamp.VILLAGE);
-					else
-						p1lg.setCamp(r2.getCamp());
-				}
+		private void exchangeCamps(PlayerLG p1lg, PlayerLG p2lg, Roles p1r, Roles p2r, RCamp p1c, RCamp p2c) {
+			reset(p1lg);
+			reset(p2lg);
+
+			change(p1lg, p2r, p2c, p2lg);
+			change(p2lg, p1r, p1c, p1lg);
+
+			main.GRunnable.updatePlayerScoreboards();
+		}
+
+		private void reset(PlayerLG playerLG) {
+			playerLG.player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+			playerLG.setRole(Roles.SIMPLE_VILLAGEOIS);
+			playerLG.setCamp(RCamp.VILLAGE);
 			
-			if (p1lg.isInfected() && !p1lg.isCamp(RCamp.LOUP_GAROU_BLANC)) p1lg.setCamp(RCamp.LOUP_GAROU);
+			main.GRunnable.updatePlayerScoreboards();
+		}
+		
+		private void change(PlayerLG playerLG, Roles r2, RCamp rc, PlayerLG p2lg) {
+			playerLG.setRole(r2);
+
+			if (r2.getCamp().equals(rc))
+				playerLG.setCamp(r2.getCamp());
+			else
+			if (!p2lg.isInfected()) {
+				if (r2.getCamp().equals(RCamp.ANGE) || r2.getCamp().equals(RCamp.MERCENAIRE))
+					if (main.days == 0)
+						playerLG.setCamp(r2.getCamp());
+					else
+						playerLG.setCamp(RCamp.VILLAGE);
+				else if (r2.getCamp().equals(RCamp.CHIEN_LOUP))
+					playerLG.setCamp(p2lg.getChoosenCampCL());
+				else if (r2.getCamp().equals(RCamp.VOLEUR))
+					playerLG.setCamp(RCamp.VILLAGE);
+			} else {
+				if (r2.getCamp().equals(RCamp.VILLAGE))
+					playerLG.setCamp(RCamp.VILLAGE);
+				else if (r2.getCamp().equals(RCamp.CHIEN_LOUP))
+					playerLG.setCamp(p2lg.getChoosenCampCL());
+				else if (r2.getCamp().equals(RCamp.ANGE) || r2.getCamp().equals(RCamp.MERCENAIRE))
+					if (main.days == 0)
+						playerLG.setCamp(r2.getCamp());
+					else
+						playerLG.setCamp(RCamp.VILLAGE);
+				else
+					playerLG.setCamp(r2.getCamp());
+			}
+
+			if (playerLG.isInfected() && !playerLG.isCamp(RCamp.LOUP_GAROU_BLANC)) playerLG.setCamp(RCamp.LOUP_GAROU);
 		}
 		
 		

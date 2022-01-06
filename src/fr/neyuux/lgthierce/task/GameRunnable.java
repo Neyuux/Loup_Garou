@@ -26,6 +26,7 @@ public class GameRunnable extends BukkitRunnable {
 	private int AnnoncesDesMortsTimer = Integer.MAX_VALUE;
 	private int TirTimer = Integer.MAX_VALUE;
 	private int FossoTimer = Integer.MAX_VALUE;
+	public static DisplayState CURRENT_ANNOUNCE;
 	private List<List<Entry<Integer, String>>> scoreboards = new ArrayList<>();
 	private int displayedScoreboard = 0;
 	private int ScoreboardTimer = 0;
@@ -58,56 +59,8 @@ public class GameRunnable extends BukkitRunnable {
 		if (main.isDisplayState(DisplayState.LECTURE_DES_ROLES)) {
 			
 			if (LectureDesRolesTimer == 6) {
-				for (Player player : main.players) {
-					PlayerLG playerlg = main.playerlg.get(player.getName());
-					
-					if (playerlg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || playerlg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC)) {
-						player.getScoreboard().getTeam("LG").addEntry(player.getName());
-						for (Player p : main.players) {
-							PlayerLG plg = main.playerlg.get(p.getName());
-							
-							if (!playerlg.isRole(Roles.ENCHANTEUR))
-								if (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC))
-									player.getScoreboard().getTeam("LG").addEntry(p.getName());
-						}
-					}
-					
-					if (playerlg.getRole().equals(Roles.SOEUR)) {
-						Team t = null;
-						for (Team team : player.getScoreboard().getTeams()) if (team.getName().startsWith("RSoeur")) t = team;
-						t.addEntry(player.getName());
-						for (Player p : main.players) {
-							
-							if (playerlg.getsoeur().contains(p) || main.playerlg.get(p.getName()).getsoeur().contains(player)) {
-								t.addEntry(p.getName());
-							}
-						}
-					}
-					
-					if (playerlg.getRole().equals(Roles.FRÈRE)) {
-						Team t = null;
-						for (Team team : player.getScoreboard().getTeams()) if (team.getName().startsWith("RFrère")) t = team;
-						t.addEntry(player.getName());
-						for (Player p : main.players) {
-							
-							if (playerlg.getfrère().contains(p) || main.playerlg.get(p.getName()).getfrère().contains(player)) {
-								t.addEntry(p.getName());
-							}
-						}
-					}
-				}
-				for (Player p : main.getPlayersByRole(Roles.MAÇON)) {
-					main.setMaçonScoreboard(p);
-					Team t = null;
-					for (Team team : p.getScoreboard().getTeams()) if (team.getName().startsWith("RSoeur")) t = team;
-					StringBuilder sma = new StringBuilder("§r\n");
-					for (Player ps : main.getPlayersByRole(Roles.MAÇON)) {
-						sma.append("§6§l").append(ps.getName()).append("§r\n");
-						t.addEntry(ps.getName());
-					}
-					p.sendMessage(main.getPrefix() + main.SendArrow + "§6Liste des maçons : " + sma);
-				}
-				
+				updatePlayerScoreboards();
+
 			} else if (LectureDesRolesTimer == 0) {
 				
 				main.setDisplayState(DisplayState.TOMBEE_DE_LA_NUIT);
@@ -124,7 +77,7 @@ public class GameRunnable extends BukkitRunnable {
 		if (!main.isDisplayState(DisplayState.LECTURE_DES_ROLES) && !main.isDisplayState(DisplayState.DISTRIBUTION_DES_ROLES)) {
 			if (ScoreboardTimer == 0) {
 					String objectiveName = "§6§lRôles";
-					if (scoreboards.get(displayedScoreboard).get(scoreboards.get(displayedScoreboard).size() - 2).getValue().startsWith("§d")) objectiveName = "§dPouvoirs du " + Roles.COMÉDIEN.getDisplayName();
+					if (scoreboards.get(displayedScoreboard).get(scoreboards.get(displayedScoreboard).size() - 2).getValue().startsWith("§d")) objectiveName = "§dPouvoirs du " + Roles.COMEDIEN.getDisplayName();
 					
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						SimpleScoreboard ss = new SimpleScoreboard(objectiveName, p);
@@ -164,7 +117,8 @@ public class GameRunnable extends BukkitRunnable {
 			
 			main.setCycle(Gcycle.NUIT);
 			new DeathManager(main).checkWin();
-			new NightRunnable(main).runTaskTimer(main, 0, 20);
+			main.NightRunnable = new NightRunnable(main);
+			main.NightRunnable.runTaskTimer(main, 0, 20);
 			
 		}
 		
@@ -182,7 +136,7 @@ public class GameRunnable extends BukkitRunnable {
 					if (plg.isNoctaTargeted())
 						plg.setNoctaTargeted(false);
 					
-					if (plg.isComédien() && plg.isVivant()) {
+					if (plg.isComedien() && plg.isVivant()) {
 						
 						if (plg.isRole(Roles.MONTREUR_D$OURS)) {
 							Player pu = plg.get2NearestPlayers().get(1);
@@ -200,13 +154,13 @@ public class GameRunnable extends BukkitRunnable {
 							main.AliveRoles.remove(r);
 						else main.AliveRoles.put(r, main.AliveRoles.get(r) - 1);
 						
-						if (main.AliveRoles.containsKey(Roles.COMÉDIEN))
-							main.AliveRoles.put(Roles.COMÉDIEN, main.AliveRoles.get(Roles.COMÉDIEN) + 1);
-						else main.AliveRoles.put(Roles.COMÉDIEN, 1);
+						if (main.AliveRoles.containsKey(Roles.COMEDIEN))
+							main.AliveRoles.put(Roles.COMEDIEN, main.AliveRoles.get(Roles.COMEDIEN) + 1);
+						else main.AliveRoles.put(Roles.COMEDIEN, 1);
 						this.createScoreboardList();
 						
-						plg.setRole(Roles.COMÉDIEN);
-						plg.setComédien(false);
+						plg.setRole(Roles.COMEDIEN);
+						plg.setComedien(false);
 					}
 				}
 				
@@ -222,7 +176,7 @@ public class GameRunnable extends BukkitRunnable {
 				List<Player> pyrotargets = new ArrayList<>();
 				List<Player> celtargets = new ArrayList<>();
 				List<Player> diedDACs = new ArrayList<>();
-				List<Player> rézPlayers = new ArrayList<>();
+				List<Player> rezPlayers = new ArrayList<>();
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
 					
@@ -235,16 +189,28 @@ public class GameRunnable extends BukkitRunnable {
 					if (playerlg.getPretreThrower() != null) pretretargets.add(player);
 					if (playerlg.isPyroTargeted()) pyrotargets.add(player);
 					if (lgtarget != null)
-						if (main.playerlg.get(lgtarget.getName()).isRole(Roles.CHEVALIER_À_L$ÉPÉE_ROUILLÉE)) {
+						if (main.playerlg.get(lgtarget.getName()).isRole(Roles.CHEVALIER_A_L$EPEE_ROUILLEE)) {
 							Player targeted = playerlg.get2NearestPlayers().get(0);
-							String place = "en dessous";
-							if (main.isType(Gtype.RÉUNION)) place = "à gauche";
-							
-							Bukkit.broadcastMessage("");
-							Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§fLe premier " + Roles.LOUP_GAROU.getDisplayName() + " §f"+place+" de §6" + lgtarget.getName() + " §fest empoisonné par §7l'épée §fdu " + Roles.CHEVALIER_À_L$ÉPÉE_ROUILLÉE.getDisplayName() + "§f.");
-							Bukkit.broadcastMessage("");
-							main.playerlg.get(targeted.getName()).setCELInfected();
-							targeted.sendMessage(main.getPrefix() + main.SendArrow + "§cLe " + Roles.CHEVALIER_À_L$ÉPÉE_ROUILLÉE.getDisplayName() + " §cvous a empoisonné ! Vous mourrez au prochain matin...");
+							PlayerLG targetedLG = main.playerlg.get(targeted.getName());
+							int i = main.players.size();
+							while (!targetedLG.isCamp(RCamp.LOUP_GAROU) && !targetedLG.isCamp(RCamp.LOUP_GAROU_BLANC)) {
+								targeted = targetedLG.get2NearestPlayers().get(0);
+								targetedLG = main.playerlg.get(targeted.getName());
+								if (i == 0) {
+									targeted = null;
+									break;
+								}
+							}
+							if (targeted != null) {
+								String place = "en dessous";
+								if (main.isType(Gtype.REUNION)) place = "à gauche";
+
+								Bukkit.broadcastMessage("");
+								Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§fLe premier " + Roles.LOUP_GAROU.getDisplayName() + " §f" + place + " de §6" + lgtarget.getName() + " §fest empoisonné par §7l'épée §fdu " + Roles.CHEVALIER_A_L$EPEE_ROUILLEE.getDisplayName() + "§f.");
+								Bukkit.broadcastMessage("");
+								main.playerlg.get(targeted.getName()).setCELInfected();
+								targeted.sendMessage(main.getPrefix() + main.SendArrow + "§cLe " + Roles.CHEVALIER_A_L$EPEE_ROUILLEE.getDisplayName() + " §cvous a empoisonné ! Vous mourrez au prochain matin...");
+							}
 						}
 					
 					playerlg.removeDayCELInfected();
@@ -279,7 +245,7 @@ public class GameRunnable extends BukkitRunnable {
 				}
 				
 				for (PlayerLG playerlg : main.playerlg.values())
-					if (playerlg.isNécroTargeted()) rézPlayers.add(playerlg.player);
+					if (playerlg.isNecroTargeted()) rezPlayers.add(playerlg.player);
 				
 				
 				if (lgtarget != null)
@@ -325,8 +291,8 @@ public class GameRunnable extends BukkitRunnable {
 				if (!pyrotargets.isEmpty())
 					for (Player p : pyrotargets)
 						dm.eliminate(p, false);
-				if (!rézPlayers.isEmpty())
-					for (Player p : rézPlayers) {
+				if (!rezPlayers.isEmpty())
+					for (Player p : rezPlayers) {
 						if (p == null) continue;
 						if (!Bukkit.getOnlinePlayers().contains(p)) continue;
 						PlayerLG plg = main.playerlg.get(p.getName());
@@ -337,35 +303,25 @@ public class GameRunnable extends BukkitRunnable {
 						p.setPlayerListName(p.getName());
 						plg.setInfected(false);
 						plg.setCharmed(false);
-						plg.getCouple().clear();
-						p.teleport(new Location(p.getWorld(), plg.getBlock().getX()+0.5, plg.getBlock().getY() + 1, plg.getBlock().getZ()+0.5));
-						Roles r = plg.getRole();
-						if (plg.isCamp(RCamp.VILLAGE))
-							plg.setRole(Roles.SIMPLE_VILLAGEOIS);
-						if (!r.getCamp().equals(RCamp.VILLAGE)) {
-							if (r.getCamp().equals(RCamp.LOUP_GAROU_BLANC) || r.getCamp().equals(RCamp.PYROMANE) || r.getCamp().equals(RCamp.JOUEUR_DE_FLÛTE))
-								plg.setCamp(r.getCamp());
-							else if (r.getCamp().equals(RCamp.MERCENAIRE) || r.getCamp().equals(RCamp.ANGE) || r.getCamp().equals(RCamp.CHIEN_LOUP) || r.getCamp().equals(RCamp.VOLEUR)) {
-								plg.setCamp(RCamp.VILLAGE);
-								plg.setRole(Roles.SIMPLE_VILLAGEOIS);
-							}
-						} else {
-							plg.setCamp(RCamp.VILLAGE);
-							plg.setRole(Roles.SIMPLE_VILLAGEOIS);
-						}
+						plg.clearCouple();
+						double y = 16.01564;
+						if (main.isType(Gtype.LIBRE)) y = plg.getBlock().getY() + 1;
+						p.teleport(new Location(p.getWorld(), plg.getBlock().getX()+0.5, y, plg.getBlock().getZ()+0.5));
+						plg.setRole(Roles.SIMPLE_VILLAGEOIS);
+						plg.setCamp(RCamp.VILLAGE);
 						try {
 							p.getInventory().setItem(4, main.getRoleMap(plg.getRole()));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						if (main.AliveRoles.containsKey(r)) {
-							main.AliveRoles.put(r, main.AliveRoles.get(r) + 1);
-						} else main.AliveRoles.put(r, 1);
+						if (main.AliveRoles.containsKey(Roles.SIMPLE_VILLAGEOIS)) {
+							main.AliveRoles.put(Roles.SIMPLE_VILLAGEOIS, main.AliveRoles.get(Roles.SIMPLE_VILLAGEOIS) + 1);
+						} else main.AliveRoles.put(Roles.SIMPLE_VILLAGEOIS, 1);
 						main.GRunnable.createScoreboardList();
 						plg.setVivant(true);
-						plg.setNécroTargeted(false);
+						plg.setNecroTargeted(false);
 						Bukkit.getWorld("LG").strikeLightningEffect(p.getLocation());
-						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§1§l" + p.getName() + " §ba été réssucité par le " + Roles.NÉCROMANCIEN.getDisplayName() + " §b!");
+						Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§1§l" + p.getName() + " §ba été réssucité par le " + Roles.NECROMANCIEN.getDisplayName() + " §b!");
 					}
 				
 				for (Player mo : main.getPlayersByRole(Roles.MONTREUR_D$OURS)) {
@@ -386,7 +342,7 @@ public class GameRunnable extends BukkitRunnable {
 				for (Player p : main.players) {
 					PlayerLG plg = main.playerlg.get(p.getName());
 					
-					if (plg.isCharmed() || plg.isRole(Roles.JOUEUR_DE_FLÛTE)) {
+					if (plg.isCharmed() || plg.isRole(Roles.JOUEUR_DE_FLUTE)) {
 						StringBuilder scharmes = new StringBuilder();
 						List<Player> charmeds = new ArrayList<>();
 						for (Player p2 : main.players) if (main.playerlg.get(p2.getName()).isCharmed()) charmeds.add(p2);
@@ -439,6 +395,7 @@ public class GameRunnable extends BukkitRunnable {
 						player.showPlayer(p);
 					if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
 							player.removePotionEffect(PotionEffectType.BLINDNESS);
+					player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false));
 					
 					main.playerlg.get(player.getName()).setHasUsedPower(false);
 					main.playerlg.get(player.getName()).resetVotes();
@@ -466,6 +423,7 @@ public class GameRunnable extends BukkitRunnable {
 					}
 				}
 			}
+			if (c == null) stopWaitDeathsRoles();
 			
 			if (TirTimer == Integer.MAX_VALUE) TirTimer = 15;
 			
@@ -489,34 +447,8 @@ public class GameRunnable extends BukkitRunnable {
 				for (PotionEffect pe : c.getActivePotionEffects()) c.removePotionEffect(pe.getType());
 				
 				new DeathManager(main).checkWin();
-				
-				TirTimer = Integer.MAX_VALUE;
-				AnnoncesDesMortsTimer = Integer.MAX_VALUE;
-				if (main.sleepingPlayers.contains(main.players.get(0))) {
-					main.setDisplayState(DisplayState.VOTE);
-					if (main.days == 1 && main.maire) main.setDisplayState(DisplayState.ELECTIONS_DU_MAIRE);
-					Bukkit.broadcastMessage("      §e§lJOUR " + main.days);
-					for (Player player : Bukkit.getOnlinePlayers()) {
-						for (Player p : Bukkit.getOnlinePlayers())
-							player.showPlayer(p);
-						if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
-								player.removePotionEffect(PotionEffectType.BLINDNESS);
-						
-						main.playerlg.get(player.getName()).setHasUsedPower(false);
-						main.playerlg.get(player.getName()).resetVotes();
-					}
-					new DeathManager(main).checkWin();
-					new DayRunnable(main).runTaskTimer(main, 0, 20);
-				} else {
-					if (main.days == 1) {
-						for (Player p : main.players) {
-							if (main.playerlg.get(p.getName()).isRole(Roles.ANGE))
-								main.playerlg.get(p.getName()).setCamp(RCamp.VILLAGE);
-						}
-					}
-					
-					main.setDisplayState(DisplayState.TOMBEE_DE_LA_NUIT);
-				}
+
+				stopWaitDeathsRoles();
 			}
 			
 			if (TirTimer != Integer.MAX_VALUE) TirTimer--;
@@ -536,6 +468,7 @@ public class GameRunnable extends BukkitRunnable {
 					}
 				}
 			}
+			if (f == null) stopWaitDeathsRoles();
 			
 			if (FossoTimer == Integer.MAX_VALUE) FossoTimer = 15;
 			
@@ -557,34 +490,7 @@ public class GameRunnable extends BukkitRunnable {
 				Bukkit.getWorld("LG").strikeLightningEffect(f.getLocation());
 				for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.FIREWORK_BLAST2, 10, 1);
 				for (PotionEffect pe : f.getActivePotionEffects()) f.removePotionEffect(pe.getType());
-				
-				FossoTimer = Integer.MAX_VALUE;
-				AnnoncesDesMortsTimer = Integer.MAX_VALUE;
-				if (main.sleepingPlayers.contains(main.players.get(0))) {
-					main.setDisplayState(DisplayState.VOTE);
-					if (main.days == 1 && main.maire) main.setDisplayState(DisplayState.ELECTIONS_DU_MAIRE);
-					Bukkit.broadcastMessage("      §e§lJOUR " + main.days);
-					for (Player player : Bukkit.getOnlinePlayers()) {
-						for (Player p : Bukkit.getOnlinePlayers())
-							player.showPlayer(p);
-						if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
-								player.removePotionEffect(PotionEffectType.BLINDNESS);
-						
-						main.playerlg.get(player.getName()).setHasUsedPower(false);
-						main.playerlg.get(player.getName()).resetVotes();
-					}
-					new DeathManager(main).checkWin();
-					new DayRunnable(main).runTaskTimer(main, 0, 20);
-				} else {
-					if (main.days == 1) {
-						for (Player p : main.players) {
-							if (main.playerlg.get(p.getName()).isRole(Roles.ANGE))
-								main.playerlg.get(p.getName()).setCamp(RCamp.VILLAGE);
-						}
-					}
-					
-					main.setDisplayState(DisplayState.TOMBEE_DE_LA_NUIT);
-				}
+				stopWaitDeathsRoles();
 			}
 			
 			if (FossoTimer != Integer.MAX_VALUE) FossoTimer--;
@@ -592,16 +498,48 @@ public class GameRunnable extends BukkitRunnable {
 		}
 		
 	}
+
+	private void stopWaitDeathsRoles() {
+		FossoTimer = Integer.MAX_VALUE;
+		TirTimer = Integer.MAX_VALUE;
+		AnnoncesDesMortsTimer = Integer.MAX_VALUE;
+
+		if (CURRENT_ANNOUNCE.equals(DisplayState.ANNONCES_DES_MORTS_NUIT)) {
+			main.setDisplayState(DisplayState.VOTE);
+			if (main.days == 1 && main.maire) main.setDisplayState(DisplayState.ELECTIONS_DU_MAIRE);
+			Bukkit.broadcastMessage("      §e§lJOUR " + main.days);
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				for (Player p : Bukkit.getOnlinePlayers())
+					player.showPlayer(p);
+				if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
+					player.removePotionEffect(PotionEffectType.BLINDNESS);
+
+				main.playerlg.get(player.getName()).setHasUsedPower(false);
+				main.playerlg.get(player.getName()).resetVotes();
+			}
+			new DeathManager(main).checkWin();
+			new DayRunnable(main).runTaskTimer(main, 0, 20);
+		} else {
+			if (main.days == 1) {
+				for (Player p : main.players) {
+					if (main.playerlg.get(p.getName()).isRole(Roles.ANGE))
+						main.playerlg.get(p.getName()).setCamp(RCamp.VILLAGE);
+				}
+			}
+
+			main.setDisplayState(DisplayState.TOMBEE_DE_LA_NUIT);
+		}
+	}
 	
 	
 	public void createScoreboardList() {
 		List<List<Entry<Integer, String>>> list = new ArrayList<>();
-		boolean thereComédien = false;
-		if (main.AliveRoles.containsKey(Roles.COMÉDIEN))
-			thereComédien = true;
-		
+		boolean thereComedien = main.AliveRoles.containsKey(Roles.COMEDIEN);
+
 		List<Entry<Integer, String>> s = new ArrayList<>();
 		int line = 15;
+
+		this.displayedScoreboard = 0;
 		
 		for (Entry<Roles, Integer> en : main.AliveRoles.entrySet()) {
 			SimpleEntry<Integer, String> se = new SimpleEntry<>(line, en.getKey().getDisplayName() + " §f» §e" + en.getValue());
@@ -630,15 +568,16 @@ public class GameRunnable extends BukkitRunnable {
 			list.add(s2);
 		}
 			
-		if (thereComédien) {
+		if (thereComedien) {
 			List<Entry<Integer, String>> sc = new ArrayList<>();
 			line = 15;
 			
-			for (Roles r : main.pouvoirsComédien) {
+			for (Roles r : main.pouvoirsComedien) {
 				SimpleEntry<Integer, String> se = new SimpleEntry<>(line, r.getDisplayName());
 				sc.add(se);
 				line--;
 			}
+			fin1.setValue("§d" + fin1.getValue());
 			sc.add(fin1);
 			sc.add(fin2);
 			
@@ -647,6 +586,55 @@ public class GameRunnable extends BukkitRunnable {
 		
 		this.scoreboards = list;
 	}
-	
+
+	public void updatePlayerScoreboards() {
+		for (Player player : main.players) {
+			PlayerLG playerlg = main.playerlg.get(player.getName());
+
+			if (playerlg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || playerlg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC)) {
+				player.getScoreboard().getTeam("LG").addEntry(player.getName());
+				if (!playerlg.isRole(Roles.ENCHANTEUR))
+					for (Player p : main.players) {
+						PlayerLG plg = main.playerlg.get(p.getName());
+							if (!plg.isRole(Roles.ENCHANTEUR) && (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC)))
+								player.getScoreboard().getTeam("LG").addEntry(p.getName());
+					}
+			}
+
+			if (playerlg.getRole().equals(Roles.SOEUR)) {
+				Team t = null;
+				for (Team team : player.getScoreboard().getTeams()) if (team.getName().startsWith("RSoeur")) t = team;
+				t.addEntry(player.getName());
+				for (Player p : main.players) {
+
+					if (playerlg.getsoeur().contains(p) || main.playerlg.get(p.getName()).getsoeur().contains(player)) {
+						t.addEntry(p.getName());
+					}
+				}
+			}
+
+			if (playerlg.getRole().equals(Roles.FRERE)) {
+				Team t = null;
+				for (Team team : player.getScoreboard().getTeams()) if (team.getName().startsWith("RFrère")) t = team;
+				t.addEntry(player.getName());
+				for (Player p : main.players) {
+
+					if (playerlg.getfrere().contains(p) || main.playerlg.get(p.getName()).getfrere().contains(player)) {
+						t.addEntry(p.getName());
+					}
+				}
+			}
+		}
+		for (Player p : main.getPlayersByRole(Roles.MACON)) {
+			main.setMaconScoreboard(p);
+			Team t = p.getScoreboard().getTeam("RMaçon");
+			StringBuilder sma = new StringBuilder("§r\n");
+			for (Player ps : main.getPlayersByRole(Roles.MACON)) {
+				sma.append("§6§l").append(ps.getName()).append("§r\n");
+				t.addEntry(ps.getName());
+			}
+			p.sendMessage(main.getPrefix() + main.SendArrow + "§6Liste des maçons : " + sma);
+		}
+	}
 
 }

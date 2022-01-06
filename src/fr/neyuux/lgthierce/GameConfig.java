@@ -47,10 +47,10 @@ public class GameConfig implements Listener {
 		
 		main.AddedRoles.clear();
 		main.DeckRoles.clear();
-		main.pouvoirsComédien.clear();
-		main.pouvoirsComédien.add(Roles.VOYANTE);
-		main.pouvoirsComédien.add(Roles.MONTREUR_D$OURS);
-		main.pouvoirsComédien.add(Roles.ANCIEN);
+		main.pouvoirsComedien.clear();
+		main.pouvoirsComedien.add(Roles.VOYANTE);
+		main.pouvoirsComedien.add(Roles.MONTREUR_D$OURS);
+		main.pouvoirsComedien.add(Roles.ANCIEN);
 		
 		main.initialiseRoles();
 	}
@@ -130,7 +130,7 @@ public class GameConfig implements Listener {
 								
 			} else if (current.getType().equals(Material.IRON_FENCE)) {
 				if (main.players.size() <= 12) {
-					setGameType(player, "§d§lRéunion", Gtype.RÉUNION);
+					setGameType(player, "§d§lRéunion", Gtype.REUNION);
 					main.initialiseNightBlocks();
 				} else {
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§2Le mode §lRéunion §2nécessite §c12 joueurs MAXIMUM§2.");
@@ -193,7 +193,7 @@ public class GameConfig implements Listener {
 				
 				invType.setItem(11, main.getItem(Material.ENDER_PORTAL_FRAME, "§e§lLibre", Arrays.asList("§7Les joueurs sont libres de se balader", "§7dans le village.")));
 				invType.setItem(15, main.getItem(Material.IRON_FENCE, "§d§lRéunion", Arrays.asList("§7Les joueurs sont bloqués sur un nénuphar.", "§7A eux de discuter sans se déplacer.")));
-				invType.setItem(26, getFlècheRetour());
+				invType.setItem(26, getFlecheRetour());
 				
 				player.openInventory(invType);
 			}
@@ -349,18 +349,18 @@ public class GameConfig implements Listener {
 						addRoleToList(Roles.SOEUR, 2, current);
 						
 					} else if (current.getItemMeta().getDisplayName().contains("FRERE")) {
-						addRoleToList(Roles.FRÈRE, 3, current);
+						addRoleToList(Roles.FRERE, 3, current);
 						
 					} else {
 						
 						if (current.getItemMeta().getDisplayName().contains("SORCIERE")) {
-							addRoleToList(Roles.SORCIÈRE, 1, current);
+							addRoleToList(Roles.SORCIERE, 1, current);
 							
 						} else if (current.getItemMeta().getDisplayName().contains("INFECT PERE DES LOUPS")) {
-							addRoleToList(Roles.INFECT_PÈRE_DES_LOUPS, 1, current);
+							addRoleToList(Roles.INFECT_PERE_DES_LOUPS, 1, current);
 							
 						} else if (current.getItemMeta().getDisplayName().contains("PRETRE")) {
-							addRoleToList(Roles.PRÊTRE, 1, current);
+							addRoleToList(Roles.PRETRE, 1, current);
 							
 						} else {
 							Roles role = null;
@@ -372,7 +372,7 @@ public class GameConfig implements Listener {
 										role = r;
 
 
-							if (role.equals(Roles.JOUEUR_DE_FLÛTE) || role.equals(Roles.CUPIDON) || role.equals(Roles.VOLEUR) || role.equals(Roles.COMÉDIEN) || role.equals(Roles.PYROMANE))
+							if (role.equals(Roles.JOUEUR_DE_FLUTE) || role.equals(Roles.CUPIDON) || role.equals(Roles.VOLEUR) || role.equals(Roles.COMEDIEN) || role.equals(Roles.PYROMANE))
 								if (main.AddedRoles.containsKey(role)) 
 									player.sendMessage(main.getPrefix() + main.SendArrow + "§cIl n'y peut avoir qu'un seul " + role.getDisplayName() + "§c.");
 							addRoleToList(role, 1, current);
@@ -385,18 +385,18 @@ public class GameConfig implements Listener {
 						delRoleToList(Roles.SOEUR, 2, current);
 						
 					} else if (current.getItemMeta().getDisplayName().contains("FRERE")) {
-						delRoleToList(Roles.FRÈRE, 3, current);
+						delRoleToList(Roles.FRERE, 3, current);
 						
 					} else {
 						
 						if (current.getItemMeta().getDisplayName().contains("SORCIERE")) {
-							delRoleToList(Roles.SORCIÈRE, 1, current);
+							delRoleToList(Roles.SORCIERE, 1, current);
 							
 						} else if (current.getItemMeta().getDisplayName().contains("INFECT PERE DES LOUPS")) {
-							delRoleToList(Roles.INFECT_PÈRE_DES_LOUPS, 1, current);
+							delRoleToList(Roles.INFECT_PERE_DES_LOUPS, 1, current);
 							
 						} else if (current.getItemMeta().getDisplayName().contains("PRETRE")) {
-							delRoleToList(Roles.PRÊTRE, 1, current);
+							delRoleToList(Roles.PRETRE, 1, current);
 							
 						} else {
 							Roles role = null;
@@ -471,18 +471,18 @@ public class GameConfig implements Listener {
 				inv.setItem(21, getParamItem(Material.SKULL_ITEM, (short)0, "§e§lMaire", Arrays.asList("§fActive ou non le fait que le", "§fmaire soit activé."), main.maire));
 
 			} else if (current.getType().equals(Material.PUMPKIN)) {
-				Inventory invComédien = Bukkit.createInventory(null, 9, "§6Pouvoirs " + Roles.COMÉDIEN.getDisplayName());
-				invComédien.setItem(8, getFlècheRetour());
+				Inventory invComedien = Bukkit.createInventory(null, 9, "§6Pouvoirs " + Roles.COMEDIEN.getDisplayName());
+				invComedien.setItem(8, getFlecheRetour());
 				
-				invComédien.addItem(getPouvComédienItem(Roles.VOYANTE));
-				invComédien.addItem(getPouvComédienItem(Roles.ANCIEN));
-				invComédien.addItem(getPouvComédienItem(Roles.MONTREUR_D$OURS));
-				invComédien.addItem(getPouvComédienItem(Roles.PETITE_FILLE));
-				invComédien.addItem(getPouvComédienItem(Roles.RENARD));
-				invComédien.addItem(getPouvComédienItem(Roles.SALVATEUR));
-				invComédien.addItem(getPouvComédienItem(Roles.SORCIÈRE));
+				invComedien.addItem(getPouvComedienItem(Roles.VOYANTE));
+				invComedien.addItem(getPouvComedienItem(Roles.ANCIEN));
+				invComedien.addItem(getPouvComedienItem(Roles.MONTREUR_D$OURS));
+				invComedien.addItem(getPouvComedienItem(Roles.PETITE_FILLE));
+				invComedien.addItem(getPouvComedienItem(Roles.RENARD));
+				invComedien.addItem(getPouvComedienItem(Roles.SALVATEUR));
+				invComedien.addItem(getPouvComedienItem(Roles.SORCIERE));
 				
-				player.openInventory(invComédien);
+				player.openInventory(invComedien);
 				
 			} else if (current.getType().equals(Material.WEB)) {
 				main.maitreRandom = !main.maitreRandom;
@@ -516,14 +516,14 @@ public class GameConfig implements Listener {
 		
 		
 		
-		else if (inv.getName().equalsIgnoreCase("§6Pouvoirs " + Roles.COMÉDIEN.getDisplayName())) {
+		else if (inv.getName().equalsIgnoreCase("§6Pouvoirs " + Roles.COMEDIEN.getDisplayName())) {
 			ev.setCancelled(true);
 			
 			if (current.getType().equals(Material.STAINED_GLASS_PANE)) {
 			
 				if (current.getItemMeta().getDisplayName().startsWith("§a")) {
 					Roles role = null;
-					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§aSORCIERE")) role = Roles.SORCIÈRE;
+					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§aSORCIERE")) role = Roles.SORCIERE;
 					else {
 						String itemRoleName = current.getItemMeta().getDisplayName();
 
@@ -533,16 +533,16 @@ public class GameConfig implements Listener {
 									role = r;
 					}
 					
-					main.pouvoirsComédien.remove(role);
-					current.setItemMeta(getPouvComédienItem(role).getItemMeta());
-					current.setData(getPouvComédienItem(role).getData());
-					current.setDurability(getPouvComédienItem(role).getDurability());
+					main.pouvoirsComedien.remove(role);
+					current.setItemMeta(getPouvComedienItem(role).getItemMeta());
+					current.setData(getPouvComedienItem(role).getData());
+					current.setDurability(getPouvComedienItem(role).getDurability());
 				}
 				
 				
 				else {
 					Roles role = null;
-					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§cSORCIERE")) role = Roles.SORCIÈRE;
+					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§cSORCIERE")) role = Roles.SORCIERE;
 					else {
 						String itemRoleName = current.getItemMeta().getDisplayName();
 
@@ -552,10 +552,10 @@ public class GameConfig implements Listener {
 									role = r;
 					}
 					
-					main.pouvoirsComédien.add(role);
-					current.setItemMeta(getPouvComédienItem(role).getItemMeta());
-					current.setData(getPouvComédienItem(role).getData());
-					current.setDurability(getPouvComédienItem(role).getDurability());
+					main.pouvoirsComedien.add(role);
+					current.setItemMeta(getPouvComedienItem(role).getItemMeta());
+					current.setData(getPouvComedienItem(role).getData());
+					current.setDurability(getPouvComedienItem(role).getDurability());
 				}
 				
 			} else if (current.getType().equals(Material.ARROW)) player.openInventory(getConfigInv());
@@ -698,7 +698,7 @@ public class GameConfig implements Listener {
 		return c;
 	}
 	
-	public ItemStack getFlècheRetour() {
+	public ItemStack getFlecheRetour() {
 		ItemStack it = new ItemStack(Material.ARROW);
 		ItemMeta itm = it.getItemMeta();
 		itm.setDisplayName("§cRetour");
@@ -770,9 +770,9 @@ public class GameConfig implements Listener {
 		return it;
 	}
 	
-	private ItemStack getPouvComédienItem(Roles r) {
+	private ItemStack getPouvComedienItem(Roles r) {
 		ItemStack it;
-		if (main.pouvoirsComédien.contains(r)) {
+		if (main.pouvoirsComedien.contains(r)) {
 			it = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
 			ItemMeta itm = it.getItemMeta();
 			itm.setDisplayName("§a" + r.getName().replace('è', 'e').toUpperCase());
@@ -803,7 +803,7 @@ public class GameConfig implements Listener {
 				v = (String) mainObj;
 			} else if (mainObj instanceof ArrayList<?>) {
 				StringBuilder s = new StringBuilder("§c");
-				for (Roles r : main.pouvoirsComédien) {
+				for (Roles r : main.pouvoirsComedien) {
 					if (s.toString().equalsIgnoreCase("§c")) {
 						s.append(r.getName());
 					} else s.append(", ").append(r.getName());
@@ -848,7 +848,7 @@ public class GameConfig implements Listener {
 	private void addRoleToList(Roles r, int iOfRole, ItemStack current) { 
 		if (main.AddedRoles.containsKey(r)) {
 			int added = main.AddedRoles.get(r) + iOfRole;
-			if (!r.equals(Roles.JOUEUR_DE_FLÛTE) && !r.equals(Roles.VOLEUR) && !r.equals(Roles.CUPIDON) && !r.equals(Roles.COMÉDIEN) && !r.equals(Roles.PYROMANE))
+			if (!r.equals(Roles.JOUEUR_DE_FLUTE) && !r.equals(Roles.VOLEUR) && !r.equals(Roles.CUPIDON) && !r.equals(Roles.COMEDIEN) && !r.equals(Roles.PYROMANE))
 				main.AddedRoles.put(r, added);
 		} else {
 			main.AddedRoles.put(r, iOfRole);
@@ -931,7 +931,7 @@ public class GameConfig implements Listener {
 		setInvCoin(inv, (byte)0, 8, (byte)2);
 		setInvCoin(inv, (byte)0, 36, (byte)3);
 		setInvCoin(inv, (byte)0, 44, (byte)4);
-		inv.setItem(44, getFlècheRetour());
+		inv.setItem(44, getFlecheRetour());
 		//Modif des jours/nuits
 		//Chat des lg
 		//Cupi + couple
@@ -948,7 +948,7 @@ public class GameConfig implements Listener {
 		
 		inv.setItem(21, getParamItem(Material.SKULL_ITEM, (short)0, "§e§lMaire", Arrays.asList("§fActive ou non le fait que le", "§fmaire soit activé."), main.maire));
 		
-		inv.setItem(23, getParamItem(Material.PUMPKIN, (short)0, "§ePouvoirs du " + Roles.COMÉDIEN.getDisplayName(), Arrays.asList("§fListe des pouvoirs que le", "§fcomédien (s'il est activé) peut utiliser pendant la partie."), main.pouvoirsComédien));
+		inv.setItem(23, getParamItem(Material.PUMPKIN, (short)0, "§ePouvoirs du " + Roles.COMEDIEN.getDisplayName(), Arrays.asList("§fListe des pouvoirs que le", "§fcomédien (s'il est activé) peut utiliser pendant la partie."), main.pouvoirsComedien));
 		
 		inv.setItem(29, getParamItem(Material.WEB, (short)0, "§fModèle de l'" + Roles.ENFANT_SAUVAGE.getDisplayName() + " §7random", Arrays.asList("§fActive ou non la sélection aléatoire", "§fdu modèle de l'Enfant Sauvage."), main.maitreRandom));
 		
@@ -983,7 +983,7 @@ public class GameConfig implements Listener {
 			inv = Bukkit.createInventory(null, 54, "§c§lConfiguration §6Joueurs");
 		}
 		
-		inv.setItem(inv.getSize() - 1, getFlècheRetour());
+		inv.setItem(inv.getSize() - 1, getFlecheRetour());
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			ItemStack it = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
@@ -1029,7 +1029,7 @@ public class GameConfig implements Listener {
 		setInvCoin(inv, (byte)1, 8, (byte)2);
 		setInvCoin(inv, (byte)1, 18, (byte)3);
 		setInvCoin(inv, (byte)1, 26, (byte)4);
-		inv.setItem(26, getFlècheRetour());
+		inv.setItem(26, getFlecheRetour());
 		
 		inv.setItem(4, current);
 		
@@ -1072,7 +1072,7 @@ public class GameConfig implements Listener {
 		if (Roles.size() < 18) invsize = 18;
 		if (Roles.size() < 9) invsize = 9;
 		inv = Bukkit.createInventory(null, invsize, "§6§lRôles " + invName);
-		inv.setItem(invsize - 1, getFlècheRetour());
+		inv.setItem(invsize - 1, getFlecheRetour());
 		
 		for (Roles r : Roles) {
 			inv.addItem(getRoleItem(r));
@@ -1083,7 +1083,7 @@ public class GameConfig implements Listener {
 	
 	private Inventory getChooseCampInv(RDeck deck) {
 		Inventory invDeck = Bukkit.createInventory(null, 9, "§aCamp §bDeck §l" + deck.getAlias());
-		invDeck.setItem(8, getFlècheRetour());
+		invDeck.setItem(8, getFlecheRetour());
 		
 		invDeck.setItem(0, getColoredItem(Material.WOOL, 1, (short)14, "§cCamp des §lLoups-Garous", Arrays.asList("§4Affiche les rôles", "§4du camp des loups.", "§b>>Cliquer pour afficher.")));
 		invDeck.setItem(6, getColoredItem(Material.WOOL, 1, (short)1, "§6Camp des §lAutres", Arrays.asList("§eAffiche les rôles", "§edu camp des autres rôles.", "§b>>Cliquer pour afficher.")));
@@ -1094,7 +1094,7 @@ public class GameConfig implements Listener {
 	
 	private Inventory getChooseDeckInv() {
 		Inventory invDeck = Bukkit.createInventory(null, 9, "§6§lMenu §bDecks");
-		invDeck.setItem(8, getFlècheRetour());
+		invDeck.setItem(8, getFlecheRetour());
 		
 		for (RDeck deck : RDeck.values())
 			invDeck.addItem(getDeckItem(deck));

@@ -60,7 +60,7 @@ public class PlayerLG {
 	
 	private Boolean isVoleur = Boolean.FALSE;
 	
-	private Boolean isComédien = Boolean.FALSE;
+	private Boolean isComedien = Boolean.FALSE;
 	
 	private Boolean isServante = Boolean.FALSE;
 	
@@ -68,13 +68,13 @@ public class PlayerLG {
 	
 	private Boolean isCharmed = Boolean.FALSE;
 	
-	private Boolean isHuilé = Boolean.FALSE;
+	private Boolean isHuile = Boolean.FALSE;
 	
 	private Boolean isInfected = Boolean.FALSE;
 	
 	private Boolean isSosoTargeted = Boolean.FALSE;
 	
-	private Boolean isNécroTargeted = Boolean.FALSE;
+	private Boolean isNecroTargeted = Boolean.FALSE;
 	
 	private Boolean isLGTargeted = Boolean.FALSE;
 	
@@ -112,7 +112,7 @@ public class PlayerLG {
 	
 	private final List<Player> soeurOf = new ArrayList<>();
 	
-	private final List<Player> frèreOf = new ArrayList<>();
+	private final List<Player> frereOf = new ArrayList<>();
 	
 	private final List<Player> maitreof = new ArrayList<>();
 	
@@ -130,8 +130,9 @@ public class PlayerLG {
 		if (camp.equals(RCamp.LOUP_GAROU) || camp.equals(RCamp.LOUP_GAROU_BLANC)) {
 			main.setLGScoreboard(this.player);
 			for (Player p : main.players) {
-				if (main.playerlg.get(p.getName()).getCamp() != null)
-					if (main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU) || main.playerlg.get(p.getName()).isCamp(RCamp.LOUP_GAROU_BLANC))
+				PlayerLG plg = main.playerlg.get(p.getName());
+				if (plg.getCamp() != null)
+					if (!plg.isRole(Roles.ENCHANTEUR) && (plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC)))
 						p.getScoreboard().getTeam("LG").addEntry(this.player.getName());
 			}
 			if (!main.isDisplayState(DisplayState.LECTURE_DES_ROLES) && !main.isDisplayState(DisplayState.DISTRIBUTION_DES_ROLES)) {
@@ -141,7 +142,7 @@ public class PlayerLG {
 				for (Player p : main.players) {
 					PlayerLG plg = main.playerlg.get(p.getName());
 
-					if (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC))
+					if (!plg.isRole(Roles.ENCHANTEUR) && (plg.getRole().getCamp().equals(RCamp.LOUP_GAROU) || plg.getRole().getCamp().equals(RCamp.LOUP_GAROU_BLANC)))
 						player.getScoreboard().getTeam("LG").addEntry(p.getName());
 				}
 			}
@@ -217,7 +218,7 @@ public class PlayerLG {
 	}
 
 	public void setCELInfected() {
-		if (this.daysBeforeDieOfCEL == -1) this.daysBeforeDieOfCEL = 2;
+		if (this.daysBeforeDieOfCEL == -1) this.daysBeforeDieOfCEL = 1;
 	}
 	
 	public void removeDayCELInfected() {
@@ -264,9 +265,9 @@ public class PlayerLG {
 
 	public void setRole(Roles role) {
 		
-		if (role.equals(Roles.SORCIÈRE)) {
+		if (role.equals(Roles.SORCIERE)) {
 			main.SosoKillPots.put(player, true);
-			main.SosoRézPots.put(player, true);
+			main.SosoRezPots.put(player, true);
 		}
 		
 		if (role.equals(Roles.VILLAGEOIS_VILLAGEOIS)) {
@@ -276,7 +277,7 @@ public class PlayerLG {
 			player.setPlayerListName(player.getDisplayName());
 		}
 		
-		if (role.equals(Roles.PRÉSIDENT)) {
+		if (role.equals(Roles.PRESIDENT)) {
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§aLe " + role.getDisplayName() + " §ade la partie est " + player.getDisplayName());
 			Bukkit.getScoreboardManager().getMainScoreboard().getTeam("RPrésident").addEntry(player.getName());
 			player.setDisplayName(player.getScoreboard().getEntryTeam(player.getName()).getPrefix() + player.getName() + player.getScoreboard().getEntryTeam(player.getName()).getSuffix());
@@ -284,14 +285,14 @@ public class PlayerLG {
 		}
 		
 		if (role.equals(Roles.SOEUR)) main.setSoeurScoreboard(player);
-		if (role.equals(Roles.FRÈRE)) main.setFrèreScoreboard(player);
+		if (role.equals(Roles.FRERE)) main.setFrereScoreboard(player);
 		if (role.equals(Roles.CUPIDON)) main.setCoupleScoreboard(player);
 		
-		if (role.equals(Roles.SERVANTE_DÉVOUÉE)) this.setServante(true);
+		if (role.equals(Roles.SERVANTE_DEVOUEE)) this.setServante(true);
 		
-		if (role.equals(Roles.COMÉDIEN)) {
+		if (role.equals(Roles.COMEDIEN)) {
 			StringBuilder pouvoirs = new StringBuilder();
-			for (Roles r : main.pouvoirsComédien) {
+			for (Roles r : main.pouvoirsComedien) {
 				if (pouvoirs.toString().equalsIgnoreCase("")) pouvoirs = new StringBuilder(r.getDisplayName());
 				else pouvoirs.append("§f, ").append(r.getDisplayName());
 			}
@@ -349,12 +350,12 @@ public class PlayerLG {
 	}
 	
 
-	public Boolean isHuilé() {
-		return isHuilé;
+	public Boolean isHuile() {
+		return isHuile;
 	}
 
-	public void setHuilé(Boolean isHuilé) {
-		this.isHuilé = isHuilé;
+	public void setHuile(Boolean isHuile) {
+		this.isHuile = isHuile;
 	}
 
 	public Boolean isInfected() {
@@ -401,12 +402,12 @@ public class PlayerLG {
 	 }
 	 
 
-	 public void setComédien(Boolean comédien) {
-		  this.isComédien = comédien;
+	 public void setComedien(Boolean comedien) {
+		  this.isComedien = comedien;
 	 }
 	 
-	 public Boolean isComédien() {
-		 return this.isComédien;
+	 public Boolean isComedien() {
+		 return this.isComedien;
 	 }
 	 
 	 
@@ -486,16 +487,16 @@ public class PlayerLG {
 	 }
 	 
 	 
-	 public void addfrère(Player frère) {
-		    this.frèreOf.add(frère);
+	 public void addfrere(Player frere) {
+		this.frereOf.add(frere);
 	 }
 		  
-	 public void removefrère(Player frère) {
-		    this.frèreOf.remove(frère);
+	 public void removefrere(Player frere) {
+		    this.frereOf.remove(frere);
 	 }
 		  
-	 public List<Player> getfrère() {
-		    return this.frèreOf;
+	 public List<Player> getfrere() {
+		    return this.frereOf;
 	 }
 	 
 	 
@@ -557,12 +558,12 @@ public class PlayerLG {
 		this.isSosoTargeted = isSosoTargeted;
 	}
 
-	public Boolean isNécroTargeted() {
-		return isNécroTargeted;
+	public Boolean isNecroTargeted() {
+		return isNecroTargeted;
 	}
 
-	public void setNécroTargeted(Boolean isNécroTargeted) {
-		this.isNécroTargeted = isNécroTargeted;
+	public void setNecroTargeted(Boolean isNecroTargeted) {
+		this.isNecroTargeted = isNecroTargeted;
 	}
 
 	public Boolean isDayTargeted() {
@@ -683,7 +684,7 @@ public class PlayerLG {
 			if (i3 >= splayers.size()) i3 = 0;
 			nearby.add(Bukkit.getPlayer(splayers.get(i3)));
 			nearby.add(Bukkit.getPlayer(splayers.get(i2)));
-			} else if (main.isType(Gtype.RÉUNION)) {
+			} else if (main.isType(Gtype.REUNION)) {
 				int i = main.UsedBlockList.get(block);
 				
 				int i2 = i - 1;
@@ -717,15 +718,13 @@ public class PlayerLG {
 						    if (i<j) i3 = j;
 						}
 					}
-				
-				for (Player p : main.players) {
-					if (nearby.size() == 0)
-						if (main.UsedBlockList.get(main.playerlg.get(p.getName()).getBlock()) == i2)
-							nearby.add(p);
-					else if (nearby.size() == 1)
-						if (main.UsedBlockList.get(main.playerlg.get(p.getName()).getBlock()) == i3)
-							nearby.add(p);
-				}
+
+
+				for (Player p : main.players)
+					if (main.UsedBlockList.get(main.playerlg.get(p.getName()).getBlock()) == i2)
+						nearby.add(0, p);
+					else if (main.UsedBlockList.get(main.playerlg.get(p.getName()).getBlock()) == i3)
+						nearby.add(p);
 
 				
 			} else throw new NullPointerException("Le type de jeu n'est pas défini");
@@ -735,7 +734,7 @@ public class PlayerLG {
 	
 	
 	private void displayArmorStand() {
-		if (!main.isType(Gtype.RÉUNION)) return;
+		if (!main.isType(Gtype.REUNION)) return;
 		String s = "";
 		if (this.getVotes() != 1) s = "s";
 		

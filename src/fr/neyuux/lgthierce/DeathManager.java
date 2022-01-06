@@ -2,14 +2,18 @@ package fr.neyuux.lgthierce;
 
 import fr.neyuux.lgthierce.role.RCamp;
 import fr.neyuux.lgthierce.role.Roles;
+import fr.neyuux.lgthierce.task.GameRunnable;
 import fr.neyuux.lgthierce.task.LGAutoStop;
+import fr.neyuux.lgthierce.task.NightRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class DeathManager {
@@ -24,14 +28,14 @@ public class DeathManager {
 
 	public void eliminate(Player player, Boolean canCheckWin) {
 		PlayerLG playerlg = main.playerlg.get(player.getName());
-		if (playerlg.isComédien()) playerlg.setRole(Roles.COMÉDIEN);
+		if (playerlg.isComedien()) playerlg.setRole(Roles.COMEDIEN);
 		playerlg.resetCELInfected();
 		playerlg.setSalvation(false);
 		playerlg.setLGTargeted(false);
 		playerlg.setLGBTargeted(false);
 		playerlg.setSosoTargeted(false);
 		playerlg.setGMLTargeted(false);
-		playerlg.setHuilé(false);
+		playerlg.setHuile(false);
 		playerlg.setCharmed(false);
 		playerlg.setCorbeauTargeted(false);
 		playerlg.setFDJDied(false);
@@ -42,7 +46,7 @@ public class DeathManager {
 		playerlg.setPretreThrower(null);
 		playerlg.setPyroTargeted(false);
 		if (playerlg.isRole(Roles.VOLEUR)) playerlg.setVoleur(false);
-		if (playerlg.isRole(Roles.SERVANTE_DÉVOUÉE)) playerlg.setServante(false);
+		if (playerlg.isRole(Roles.SERVANTE_DEVOUEE)) playerlg.setServante(false);
 		if (!main.players.contains(player)) return;
 		
 		Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§6Le village a perdu un de ses membres : §e" + player.getName() + "§6 est §nmort§6. Il était " + playerlg.getRole().getDisplayName() + "§6.");
@@ -55,17 +59,20 @@ public class DeathManager {
 		} else main.AliveRoles.remove(r);
 		main.GRunnable.createScoreboardList();
 		main.sleepingPlayers.remove(player);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false));
 		playerlg.setVivant(false);
 		player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous êtes MORT.");
-		for (Player p : Bukkit.getOnlinePlayers())
+		for (Player p : Bukkit.getOnlinePlayers()) {
 			player.showPlayer(p);
+			p.showPlayer(player);
+		}
 		
-		if (r.equals(Roles.PRÉSIDENT)) {
+		if (r.equals(Roles.PRESIDENT)) {
 			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire des§r §c§lLoups-Garous §c§l§n§kaa", "§6§l§nNombre de survivants §f: §e" + main.players.size(), 10, 90, 20);
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire des §c§lLoups-Garous §e!");
 			Bukkit.broadcastMessage("§6Survivant(s) §7("+main.players.size()+") §f:");
 			for (Player p : main.players) Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
-			for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ZOMBIE_REMEDY, 10, 1);
+			for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ZOMBIE_REMEDY, 1.0f, 1f);
 			main.setState(Gstate.FINISH);
 			
 			displayRoleList();
@@ -73,9 +80,10 @@ public class DeathManager {
 			new LGAutoStop(main).runTaskTimer(main, 0, 20);
 			return;
 		}
+
+		if (r.equals(Roles.COMEDIEN)) main.GRunnable.createScoreboardList();
 		
 		if (!r.equals(Roles.CHASSEUR) && !r.equals(Roles.FOSSOYEUR)) {
-		
 			player.setGameMode(GameMode.SPECTATOR);
 			player.sendMessage(main.getPrefix() + main.SendArrow + "§7Votre mode de jeu à été établi en §lSpectateur§7.");
 			player.setDisplayName("§8[§7" + main.playerlg.get(player.getName()).getRole().getName() + "§8] §b" + player.getName());
@@ -85,20 +93,29 @@ public class DeathManager {
 			for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.FIREWORK_BLAST2, 10, 1);
 			for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
 		} else {
+			int a = 0;
+			for (Map.Entry<String, PlayerLG> en : main.playerlg.entrySet())
+				if (!en.getKey().equals(player.getName()) && en.getValue().isVivant())
+					a++;
 			if (r.equals(Roles.CHASSEUR)) {
-				main.setDisplayState(DisplayState.TIR_CHASSEUR);
-				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§cLe " + r.getDisplayName() + " §cdoit maintenant utiliser son dernier souffle pour tirer...");
-				player.getInventory().setItem(0, main.getItem(Material.INK_SACK, "§2Fusil", null));
-				player.getInventory().setHeldItemSlot(0);
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§aClique droit pour utiliser votre fusil (inventaire).");
-				for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.FIREWORK_BLAST, 10, 1.5f);
+				if (a > 0) {
+					main.setDisplayState(DisplayState.TIR_CHASSEUR);
+					Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§cLe " + r.getDisplayName() + " §cdoit maintenant utiliser son dernier souffle pour tirer...");
+					player.getInventory().setItem(0, main.getItem(Material.INK_SACK, "§2Fusil", null));
+					player.getInventory().setHeldItemSlot(0);
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§aClique droit pour utiliser votre fusil (inventaire).");
+					for (Player p : Bukkit.getOnlinePlayers())
+						p.playSound(p.getLocation(), Sound.FIREWORK_BLAST, 10, 1.5f);
+				}
 			} else {
-				main.setDisplayState(DisplayState.CHOIX_FOSSOYEUR);
-				Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§7Le " + r.getDisplayName() + " §7doit maintenant creuser deux tombes de joueurs de camp opposé.");
-				player.getInventory().setItem(0, main.getItem(Material.STONE_SPADE, "§7Pelle", null));
-				player.getInventory().setHeldItemSlot(0);
-				player.sendMessage(main.getPrefix() + main.SendArrow + "§aClique droit pour creuser les tombes. Vous devrez choisir un joueur et le jeu décidera d'un deuxième joueur d'un camp opposé choisi au hasard.");
-				for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.DIG_GRASS, 10, 1.5f);
+				if (a > 1) {
+					main.setDisplayState(DisplayState.CHOIX_FOSSOYEUR);
+					Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§7Le " + r.getDisplayName() + " §7doit maintenant creuser deux tombes de joueurs de camp opposé.");
+					player.getInventory().setItem(0, main.getItem(Material.STONE_SPADE, "§7Pelle", null));
+					player.getInventory().setHeldItemSlot(0);
+					player.sendMessage(main.getPrefix() + main.SendArrow + "§aClique droit pour creuser les tombes. Vous devrez choisir un joueur et le jeu décidera d'un deuxième joueur d'un camp opposé choisi au hasard.");
+					for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.DIG_GRASS, 10, 1.5f);
+				}
 			}
 		}
 		
@@ -112,22 +129,22 @@ public class DeathManager {
 		if (r.equals(Roles.VOYANTE) && main.AliveRoles.containsKey(Roles.VOYANTE_APPRENTIE)) {
 			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§dÉtant donné que la Voyante est morte, la " + Roles.VOYANTE_APPRENTIE.getDisplayName() + " §dva prendre sa place.");
 			Player p = main.getPlayersByRole(Roles.VOYANTE_APPRENTIE).get(0);
-			player.sendMessage(main.getPrefix() + main.SendArrow + r.getDescription());
-			LG.sendTitle(player, "§fVous êtes " + r.getDisplayName(), "§fVotre camp : §e" + main.playerlg.get(p.getName()).getCamp(), 10, 60, 10);
+			p.sendMessage(main.getPrefix() + main.SendArrow + r.getDescription());
+			LG.sendTitle(p, "§fVous êtes " + r.getDisplayName(), "§fVotre camp : §e" + Roles.VOYANTE.getCamp(), 10, 60, 10);
 			main.playerlg.get(p.getName()).setRole(r);
-			player.getInventory().setItem(4, main.getRoleMap(r));
+			p.getInventory().setItem(4, main.getRoleMap(r));
 		}
 		
 		if (r.equals(Roles.ANGE) && main.days == 1 && main.isDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR)) winAnge(player);
 		
-		if (playerlg.isRole(Roles.JOUEUR_DE_FLÛTE)) {
+		if (playerlg.isRole(Roles.JOUEUR_DE_FLUTE)) {
 			for (Player p : main.players)
 				main.playerlg.get(p.getName()).setCharmed(false);
 		}
 		
 		if (playerlg.isRole(Roles.PYROMANE)) {
 			for (Player p : main.players)
-				main.playerlg.get(p.getName()).setHuilé(false);
+				main.playerlg.get(p.getName()).setHuile(false);
 		}
 		
 		if (playerlg.isRole(Roles.ANKOU))
@@ -168,7 +185,7 @@ public class DeathManager {
 							plg.setCamp(RCamp.VILLAGE);
 					if (plg.isCamp(RCamp.CHIEN_LOUP))
 						plg.setCamp(playerlg.getCamp());
-					
+
 					p.sendMessage(main.getPrefix() + main.SendArrow + "§5Votre §lJumeau §d\"§5"+player.getName()+"§d\" §5est mort ! Vous dérobez donc son rôle et devenez " + r.getDisplayName() + "§5 !");
 				}
 			}
@@ -231,17 +248,14 @@ public class DeathManager {
 				int LGAlive = 0;
 				int VillageAlive = 0;
 				int CoupleAlive = 0;
-				int charmés = 0;
+				int charmes = 0;
 				
 				for (Player player : main.players) {
 					PlayerLG playerlg = main.playerlg.get(player.getName());
 					
-					if (playerlg.isCharmed()) charmés++;
-					if (!playerlg.getCouple().isEmpty()) {
-						CoupleAlive++;
-					} else {
-						if (playerlg.getRole().equals(Roles.CUPIDON) && main.cupiTeamCouple) CoupleAlive++;
-					}
+					if (playerlg.isCharmed()) charmes++;
+					if (!playerlg.getCouple().isEmpty()) CoupleAlive++;
+					else if (playerlg.getRole().equals(Roles.CUPIDON) && main.cupiTeamCouple) CoupleAlive++;
 					
 					switch (playerlg.getCamp()) {
 					case LOUP_GAROU:
@@ -253,16 +267,14 @@ public class DeathManager {
 						
 					default:
 						break;
-					
 					}
-					
 				}
 				
 				if (LGAlive == main.players.size()) victoryCamp = RCamp.LOUP_GAROU;
 				if (VillageAlive == main.players.size()) victoryCamp = RCamp.VILLAGE;
 				if (CoupleAlive == main.players.size()) victoryCamp = RCamp.COUPLE;
-				if (charmés + 1 == main.players.size()) victoryCamp = RCamp.JOUEUR_DE_FLÛTE;
-				System.out.println("lg" + LGAlive + " vivi" + VillageAlive + " cpl" + CoupleAlive + " charm" + charmés + " total" + main.players.size());
+				if (charmes + 1 == main.players.size()) victoryCamp = RCamp.JOUEUR_DE_FLUTE;
+				System.out.println("lg" + LGAlive + " vivi" + VillageAlive + " cpl" + CoupleAlive + " charm" + charmes + " total" + main.players.size());
 			}
 			
 			System.out.println(victoryCamp + "");
@@ -271,6 +283,7 @@ public class DeathManager {
 		
 		
 		if (victoryCamp == null) return;
+		for (Player player : main.players) main.NightRunnable.setWake(player);
 		main.setState(Gstate.FINISH);
 		main.setDisplayState(DisplayState.DISTRIBUTION_DES_ROLES);
 		
@@ -307,13 +320,13 @@ public class DeathManager {
 		}
 		
 		
-		else if (victoryCamp.equals(RCamp.JOUEUR_DE_FLÛTE)) {
+		else if (victoryCamp.equals(RCamp.JOUEUR_DE_FLUTE)) {
 			Player p = null;
 			for (Player player : main.players)
-				if (main.playerlg.get(player.getName()).isRole(Roles.JOUEUR_DE_FLÛTE)) p = player;
+				if (main.playerlg.get(player.getName()).isRole(Roles.JOUEUR_DE_FLUTE)) p = player;
 			
-			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.JOUEUR_DE_FLÛTE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
-			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.JOUEUR_DE_FLÛTE.getDisplayName()+" §e!");
+			LG.sendTitleForAllPlayers("§c§l§n§kaa§r §e§l§nVictoire du§r "+Roles.JOUEUR_DE_FLUTE.getDisplayName()+" §c§l§n§kaa", "§6§l§nSurvivant §f: §e" + p.getName(), 10, 90, 20);
+			Bukkit.broadcastMessage(main.getPrefix() + main.SendArrow + "§eVictoire du "+Roles.JOUEUR_DE_FLUTE.getDisplayName()+" §e!");
 			Bukkit.broadcastMessage("§6Survivant §f:");
 			Bukkit.broadcastMessage(getFinalPlayerMessage(p.getName()));
 			for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 10, 1);
@@ -351,19 +364,21 @@ public class DeathManager {
 	
 	
 	private String getFinalPlayerMessage(String player) {
-		String s = "§e" + player;
+		StringBuilder s = new StringBuilder("§e" + player);
 		PlayerLG playerlg = main.playerlg.get(player);
-		s = s + " §7» " + playerlg.getRole().getDisplayName();
-		if (playerlg.isRole(Roles.SOEUR)) s = s + "§d (avec §o" + playerlg.getsoeur().get(0).getName() + "§d)";
-		if (playerlg.isRole(Roles.FRÈRE)) s = s + "§d (avec §o" + playerlg.getfrère().get(0).getName() + "§d et §o" + playerlg.getfrère().get(1).getName() + "§d)";
-		if (playerlg.isServante()) s = s + " §d(" + Roles.SERVANTE_DÉVOUÉE.getDisplayName() + "§d)";
-		if (playerlg.isInfected()) s = s + " §c§oInfecté";
-		if (!playerlg.getCouple().isEmpty()) s = s + " §den couple avec §l" + playerlg.getCouple().get(0).getName();
-		if (playerlg.isCharmed()) s = s + " §5§oCharmé";
-		if (playerlg.isVoleur()) s = s + " §3(" + Roles.VOLEUR.getDisplayName() + "§3)";
-		if (playerlg.isMaire()) s = s + " §b§oMaire";
+		s.append(" §7» ").append(playerlg.getRole().getDisplayName());
+		if (playerlg.isRole(Roles.SOEUR)) s.append("§d (avec §o").append(playerlg.getsoeur().get(0).getName()).append("§d)");
+		if (playerlg.isRole(Roles.FRERE)) s.append("§d (avec §o").append(playerlg.getfrere().get(0).getName()).append("§d et §o").append(playerlg.getfrere().get(1).getName()).append("§d)");
+		if (playerlg.isServante()) s.append(" §d(").append(Roles.SERVANTE_DEVOUEE.getDisplayName()).append("§d)");
+		if (playerlg.isInfected()) s.append(" §c§oInfecté");
+		if (!playerlg.getCouple().isEmpty()) s.append(" §den couple avec §l").append(playerlg.getCouple().get(0).getName());
+		if (playerlg.isCharmed()) s.append(" §5§oCharmé");
+		if (playerlg.isVoleur()) s.append(" §3(").append(Roles.VOLEUR.getDisplayName()).append("§3)");
+		for (PlayerLG plg : main.playerlg.values())
+			if (plg.getJumeauOf().contains(Bukkit.getPlayer(player))) s.append(" §5(").append(Roles.JUMEAU.getDisplayName()).append("§5)");
+		if (playerlg.isMaire()) s.append(" §b§oMaire");
 		
-		return s;
+		return s.toString();
 	}
 	
 	private void displayRoleList() {

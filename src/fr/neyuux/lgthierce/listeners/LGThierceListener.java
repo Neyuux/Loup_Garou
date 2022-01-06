@@ -37,7 +37,6 @@ public class LGThierceListener implements Listener {
 		Player player = event.getPlayer();
 		
 		main.updateGrades();
-		
 		player.getInventory().clear();
 		main.clearArmor(player);
 		player.updateInventory();
@@ -121,8 +120,8 @@ public class LGThierceListener implements Listener {
 	public void onDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 		if (player.getGameMode() != GameMode.CREATIVE) {
-		event.setCancelled(true);
-		player.updateInventory();
+			event.setCancelled(true);
+			player.updateInventory();
 		}
 	}
 	
@@ -130,15 +129,11 @@ public class LGThierceListener implements Listener {
 	@EventHandler()
 	public void onDamage(EntityDamageEvent ev) {
 		if (ev.getEntityType().equals(EntityType.PLAYER)) {
-			if (!main.isCycle(Gcycle.NUIT) || ev.getDamage() != 0.1) {
-				ev.setCancelled(true);
-			} else {
-				ev.setDamage(0);
-			}
+			if (!main.isCycle(Gcycle.NUIT) || ev.getDamage() != 0.1) ev.setCancelled(true);
+			else ev.setDamage(0);
 		} else if (ev.getEntityType().equals(EntityType.ITEM_FRAME)) ev.setCancelled(true);
-		else if (ev.getEntityType().equals(EntityType.ARMOR_STAND)) {
+		else if (ev.getEntityType().equals(EntityType.ARMOR_STAND))
 			if (ev.getCause().equals(DamageCause.ENTITY_ATTACK)) ev.setCancelled(true);
-		}
 
 	}
 	
@@ -172,8 +167,8 @@ public class LGThierceListener implements Listener {
 			return;
 		}
 
-		final String[] strings = cmd.toLowerCase().substring(1).split(" ", 2);
-		if (Bukkit.getPluginCommand("tell").getAliases().contains(strings[0]) || cmd.toLowerCase().startsWith("/tell") || Bukkit.getPluginCommand("respond").getAliases().contains(strings[0]) || cmd.toLowerCase().startsWith("/respond")) {
+		final String string = cmd.toLowerCase().substring(1).split(" ", 2)[0];
+		if (Bukkit.getPluginCommand("tell").getAliases().contains(string) || cmd.toLowerCase().startsWith("/tell") || Bukkit.getPluginCommand("respond").getAliases().contains(string) || cmd.toLowerCase().startsWith("/respond")) {
 			ev.setCancelled(true);
 			player.sendMessage("§4§lNey§6G§ei§2n§4§l_" + main.SendArrow + " §4Cette commande est désactivée en " + main.getPrefix() + "§4.");
 		}
@@ -216,21 +211,21 @@ public class LGThierceListener implements Listener {
 		if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.PHYSICAL)) {
 			
 			if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
-				if (cblock.getType().equals(Material.CHEST) ||
+				if ((cblock.getType().equals(Material.CHEST) ||
 					cblock.getType().equals(Material.HOPPER) ||
 					cblock.getType().equals(Material.ENDER_CHEST) ||
 					cblock.getType().equals(Material.ANVIL) || 
 					cblock.getType().equals(Material.ENCHANTMENT_TABLE) ||
 					cblock.getType().equals(Material.FURNACE) ||
 					cblock.getType().equals(Material.DISPENSER) ||
-					cblock.getType().equals(Material.WORKBENCH)) ev.setCancelled(true);
+					cblock.getType().equals(Material.WORKBENCH)) && !player.getGameMode().equals(GameMode.CREATIVE)) ev.setCancelled(true);
 			}
 			
 			if (current.hasItemMeta()) {
 			if (current.getItemMeta().hasDisplayName()) {
 			if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§a§lJouer") && current.getType().equals(Material.EYE_OF_ENDER)) {
 				String s = "";
-				
+
 				switch (main.getType()) {
 				case LIBRE:
 					try {
@@ -243,7 +238,7 @@ public class LGThierceListener implements Listener {
 						}
 					main.players.add(player);
 					if (main.players.size() != 1) s = "s";
-					
+
 					player.getInventory().remove(current);
 					LG.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
 					player.playSound(player.getLocation(), Sound.NOTE_PLING, 9, 1);
@@ -256,17 +251,17 @@ public class LGThierceListener implements Listener {
 					}
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§fListe des joueurs : " + splayers);
 					break;
-					
-					
-					
+
+
+
 				case NONE:
 					player.sendMessage(main.getPrefix() + main.SendArrow + "§cVous devez attendre qu'un OP choisisse le type de jeu (Libre ou Réunion) !");
 					player.playSound(player.getLocation(), Sound.ITEM_BREAK, 7, 1);
 					break;
-					
-					
-					
-				case RÉUNION:
+
+
+
+				case REUNION:
 					try {
 						player.teleport(new Location(Bukkit.getWorld("LG"), main.ReunionSpawnX, main.ReunionSpawnY, main.ReunionSpawnZ));
 					} catch (NullPointerException e) {
@@ -277,7 +272,7 @@ public class LGThierceListener implements Listener {
 					}
 					main.players.add(player);
 					if (main.players.size() != 1) s = "s";
-					
+
 					player.getInventory().remove(current);
 					LG.sendTitle(player, "§5§k §4§k §c§k §a§lVous jouerez cette partie ! §6§k §e§k §f§k ", "§6Il y a désormais §e" + main.players.size() + "§6 joueur"+s+".", 20, 60, 20);
 					player.playSound(player.getLocation(), Sound.NOTE_PLING, 9, 1);
@@ -293,9 +288,9 @@ public class LGThierceListener implements Listener {
 					break;
 				default:
 					break;
-				
+
 				}
-				
+
 				if (main.players.size() >= 3) {
 					if (main.isState(Gstate.PREPARING)) {
 						if ((main.players.size() + main.spectators.size()) == Bukkit.getOnlinePlayers().size()) {
@@ -311,7 +306,7 @@ public class LGThierceListener implements Listener {
 									roles.add(en.getKey());
 								}
 							}
-							
+
 							if (main.AddedRoles.containsKey(Roles.VOLEUR)) {
 								if (roles.size() == (2 * main.AddedRoles.get(Roles.VOLEUR)) + main.players.size()) {
 									main.setState(Gstate.STARTING);
@@ -336,15 +331,15 @@ public class LGThierceListener implements Listener {
 						}
 					}
 				}
-				
+
 				for (Player p : Bukkit.getOnlinePlayers())
 					main.updateScoreboard(p);
-				
+
 			} else if (current.getItemMeta().getDisplayName().equalsIgnoreCase("§7§lDevenir Spectateur") && current.getType().equals(Material.GHAST_TEAR)) {
 
 				main.players.remove(player);
 				main.spectators.add(player);
-				
+
 				player.getInventory().clear();
 				for (Entry<String, List<UUID>> en : main.getGrades().entrySet())
 					if (en.getValue().contains(player.getUniqueId()))
@@ -355,10 +350,10 @@ public class LGThierceListener implements Listener {
 				Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
 				player.sendMessage(main.getPrefix() + main.SendArrow + "§9Votre mode de jeu a été établi en §7spectateur§9.");
 				player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
-				
+
 				for (Player p : Bukkit.getOnlinePlayers())
 					main.updateScoreboard(p);
-				
+
 				}
 			}
 			}

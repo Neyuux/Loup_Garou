@@ -1,8 +1,9 @@
-package fr.neyuux.refont.lg.items.config.mainmenu;
+package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
 
 public class ParametersItemStack extends CustomItemStack {

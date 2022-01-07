@@ -1,9 +1,10 @@
-package fr.neyuux.refont.lg.items.config;
+package fr.neyuux.refont.lg.items.hotbar;
 
 import fr.neyuux.refont.lg.inventories.ConfigurationInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
 
 public class OpComparatorItemStack extends CustomItemStack {

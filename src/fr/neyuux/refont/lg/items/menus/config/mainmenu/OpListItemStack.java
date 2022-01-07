@@ -1,4 +1,4 @@
-package fr.neyuux.refont.lg.items.config.mainmenu;
+package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;

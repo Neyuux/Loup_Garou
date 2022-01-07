@@ -1,9 +1,10 @@
-package fr.neyuux.refont.lg.items;
+package fr.neyuux.refont.lg.items.menus;
 
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
 
 public class ReturnArrowItemStack extends CustomItemStack {

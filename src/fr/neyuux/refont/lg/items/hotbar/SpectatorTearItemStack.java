@@ -1,8 +1,11 @@
-package fr.neyuux.refont.lg.items.config;
+package fr.neyuux.refont.lg.items.hotbar;
 
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -23,6 +26,6 @@ public class SpectatorTearItemStack extends CustomItemStack {
                 return;
         }
 
-
+        LG.getInstance().getGame().setSpectator(PlayerLG.createPlayerLG((Player) player));
     }
 }

@@ -1,12 +1,12 @@
 package fr.neyuux.refont.lg;
 
-import fr.neyuux.refont.lg.items.config.OpComparatorItemStack;
+import fr.neyuux.refont.lg.items.ItemsManager;
+import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
@@ -17,9 +17,11 @@ import java.util.List;
 
 public class GameLG implements Listener {
 
-    private GameState gameState;
+    private GameState gameState = GameState.WAITING;
 
-    private GameType gameType;
+    private GameType gameType = GameType.NONE;
+
+    private DayCycle dayCycle = DayCycle.NONE;
 
     private int day = 0;
 
@@ -39,8 +41,7 @@ public class GameLG implements Listener {
 
 
     public GameLG() {
-        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
-    }
+        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());}
 
 
     public void sendMessage(Role role, String msg) {
@@ -90,8 +91,18 @@ public class GameLG implements Listener {
         playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
     }
 
-    public void addSpectator(PlayerLG playerLG) {
+    public void setSpectator(PlayerLG playerLG) {
+        Player player = playerLG.getPlayer();
 
+        this.spectators.add(playerLG);
+
+        this.getItemsManager().updateSpawnItems(playerLG);
+        player.setGameMode(GameMode.SPECTATOR);
+        player.setDisplayName("§8[§7Spectateur§8]" + player.getName());
+        player.setPlayerListName(player.getDisplayName());
+        player.sendMessage(this.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
+        player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
+        //TODO update all scoreboard (less players)
     }
 
     public void addNightVision(PlayerLG playerLG) {
@@ -104,10 +115,10 @@ public class GameLG implements Listener {
 
     public void resetGame() {
         this.playersInGame.clear();
+        this.spectators.clear();
         this.day = 0;
         this.night = 0;
         this.mayor = null;
-        this.rolesAtStart.clear();
         this.aliveRoles.clear();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -124,7 +135,22 @@ public class GameLG implements Listener {
             player.setGameMode(GameMode.ADVENTURE);
             //TODO tp config locations.mainSpawn
             //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
+
+            this.getItemsManager().updateSpawnItems(playerLG);
+
+            //TODO update scoreboard
+            PlayerLG.removePlayerLG(player);
+            PlayerLG.createPlayerLG(player);
         }
+
+        Bukkit.getWorld("LG").setTime(0);
+
+        this.setGameState(GameState.WAITING);
+        this.setGameType(GameType.NONE);
+        this.setDayCycle(DayCycle.NONE);
+        Bukkit.getScheduler().cancelTasks(LG.getInstance());
+
+        //TODO update all scoreboards
     }
 
     public List<PlayerLG> getOPs() {
@@ -141,6 +167,14 @@ public class GameLG implements Listener {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public DayCycle getDayCycle() {
+        return dayCycle;
+    }
+
+    public void setDayCycle(DayCycle dayCycle) {
+        this.dayCycle = dayCycle;
     }
 
     public int getDay() {
@@ -181,5 +215,13 @@ public class GameLG implements Listener {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    public ItemsManager getItemsManager() {
+        return LG.getInstance().getItemsManager();
+    }
+
+    public String getPrefix() {
+        return LG.getPrefix();
     }
 }

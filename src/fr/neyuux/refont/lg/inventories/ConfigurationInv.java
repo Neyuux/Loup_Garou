@@ -1,6 +1,6 @@
 package fr.neyuux.refont.lg.inventories;
 
-import fr.neyuux.refont.lg.items.config.mainmenu.*;
+import fr.neyuux.refont.lg.items.menus.config.mainmenu.*;
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 import org.bukkit.entity.HumanEntity;
 

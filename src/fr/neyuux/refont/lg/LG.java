@@ -40,6 +40,7 @@ public class LG extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
+        this.initialiseRoles();
         this.gameLG = new GameLG();
         this.itemsManager = new ItemsManager(gameLG);
 

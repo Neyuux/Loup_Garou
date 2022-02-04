@@ -1,4 +1,4 @@
-package fr.neyuux.refont.lg.inventories;
+package fr.neyuux.refont.lg.inventories.config;
 
 import fr.neyuux.refont.lg.items.menus.config.mainmenu.*;
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;

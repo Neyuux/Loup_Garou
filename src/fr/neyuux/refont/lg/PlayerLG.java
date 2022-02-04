@@ -12,10 +12,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PlayerLG {
 
@@ -257,5 +254,9 @@ public class PlayerLG {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static HashMap<Player, PlayerLG> getPlayersMap() {
+        return playerHashMap;
     }
 }

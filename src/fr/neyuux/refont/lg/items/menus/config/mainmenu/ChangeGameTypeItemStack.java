@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
+import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ public class ChangeGameTypeItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        //TODO
+        LG.getInstance().getGame().setGameType(GameType.FREE);
+        player.closeInventory();
     }
 }

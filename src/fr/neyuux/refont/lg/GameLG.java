@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.config.GameConfig;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameLG implements Listener {
+
+    private GameConfig config;
 
     private GameState gameState = GameState.WAITING;
 
@@ -41,7 +44,9 @@ public class GameLG implements Listener {
 
 
     public GameLG() {
-        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());}
+        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
+        this.config = new GameConfig(this);
+    }
 
 
     public void sendMessage(Role role, String msg) {
@@ -215,6 +220,7 @@ public class GameLG implements Listener {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+        sendTitleToAllPlayers(gameType.getName(), "§fa été choisi comme nouveau type de jeu !" , 20, 60, 20);
     }
 
     public ItemsManager getItemsManager() {
@@ -223,5 +229,10 @@ public class GameLG implements Listener {
 
     public String getPrefix() {
         return LG.getPrefix();
+    }
+
+    public static void sendTitleToAllPlayers(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
+        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
+            playerLG.sendTitle(title, subtitle, fadeInTime, showTime, fadeOutTime);
     }
 }

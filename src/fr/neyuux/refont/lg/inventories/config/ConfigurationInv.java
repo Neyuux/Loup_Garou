@@ -22,6 +22,7 @@ public class ConfigurationInv extends AbstractCustomInventory {
         this.setItem(32, new ResetGameItemStack());
         this.setItem(13, new ParametersItemStack());
         this.setItem(15, new RolesFirstMenuItemStack());
+        this.setItem(11, new ChangeGameTypeItemStack());
     }
 
     @Override

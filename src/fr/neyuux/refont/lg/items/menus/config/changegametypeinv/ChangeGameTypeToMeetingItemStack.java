@@ -7,17 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 
-public class ChangeGameTypeToFreeItemStack extends CustomItemStack {
+public class ChangeGameTypeToMeetingItemStack extends CustomItemStack {
 
-    public ChangeGameTypeToFreeItemStack() {
-        super(Material.ENDER_PORTAL_FRAME, 1, "§e§lLibre");
+    public ChangeGameTypeToMeetingItemStack() {
+        super(Material.IRON_FENCE, 1, "§d§lRéunion");
 
-        this.setLore("§7Les joueurs sont libres de se balader", "§7dans le village.");
+        this.setLore("§7Les joueurs sont bloqués sur un nénuphar.", "§7A eux de discuter sans se déplacer.");
     }
 
     @Override
     public void use(HumanEntity player, Event event) {
-        LG.getInstance().getGame().setGameType(GameType.FREE);
+        LG.getInstance().getGame().setGameType(GameType.MEETING);
         player.closeInventory();
     }
 }

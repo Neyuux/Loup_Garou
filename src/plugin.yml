@@ -1,7 +1,7 @@
 name: LG
 version: 1.4.1
 author: Neyuux_
-main: fr.neyuux.refont.lg.lgthierce.Index
+main: fr.neyuux.refont.old.lg.LG
 softdepend: [NeyGin_Core]
 commands:
   ankou:

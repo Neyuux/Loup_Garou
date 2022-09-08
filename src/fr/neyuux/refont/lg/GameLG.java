@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GameLG implements Listener {
 
-    private GameConfig config;
+    private final GameConfig config;
 
     private GameState gameState = GameState.WAITING;
 
@@ -234,5 +234,9 @@ public class GameLG implements Listener {
     public static void sendTitleToAllPlayers(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
         for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
             playerLG.sendTitle(title, subtitle, fadeInTime, showTime, fadeOutTime);
+    }
+
+    public GameConfig getConfig() {
+        return config;
     }
 }

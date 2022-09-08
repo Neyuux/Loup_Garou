@@ -44,6 +44,6 @@ public class Comedien extends Role {
 
     @Override
     public String getActionMessage() {
-        return "§fVous avez §d" + getTimeout() + " secondes §fpour choisir un rôle pour cette nuit.";
+        return "§fVous avez §d" + this.getTimeout() + " secondes §fpour choisir un rôle pour cette nuit.";
     }
 }

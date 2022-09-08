@@ -1,10 +1,10 @@
 package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
+import fr.neyuux.refont.lg.inventories.config.roles.RoleDecksInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
-import org.bukkit.event.inventory.ClickType;
 
 public class RolesFirstMenuItemStack extends CustomItemStack {
 
@@ -16,6 +16,6 @@ public class RolesFirstMenuItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        //TODO
+        new RoleDecksInv().open(player);
     }
 }

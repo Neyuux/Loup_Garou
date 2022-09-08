@@ -6,25 +6,25 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
-public class Pyromane extends Role {
+public class Assassin extends Role {
 
-    public Pyromane(GameLG gameLG) {
+    public Assassin(GameLG gameLG) {
         super(gameLG);
     }
 
     @Override
     public String getDisplayName() {
-        return "§6§lPyromane";
+        return "§1§lAssassin";
     }
 
     @Override
     public String getConfigName() {
-        return "Pyromane";
+        return "Assassin";
     }
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les joueurs de la partie et de, par conséquent, de gagner seul. Chaque nuit, vous pourrez décider d'enrober un joueur d'essence ou de mettre le feu à tous les joueurs déjà huilés...";
+        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les joueurs de la partie et de, par conséquent, de gagner seul. Chaque nuit, vous pourrez assassiner quelqu'un. Vous ne pouvez pas être ciblé par les Loups-Garous";
     }
 
     @Override
@@ -34,16 +34,16 @@ public class Pyromane extends Role {
 
     @Override
     public Decks getDeck() {
-        return Decks.WEREWOLF_ONLINE;
+        return Decks.LEOMELKI;
     }
 
     @Override
     public int getTimeout() {
-        return 35;
+        return 25;
     }
 
     @Override
     public String getActionMessage() {
-        return "§fVous avez §6" + "timer restant" + " secondes§f pour répandre de l'essence sur deux personnes."; //TODO
+        return "§fVous avez §9" + this.getTimeout() + " secondes§f pour assassiner quelqu'un.";
     }
 }

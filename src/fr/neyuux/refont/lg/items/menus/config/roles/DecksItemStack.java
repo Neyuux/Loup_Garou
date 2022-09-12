@@ -1,7 +1,9 @@
-package fr.neyuux.refont.lg.items.menus.config.mainmenu;
+package fr.neyuux.refont.lg.items.menus.config.roles;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.inventories.config.parameters.RoleDecksInv;
+import fr.neyuux.refont.lg.inventories.config.roles.RoleDecksInv;
+import fr.neyuux.refont.lg.inventories.config.roles.RolesCampChooseInv;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
@@ -12,7 +14,6 @@ import org.bukkit.event.Event;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 
 public class DecksItemStack extends CustomItemStack {
 
@@ -38,14 +39,15 @@ public class DecksItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        new RoleDecksInv().open(player);
+        new RolesCampChooseInv(deck).open(player);
     }
 
 
     private boolean isUsed() {
-        for (Constructor<? extends Role> roleConstructor : LG.getInstance().getGame().getConfig().getAddedRoles()) {
+        GameLG game = LG.getInstance().getGame();
+        for (Constructor<? extends Role> roleConstructor : game.getConfig().getAddedRoles()) {
             try {
-                if (((Constructor<Role>)roleConstructor).newInstance(LG.getInstance().getGame()).getDeck().equals(deck)) return true;
+                if (((Constructor<Role>)roleConstructor).newInstance(game).getDeck().equals(deck)) return true;
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
                 Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cUne erreur s'est produite dans la création des items des decks !");

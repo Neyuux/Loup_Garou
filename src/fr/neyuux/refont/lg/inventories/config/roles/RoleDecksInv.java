@@ -2,7 +2,7 @@ package fr.neyuux.refont.lg.inventories.config.roles;
 
 import fr.neyuux.refont.lg.inventories.config.ConfigurationInv;
 import fr.neyuux.refont.lg.items.menus.ReturnArrowItemStack;
-import fr.neyuux.refont.lg.items.menus.config.mainmenu.DecksItemStack;
+import fr.neyuux.refont.lg.items.menus.config.roles.DecksItemStack;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 

@@ -94,5 +94,12 @@ public class GameConfig {
     public List<Constructor<? extends Role>> getAddedRoles() {
         return addedRoles;
     }
+
+    public int getNumberOfRole(Constructor<? extends Role> constructor) {
+        int i = 0;
+        for (Constructor<? extends Role> constructor2 : this.getAddedRoles())
+            if (constructor.equals(constructor2))i++;
+        return i;
+    }
 }
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GameLG implements Listener {
 
-    private final GameConfig config;
+    private GameConfig config;
 
     private GameState gameState = GameState.WAITING;
 
@@ -155,6 +155,8 @@ public class GameLG implements Listener {
         this.setDayCycle(DayCycle.NONE);
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
 
+        this.setConfig(new GameConfig(this));
+
         //TODO update all scoreboards
     }
 
@@ -238,5 +240,9 @@ public class GameLG implements Listener {
 
     public GameConfig getConfig() {
         return config;
+    }
+
+    private void setConfig(GameConfig config) {
+        this.config = config;
     }
 }

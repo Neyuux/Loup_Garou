@@ -81,6 +81,15 @@ public class CustomItemStack extends ItemStack {
         return this;
     }
 
+    public CustomItemStack addLore(String text) {
+        ItemMeta meta = this.getItemMeta();
+        List<String> lore = meta.getLore();
+        lore.add(text);
+        meta.setLore(lore);
+        this.setItemMeta(meta);
+        return this;
+    }
+
     public CustomItemStack setTypeV(Material type){
         this.setType(type);
         return this;

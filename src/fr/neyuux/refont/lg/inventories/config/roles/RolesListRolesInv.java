@@ -2,9 +2,7 @@ package fr.neyuux.refont.lg.inventories.config.roles;
 
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.inventories.config.ConfigurationInv;
 import fr.neyuux.refont.lg.items.menus.ReturnArrowItemStack;
-import fr.neyuux.refont.lg.items.menus.config.roles.CampChooseItemStack;
 import fr.neyuux.refont.lg.items.menus.config.roles.RoleAddingItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;

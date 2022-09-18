@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class President extends Role {
 
-    public President(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§e§lPrésident";

@@ -7,11 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
 public class Assassin extends Role {
-
-    public Assassin(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§1§lAssassin";

@@ -8,12 +8,16 @@ import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameLG implements Listener {
@@ -40,12 +44,14 @@ public class GameLG implements Listener {
 
     private final ArrayList<PlayerLG> spectators = new ArrayList<>();
 
-    private final ArrayList<PlayerLG> opList = new ArrayList<>();
+    private final ArrayList<HumanEntity> opList = new ArrayList<>();
 
 
     public GameLG() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
         this.config = new GameConfig(this);
+
+        this.resetGame();
     }
 
 
@@ -86,14 +92,15 @@ public class GameLG implements Listener {
     }
 
     public void OP(PlayerLG playerLG) {
-        if (!opList.contains(playerLG)) this.opList.add(playerLG);
+        if (!opList.contains(playerLG.getPlayer())) this.opList.add(playerLG.getPlayer());
         playerLG.getPlayer().getInventory().setItem(6, new OpComparatorItemStack());
-        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("AOP").addEntry(playerLG.getName());
+        LG.setPlayerInScoreboardTeam("AOP", playerLG.getPlayer());
     }
 
     public void unOP(PlayerLG playerLG) {
-        this.opList.remove(playerLG);
+        this.opList.remove(playerLG.getPlayer());
         playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
+        LG.setPlayerInScoreboardTeam("Players", playerLG.getPlayer());
     }
 
     public void setSpectator(PlayerLG playerLG) {
@@ -108,6 +115,27 @@ public class GameLG implements Listener {
         player.sendMessage(this.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
         player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
         //TODO update all scoreboard (less players)
+    }
+
+    public void removeSpectator(PlayerLG playerLG) {
+        Player player = playerLG.getPlayer();
+
+        this.spectators.remove(playerLG);
+
+        this.getItemsManager().updateSpawnItems(playerLG);
+        player.setMaxHealth(20);
+        player.setHealth(20);
+
+        for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
+        this.addSaturation(playerLG);
+        this.addNightVision(playerLG);
+
+        player.setDisplayName(player.getName());
+        player.setPlayerListName(player.getName());
+        player.setGameMode(GameMode.ADVENTURE);
+        //TODO player.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f));
+
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
     }
 
     public void addNightVision(PlayerLG playerLG) {
@@ -129,7 +157,6 @@ public class GameLG implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerLG playerLG = PlayerLG.createPlayerLG(player);
 
-            player.getInventory().clear();
             player.setExp(0f);
             player.setLevel(0);
             player.setMaxHealth(20);
@@ -141,11 +168,14 @@ public class GameLG implements Listener {
             //TODO tp config locations.mainSpawn
             //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
 
+            LG.setPlayerInScoreboardTeam("Players", player);
+            if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
 
             //TODO update scoreboard
             PlayerLG.removePlayerLG(player);
             PlayerLG.createPlayerLG(player);
+
         }
 
         Bukkit.getWorld("LG").setTime(0);
@@ -160,7 +190,7 @@ public class GameLG implements Listener {
         //TODO update all scoreboards
     }
 
-    public List<PlayerLG> getOPs() {
+    public List<HumanEntity> getOPs() {
         return this.opList;
     }
 
@@ -222,7 +252,7 @@ public class GameLG implements Listener {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
-        sendTitleToAllPlayers(gameType.getName(), "§fa été choisi comme nouveau type de jeu !" , 20, 60, 20);
+        if (gameType != GameType.NONE) sendTitleToAllPlayers(gameType.getName(), "§fa été choisi comme nouveau type de jeu !" , 20, 60, 20);
     }
 
     public ItemsManager getItemsManager() {

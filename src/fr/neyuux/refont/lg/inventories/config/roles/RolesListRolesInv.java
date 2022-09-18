@@ -21,7 +21,7 @@ public class RolesListRolesInv extends AbstractCustomInventory {
     private final Camps camp;
 
     public RolesListRolesInv(Decks deck, Camps camp) {
-        super("§6" + deck.getAlias() + "§b" + camp.getName(), 45);
+        super("§bRôles §l" + camp.getName() + " §6" + deck.getAlias(), 45, 7);
         this.deck = deck;
         this.camp = camp;
 
@@ -41,11 +41,10 @@ public class RolesListRolesInv extends AbstractCustomInventory {
 
     private List<Role> getRolesInDeckCamp() {
         List<Role> list = new ArrayList<>();
-        GameLG game = LG.getInstance().getGame();
 
         try {
             for (Constructor<? extends Role> roleConstructor : LG.getInstance().getRoles().values()) {
-                Role role = ((Constructor<Role>)roleConstructor).newInstance(game);
+                Role role = ((Constructor<Role>)roleConstructor).newInstance();
 
                 if (role.getDeck().equals(deck)) {
                     if (role.getBaseCamp().equals(camp)) list.add(role);

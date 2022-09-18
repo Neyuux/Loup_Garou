@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Fossoyeur extends Role {
 
-    public Fossoyeur(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§8§lFossoyeur";

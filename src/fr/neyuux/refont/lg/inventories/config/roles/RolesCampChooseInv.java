@@ -12,7 +12,7 @@ public class RolesCampChooseInv extends AbstractCustomInventory {
     private final Decks deck;
 
     public RolesCampChooseInv(Decks deck) {
-        super("§6§lMenu §aCamps", 9);
+        super("§6§lMenu §aCamps", 9, 6);
         this.deck = deck;
     }
 

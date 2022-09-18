@@ -7,10 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 
 public class Pirate extends Role {
 
-    public Pirate(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§e§lPirate";

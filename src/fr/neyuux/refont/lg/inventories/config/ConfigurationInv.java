@@ -10,7 +10,7 @@ public class ConfigurationInv extends AbstractCustomInventory {
 
 
     public ConfigurationInv() {
-        super("§c§lConfiguration", 45);
+        super("§c§lConfiguration", 45, 0);
     }
 
     @Override

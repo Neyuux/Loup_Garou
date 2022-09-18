@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class GrandMechantLoup extends Role {
 
-    public GrandMechantLoup(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§4§lGrand Méchant §c§lLoup";

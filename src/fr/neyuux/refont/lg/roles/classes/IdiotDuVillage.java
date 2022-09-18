@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class IdiotDuVillage extends Role {
 
-    public IdiotDuVillage(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§d§lIdiot §e§ldu Village";

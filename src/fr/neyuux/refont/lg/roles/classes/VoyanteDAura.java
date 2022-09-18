@@ -7,10 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 
 public class VoyanteDAura extends Role {
 
-    public VoyanteDAura(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§d§lVoyante §4§ld'Aura";

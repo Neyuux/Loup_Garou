@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class InfectPereDesLoups extends Role {
 
-    public InfectPereDesLoups(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§2§lInfect Père §c§ldes Loups";

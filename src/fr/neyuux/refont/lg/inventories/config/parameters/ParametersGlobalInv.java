@@ -7,7 +7,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class ParametersGlobalInv extends AbstractCustomInventory {
     public ParametersGlobalInv() {
-        super("§f§lParamètres §a§lGlobaux", 27);
+        super("§f§lParamètres §a§lGlobaux", 27, 10);
     }
 
     @Override

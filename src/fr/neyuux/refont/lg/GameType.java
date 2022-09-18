@@ -3,7 +3,7 @@ package fr.neyuux.refont.lg;
 public enum GameType {
 
     FREE("§eLibre"),
-    MEETING("§aRéunion"),
+    MEETING("§dRéunion"),
     NONE("§cPas encore choisi");
 
     GameType(String name) {

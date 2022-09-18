@@ -14,11 +14,13 @@ public abstract class AbstractCustomInventory {
 
     private final String name;
     private int size;
+    private final int id;
     private final HashMap<Integer, CustomItemStack> itemsMap = new HashMap<>();
 
-    public AbstractCustomInventory(String name, int size) {
+    public AbstractCustomInventory(String name, int size, int id) {
         this.name = name;
         this.size = size;
+        this.id = id;
     }
 
     public abstract void registerItems();
@@ -84,7 +86,7 @@ public abstract class AbstractCustomInventory {
 
 
     public void setCorner(byte color, int slot, byte direction) {
-        CustomItemStack glass = new CustomItemStack(Material.STAINED_GLASS, 1, color);
+        CustomItemStack glass = new CustomItemStack(Material.STAINED_GLASS_PANE, 1, color);
 
         this.setItem((slot), glass);
 
@@ -107,5 +109,9 @@ public abstract class AbstractCustomInventory {
         this.setCorner(color, this.getSize() - 9, (byte)3);
 
         this.setCorner(color, this.getSize() - 1, (byte)4);
+    }
+
+    public int getID() {
+        return id;
     }
 }

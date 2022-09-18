@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Macon extends Role {
 
-    public Macon(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§6§lMaçon";

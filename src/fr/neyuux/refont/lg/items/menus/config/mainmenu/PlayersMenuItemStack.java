@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.ClickType;
 public class PlayersMenuItemStack extends CustomItemStack {
 
     public PlayersMenuItemStack(String owner) {
-        super(Material.SKULL, 1, "§6Joueurs");
+        super(Material.SKULL_ITEM, 1, "§6Joueurs");
 
         this.setDamage(3);
         this.setSkullOwner(owner);

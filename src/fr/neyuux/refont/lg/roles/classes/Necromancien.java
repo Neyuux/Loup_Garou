@@ -7,11 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
 public class Necromancien extends Role {
-
-    public Necromancien(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§9§lNécromancien";

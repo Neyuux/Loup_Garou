@@ -7,11 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
 public class Noctambule extends Role {
-
-    public Noctambule(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§9§lNoctambule";

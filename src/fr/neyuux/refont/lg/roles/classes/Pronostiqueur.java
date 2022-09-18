@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Pronostiqueur extends Role {
 
-    public Pronostiqueur(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§7§lPronostiqueur";

@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Corbeau extends Role {
 
-    public Corbeau(GameLG gameLG){
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§8§lCorbeau";

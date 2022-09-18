@@ -44,10 +44,9 @@ public class DecksItemStack extends CustomItemStack {
 
 
     private boolean isUsed() {
-        GameLG game = LG.getInstance().getGame();
-        for (Constructor<? extends Role> roleConstructor : game.getConfig().getAddedRoles()) {
+        for (Constructor<? extends Role> roleConstructor : LG.getInstance().getGame().getConfig().getAddedRoles()) {
             try {
-                if (((Constructor<Role>)roleConstructor).newInstance(game).getDeck().equals(deck)) return true;
+                if (((Constructor<Role>)roleConstructor).newInstance().getDeck().equals(deck)) return true;
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
                 Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cUne erreur s'est produite dans la création des items des decks !");

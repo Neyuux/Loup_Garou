@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,8 @@ public class OpListItemStack extends CustomItemStack {
 
         ArrayList<String> namesList = new ArrayList<>();
 
-        for (PlayerLG playerLG : LG.getInstance().getGame().getOPs())
-            namesList.add(playerLG.getDisplayName());
+        for (HumanEntity human : LG.getInstance().getGame().getOPs())
+            namesList.add("§c" + human.getName());
 
         this.setLore(namesList);
     }

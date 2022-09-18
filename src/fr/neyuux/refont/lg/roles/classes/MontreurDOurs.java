@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class MontreurDOurs extends Role {
 
-    public MontreurDOurs(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§6§lMontreur d'Ours";

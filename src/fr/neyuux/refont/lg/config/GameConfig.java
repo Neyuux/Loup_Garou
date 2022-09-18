@@ -15,27 +15,27 @@ public class GameConfig {
 
     private final List<Constructor<? extends Role>> addedRoles = new ArrayList<>();
 
-    private final Parameter dayCycle = new Parameter(new ParameterDayCycleItemStack(), true, ParameterType.GLOBAL);
+    private final Parameter dayCycle = new Parameter(true, ParameterType.GLOBAL);
 
-    private final Parameter chatLG = new Parameter(new ParameterLGChatItemStack(), true, ParameterType.GLOBAL);
+    private final Parameter chatLG = new Parameter(true, ParameterType.GLOBAL);
 
-    private final Parameter mayor = new Parameter(new ParameterMayorItemStack(), true, ParameterType.GLOBAL);
+    private final Parameter mayor = new Parameter(true, ParameterType.GLOBAL);
 
-    private final Parameter randomCouple = new Parameter(new ParameterRandomCoupleItemStack(), false, ParameterType.GLOBAL);
+    private final Parameter randomCouple = new Parameter(false, ParameterType.GLOBAL);
 
-    private final Parameter mayorSuccession = new Parameter(new ParameterMayorSuccessionItemStack(), MayorSuccession.CHOOSE, ParameterType.GLOBAL);
+    private final Parameter mayorSuccession = new Parameter(MayorSuccession.CHOOSE, ParameterType.GLOBAL);
 
-    private final Parameter cupiWinWithCouple = new Parameter(new ParameterCupiWinWithCoupleItemStack(), false, ParameterType.ROLE);
+    private final Parameter cupiWinWithCouple = new Parameter(false, ParameterType.ROLE);
 
-    private final Parameter comedianPowers = new Parameter(new ParameterComedianPowersItemStack(), Arrays.asList(ComedianPowers.VOYANTE, ComedianPowers.MONTREUR_D_OURS, ComedianPowers.ANCIEN), ParameterType.ROLE);
+    private final Parameter comedianPowers = new Parameter(new ArrayList<>(Arrays.asList(ComedianPowers.VOYANTE, ComedianPowers.MONTREUR_D_OURS, ComedianPowers.ANCIEN)), ParameterType.ROLE);
 
-    private final Parameter wildChildRandomModel = new Parameter(new ParameterWildChildRandomModelItemStack(), false, ParameterType.ROLE);
+    private final Parameter wildChildRandomModel = new Parameter(false, ParameterType.ROLE);
 
-    private final Parameter cupiInCouple = new Parameter(new ParameterCupiInCoupleItemStack(), false, ParameterType.ROLE);
+    private final Parameter cupiInCouple = new Parameter(false, ParameterType.ROLE);
 
-    private final Parameter chamanChat = new Parameter(new ParameterChamanChatItemStack(), false, ParameterType.ROLE);
+    private final Parameter chamanChat = new Parameter(false, ParameterType.ROLE);
 
-    private final Parameter chattyVoyante = new Parameter(new ParameterChattyVoyanteItemStack(), false, ParameterType.ROLE);
+    private final Parameter chattyVoyante = new Parameter(false, ParameterType.ROLE);
 
     public GameConfig(GameLG game) {
         this.gameLG = game;
@@ -100,6 +100,30 @@ public class GameConfig {
         for (Constructor<? extends Role> constructor2 : this.getAddedRoles())
             if (constructor.equals(constructor2))i++;
         return i;
+    }
+
+    public void registerParameters() {
+        this.getDayCycle().setItem(new ParameterDayCycleItemStack());
+
+        this.getChatLG().setItem(new ParameterLGChatItemStack());
+
+        this.getMayor().setItem(new ParameterMayorItemStack());
+
+        this.getRandomCouple().setItem(new ParameterRandomCoupleItemStack());
+
+        this.getMayorSuccession().setItem(new ParameterMayorSuccessionItemStack());
+
+        this.getCupiWinWithCouple().setItem(new ParameterCupiWinWithCoupleItemStack());
+
+        this.getComedianPowers().setItem(new ParameterComedianPowersItemStack());
+
+        this.getWildChildRandomModel().setItem(new ParameterWildChildRandomModelItemStack());
+
+        this.getCupiInCouple().setItem(new ParameterCupiInCoupleItemStack());
+
+        this.getChamanChat().setItem(new ParameterChamanChatItemStack());
+
+        this.getChattyVoyante().setItem(new ParameterChattyVoyanteItemStack());
     }
 }
 

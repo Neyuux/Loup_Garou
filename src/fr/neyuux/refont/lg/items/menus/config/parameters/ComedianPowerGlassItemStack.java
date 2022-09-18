@@ -12,19 +12,19 @@ import org.bukkit.event.Event;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 public class ComedianPowerGlassItemStack extends CustomItemStack {
 
+    private final ComedianPowers power;
     private final Role role;
-    private final Constructor<? extends Role> constructorRole;
+    private final ArrayList<ComedianPowers> listPowers;
 
-    public ComedianPowerGlassItemStack(Constructor<? extends Role> constructorRole) {
+    public ComedianPowerGlassItemStack(ComedianPowers power) {
         super(Material.STAINED_GLASS_PANE, 1, "role");
-        this.role = this.getRole(constructorRole);
-        this.constructorRole = constructorRole;
+        this.power = power;
+        this.role = this.getRole(LG.getInstance().getRoles().get(power.getName()));
+        this.listPowers = (ArrayList<ComedianPowers>) LG.getInstance().getGame().getConfig().getComedianPowers().getValue();
 
 
         this.setItemMetas(this.isActivated());
@@ -33,18 +33,18 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
     @Override
     public void use(HumanEntity player, Event event) {
         if (this.isActivated()) {
-            ((ArrayList<ComedianPowers>)LG.getInstance().getGame().getConfig().getComedianPowers().getValue()).remove(ComedianPowers.getByRole(constructorRole));
+            listPowers.remove(power);
             this.setItemMetas(true);
         } else {
-            ((ArrayList<ComedianPowers>)LG.getInstance().getGame().getConfig().getComedianPowers().getValue()).add(ComedianPowers.getByRole(constructorRole));
+            listPowers.add(power);
             this.setItemMetas(false);
         }
     }
 
 
-    private Role getRole(Constructor<? extends Role> role) {
+    private Role getRole(Constructor<? extends Role> constructor) {
         try {
-            return ((Constructor<Role>)role).newInstance(LG.getInstance().getGame());
+            return constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cUne erreur s'est produite dans la création des pouvoirs du Comédien !");
@@ -53,8 +53,8 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
     }
 
     private boolean isActivated() {
-        for (ComedianPowers power : (ArrayList<ComedianPowers>)LG.getInstance().getGame().getConfig().getComedianPowers().getValue())
-            if (power.getRole().equals(constructorRole))
+        for (ComedianPowers activatedPower : listPowers)
+            if (activatedPower.getName().equals(power.getName()))
                 return true;
         return false;
     }

@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class BoucEmissaire extends Role {
 
-    public BoucEmissaire(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "ßcßlBouc ßaßl…missaire";

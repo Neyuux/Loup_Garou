@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Pyromane extends Role {
 
-    public Pyromane(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§6§lPyromane";

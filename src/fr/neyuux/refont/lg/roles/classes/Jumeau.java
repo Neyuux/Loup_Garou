@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Jumeau extends Role {
 
-    public Jumeau(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§5§lJumeau";

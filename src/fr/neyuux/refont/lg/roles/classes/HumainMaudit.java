@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class HumainMaudit extends Role {
 
-    public HumainMaudit(GameLG gameLG)  {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§e§lHumain §c§lMaudit";

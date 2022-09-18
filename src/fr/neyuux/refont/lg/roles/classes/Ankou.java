@@ -8,11 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Ankou extends Role {
 
-    public Ankou(GameLG gameLG) {
-        super(gameLG);
-
-    }
-
     @Override
     public String getDisplayName() {
         return "§6§lAnkou";

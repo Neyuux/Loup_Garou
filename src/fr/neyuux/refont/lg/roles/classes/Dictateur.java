@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Dictateur extends Role {
 
-    public Dictateur(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§4§lDicta§2§lteur";

@@ -7,10 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 
 public class VilainGarcon extends Role {
 
-    public VilainGarcon(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§c§lVilain §b§lGarçon";

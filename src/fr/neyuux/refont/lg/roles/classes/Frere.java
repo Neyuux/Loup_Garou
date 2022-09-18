@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Frere extends Role {
 
-    public Frere(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§3§lFrère";

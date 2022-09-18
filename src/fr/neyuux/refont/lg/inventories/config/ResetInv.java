@@ -7,7 +7,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class ResetInv extends AbstractCustomInventory {
     public ResetInv() {
-        super("§b§lReset §bla Map", 27);
+        super("§b§lReset §bla Map", 27, 2);
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg.items.menus.config.parameters;
 
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.config.Parameter;
+import fr.neyuux.refont.lg.inventories.config.parameters.ParametersGlobalInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -22,5 +23,6 @@ public class ParameterDayCycleItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         dayCycleParameter.setValue(!(boolean)dayCycleParameter.getValue());
         this.setLoreLine(4, "§bValeur : " + dayCycleParameter.getVisibleValue());
+        new ParametersGlobalInv().open(player);
     }
 }

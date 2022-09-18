@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class PorteurDeLAmulette extends Role {
 
-    public PorteurDeLAmulette(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§6§lPorteur de §d§lL'Amulette";

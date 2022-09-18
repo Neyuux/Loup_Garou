@@ -12,11 +12,9 @@ import java.util.logging.Level;
 public abstract class Role implements Listener {
 
     private final ArrayList<PlayerLG> players = new ArrayList<>();
-    private final GameLG gameLG;
 
 
-    public Role(GameLG gameLG) {
-        this.gameLG = gameLG;
+    public Role() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
     }
 
@@ -47,10 +45,6 @@ public abstract class Role implements Listener {
         return players;
     }
 
-
-    public GameLG getGame() {
-        return gameLG;
-    }
 
 
     public abstract String getDisplayName();

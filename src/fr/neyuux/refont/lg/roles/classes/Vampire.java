@@ -7,10 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 
 public class Vampire extends Role {
 
-    public Vampire(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§5§lVampire";

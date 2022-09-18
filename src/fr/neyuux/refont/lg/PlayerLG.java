@@ -18,11 +18,11 @@ public class PlayerLG {
 
     private static final HashMap<Player, PlayerLG> playerHashMap = new HashMap<>();
     
-    private final GameLG game;
+    private GameLG game;
 
-    public PlayerLG(Player player, GameLG game) {
+    public PlayerLG(Player player) {
         this.player = player;
-        this.game = game;
+        this.game = LG.getInstance().getGame();
     }
 
     private final Player player;
@@ -160,10 +160,18 @@ public class PlayerLG {
     }
 
     public boolean isOP() {
-        return this.game.getOPs().contains(this);
+        if (this.game == null) {
+            this.game = LG.getInstance().getGame();
+            return true;
+        }
+        return this.game.getOPs().contains(this.player);
     }
 
     public boolean isSpectator() {
+        if (this.game == null) {
+            this.game = LG.getInstance().getGame();
+            return false;
+        }
         return this.game.getSpectators().contains(this);
     }
 
@@ -216,7 +224,7 @@ public class PlayerLG {
         if (playerHashMap.containsKey(player))
             return playerHashMap.get(player);
 
-        PlayerLG plg = new PlayerLG(player, LG.getInstance().getGame());
+        PlayerLG plg = new PlayerLG(player);
         playerHashMap.put(player, plg);
         return plg;
     }
@@ -227,12 +235,6 @@ public class PlayerLG {
 
     public CacheLG getCache() {
         return cache;
-    }
-    
-    public void updateRank() {
-        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(this.getName());
-
-        if (this.isOP()) this.game.OP(this);
     }
 
     private void sendPacket(Object packet) {

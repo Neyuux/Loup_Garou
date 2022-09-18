@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 
 public class Cupidon extends Role {
 
-    public Cupidon(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§9§lCupi§d§ldon";

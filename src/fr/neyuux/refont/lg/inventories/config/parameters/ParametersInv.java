@@ -8,7 +8,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class ParametersInv extends AbstractCustomInventory {
     public ParametersInv() {
-        super("§f§lParamètres de la partie", 9);
+        super("§f§lParamètres de la partie", 9, 9);
     }
 
     @Override

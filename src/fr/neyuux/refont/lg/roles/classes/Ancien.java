@@ -7,11 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
 public class Ancien extends Role {
-
-    public Ancien(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§7§lAncien";

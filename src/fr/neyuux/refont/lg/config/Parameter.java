@@ -4,15 +4,14 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 
 public class Parameter {
 
-    private final CustomItemStack item;
+    private CustomItemStack item;
 
     private Object value;
 
     private final ParameterType parameterType;
 
 
-    public Parameter(CustomItemStack item, Object value, ParameterType parameterType) {
-        this.item = item;
+    public Parameter(Object value, ParameterType parameterType) {
         this.value = value;
         this.parameterType = parameterType;
     }
@@ -20,6 +19,10 @@ public class Parameter {
 
     public CustomItemStack getItem() {
         return this.item;
+    }
+
+    public void setItem(CustomItemStack item) {
+        this.item = item;
     }
 
     public Object getValue() {

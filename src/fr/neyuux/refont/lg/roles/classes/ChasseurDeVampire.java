@@ -7,10 +7,6 @@ import fr.neyuux.refont.lg.roles.Role;
 
 public class ChasseurDeVampire extends Role {
 
-    public ChasseurDeVampire(GameLG gameLG) {
-        super(gameLG);
-    }
-
     @Override
     public String getDisplayName() {
         return "§a§lChasseur de §5§lVampire";

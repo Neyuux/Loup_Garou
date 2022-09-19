@@ -1,13 +1,11 @@
 package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
-import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.inventories.config.ChangeGameTypeInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
-import org.bukkit.event.inventory.ClickType;
 
 public class ChangeGameTypeItemStack extends CustomItemStack {
 

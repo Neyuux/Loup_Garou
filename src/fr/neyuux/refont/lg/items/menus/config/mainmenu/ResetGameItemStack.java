@@ -1,10 +1,10 @@
 package fr.neyuux.refont.lg.items.menus.config.mainmenu;
 
+import fr.neyuux.refont.lg.inventories.config.ResetInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
-import org.bukkit.event.inventory.ClickType;
 
 public class ResetGameItemStack extends CustomItemStack {
 
@@ -16,6 +16,6 @@ public class ResetGameItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        //TODO open reset game inv
+        new ResetInv().open(player);
     }
 }

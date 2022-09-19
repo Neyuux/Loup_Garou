@@ -9,6 +9,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -16,16 +17,16 @@ import java.util.*;
 
 public class PlayerLG {
 
-    private static final HashMap<Player, PlayerLG> playerHashMap = new HashMap<>();
+    private static final HashMap<HumanEntity, PlayerLG> playerHashMap = new HashMap<>();
     
     private GameLG game;
 
-    public PlayerLG(Player player) {
-        this.player = player;
+    public PlayerLG(HumanEntity human) {
+        this.human = human;
         this.game = LG.getInstance().getGame();
     }
 
-    private final Player player;
+    private final HumanEntity human;
 
     private Role role;
 

@@ -7,6 +7,7 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryEvent;
 
 public class ParameterDayCycleItemStack extends CustomItemStack {
 
@@ -23,6 +24,6 @@ public class ParameterDayCycleItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         dayCycleParameter.setValue(!(boolean)dayCycleParameter.getValue());
         this.setLoreLine(4, "§bValeur : " + dayCycleParameter.getVisibleValue());
-        new ParametersGlobalInv().open(player);
+        this.updateInInv(((InventoryEvent)event).getInventory());
     }
 }

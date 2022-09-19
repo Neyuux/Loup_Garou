@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryEvent;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +40,7 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
             listPowers.add(power);
             this.setItemMetas(false);
         }
+        this.updateInInv(((InventoryEvent)event).getInventory());
     }
 
 

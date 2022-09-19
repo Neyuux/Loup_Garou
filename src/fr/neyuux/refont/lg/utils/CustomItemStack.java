@@ -1,11 +1,10 @@
 package fr.neyuux.refont.lg.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
-import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -154,6 +153,16 @@ public class CustomItemStack extends ItemStack {
 
     public CustomItemStack clone(){
         return new CustomItemStack(this);
+    }
+
+    public void updateInInv(Inventory inv) {
+        int slot = -1;
+        for (int i = 0; i < inv.getSize(); i++) {
+            ItemStack item = inv.getItem(i);
+            if (this.isCustomSimilar(item))
+                slot = i;
+        }
+        inv.setItem(slot, this.clone());
     }
 
     @SuppressWarnings("deprecation")

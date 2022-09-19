@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryEvent;
 
 public class ParameterChamanChatItemStack extends CustomItemStack {
 
@@ -22,5 +23,6 @@ public class ParameterChamanChatItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         chamanChat.setValue(!(boolean)chamanChat.getValue());
         this.setLoreLine(5, "§bValeur : §l" + chamanChat.getVisibleValue());
+        this.updateInInv(((InventoryEvent)event).getInventory());
     }
 }

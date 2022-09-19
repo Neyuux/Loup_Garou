@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryEvent;
 
 public class ParameterCupiWinWithCoupleItemStack extends CustomItemStack {
 
@@ -22,5 +23,6 @@ public class ParameterCupiWinWithCoupleItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         cupiWinWithCouple.setValue(!(boolean)cupiWinWithCouple.getValue());
         this.setLoreLine(3, "§bValeur : " + cupiWinWithCouple.getVisibleValue());
+        this.updateInInv(((InventoryEvent)event).getInventory());
     }
 }

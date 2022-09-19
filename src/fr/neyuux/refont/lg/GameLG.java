@@ -113,7 +113,7 @@ public class GameLG implements Listener {
         player.setDisplayName("§8[§7Spectateur§8]" + player.getName());
         player.setPlayerListName(player.getDisplayName());
         player.sendMessage(this.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
-        player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/spec off§c.");
+        player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/lg spec off§c.");
         //TODO update all scoreboard (less players)
     }
 

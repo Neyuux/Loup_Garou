@@ -1,22 +1,16 @@
 package fr.neyuux.refont.lg.items.menus.config.roles;
 
-import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.config.GameConfig;
-import fr.neyuux.refont.lg.inventories.config.roles.RoleDecksInv;
-import fr.neyuux.refont.lg.inventories.config.roles.RolesCampChooseInv;
-import fr.neyuux.refont.lg.inventories.config.roles.RolesListRolesInv;
-import fr.neyuux.refont.lg.roles.Camps;
-import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryEvent;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class RoleAddingItemStack extends CustomItemStack {
@@ -40,6 +34,8 @@ public class RoleAddingItemStack extends CustomItemStack {
             e.printStackTrace();
         }
         this.updateMeta();
+
+        this.updateInInv(((InventoryEvent)event).getInventory());
     }
 
     private void updateMeta() {

@@ -28,7 +28,12 @@ public class LGCommand implements CommandExecutor {
                         switch (args[1]) {
                             case "on":
                                 if(this.checkHuman(sender)) {
-                                    PlayerLG playerLG = PlayerLG.
+                                    PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
+
+                                    if (!playerLG.isSpectator()) {
+                                        LG.getInstance().getGame().setSpectator(playerLG);
+                                        sender.sendMessage(LG.getPrefix() + "§b" + entityPlayer.getDisplayName() + "7 vous a mis en mode §lSpectateur§7.");
+                                    }
                                 }
                              break;
                             default:

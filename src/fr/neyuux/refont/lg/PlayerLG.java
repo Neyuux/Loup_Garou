@@ -8,6 +8,7 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -44,22 +45,22 @@ public class PlayerLG {
 
 
     public void sendMessage(String msg) {
-        if (this.player != null) {
+        if (this.human != null) {
             this.getPlayer().sendMessage(LG.getPrefix() + msg);
         }
     }
 
     public void sendActionBar(String msg) {
-        if (this.player == null) return;
+        if (this.human == null) return;
         IChatBaseComponent cbc = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + msg + "\"}");
         PacketPlayOutChat ppoc = new PacketPlayOutChat(cbc, (byte) 2);
         try {
-            ((CraftPlayer) this.player).getHandle().playerConnection.sendPacket(ppoc);
+            ((CraftPlayer) this.human).getHandle().playerConnection.sendPacket(ppoc);
         } catch (NullPointerException e) {e.printStackTrace();}
     }
 
     public void sendTitle(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
-        if (this.player == null) return;
+        if (this.human == null) return;
         try {
             Object chatTitle = Objects.requireNonNull(getNMSClass("IChatBaseComponent")).getDeclaredClasses()[0].getMethod("a", String.class)
                     .invoke(null, "{\"text\": \"" + title + "\"}");
@@ -87,14 +88,14 @@ public class PlayerLG {
     }
 
     public String getName() {
-        if (this.player != null)
-            return this.player.getName();
+        if (this.human != null)
+            return this.human.getName();
         return null;
     }
 
     public String getDisplayName() {
-        if (this.player != null)
-            return this.player.getDisplayName();
+        if (this.human != null && this.human instanceof Player)
+            return ((Player) this.human).getDisplayName();
         return null;
     }
 
@@ -152,12 +153,14 @@ public class PlayerLG {
                 name += "§5§lJumeau §d";
         }
 
-        name += player.getName();
+        name += this.human.getName();
         return name;
     }
 
     public Player getPlayer() {
-        return player;
+        if (this.human instanceof Player)
+            return (Player)this.human;
+        return null;
     }
 
     public boolean isOP() {
@@ -165,7 +168,7 @@ public class PlayerLG {
             this.game = LG.getInstance().getGame();
             return true;
         }
-        return this.game.getOPs().contains(this.player);
+        return this.game.getOPs().contains(this.human);
     }
 
     public boolean isSpectator() {
@@ -221,17 +224,17 @@ public class PlayerLG {
     }
 
 
-    public static PlayerLG createPlayerLG(Player player) {
-        if (playerHashMap.containsKey(player))
-            return playerHashMap.get(player);
+    public static PlayerLG createPlayerLG(HumanEntity human) {
+        if (playerHashMap.containsKey(human))
+            return playerHashMap.get(human);
 
-        PlayerLG plg = new PlayerLG(player);
-        playerHashMap.put(player, plg);
+        PlayerLG plg = new PlayerLG(human);
+        playerHashMap.put(human, plg);
         return plg;
     }
 
-    public static PlayerLG removePlayerLG(Player player) {
-        return playerHashMap.remove(player);
+    public static PlayerLG removePlayerLG(HumanEntity human) {
+        return playerHashMap.remove(human);
     }
 
     public CacheLG getCache() {
@@ -239,9 +242,10 @@ public class PlayerLG {
     }
 
     private void sendPacket(Object packet) {
-        if (this.player == null) return;
+        if (this.human == null) return;
         try {
-            Object handle = player.getClass().getMethod("getHandle").invoke(player);
+            Player player = (Player)human;
+            Object handle = (player).getClass().getMethod("getHandle").invoke(player);
             Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
             playerConnection.getClass().getMethod("sendPacket", getNMSClass("Packet")).invoke(playerConnection, packet);
         } catch (Exception e) {
@@ -259,7 +263,7 @@ public class PlayerLG {
         return null;
     }
 
-    public static HashMap<Player, PlayerLG> getPlayersMap() {
+    public static HashMap<HumanEntity, PlayerLG> getPlayersMap() {
         return playerHashMap;
     }
 }

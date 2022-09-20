@@ -43,7 +43,7 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
             LG.getInstance().getGame().setSpectator(playerLG);
 
             entityPlayer.sendMessage(LG.getPrefix() + "§b" + playerLG.getName() + " §7a bien été §amit§7 en §lSpectateur§7.");
-            playerLG.sendMessage(LG.getPrefix() + "§b" + entityPlayer.getDisplayName() + "7 vous a mis en mode §lSpectateur§7.");
+            playerLG.sendMessage(LG.getPrefix() + "§b" + entityPlayer.getDisplayName() + "§7 vous a mis en mode §lSpectateur§7.");
         }
         this.updateInInv(((InventoryEvent)event).getInventory());
     }

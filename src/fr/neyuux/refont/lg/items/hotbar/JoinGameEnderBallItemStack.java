@@ -1,5 +1,7 @@
 package fr.neyuux.refont.lg.items.hotbar;
 
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -15,6 +17,6 @@ public class JoinGameEnderBallItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        //TODO
+        LG.getInstance().getGame().joinGame(PlayerLG.createPlayerLG(player));
     }
 }

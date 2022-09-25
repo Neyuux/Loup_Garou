@@ -7,7 +7,9 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 public class ParameterMayorSuccessionItemStack extends CustomItemStack {
 
@@ -22,9 +24,13 @@ public class ParameterMayorSuccessionItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        Inventory inv = ((InventoryClickEvent) event).getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         mayorSuccessionParameter.setValue(MayorSuccession.getNext(((MayorSuccession)mayorSuccessionParameter.getValue()).getId()));
         this.setLoreLine(4, "§bValeur : " + mayorSuccessionParameter.getVisibleValue());
         this.setLoreLine(5, ((MayorSuccession)mayorSuccessionParameter.getValue()).getDescription());
-        this.updateInInv(((InventoryEvent)event).getInventory());
+
+        inv.setItem(slot, this);
     }
 }

@@ -12,15 +12,17 @@ import java.util.Map;
 
 public abstract class AbstractCustomInventory {
 
+    private static int totalIDs;
+
     private final String name;
     private int size;
     private final int id;
     private final HashMap<Integer, CustomItemStack> itemsMap = new HashMap<>();
 
-    public AbstractCustomInventory(String name, int size, int id) {
+    public AbstractCustomInventory(String name, int size) {
         this.name = name;
         this.size = size;
-        this.id = id;
+        this.id = nextID();
     }
 
     public abstract void registerItems();
@@ -113,5 +115,11 @@ public abstract class AbstractCustomInventory {
 
     public int getID() {
         return id;
+    }
+
+
+    public static int nextID() {
+        totalIDs++;
+        return totalIDs;
     }
 }

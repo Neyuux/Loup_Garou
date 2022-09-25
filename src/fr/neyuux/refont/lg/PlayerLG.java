@@ -7,14 +7,17 @@ import fr.neyuux.refont.lg.utils.CacheLG;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class PlayerLG {
 
@@ -99,6 +102,12 @@ public class PlayerLG {
         return null;
     }
 
+    public Location getLocation() {
+        if (this.human != null)
+            return this.human.getLocation();
+        return null;
+    }
+
     public String getNameWithAttributes(PlayerLG receiver) {
         String name = "";
 
@@ -167,16 +176,29 @@ public class PlayerLG {
         if (this.game == null) {
             this.game = LG.getInstance().getGame();
             return true;
-        }
+        } else if (this.game != LG.getInstance().getGame())
+            this.game = LG.getInstance().getGame();
         return this.game.getOPs().contains(this.human);
     }
 
     public boolean isSpectator() {
+        System.out.println(game + " / " + LG.getInstance().getGame());
         if (this.game == null) {
             this.game = LG.getInstance().getGame();
             return false;
-        }
+        } else if (this.game != LG.getInstance().getGame())
+            this.game = LG.getInstance().getGame();
+        System.out.println(this.game.getSpectators());
         return this.game.getSpectators().contains(this);
+    }
+
+    public boolean isInGame() {
+        if (this.game == null) {
+            this.game = LG.getInstance().getGame();
+            return false;
+        } else if (this.game != LG.getInstance().getGame())
+            this.game = LG.getInstance().getGame();
+        return this.game.getPlayersInGame().contains(this);
     }
 
     public Role getRole() {

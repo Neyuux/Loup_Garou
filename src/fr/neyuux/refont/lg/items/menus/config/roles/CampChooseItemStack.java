@@ -30,16 +30,16 @@ public class CampChooseItemStack extends CustomItemStack {
 
         if (camp.equals(Camps.LOUP_GAROU)) {
             this.setDamage(14);
-            this.setDisplayName("§cCamp des §lLoups-Garous");
+            this.setDisplayName("§cCamp des §lLoups-Garous §b" + deck.getAlias());
             this.setLore("§4Affiche les rôles", "§4du camp des loups.", "§7>>Cliquer pour afficher.");
         } else if (camp.equals(Camps.VILLAGE)){
             this.setDamage(5);
-            this.setDisplayName("§aCamp du §lVillage");
+            this.setDisplayName("§aCamp du §lVillage §b" + deck.getAlias());
             this.setLore("§2Affiche les rôles", "§2du camp du village.", "§7>>Cliquer pour afficher.");
         } else {
             this.setDamage(1);
-            this.setDisplayName("§6Camp des §lAutres");
-            this.setLore("§eAffiche les rôles", "§edu camp des autres rôles.", "§7>>Cliquer pour afficher.");
+            this.setDisplayName("§6Camp des §lAutres §b" + deck.getAlias());
+            this.setLore("§eAffiche les rôles qui ne", "§esont ni du village ni des loups.", "§7>>Cliquer pour afficher.");
         }
     }
 

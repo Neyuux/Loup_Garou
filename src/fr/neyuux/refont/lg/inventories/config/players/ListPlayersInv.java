@@ -10,7 +10,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 public class ListPlayersInv extends AbstractCustomInventory {
 
     public ListPlayersInv() {
-        super("§6§lJoueurs", 36, 4);
+        super("§6§lJoueurs", 36);
         this.adaptIntToInvSize(PlayerLG.getPlayersMap().size());
     }
 

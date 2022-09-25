@@ -1,8 +1,12 @@
 package fr.neyuux.refont.lg.commands;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameState;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.roles.Camps;
+import fr.neyuux.refont.lg.roles.Decks;
+import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,18 +14,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class LGCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         String helpMessage = "§fAide pour la commande §c"+alias+"§f :§r\n§c/"+alias+" spec §a<on/off/add/remove/list/clear>\n§c/"+alias+" compo" +
-                "\n§c/"+alias+" ankou §a[joueur]\n§c/" + alias + " op §a<add/remove/list>\n§c/"+alias+ " play §a<list/add/remove>";
+                "\n§c/"+alias+" ankou §a[joueur]\n§c/" + alias + " op §a<add/remove/list>\n§c/"+alias+ " players §a<list/add/remove>";
 
         if (args.length > 0) {
             switch(args[0].toLowerCase()) {
                 case "spec":
                 case "spectateur":
                 case "spectator":
-                    final String helpspecmessage = "§6La commande spec gérer les spectateurs de la partie.\nArgument possibles : \n" +
+                    final String helpspecmessage = "§6La commande spec permet de gérer les spectateurs de la partie.\nArgument possibles : \n" +
                             "§con §6: Devient spectateur\n§coff §6: Retire le mode spectateur\n" +
                             "§clist §6: Affiche la liste des spectateurs.\n" +
                             "§cadd §e<joueur>§6: Ajoute un joueur au mode spectateur\n" +
@@ -36,13 +43,15 @@ public class LGCommand implements CommandExecutor {
                                     PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
 
                                     if (!playerLG.isSpectator()) LG.getInstance().getGame().setSpectator(playerLG);
+                                    GameLG.playPositiveSound(playerLG.getPlayer());
                                 }
                              break;
                             case "off":
                                 if(this.checkHuman(sender)) {
                                     PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
 
-                                    if (!playerLG.isSpectator()) LG.getInstance().getGame().removeSpectator(playerLG);
+                                    if (playerLG.isSpectator()) LG.getInstance().getGame().removeSpectator(playerLG);
+                                    GameLG.playPositiveSound(playerLG.getPlayer());
                                 }
                             break;
                             case "list":
@@ -107,9 +116,185 @@ public class LGCommand implements CommandExecutor {
                 case "roles":
                 case "composition":
                     if (LG.getInstance().getGame().getGameState() != GameState.PLAYING) {
-                        sender.sendMessage(LG.getPrefix() + );
+                        sender.sendMessage(LG.getPrefix() + "§eListe des rôles présents dans la composition :");
+
+                        for (Camps camp : Camps.values()) {
+                            sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
+
+                            for (Decks decks : Decks.values())
+                                for (Constructor<? extends Role> constructor : LG.getInstance().getGame().getConfig().getAddedRoles())
+                                    try {
+                                        Role role = ((Constructor<Role>) constructor).newInstance();
+                                        if (role.getBaseCamp().equals(camp) && role.getDeck().equals(decks)) sender.sendMessage("  " + camp.getColor() + "§l- " + role.getDisplayName());
+                                    } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                                        e.printStackTrace();
+                                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cUne erreur s'est produite dans la création des items des decks !");
+                                    }
+
+                            sender.sendMessage(" ");
+                        }
+                    } else {
+                        sender.sendMessage(LG.getPrefix() + "§eListe des rôles encore présents dans la partie :");
+
+                        for (Camps camp : Camps.values()) {
+                            sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
+
+                            for (Role role : LG.getInstance().getGame().getAliveRoles())
+                                sender.sendMessage("  " + camp.getColor() + "§l- " + role.getDisplayName());
+
+                            sender.sendMessage(" ");
+                        }
                     }
 
+                break;
+
+                case "ankou": //TODO ankouCommand
+                break;
+
+                case "op":
+                case "operator":
+                case "admin":
+                case "operateur":
+                    final String helpopcommand = "§6La commande op permet de gérer les gérants de la partie.\nArgument possibles : \n" +
+                            "§clist §6: Affiche la liste des op.\n" +
+                            "§cadd §e<joueur>§6: OP un joueur\n" +
+                            "§cremove §e<joueur>§6: DéOP un joueur\n";
+                    if (args.length == 1) {
+                        sender.sendMessage(LG.getPrefix() + helpopcommand);
+                    } else {
+                        switch (args[1].toLowerCase()) {
+                            case "list":
+                                sender.sendMessage(LG.getPrefix() + "§cListe des OPs :");
+                                LG.getInstance().getGame().getOPs().forEach(playerLG -> sender.sendMessage(" §c - §f" + playerLG.getName()));
+                                break;
+                            case "add":
+                                if (sender.isOp()) {
+                                    if (args.length > 2) {
+
+                                        Player player = Bukkit.getPlayer(args[2]);
+                                        if (player != null) {
+                                            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+                                            if (!playerLG.isOP()) {
+
+                                                LG.getInstance().getGame().OP(playerLG);
+                                                Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §ca OP §5§l" + player.getName() + "§c.");
+
+                                            } else
+                                                sender.sendMessage(LG.getPrefix() + "§cCe joueur est déjà §5§lOP §c!");
+                                        } else
+                                            sender.sendMessage(LG.getPrefix() + "§cLe joueur §4\"§e" + args[2] + "§4\" §cn'existe pas.");
+                                    } else sender.sendMessage(LG.getPrefix() + helpopcommand);
+                                } else
+                                    sender.sendMessage(LG.getPrefix() + "§cVous n'avez pas la permission d'exécuter cette commande.");
+                                break;
+                            case "remove":
+                                if (sender.isOp()) {
+                                    if (args.length > 2) {
+
+                                        Player player = Bukkit.getPlayer(args[2]);
+                                        if (player != null) {
+                                            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+                                            if (playerLG.isOP()) {
+
+                                                LG.getInstance().getGame().unOP(playerLG);
+                                                Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §ca déOP §5§l" + player.getName() + "§c.");
+
+                                            } else
+                                                sender.sendMessage(LG.getPrefix() + "§cCe joueur n'est pas §5§lOP §c!");
+                                        } else
+                                            sender.sendMessage(LG.getPrefix() + "§cLe joueur §4\"§e" + args[2] + "§4\" §cn'existe pas.");
+                                    } else sender.sendMessage(LG.getPrefix() + helpopcommand);
+                                } else
+                                    sender.sendMessage(LG.getPrefix() + "§cVous n'avez pas la permission d'exécuter cette commande.");
+                                break;
+
+                            default:
+                                sender.sendMessage(LG.getPrefix() + helpopcommand);
+                            break;
+                        }
+                    }
+                break;
+
+                case "players":
+                case "player":
+                case "playing":
+                    final String helpplayerscommand = "§6La commande players permet de gérer les participants de la partie.\nArgument possibles : \n" +
+                            "§clist §6: Affiche la liste des participants.\n" +
+                            "§cadd §e<joueur>§6: Ajoute un joueur à la liste des participants\n" +
+                            "§cremove §e<joueur>§6: Retire un joueur de la liste des participants\n";
+                    if (args.length == 1) {
+                        sender.sendMessage(LG.getPrefix() + helpplayerscommand);
+                    } else {
+                        switch (args[1].toLowerCase()) {
+                            case "list":
+                                sender.sendMessage(LG.getPrefix() + "§aListe des participants :");
+                                LG.getInstance().getGame().getPlayersInGame().forEach(playerLG -> sender.sendMessage(" §a - §f" + playerLG.getName()));
+                                break;
+                            case "add":
+                                if (!this.checkHuman(sender) || LG.getInstance().getGame().getOPs().contains((HumanEntity) sender)) {
+                                    if (args.length > 2) {
+
+                                        Player player = Bukkit.getPlayer(args[2]);
+                                        if (player != null) {
+                                            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+                                            if (!playerLG.isInGame()) {
+
+                                                if (LG.getInstance().getGame().joinGame(playerLG))
+                                                    Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §aa ajouté §e§l" + player.getDisplayName() + "§a à la liste des participants.");
+                                                else
+                                                    sender.sendMessage(LG.getPrefix() + "§cCe joueur ne peut pas rejoindre la partie si le type de jeu n'est pas paramétré.");
+                                            } else
+                                                sender.sendMessage(LG.getPrefix() + "§cCe joueur est déjà dans la liste des participants !");
+                                        } else
+                                            sender.sendMessage(LG.getPrefix() + "§cLe joueur §4\"§e" + args[2] + "§4\" §cn'existe pas.");
+                                    } else sender.sendMessage(LG.getPrefix() + helpplayerscommand);
+                                } else
+                                    sender.sendMessage(LG.getPrefix() + "§cVous n'avez pas la permission d'exécuter cette commande.");
+                                break;
+                            case "remove":
+                                if (!this.checkHuman(sender) || LG.getInstance().getGame().getOPs().contains((HumanEntity) sender)) {
+                                    if (args.length > 2) {
+
+                                        Player player = Bukkit.getPlayer(args[2]);
+                                        if (player != null) {
+                                            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+                                            if (playerLG.isInGame()) {
+
+                                                LG.getInstance().getGame().leaveGame(playerLG);
+                                                Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §ca retiré §e§l" + player.getDisplayName() + "§c de la liste des participants.");
+
+                                            } else
+                                                sender.sendMessage(LG.getPrefix() + "§cCe joueur n'est pas dans la liste des participants !");
+                                        } else
+                                            sender.sendMessage(LG.getPrefix() + "§cLe joueur §4\"§e" + args[2] + "§4\" §cn'existe pas.");
+                                    } else sender.sendMessage(LG.getPrefix() + helpplayerscommand);
+                                } else
+                                    sender.sendMessage(LG.getPrefix() + "§cVous n'avez pas la permission d'exécuter cette commande.");
+                                break;
+
+                            case "on":
+                                if(this.checkHuman(sender)) {
+                                    PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
+
+                                    if (!playerLG.isInGame()) LG.getInstance().getGame().joinGame(playerLG);
+                                }
+                                break;
+                            case "off":
+                                if(this.checkHuman(sender)) {
+                                    PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
+
+                                    if (playerLG.isInGame()) LG.getInstance().getGame().leaveGame(playerLG);
+                                }
+                                break;
+                            default:
+                                sender.sendMessage(LG.getPrefix() + helpplayerscommand);
+                                break;
+                        }
+                    }
                 break;
 
                 default:

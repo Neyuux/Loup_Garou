@@ -9,7 +9,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class ParameterComedianPowersInv extends AbstractCustomInventory {
     public ParameterComedianPowersInv() {
-        super("§dRôles du §5§lComédien", 54, 11);
+        super("§dRôles du §5§lComédien", 54);
         this.adaptIntToInvSize(ComedianPowers.values().length + 1);
     }
 

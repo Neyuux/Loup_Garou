@@ -1,9 +1,11 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.commands.LGCommand;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.listeners.PlayerListener;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
+import fr.neyuux.refont.old.lg.commands.CommandAnkou;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -36,6 +38,11 @@ public class LG extends JavaPlugin {
 
     public static String getPrefix() {
         return prefix;
+    }
+
+    public static String getPlurial(int i) {
+        if (i != 1) return "s";
+        else return "";
     }
 
     @Override
@@ -83,6 +90,7 @@ public class LG extends JavaPlugin {
         this.gameLG = new GameLG();
         this.initialiseRoles();
 
+        this.getCommand("lg").setExecutor(new LGCommand());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
         super.onEnable();

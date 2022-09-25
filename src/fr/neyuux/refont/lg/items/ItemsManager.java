@@ -14,7 +14,7 @@ public class ItemsManager {
         playerInv.clear();
         if (!playerLG.isSpectator()) {
             playerInv.setItem(1, new SpectatorTearItemStack());
-            playerInv.setItem(5, new JoinGameEnderBallItemStack());
+            if (!playerLG.isInGame()) playerInv.setItem(5, new JoinGameEnderBallItemStack());
         }
         if (playerLG.isOP()) {
             playerInv.setItem(6, new OpComparatorItemStack());

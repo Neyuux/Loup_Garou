@@ -7,7 +7,9 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 public class ParameterDayCycleItemStack extends CustomItemStack {
 
@@ -22,8 +24,11 @@ public class ParameterDayCycleItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        Inventory inv = ((InventoryClickEvent) event).getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         dayCycleParameter.setValue(!(boolean)dayCycleParameter.getValue());
         this.setLoreLine(4, "§bValeur : " + dayCycleParameter.getVisibleValue());
-        this.updateInInv(((InventoryEvent)event).getInventory());
+        inv.setItem(slot, this);
     }
 }

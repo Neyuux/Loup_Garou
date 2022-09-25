@@ -155,15 +155,6 @@ public class CustomItemStack extends ItemStack {
         return new CustomItemStack(this);
     }
 
-    public void updateInInv(Inventory inv) {
-        int slot = -1;
-        for (int i = 0; i < inv.getSize(); i++) {
-            ItemStack item = inv.getItem(i);
-            if (this.isCustomSimilar(item))
-                slot = i;
-        }
-        inv.setItem(slot, this.clone());
-    }
 
     @SuppressWarnings("deprecation")
     public boolean isCustomSimilar(ItemStack stack) {
@@ -182,5 +173,17 @@ public class CustomItemStack extends ItemStack {
         for (CustomItemStack item : getItemList())
             if (item.isCustomSimilar(customItemStack)) return;
         getItemList().add(customItemStack);
+    }
+
+
+    public static int getSlot(Inventory inv, CustomItemStack customItemStack) {
+        int slot = -1;
+        for (int i = 0; i < inv.getSize(); i++) {
+            ItemStack item = inv.getItem(i);
+            if (item == null) break;
+            if (customItemStack.isCustomSimilar(item))
+                slot = i;
+        }
+        return slot;
     }
 }

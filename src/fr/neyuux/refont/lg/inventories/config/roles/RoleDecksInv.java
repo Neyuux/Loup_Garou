@@ -8,7 +8,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class RoleDecksInv extends AbstractCustomInventory {
     public RoleDecksInv() {
-        super("§6§lMenu §bDecks", 9, 5);
+        super("§6§lMenu §bDecks", 9);
     }
 
     @Override

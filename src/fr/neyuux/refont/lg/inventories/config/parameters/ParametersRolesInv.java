@@ -7,7 +7,7 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 public class ParametersRolesInv extends AbstractCustomInventory {
     public ParametersRolesInv() {
-        super("§f§lParamètres §6§ldes Rôles", 36, 8);
+        super("§f§lParamètres §6§ldes Rôles", 36);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class PlayerConfigInv extends AbstractCustomInventory {
     private final PlayerLG playerLG;
 
     public PlayerConfigInv(PlayerLG playerLG) {
-        super("§6§lMenu §b" + playerLG.getName(), 27, 3);
+        super("§6§lMenu §b" + playerLG.getName(), 27);
         this.playerLG = playerLG;
     }
 

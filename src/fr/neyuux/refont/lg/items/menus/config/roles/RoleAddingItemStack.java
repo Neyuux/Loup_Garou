@@ -8,7 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -27,15 +29,25 @@ public class RoleAddingItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        InventoryClickEvent clickEvent = (InventoryClickEvent) event;
+        Inventory inv = clickEvent.getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         try {
-            LG.getInstance().getGame().getConfig().getAddedRoles().add(role.getClass().getConstructor());
+            if (clickEvent.isLeftClick()) {
+                LG.getInstance().getGame().getConfig().getAddedRoles().add(role.getClass().getConstructor());
+
+            } else if (clickEvent.isRightClick()) {
+                LG.getInstance().getGame().getConfig().getAddedRoles().remove(role.getClass().getConstructor());
+            }
         } catch (NoSuchMethodException e) {
             Bukkit.broadcastMessage("§4[§cErreur§4]§c La création des objets pour ajouter des rôles a échoué. Veuillez réessayer ou appeler Neyuux_.");
             e.printStackTrace();
         }
+
         this.updateMeta();
 
-        this.updateInInv(((InventoryEvent)event).getInventory());
+        inv.setItem(slot, this);
     }
 
     private void updateMeta() {

@@ -12,7 +12,7 @@ public class RolesCampChooseInv extends AbstractCustomInventory {
     private final Decks deck;
 
     public RolesCampChooseInv(Decks deck) {
-        super("§6§lMenu §aCamps", 9, 6);
+        super("§6§lMenu §aCamps", 9);
         this.deck = deck;
     }
 
@@ -23,5 +23,6 @@ public class RolesCampChooseInv extends AbstractCustomInventory {
         this.setItem(0, new CampChooseItemStack(deck, Camps.LOUP_GAROU));
         this.setItem(3, new CampChooseItemStack(deck, Camps.VILLAGE));
         this.setItem(6, new CampChooseItemStack(deck, Camps.AUTRE));
+
     }
 }

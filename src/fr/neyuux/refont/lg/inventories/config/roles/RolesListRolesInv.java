@@ -1,6 +1,5 @@
 package fr.neyuux.refont.lg.inventories.config.roles;
 
-import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.items.menus.ReturnArrowItemStack;
 import fr.neyuux.refont.lg.items.menus.config.roles.RoleAddingItemStack;
@@ -21,25 +20,25 @@ public class RolesListRolesInv extends AbstractCustomInventory {
     private final Camps camp;
 
     public RolesListRolesInv(Decks deck, Camps camp) {
-        super("§bRôles §l" + camp.getName() + " §6" + deck.getAlias(), 45, 7);
+        super("§bRôles §l" + camp.getName() + " §6" + deck.getAlias(), 45);
         this.deck = deck;
         this.camp = camp;
 
-        this.adaptIntToInvSize(this.getRolesInDeckCamp().size());
+        this.adaptIntToInvSize(getRolesInDeckCamp(deck, camp).size());
     }
 
     @Override
     public void registerItems() {
         this.setItem(this.getSize() - 1, new ReturnArrowItemStack(new RolesCampChooseInv(deck)));
 
-        for (Role role : this.getRolesInDeckCamp()) {
+        for (Role role : getRolesInDeckCamp(deck, camp)) {
             this.addItem(new RoleAddingItemStack(role));
         }
     }
 
 
 
-    private List<Role> getRolesInDeckCamp() {
+    public static List<Role> getRolesInDeckCamp(Decks deck, Camps camp) {
         List<Role> list = new ArrayList<>();
 
         try {

@@ -12,7 +12,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -34,6 +36,9 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
     @Override
     public void use(HumanEntity player, Event event) {
         Player entityPlayer = (Player)player;
+        Inventory inv = ((InventoryClickEvent) event).getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         if (playerLG.isSpectator()) {
             LG.getInstance().getGame().removeSpectator(playerLG);
 
@@ -45,6 +50,6 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
             entityPlayer.sendMessage(LG.getPrefix() + "§b" + playerLG.getName() + " §7a bien été §amit§7 en §lSpectateur§7.");
             playerLG.sendMessage(LG.getPrefix() + "§b" + entityPlayer.getDisplayName() + "§7 vous a mis en mode §lSpectateur§7.");
         }
-        this.updateInInv(((InventoryEvent)event).getInventory());
+        inv.setItem(slot, this);
     }
 }

@@ -25,7 +25,7 @@ public class InfectPereDesLoups extends Role {
 
     @Override
     public Camps getBaseCamp() {
-        return Camps.VILLAGE;
+        return Camps.LOUP_GAROU;
     }
 
     @Override

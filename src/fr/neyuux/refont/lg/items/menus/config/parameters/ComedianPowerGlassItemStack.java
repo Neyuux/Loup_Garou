@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -33,6 +34,9 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        Inventory inv = ((InventoryEvent)event).getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         if (this.isActivated()) {
             listPowers.remove(power);
             this.setItemMetas(true);
@@ -40,7 +44,8 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
             listPowers.add(power);
             this.setItemMetas(false);
         }
-        this.updateInInv(((InventoryEvent)event).getInventory());
+
+        inv.setItem(slot, this);
     }
 
 

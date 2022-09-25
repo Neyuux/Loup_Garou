@@ -6,7 +6,9 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.inventory.Inventory;
 
 public class ParameterRandomCoupleItemStack extends CustomItemStack {
 
@@ -21,8 +23,11 @@ public class ParameterRandomCoupleItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        Inventory inv = ((InventoryClickEvent) event).getInventory();
+        int slot = CustomItemStack.getSlot(inv, this);
+
         randomCoupleParamter.setValue(!(boolean)randomCoupleParamter.getValue());
         this.setLoreLine(3, "§bValeur : " + randomCoupleParamter.getVisibleValue());
-        this.updateInInv(((InventoryEvent)event).getInventory());
+        inv.setItem(slot, this);
     }
 }

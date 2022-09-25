@@ -8,8 +8,8 @@ import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -17,7 +17,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameLG implements Listener {
@@ -132,10 +131,43 @@ public class GameLG implements Listener {
 
         player.setDisplayName(player.getName());
         player.setPlayerListName(player.getName());
+        player.sendMessage(this.getPrefix() + "§9Vous avez été retiré du mode Spectateur.");
         player.setGameMode(GameMode.ADVENTURE);
         //TODO player.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f));
 
         Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
+    }
+
+    public boolean joinGame(PlayerLG playerLG) {
+        if (this.gameType.equals(GameType.FREE)) {
+            //TODO TP
+        } else if (this.gameType.equals(GameType.MEETING)) {
+            //TODO TP
+        } else if (this.gameType.equals(GameType.NONE)) {
+            playerLG.sendMessage(LG.getPrefix() + "§cVous devez attendre qu'un OP choisisse le type de jeu (Libre ou Réunion) !");
+            playNegativeSound(playerLG.getPlayer());
+            return false;
+        }
+
+        if (!playersInGame.contains(playerLG)) this.playersInGame.add(playerLG);
+
+        LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
+
+        playerLG.sendTitle("§5§ka §4§ka §c§ka §a§lVous jouerez cette partie ! §6§ka §e§ka §f§ka ", "§6Il y a désormais §e" + this.playersInGame.size() + "§6 joueur"+ LG.getPlurial(this.playersInGame.size()) +".", 20, 60, 20);
+        playPositiveSound(playerLG.getPlayer());
+        //TODO updateScoreboard
+
+        return true;
+    }
+
+    public void leaveGame(PlayerLG playerLG) {
+        if (playersInGame.contains(playerLG)) this.playersInGame.remove(playerLG);
+
+        LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
+        //TODO TP
+        playerLG.sendTitle("§c§lVous avez été retiré de la partie !", "§6Pas de pot.", 20, 60, 20);
+        playNegativeSound(playerLG.getPlayer());
+        //TODO updateScoreboard
     }
 
     public void addNightVision(PlayerLG playerLG) {
@@ -144,6 +176,14 @@ public class GameLG implements Listener {
 
     public void addSaturation(PlayerLG playerLG) {
         playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false));
+    }
+
+    public static void playNegativeSound(Player player) {
+        player.playSound(player.getLocation(), Sound.DOOR_CLOSE, 8, 2);
+    }
+
+    public static void playPositiveSound(Player player) {
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 8f, 1.8f);
     }
 
     public void resetGame() {
@@ -178,6 +218,7 @@ public class GameLG implements Listener {
 
         }
 
+        Bukkit.createWorld(new WorldCreator("LG"));
         Bukkit.getWorld("LG").setTime(0);
 
         this.setGameState(GameState.WAITING);
@@ -196,6 +237,10 @@ public class GameLG implements Listener {
 
     public List<PlayerLG> getSpectators() {
         return this.spectators;
+    }
+
+    public List<PlayerLG> getPlayersInGame() {
+        return this.playersInGame;
     }
 
     public GameState getGameState() {

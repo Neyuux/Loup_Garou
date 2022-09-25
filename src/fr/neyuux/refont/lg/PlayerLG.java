@@ -90,6 +90,15 @@ public class PlayerLG {
         }
     }
 
+    public void showAllPlayers() {
+        this.showPlayer(Bukkit.getOnlinePlayers().toArray(new Player[]{}));
+    }
+
+    public void showPlayer(Player... hided) {
+        for (Player p : hided)
+            this.getPlayer().showPlayer(p);
+    }
+
     public String getName() {
         if (this.human != null)
             return this.human.getName();

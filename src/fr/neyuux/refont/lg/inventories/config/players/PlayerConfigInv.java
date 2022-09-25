@@ -17,8 +17,8 @@ public class PlayerConfigInv extends AbstractCustomInventory {
 
     @Override
     public void registerItems() {
-        this.setItem(26, new ReturnArrowItemStack(new ListPlayersInv()));
         this.setAllCorners((byte)1);
+        this.setItem(26, new ReturnArrowItemStack(new ListPlayersInv()));
         this.setItem(4, new PlayerConfigItemStack(playerLG));
 
         this.setItem(12, new SetPlayerToSpectatorItemStack(playerLG));

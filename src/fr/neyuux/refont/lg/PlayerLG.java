@@ -191,13 +191,11 @@ public class PlayerLG {
     }
 
     public boolean isSpectator() {
-        System.out.println(game + " / " + LG.getInstance().getGame());
         if (this.game == null) {
             this.game = LG.getInstance().getGame();
             return false;
         } else if (this.game != LG.getInstance().getGame())
             this.game = LG.getInstance().getGame();
-        System.out.println(this.game.getSpectators());
         return this.game.getSpectators().contains(this);
     }
 

@@ -44,6 +44,11 @@ public class LG extends JavaPlugin {
         else return "";
     }
 
+    public static String getStringBoolean(boolean b) {
+        if (b) return "§aOui";
+        else return "§cNon";
+    }
+
     @Override
     public void onEnable() {
         INSTANCE = this;

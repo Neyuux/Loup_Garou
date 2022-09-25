@@ -28,7 +28,7 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
         super(Material.GHAST_TEAR, 1, "§fMettre §b" + playerLG.getName() + " §fen §7Spectateur§f.");
         this.playerLG = playerLG;
 
-        this.setLore("", "Actuel » PH", "", ">>Clique pour modifier");
+        this.setLore("", "Actuel » PH", "", "§7>>Clique pour modifier");
         if (playerLG.isSpectator()) this.setLoreLine(1, "§bActuel » §aOui");
         else this.setLoreLine(1, "§bActuel » §cNon");
     }
@@ -44,11 +44,13 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
 
             playerLG.sendMessage(LG.getPrefix() + entityPlayer.getDisplayName() + " §9vous a retiré du mode §7§lSpectateur§9.");
             entityPlayer.sendMessage(LG.getPrefix() + "§b" + playerLG.getName() + " §7a bien été §cretiré§7 du mode §lSpectateur§7.");
+            this.setLoreLine(1, "§bActuel » §cNon");
         } else {
             LG.getInstance().getGame().setSpectator(playerLG);
 
             entityPlayer.sendMessage(LG.getPrefix() + "§b" + playerLG.getName() + " §7a bien été §amit§7 en §lSpectateur§7.");
             playerLG.sendMessage(LG.getPrefix() + "§b" + entityPlayer.getDisplayName() + "§7 vous a mis en mode §lSpectateur§7.");
+            this.setLoreLine(1, "§bActuel » §aOui");
         }
         inv.setItem(slot, this);
     }

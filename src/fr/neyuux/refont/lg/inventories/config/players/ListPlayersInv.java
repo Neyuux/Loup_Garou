@@ -11,14 +11,20 @@ public class ListPlayersInv extends AbstractCustomInventory {
 
     public ListPlayersInv() {
         super("§6§lJoueurs", 36);
-        this.adaptIntToInvSize(PlayerLG.getPlayersMap().size());
+        this.adaptIntToInvSize(PlayerLG.getPlayersMap().size() + 18);
     }
 
     @Override
     public void registerItems() {
-        this.setItem(this.getSize() -1, new ReturnArrowItemStack(new ConfigurationInv()));
         this.setAllCorners((byte)1);
+        this.setItem(this.getSize() - 1, new ReturnArrowItemStack(new ConfigurationInv()));
 
-        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values()) this.addItem(new PlayerConfigItemStack(playerLG));
+        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
+            for (int slot = 10; slot < this.getSize() - 9; slot++)
+                if (this.getItem(slot) == null) {
+
+                    this.setItem(slot, new PlayerConfigItemStack(playerLG));
+                    return;
+                }
     }
 }

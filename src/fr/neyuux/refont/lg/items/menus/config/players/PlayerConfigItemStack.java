@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.items.menus.config.players;
 
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.inventories.config.players.PlayerConfigInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
@@ -13,12 +14,12 @@ public class PlayerConfigItemStack extends CustomItemStack {
     private final PlayerLG playerLG;
 
     public PlayerConfigItemStack(PlayerLG playerLG) {
-        super(Material.SKULL, 1, playerLG.getDisplayName());
+        super(Material.SKULL_ITEM, 1, playerLG.getDisplayName());
         this.playerLG = playerLG;
 
         this.setDamage(3);
         this.setSkullOwner(playerLG.getName());
-        this.setLore("", "§7Spectateur » " + playerLG.isSpectator(), "§aOP » " + playerLG.isOP(), "", "§7>>Clique pour gérer ce joueur");
+        this.setLore("", "§7Spectateur » " + LG.getStringBoolean(playerLG.isSpectator()), "§aOP » " + LG.getStringBoolean(playerLG.isOP()), "", "§7>>Clique pour gérer ce joueur");
     }
 
     @Override

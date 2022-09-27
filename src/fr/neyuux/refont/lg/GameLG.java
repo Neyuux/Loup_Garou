@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
+import fr.neyuux.refont.old.lg.task.GameRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -184,6 +185,30 @@ public class GameLG implements Listener {
 
     public static void playPositiveSound(Player player) {
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 8f, 1.8f);
+    }
+
+    public void start() {
+        LG.getInstance().getGame().setGameState(GameState.PLAYING);
+
+        Bukkit.broadcastMessage(LG.getPrefix() + "§eLancement du jeu !");
+        GameLG.sendTitleToAllPlayers("§b§lGO !", "", 20, 20, 20);
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 10, 1);
+            p.setTotalExperience(0);
+            p.setGameMode(GameMode.ADVENTURE);
+
+            LG.setPlayerInScoreboardTeam("Players", p);
+        }
+
+        this.dealRoles();
+
+        new GameRunnable(main).runTaskTimer(main, 0, 20);
+    }
+
+    public void dealRoles() {
+        ArrayList<PlayerLG> waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
+
     }
 
     public void resetGame() {

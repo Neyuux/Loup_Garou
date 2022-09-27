@@ -95,8 +95,8 @@ public class LGAutoStart extends BukkitRunnable {
 		
 		if (timer==9) {
 			System.out.println("9");
-		LG.sendTitleForAllPlayers("§4§l10", "§c§oPréparation...", 20, 30, 20);
-		for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 8, 2f);
+			LG.sendTitleForAllPlayers("§4§l10", "§c§oPréparation...", 20, 30, 20);
+			for (Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 8, 2f);
 		} else if (timer==4) {
 			System.out.println("4");
 			LG.sendTitleForAllPlayers("§6§l5", "§cAttention !", 5, 10, 5);

@@ -19,6 +19,11 @@ public class ChevalierALEpeeRouillee extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Si vous mourrez par les loups, le premier Loup à votre gauche§o(réunion)§f ou en dessous dans le tab§o(libre)§f tombera gravement malade : §9il mourra§f au tour suivant.";
     }

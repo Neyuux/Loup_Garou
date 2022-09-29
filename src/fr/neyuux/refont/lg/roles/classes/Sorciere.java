@@ -19,6 +19,11 @@ public class Sorciere extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous§f (ou rôles solos). Vous possèdez 2 §2potions§f : une §apotion de vie§f§o(qui vous permettera de réssuciter un joueur, dont le nom vous sera donné, dévoré par les Loups)§f et une §4potion de mort§f§o(qui vous permettera de tuer un joueur de votre choix)§f.";
     }

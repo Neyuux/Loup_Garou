@@ -19,6 +19,11 @@ public class Ange extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est de vous faire voter par le village au premier tour. Si vous réussissez : la victoire sera votre, mais dans le cas contraire : vous deviendrez §e§lSimple §a§lVillageois§f.";
     }

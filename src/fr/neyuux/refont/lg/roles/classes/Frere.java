@@ -19,6 +19,11 @@ public class Frere extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Pendant la partie, vos deux frères seront vos coéquipiers, vous pouvez donc §9leur faire confiance§f.";
     }

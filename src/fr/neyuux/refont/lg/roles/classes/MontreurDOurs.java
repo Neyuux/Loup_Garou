@@ -19,6 +19,11 @@ public class MontreurDOurs extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). A chaque matinée, votre ours grognera si un ou deux de vos voisins est un §c§lLoup-Garou§f.";
     }

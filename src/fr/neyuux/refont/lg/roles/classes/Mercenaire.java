@@ -19,6 +19,11 @@ public class Mercenaire extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, le premier jour, votre objectif est d'éliminer la cible qui vous est attribuée. Si vous y parvenez, vous gagnez seul la partie instantanément. Sinon, vous devenez §e§lSimple §a§lVillageois§f.";
     }
@@ -42,4 +47,6 @@ public class Mercenaire extends Role {
     public String getActionMessage() {
         return "";
     }
+
+    //check if player is aleardy targeted by another mercenaire
 }

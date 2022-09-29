@@ -19,6 +19,11 @@ public class IdiotDuVillage extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous§f (ou rôles solos). Si, une fois dans la partie, le village décide de vous pendre, ils §9reconnaîtront votre bêtise§f. Vous ne mourrez donc pas, mais §9vous ne pourrez plus voter§f.";
     }

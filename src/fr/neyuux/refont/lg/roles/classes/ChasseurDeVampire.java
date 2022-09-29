@@ -18,6 +18,11 @@ public class ChasseurDeVampire extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Chaque nuit, vous pourrez vérifier si un joueur est vampire. S'il l'est, vous le purifirez.";
     }

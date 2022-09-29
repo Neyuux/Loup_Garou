@@ -18,6 +18,11 @@ public class Necromancien extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Une fois dans la partie, vous pourrez §9récussiter§f un joueur. S'il avait un pouvoir, il le perd et devient §e§lSimple §a§lVillageois§f.";
     }

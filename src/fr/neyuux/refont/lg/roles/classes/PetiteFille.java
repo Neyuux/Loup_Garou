@@ -19,6 +19,11 @@ public class PetiteFille extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous§f (ou rôles solos). Chaque nuit, à la levée des Loups-Garous : vous pourrez §9espionner leurs messages§f.";
     }

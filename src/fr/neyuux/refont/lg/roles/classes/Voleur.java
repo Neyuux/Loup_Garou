@@ -19,6 +19,11 @@ public class Voleur extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, au début de la partie, vous allez devoir §9choisir §fentre les deux rôles qui n'ont pas été distribué (ou en choisir aucun)...";
     }

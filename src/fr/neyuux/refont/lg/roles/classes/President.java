@@ -19,6 +19,11 @@ public class President extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Tous le monde connait votre identité, mais si vous mourrez, le §9village a perdu§f. Vous possédez également le rôle de maire s'il est activé.";
     }

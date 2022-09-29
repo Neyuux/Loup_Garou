@@ -208,7 +208,14 @@ public class GameLG implements Listener {
 
     public void dealRoles() {
         ArrayList<PlayerLG> waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
-
+        ArrayList<Role> toGive = new ArrayList<>();
+        try {
+            if (this.config.getAddedRoles().contains(LG.getInstance().getRoles().get("Voleur")))
+                toGive.add(LG.getInstance().getRoles().get("Voleur").newInstance());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de distribuer les rôles. Veuillez prévenir Neyuux_ ou réessayer.");
+        }
     }
 
     public void resetGame() {

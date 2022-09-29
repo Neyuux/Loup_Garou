@@ -19,6 +19,11 @@ public class Detective extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Chaque nuit, vous serez appelé pour §9enquêter§f sur deux joueurs : vous saurez s'ils sont du même camp ou non.";
     }

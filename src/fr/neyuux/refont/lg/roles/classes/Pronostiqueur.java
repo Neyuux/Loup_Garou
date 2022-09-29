@@ -19,6 +19,11 @@ public class Pronostiqueur extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Chaque nuit, vous pourrez calculer la probabilité qu'un joueur soit méchant. Un message affichera si le joueur est méchant ou non. Cependant, vos pronostics sont soit §atous bons§f, soit §ctous mauvais§f.";
     }

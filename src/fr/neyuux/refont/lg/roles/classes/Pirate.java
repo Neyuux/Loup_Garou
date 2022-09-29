@@ -18,6 +18,11 @@ public class Pirate extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+", votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Une fois dans la partie, vous pourrez prendre un joueur en otage. Cela vous permettra §9faire tuer§f votre otage à votre place si vous êtes visé par le vote du village.";
     }

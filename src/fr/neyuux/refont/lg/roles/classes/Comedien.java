@@ -19,6 +19,11 @@ public class Comedien extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous§f (ou rôles solos). Au début de la partie, vous obtiendrez §93 pouvoirs de rôles villageois§f que vous pourrez utiliser une fois chacun pendant la partie.";
     }

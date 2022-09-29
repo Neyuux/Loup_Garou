@@ -19,6 +19,11 @@ public class Cupidon extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer tous les §c§lLoups-Garous§f (ou rôles solos). Au début de la partie, vous pouvez §9sélectionner 2 joueurs§f pour qu'ils deviennent le §d§lCouple§f de cette partie. Ils devront gagner ensemble ou avec leur camp d'origine (s'ils sont ensemble) ; et si l'un d'entre eux meurt, l'autre se suicidera d'un chagrin d'amour.";
     }

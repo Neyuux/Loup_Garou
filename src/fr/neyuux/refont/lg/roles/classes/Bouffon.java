@@ -19,6 +19,11 @@ public class Bouffon extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est de vous faire voter par le village. Si vous réussissez : vous aurez la possibilité de tuer un des joueurs qui a voté pour vous.";
     }

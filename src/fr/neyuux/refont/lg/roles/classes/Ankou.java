@@ -19,6 +19,11 @@ public class Ankou extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Une fois que vous mourrez, vous pouvez §9continuer de voter§f pendant deux tours maximum depuis le cimetière à l'aide de la commande §e/ankou§f. Votre vote ne sera pas visible des joueurs mais sera comptabilisé et participera à l'élimination d'un joueur de jour tout en voyant les morts parler.";
     }

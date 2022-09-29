@@ -19,6 +19,11 @@ public class ChaperonRouge extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Tant que qu'un chasseur sera encore présent dans la partie, les Loups ne §9pourront pas vous tuer§f.";
     }

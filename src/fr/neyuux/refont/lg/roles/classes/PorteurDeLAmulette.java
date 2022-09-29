@@ -19,6 +19,11 @@ public class PorteurDeLAmulette extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Vous ne pouvez pas mourir des Loups.";
     }

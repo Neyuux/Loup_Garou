@@ -19,6 +19,11 @@ public class ServanteDevouee extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, vous n'avez pas réellement d'objectif. Pendant la partie : lorsque quelqu'un mourra au vote, vous aurez 10 secondes pour choisir de §9prendre son rôle§f ou non. (Vous deviendrez donc le rôle que ce joueur incarnait)";
     }

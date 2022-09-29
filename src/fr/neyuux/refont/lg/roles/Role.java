@@ -51,6 +51,8 @@ public abstract class Role implements Listener {
 
     public abstract String getConfigName();
 
+    public abstract int getMaxNumber();
+
     public abstract String getDescription();
 
     public abstract Camps getBaseCamp();

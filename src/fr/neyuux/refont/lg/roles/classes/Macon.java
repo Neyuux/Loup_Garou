@@ -19,6 +19,11 @@ public class Macon extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Vous et les autres §6§lMaçons§f vous reconnaissez entre-vous §8(car vous vous appellez tous Ricardo)§f ; vous pouvez donc avoir confiance en eux.";
     }

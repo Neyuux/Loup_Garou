@@ -18,6 +18,11 @@ public class Noctambule extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return -1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Chaque nuit, vous devez choisir un joueur chez qui §9dormir§f, ce joueur connaîtra alors votre identité mais sera privé de ses pouvoirs pour la nuit.";
     }

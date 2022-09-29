@@ -19,6 +19,11 @@ public class Fossoyeur extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 2;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). A votre mort, vous pourrez choisir un joueur ; et dans le chat, sera indiqué le pseudo de ce joueur et le pseudo d'un autre joueur d'un §9camp différent§f du premier.";
     }

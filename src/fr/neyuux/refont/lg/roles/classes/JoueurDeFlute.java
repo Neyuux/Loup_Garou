@@ -19,6 +19,11 @@ public class JoueurDeFlute extends Role {
     }
 
     @Override
+    public int getMaxNumber() {
+        return 1;
+    }
+
+    @Override
     public String getDescription() {
         return "§fVous êtes "+this.getDisplayName()+"§f, votre objectif est de gagner la partie (wow). Vous pouvez remporter celle-ci en §9enchantant tous les joueurs§f avec votre flûte. Chaque nuit, vous pouvez enchanter jusqu'à 2 personnes.";
     }

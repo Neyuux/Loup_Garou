@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 
 public class Voleur extends Role {
 
+    public Role role1;
+    public Role role2;
+
+
     @Override
     public String getDisplayName() {
         return "§3§lVoleur";

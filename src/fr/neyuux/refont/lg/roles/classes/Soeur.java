@@ -1,12 +1,21 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
+
 public class Soeur extends Role {
+
+    public PlayerLG sister;
 
     @Override
     public String getDisplayName() {
@@ -46,5 +55,48 @@ public class Soeur extends Role {
     @Override
     public String getActionMessage() {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour parler à votre soeur.";
+    }
+
+
+
+    public void onPlayerJoin(PlayerLG playerLG) {
+        super.onPlayerJoin(playerLG);
+
+        if (sister != null) {
+
+            if (sister.getRole().getConfigName().equals(this.getConfigName())) {
+                playerLG.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + "§d est §a§l" + sister.getName());
+                sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + sister.getName());
+            }
+
+        } else {
+            PlayerLG newsister = null;
+            while (newsister == null) {
+                PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(new Random().nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
+
+                if (random.getRole() == null) {
+                    this.sister = random;
+                    newsister = random;
+                    Soeur newRole = null;
+
+                    try {
+                        for (Constructor<? extends Role> constructor : LG.getInstance().getGame().getConfig().getAddedRoles()) {
+                            Role role = constructor.newInstance();
+
+                            if (role.getConfigName().equals(this.getConfigName()) && !role.equals(this)) {
+                                newRole = (Soeur) role;
+                                break;
+                            }
+                        }
+
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role de la soeur de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
+                    }
+                    newRole.sister = playerLG;
+                    newsister.setRole(newRole);
+                }
+            }
+        }
     }
 }

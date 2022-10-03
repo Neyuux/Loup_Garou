@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
+import fr.neyuux.refont.lg.roles.classes.Voleur;
 import fr.neyuux.refont.old.lg.task.GameRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -17,8 +18,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameLG implements Listener {
 
@@ -36,7 +39,7 @@ public class GameLG implements Listener {
 
     private PlayerLG mayor;
 
-    private final ArrayList<Role> rolesAtStart = new ArrayList<>();
+    private ArrayList<Constructor<? extends Role>> rolesAtStart = new ArrayList<Constructor<? extends Role>>();
 
     private final ArrayList<Role> aliveRoles = new ArrayList<>();
 
@@ -189,6 +192,7 @@ public class GameLG implements Listener {
 
     public void start() {
         LG.getInstance().getGame().setGameState(GameState.PLAYING);
+        this.rolesAtStart = new ArrayList<>(this.config.getAddedRoles());
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§eLancement du jeu !");
         GameLG.sendTitleToAllPlayers("§b§lGO !", "", 20, 20, 20);
@@ -209,9 +213,51 @@ public class GameLG implements Listener {
     public void dealRoles() {
         ArrayList<PlayerLG> waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
         ArrayList<Role> toGive = new ArrayList<>();
+        Random random = new Random();
         try {
-            if (this.config.getAddedRoles().contains(LG.getInstance().getRoles().get("Voleur")))
-                toGive.add(LG.getInstance().getRoles().get("Voleur").newInstance());
+            Constructor<? extends Role> thiefConstructor = LG.getInstance().getRoles().get("Voleur");
+
+            if (this.config.getAddedRoles().contains(thiefConstructor)) {
+                Voleur thief = (Voleur) thiefConstructor.newInstance();
+
+                Role role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+                while (role1.getConfigName().equals("Voleur")) role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+
+                Role role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+                while (role2.getConfigName().equals("Voleur")) role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+
+                this.config.getAddedRoles().remove(role1.getClass().getConstructor());
+                this.config.getAddedRoles().remove(role2.getClass().getConstructor());
+
+                thief.role1 = role1;
+                thief.role2 = role2;
+
+                System.out.println("rolevoleur : " + role1.getConfigName());
+                System.out.println("rolevoleur : " + role2.getConfigName());
+            }
+
+            for (Constructor<? extends Role> constructor : this.config.getAddedRoles())
+                toGive.add(constructor.newInstance());
+
+            Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
+                if (waitedPlayers.isEmpty()) Bukkit.getScheduler().cancelTask(geti);
+
+                PlayerLG playerLG = waitedPlayers.get(random.nextInt(waitedPlayers.size()));
+                Role role;
+
+                if (playerLG.getRole() != null) {
+                    System.out.println("forced " + playerLG.getName());
+                    role = playerLG.getRole();
+                    toGive.remove(role);
+
+                } else role = toGive.remove(random.nextInt(toGive.size()));
+
+
+                GameLG.sendActionBarToAllPlayers(LG.getPrefix() + "§eDealing role to §b" + playerLG.getName());
+
+                playerLG.setRole(role);
+                playerLG.setCamp(role.getBaseCamp());
+            }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de distribuer les rôles. Veuillez prévenir Neyuux_ ou réessayer.");
@@ -240,13 +286,12 @@ public class GameLG implements Listener {
             //TODO tp config locations.mainSpawn
             //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
 
+            PlayerLG.removePlayerLG(player);
+            PlayerLG.createPlayerLG(player);
+
             LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
-
-            //TODO update scoreboard
-            PlayerLG.removePlayerLG(player);
-            PlayerLG.createPlayerLG(player);
 
         }
 
@@ -315,7 +360,7 @@ public class GameLG implements Listener {
         this.mayor = mayor;
     }
 
-    public ArrayList<Role> getRolesAtStart() {
+    public ArrayList<Constructor<? extends Role>> getRolesAtStart() {
         return rolesAtStart;
     }
 
@@ -343,6 +388,11 @@ public class GameLG implements Listener {
     public static void sendTitleToAllPlayers(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
         for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
             playerLG.sendTitle(title, subtitle, fadeInTime, showTime, fadeOutTime);
+    }
+
+    public static void sendActionBarToAllPlayers(String msg) {
+        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
+            playerLG.sendActionBar(msg);
     }
 
     public GameConfig getConfig() {

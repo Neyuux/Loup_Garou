@@ -212,6 +212,11 @@ public class PlayerLG {
         return role;
     }
 
+    public void joinRole(Role role) {
+        this.setRole(role);
+        role.onPlayerJoin(this);
+    }
+
     public void setRole(Role role) {
         this.role = role;
     }

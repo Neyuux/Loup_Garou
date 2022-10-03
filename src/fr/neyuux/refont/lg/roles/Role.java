@@ -45,6 +45,15 @@ public abstract class Role implements Listener {
         return players;
     }
 
+    public void onPlayerJoin(PlayerLG playerLG) {
+        this.players.add(playerLG);
+
+        System.out.println(playerLG.getName() + " >> " + this.getConfigName());
+
+        playerLG.sendTitle("§fVous êtes " + this.getDisplayName(), "§fVotre camp : §e" + this.getBaseCamp().getName(), 10, 60, 10);
+        playerLG.sendMessage(LG.getPrefix() + this.getDescription());
+        //TODO give role map
+    }
 
 
     public abstract String getDisplayName();

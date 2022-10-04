@@ -41,6 +41,8 @@ public class CampChooseItemStack extends CustomItemStack {
             this.setDisplayName("§6Camp des §lAutres §b" + deck.getAlias());
             this.setLore("§eAffiche les rôles qui ne", "§esont ni du village ni des loups.", "§7>>Cliquer pour afficher.");
         }
+
+        addItemInList(this);
     }
 
     @Override

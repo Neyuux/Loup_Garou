@@ -19,6 +19,8 @@ public class ParameterWildChildRandomModelItemStack extends CustomItemStack {
         this.randomModel = LG.getInstance().getGame().getConfig().getWildChildRandomModel();
 
         this.setLore("§fActive ou non la génération", "§faléatoire du modèle de l'enfant sauvage.", "", "§bValeur : " + randomModel.getVisibleValue(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override
@@ -28,6 +30,7 @@ public class ParameterWildChildRandomModelItemStack extends CustomItemStack {
 
         randomModel.setValue(!(boolean)randomModel.getValue());
         this.setLoreLine(3, "§bValeur : " + randomModel.getVisibleValue());
+
         inv.setItem(slot, this);
     }
 }

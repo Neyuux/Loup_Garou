@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class Soeur extends Role {
 
-    public PlayerLG sister;
+    private PlayerLG sister;
 
     @Override
     public String getDisplayName() {
@@ -58,13 +58,20 @@ public class Soeur extends Role {
     }
 
 
+    public PlayerLG getSister() {
+        return sister;
+    }
+
+    public void setSister(PlayerLG sister) {
+        this.sister = sister;
+    }
 
     public void onPlayerJoin(PlayerLG playerLG) {
         super.onPlayerJoin(playerLG);
 
         if (sister != null) {
 
-            if (sister.getRole().getConfigName().equals(this.getConfigName())) {
+            if (getPlayers().contains(sister)) {
                 playerLG.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + "§d est §a§l" + sister.getName());
                 sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + sister.getName());
             }
@@ -91,12 +98,20 @@ public class Soeur extends Role {
 
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
-                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role de la soeur de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
+                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role de la "+this.getConfigName()+" de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
                     }
-                    newRole.sister = playerLG;
+
+                    if (newRole == null) {
+                        System.out.println("lonely sister : " + playerLG.getName());
+                        return;
+                    }
+
+                    newRole.setSister(playerLG);
                     newsister.setRole(newRole);
                 }
             }
+
+
         }
     }
 }

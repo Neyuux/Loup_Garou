@@ -12,6 +12,8 @@ public class ParametersRolesItemStack extends CustomItemStack {
         super(Material.PAINTING, 1, "§6§lParamètres des Rôles de la Partie");
 
         this.setLore("§fPermet de changer les", "§foptions des rôles de la partie.");
+
+        addItemInList(this);
     }
 
     @Override

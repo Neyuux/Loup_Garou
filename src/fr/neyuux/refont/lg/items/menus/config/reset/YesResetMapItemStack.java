@@ -18,6 +18,8 @@ public class YesResetMapItemStack extends CustomItemStack {
 
         this.setLore("§7>>Clique pour", "§7reset la Map.");
         this.setDamage(5);
+
+        addItemInList(this);
     }
 
 

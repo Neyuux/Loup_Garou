@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -21,28 +22,23 @@ public class CustomItemStack extends ItemStack {
 
     public CustomItemStack(Material m){
         super(m);
-        itemList.add(this);
     }
 
     public CustomItemStack(Material m, int amount){
         super(m, amount);
-        addItemInList(this);
     }
 
     public CustomItemStack(Material m, int amount, byte data) {
         super(m, amount, data);
-        addItemInList(this);
     }
 
     public CustomItemStack(Material m, int amount,String string){
         super(m, amount);
-        addItemInList(this);
         this.setDisplayName(string);
     }
 
     public CustomItemStack(ItemStack i){
         super(i);
-        addItemInList(this);
     }
 
     public void use(HumanEntity player, Event event) {
@@ -169,9 +165,8 @@ public class CustomItemStack extends ItemStack {
         return itemList;
     }
 
-    private static void addItemInList(CustomItemStack customItemStack) {
-        for (CustomItemStack item : getItemList())
-            if (item.isCustomSimilar(customItemStack)) return;
+    protected static void addItemInList(CustomItemStack customItemStack) {
+        for (CustomItemStack item : getItemList()) if (item.isCustomSimilar(customItemStack)) return;
         getItemList().add(customItemStack);
     }
 
@@ -180,7 +175,7 @@ public class CustomItemStack extends ItemStack {
         int slot = -1;
         for (int i = 0; i < inv.getSize(); i++) {
             ItemStack item = inv.getItem(i);
-            if (item == null) break;
+            if (item == null) continue;
             if (customItemStack.isCustomSimilar(item))
                 slot = i;
         }

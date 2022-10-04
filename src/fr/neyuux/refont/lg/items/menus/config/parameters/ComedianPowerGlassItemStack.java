@@ -30,6 +30,8 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
 
 
         this.setItemMetas(this.isActivated());
+
+        addItemInList(this);
     }
 
     @Override
@@ -39,10 +41,10 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
 
         if (this.isActivated()) {
             listPowers.remove(power);
-            this.setItemMetas(true);
+            this.setItemMetas(false);
         } else {
             listPowers.add(power);
-            this.setItemMetas(false);
+            this.setItemMetas(true);
         }
 
         inv.setItem(slot, this);

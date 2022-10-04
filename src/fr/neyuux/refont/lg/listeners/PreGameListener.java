@@ -1,10 +1,9 @@
 package fr.neyuux.refont.lg.listeners;
 
-import fr.neyuux.refont.lg.DayCycle;
-import fr.neyuux.refont.lg.GameState;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.PlayerJoinGameEvent;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
+import fr.neyuux.refont.lg.tasks.LGStart;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import fr.neyuux.refont.old.lg.Gcycle;
 import org.bukkit.Bukkit;
@@ -134,7 +133,7 @@ public class PreGameListener implements Listener {
         String msg = ev.getMessage();
 
         if (LG.getInstance().getGame().getDayCycle().equals(DayCycle.NONE))
-            ev.setFormat(player.getDisplayName() + "»" + msg);
+            ev.setFormat(player.getDisplayName() + " §7» §f" + msg);
     }
 
     @EventHandler
@@ -151,6 +150,16 @@ public class PreGameListener implements Listener {
                     customitem.use(human, event);
                 }
         } catch (ConcurrentModificationException ignored) {}
+    }
+
+    @EventHandler
+    public void onJoinGame(PlayerJoinGameEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+
+        if (game.getPlayersInGame().size() == Bukkit.getOnlinePlayers().size() - game.getSpectators().size() && game.getPlayersInGame().size() > 0 && game.getGameState().equals(GameState.WAITING)) {
+            LG.getInstance().getGame().setGameState(GameState.STARTING);
+            new LGStart(game).runTaskTimer(LG.getInstance(), 0, 20);
+        }
     }
 
 }

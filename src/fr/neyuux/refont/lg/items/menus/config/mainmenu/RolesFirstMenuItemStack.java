@@ -12,6 +12,8 @@ public class RolesFirstMenuItemStack extends CustomItemStack {
         super(Material.EMPTY_MAP, 1, "§6§lRôles");
 
         this.setLore("§fPermet de gérer les", "§frôles de la partie.");
+
+        addItemInList(this);
     }
 
     @Override

@@ -15,6 +15,8 @@ public class PlayersMenuItemStack extends CustomItemStack {
         this.setDamage(3);
         this.setSkullOwner(owner);
         this.setLore("§fPermet de gérer", "§fles joueurs", "§f§o(spectateur, etc)");
+
+        addItemInList(this);
     }
 
     @Override

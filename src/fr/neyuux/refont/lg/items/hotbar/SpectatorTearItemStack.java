@@ -16,6 +16,8 @@ public class SpectatorTearItemStack extends CustomItemStack {
         super(Material.GHAST_TEAR, 1, "§7§lDevenir Spectateur");
 
         this.setLore("§fFais devenir le joueur", "§fspectateur de la partie.", "§b>>Clique droit");
+
+        addItemInList(this);
     }
 
     @Override
@@ -26,6 +28,6 @@ public class SpectatorTearItemStack extends CustomItemStack {
                 return;
         }
 
-        LG.getInstance().getGame().setSpectator(PlayerLG.createPlayerLG((Player) player));
+        LG.getInstance().getGame().setSpectator(PlayerLG.createPlayerLG(player));
     }
 }

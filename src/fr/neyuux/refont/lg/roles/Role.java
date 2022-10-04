@@ -11,15 +11,11 @@ import java.util.logging.Level;
 
 public abstract class Role implements Listener {
 
-    private final ArrayList<PlayerLG> players = new ArrayList<>();
+    private static final ArrayList<PlayerLG> players = new ArrayList<>();
 
 
     public Role() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
-    }
-
-    public void onDistribution(PlayerLG player) {
-        this.players.add(player);
     }
 
     public void onNightTurn() {
@@ -37,16 +33,17 @@ public abstract class Role implements Listener {
             return roleNightOrder.ordinal();
         } catch (IllegalArgumentException e) {
             LG.getInstance().getLogger().log(Level.SEVERE, className + " n'a pas le meme nom dans RoleNightOrder");
+            Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de récupérer l'ordre de passage de nuit. Veuillez appeler Neyuux_ ou réessayer plus tard.");
             return -1;
         }
     }
 
-    public ArrayList<PlayerLG> getPlayers() {
+    public static ArrayList<PlayerLG> getPlayers() {
         return players;
     }
 
     public void onPlayerJoin(PlayerLG playerLG) {
-        this.players.add(playerLG);
+        players.add(playerLG);
 
         System.out.println(playerLG.getName() + " >> " + this.getConfigName());
 

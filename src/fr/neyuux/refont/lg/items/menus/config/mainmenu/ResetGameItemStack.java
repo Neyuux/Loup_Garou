@@ -12,6 +12,8 @@ public class ResetGameItemStack extends CustomItemStack {
         super(Material.BARRIER, 1, "§bReset la Map");
 
         this.setLore("§fPermet de reset", "§fla map.");
+
+        addItemInList(this);
     }
 
     @Override

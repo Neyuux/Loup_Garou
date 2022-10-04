@@ -61,37 +61,11 @@ public class LG extends JavaPlugin {
             saveConfig();
         }
 
-        Scoreboard s = Bukkit.getScoreboardManager().getMainScoreboard();
-
-        for (Team t : s.getTeams())
-            if (!t.getDisplayName().startsWith("Kits"))
-                t.unregister();
-
-        for (Objective ob : s.getObjectives())
-            ob.unregister();
-
-        Team op = s.registerNewTeam("AOP");
-        Team players = s.registerNewTeam("Players");
-        Team villager = s.registerNewTeam("RVillageois");
-        Team president = s.registerNewTeam("RPresident");
-
-        op.setPrefix("§5§lOP §c");
-        op.setSuffix("§r");
-
-        players.setDisplayName("Joueurs");
-        players.setPrefix("§e");
-        players.setSuffix("§r");
-
-        villager.setDisplayName("Villageois-Villageois");
-        villager.setPrefix("§a§lV§e-§a§lV §a");
-        villager.setSuffix("§r");
-
-        president.setDisplayName("Prédident");
-        president.setPrefix("§e§lPrésident §6");
-        president.setSuffix("§r");
+        registerBaseTeams(Bukkit.getScoreboardManager().getMainScoreboard());
 
         this.itemsManager = new ItemsManager();
         this.gameLG = new GameLG();
+        this.gameLG.createGame();
         this.initialiseRoles();
 
         this.getCommand("lg").setExecutor(new LGCommand());
@@ -122,7 +96,6 @@ public class LG extends JavaPlugin {
             this.roles.put("Detective", Detective.class.getConstructor());
             this.roles.put("Dictateur", Dictateur.class.getConstructor());
             this.roles.put("DurACuire", DurACuire.class.getConstructor());
-            this.roles.put("Enchanteur", Enchanteur.class.getConstructor());
             this.roles.put("EnfantSauvage", EnfantSauvage.class.getConstructor());
             this.roles.put("FilleDeJoie", FilleDeJoie.class.getConstructor());
             this.roles.put("Fossoyeur", Fossoyeur.class.getConstructor());
@@ -168,6 +141,35 @@ public class LG extends JavaPlugin {
     }
 
 
+    
+    public static void registerBaseTeams(Scoreboard scoreboard) {
+        for (Team t : scoreboard.getTeams())
+            if (!t.getDisplayName().startsWith("Kits"))
+                t.unregister();
+
+        for (Objective ob : scoreboard.getObjectives())
+            ob.unregister();
+
+        Team op = scoreboard.registerNewTeam("AOP");
+        Team players = scoreboard.registerNewTeam("Players");
+        Team villager = scoreboard.registerNewTeam("RVillageois");
+        Team president = scoreboard.registerNewTeam("RPresident");
+
+        op.setPrefix("§5§lOP §c");
+        op.setSuffix("§r");
+
+        players.setDisplayName("Joueurs");
+        players.setPrefix("§e");
+        players.setSuffix("§r");
+
+        villager.setDisplayName("Villageois-Villageois");
+        villager.setPrefix("§a§lV§e-§a§lV §a");
+        villager.setSuffix("§r");
+
+        president.setDisplayName("Prédident");
+        president.setPrefix("§e§lPrésident §6");
+        president.setSuffix("§r");
+    }
 
     public static void setPlayerInScoreboardTeam(String teamname, Player player) {
         Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamname);

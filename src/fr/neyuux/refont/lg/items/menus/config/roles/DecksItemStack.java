@@ -35,6 +35,8 @@ public class DecksItemStack extends CustomItemStack {
         }
 
         this.setLore("§fPermet de gérer les", "§frôles de la partie.");
+
+        addItemInList(this);
     }
 
     @Override

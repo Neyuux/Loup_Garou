@@ -28,6 +28,8 @@ public class RoleAddingItemStack extends CustomItemStack {
         this.role = role;
 
         this.updateMeta();
+
+        addItemInList(this);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class RoleAddingItemStack extends CustomItemStack {
                 if (role.getConfigName().equals("Frere")) times = 3;
                 else if (role.getConfigName().equals("Soeur")) times = 2;
 
-                if (number + times > role.getMaxNumber()) {
+                if (number + times > role.getMaxNumber() && role.getMaxNumber() != -1) {
                     GameLG.playNegativeSound((Player) player);
                     player.sendMessage(LG.getPrefix() + "§cIl ne peut pas y avoir plus de §4§l" + role.getMaxNumber() + " " + role.getDisplayName() + " §cdans une partie !");
                     return;

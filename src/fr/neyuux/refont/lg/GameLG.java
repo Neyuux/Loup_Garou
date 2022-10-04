@@ -1,13 +1,14 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.config.GameConfig;
+import fr.neyuux.refont.lg.event.PlayerJoinGameEvent;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import fr.neyuux.refont.lg.roles.classes.Voleur;
-import fr.neyuux.refont.old.lg.task.GameRunnable;
+import fr.neyuux.refont.lg.tasks.GameRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -17,6 +18,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -39,7 +43,9 @@ public class GameLG implements Listener {
 
     private PlayerLG mayor;
 
-    private ArrayList<Constructor<? extends Role>> rolesAtStart = new ArrayList<Constructor<? extends Role>>();
+    private ArrayList<Constructor<? extends Role>> rolesAtStart = new ArrayList<>();
+
+    private ArrayList<PlayerLG> waitedPlayers = new ArrayList<>();
 
     private final ArrayList<Role> aliveRoles = new ArrayList<>();
 
@@ -50,18 +56,18 @@ public class GameLG implements Listener {
     private final ArrayList<HumanEntity> opList = new ArrayList<>();
 
 
-    public GameLG() {
+
+    public void createGame() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
         this.config = new GameConfig(this);
 
         this.resetGame();
     }
 
-
     public void sendMessage(Role role, String msg) {
         for (PlayerLG playerLG : this.getAlive()) {
             if (role != null) {
-                if (role.getPlayers().contains(playerLG))
+                if (Role.getPlayers().contains(playerLG))
                     playerLG.sendMessage(msg);
             } else playerLG.sendMessage(msg);
         }
@@ -159,6 +165,9 @@ public class GameLG implements Listener {
 
         playerLG.sendTitle("§5§ka §4§ka §c§ka §a§lVous jouerez cette partie ! §6§ka §e§ka §f§ka ", "§6Il y a désormais §e" + this.playersInGame.size() + "§6 joueur"+ LG.getPlurial(this.playersInGame.size()) +".", 20, 60, 20);
         playPositiveSound(playerLG.getPlayer());
+
+        PlayerJoinGameEvent ev = new PlayerJoinGameEvent(playerLG);
+        Bukkit.getPluginManager().callEvent(ev);
         //TODO updateScoreboard
 
         return true;
@@ -205,13 +214,13 @@ public class GameLG implements Listener {
             LG.setPlayerInScoreboardTeam("Players", p);
         }
 
-        this.dealRoles();
+        BukkitTask deal = this.dealRoles();
 
-        new GameRunnable(main).runTaskTimer(main, 0, 20);
+        new GameRunnable(deal).runTaskTimer(LG.getInstance(), 0, 20);
     }
 
-    public void dealRoles() {
-        ArrayList<PlayerLG> waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
+    public BukkitTask dealRoles() {
+       this.waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
         ArrayList<Role> toGive = new ArrayList<>();
         Random random = new Random();
         try {
@@ -239,10 +248,8 @@ public class GameLG implements Listener {
             for (Constructor<? extends Role> constructor : this.config.getAddedRoles())
                 toGive.add(constructor.newInstance());
 
-            Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
-                if (waitedPlayers.isEmpty()) Bukkit.getScheduler().cancelTask(geti);
-
-                PlayerLG playerLG = waitedPlayers.get(random.nextInt(waitedPlayers.size()));
+            return Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
+                PlayerLG playerLG = this.waitedPlayers.get(random.nextInt(this.waitedPlayers.size()));
                 Role role;
 
                 if (playerLG.getRole() != null) {
@@ -255,17 +262,24 @@ public class GameLG implements Listener {
 
                 GameLG.sendActionBarToAllPlayers(LG.getPrefix() + "§eDealing role to §b" + playerLG.getName());
 
-                playerLG.setRole(role);
+                playerLG.joinRole(role);
                 playerLG.setCamp(role.getBaseCamp());
+                playerLG.createScoreboard();
             }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de distribuer les rôles. Veuillez prévenir Neyuux_ ou réessayer.");
         }
+        return null;
     }
 
     public void resetGame() {
+        this.setGameState(GameState.WAITING);
+        this.setGameType(GameType.NONE);
+        this.setDayCycle(DayCycle.NONE);
+
         this.playersInGame.clear();
+        this.waitedPlayers.clear();
         this.spectators.clear();
         this.day = 0;
         this.night = 0;
@@ -289,6 +303,7 @@ public class GameLG implements Listener {
             PlayerLG.removePlayerLG(player);
             PlayerLG.createPlayerLG(player);
 
+            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
             LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
@@ -298,14 +313,22 @@ public class GameLG implements Listener {
         Bukkit.createWorld(new WorldCreator("LG"));
         Bukkit.getWorld("LG").setTime(0);
 
-        this.setGameState(GameState.WAITING);
-        this.setGameType(GameType.NONE);
-        this.setDayCycle(DayCycle.NONE);
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
 
         this.setConfig(new GameConfig(this));
 
         //TODO update all scoreboards
+    }
+
+    public List<PlayerLG> getPlayersByRole(String configname) {
+        List<PlayerLG> players = new ArrayList<>();
+
+        for (PlayerLG playerLG : this.playersInGame)
+            if (playerLG.getRole().getConfigName().equals(configname)) {
+                players.add(playerLG);
+            }
+
+        return players;
     }
 
     public List<HumanEntity> getOPs() {

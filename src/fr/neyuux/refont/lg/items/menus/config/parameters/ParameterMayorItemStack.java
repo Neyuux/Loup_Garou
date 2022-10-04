@@ -19,6 +19,8 @@ public class ParameterMayorItemStack extends CustomItemStack {
         this.mayorParameter = LG.getInstance().getGame().getConfig().getMayor();
 
         this.setLore("§Gère le fait que le", "§fmaire soit activé ou non.", "", "§bValeur : §l" + mayorParameter.getVisibleValue(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override

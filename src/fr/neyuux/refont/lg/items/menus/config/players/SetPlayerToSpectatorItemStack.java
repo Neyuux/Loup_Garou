@@ -31,6 +31,8 @@ public class SetPlayerToSpectatorItemStack extends CustomItemStack {
         this.setLore("", "Actuel » PH", "", "§7>>Clique pour modifier");
         if (playerLG.isSpectator()) this.setLoreLine(1, "§bActuel » §aOui");
         else this.setLoreLine(1, "§bActuel » §cNon");
+
+        addItemInList(this);
     }
 
     @Override

@@ -12,6 +12,8 @@ public class ParametersItemStack extends CustomItemStack {
         super(Material.APPLE, 1, "§f§lParamètres de la Partie");
 
         this.setLore("§fPermet de changer les", "§foptions de la partie.");
+
+        addItemInList(this);
     }
 
     @Override

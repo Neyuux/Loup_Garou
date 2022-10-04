@@ -20,6 +20,8 @@ public class ParameterMayorSuccessionItemStack extends CustomItemStack {
         this.mayorSuccessionParameter = LG.getInstance().getGame().getConfig().getMayorSuccession();
 
         this.setLore("§fChange le type de succession du maire", "", "§bValeur : " + mayorSuccessionParameter.getVisibleValue(), ((MayorSuccession)mayorSuccessionParameter.getValue()).getDescription(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override

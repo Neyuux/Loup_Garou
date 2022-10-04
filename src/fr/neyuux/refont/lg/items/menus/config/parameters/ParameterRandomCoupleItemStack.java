@@ -19,6 +19,8 @@ public class ParameterRandomCoupleItemStack extends CustomItemStack {
         this.randomCoupleParamter = LG.getInstance().getGame().getConfig().getRandomCouple();
 
         this.setLore("§fActive ou non la sélection", "§faléatoire du couple.", "", "§bValeur : " + randomCoupleParamter.getVisibleValue(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override

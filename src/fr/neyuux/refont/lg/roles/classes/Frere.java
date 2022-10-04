@@ -11,11 +11,13 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Frere extends Role {
 
-    public PlayerLG[] brothers;
+    private final List<PlayerLG> brothers = new ArrayList<>();
 
 
     @Override
@@ -58,48 +60,67 @@ public class Frere extends Role {
         return "§fVous avez §3" + this.getTimeout() + " secondes§f pour parler avec vos frères.";
     }
 
+
+
     @Override
     public void onPlayerJoin(PlayerLG playerLG) {
         super.onPlayerJoin(playerLG);
 
-        if (brothers != null) {
-
-            if (brothers[0].getRole().getConfigName().equals(this.getConfigName()) && brothers[1].getRole().getConfigName().equals(this.getConfigName())) {
-                playerLG.sendMessage(LG.getPrefix() + "§3Vos " + this.getDisplayName() + " §3sont §a§l" + brothers[0].getName() + " §3et §a§l" + brothers[1].getName());
-                brothers[0].sendMessage(LG.getPrefix() + "§3Vos " + this.getDisplayName() + " §3sont §a§l" + brothers[1].getName() + " §3et §a§l" + playerLG.getName());
-                brothers[1].sendMessage(LG.getPrefix() + "§3Vos " + this.getDisplayName() + " §3sont §a§l" + brothers[0].getName() + " §3et §a§l" + playerLG.getName());
-            }
+        if (!this.brothers.isEmpty()) {
+            playerLG.sendMessage(getBrothersMessage(playerLG, this.brothers));
+            for (PlayerLG brotherLG : this.brothers)
+                brotherLG.sendMessage(getBrothersMessage(brotherLG, ((Frere)brotherLG.getRole()).getBrothers()));
 
         } else {
-            PlayerLG[] newbrothers = null;
-            PlayerLG brother1 = null;
 
-            while (newbrothers == null) {
+            while (this.brothers.size() != 2) {
                 PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(new Random().nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
 
                 if (random.getRole() == null) {
-                    Role newRole = null;
+                    Frere newRole = null;
 
                     try {
                         for (Constructor<? extends Role> constructor : LG.getInstance().getGame().getConfig().getAddedRoles()) {
                             Role role = constructor.newInstance();
 
                             if (role.getConfigName().equals(this.getConfigName()) && !role.equals(this)) {
-                                newRole = role;
+                                newRole = (Frere) role;
                                 break;
                             }
                         }
 
-                        if (brother1 == null) brother1 = random;
-                        else newbrothers = new PlayerLG[]{brother1, random};
+                        if (newRole == null) return;
+
+                        this.brothers.add(random);
+                        System.out.println("add " + playerLG.getName() + " brother : " + random.getName());
+
+                        newRole.getBrothers().add(playerLG);
+
+                        for (PlayerLG brotherLG : this.brothers)
+                            if (!brotherLG.equals(random))
+                                newRole.getBrothers().add(brotherLG);
+
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
-                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role de la soeur de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
+                        Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role du frere de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
                     }
                     random.setRole(newRole);
                 }
             }
-            brothers = newbrothers;
         }
+    }
+
+    private static String getBrothersMessage(PlayerLG playerLG, List<PlayerLG> brothers) {
+        StringBuilder sb = new StringBuilder(LG.getPrefix() + "§3Vos " + playerLG.getRole().getDisplayName() + " §3sont §a§l");
+        for (PlayerLG brotherLG : brothers)
+            sb.append(brotherLG.getName()).append("  ");
+        playerLG.sendMessage(sb.toString());
+
+        return sb.toString();
+    }
+
+
+    public List<PlayerLG> getBrothers() {
+        return this.brothers;
     }
 }

@@ -13,6 +13,8 @@ public class ChangeGameTypeToMeetingItemStack extends CustomItemStack {
         super(Material.IRON_FENCE, 1, "§d§lRéunion");
 
         this.setLore("§7Les joueurs sont bloqués sur un nénuphar.", "§7A eux de discuter sans se déplacer.");
+
+        addItemInList(this);
     }
 
     @Override

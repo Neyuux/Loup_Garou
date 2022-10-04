@@ -19,6 +19,8 @@ public class ParameterLGChatItemStack extends CustomItemStack {
         this.chatLGParameter = LG.getInstance().getGame().getConfig().getChatLG();
 
         this.setLore("§fActive ou non le chat", "§fentre loups-garous la nuit.", "", "§bValeur : " + chatLGParameter.getVisibleValue(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override

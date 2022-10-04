@@ -20,6 +20,8 @@ public class PlayerConfigItemStack extends CustomItemStack {
         this.setDamage(3);
         this.setSkullOwner(playerLG.getName());
         this.setLore("", "§7Spectateur » " + LG.getStringBoolean(playerLG.isSpectator()), "§aOP » " + LG.getStringBoolean(playerLG.isOP()), "", "§7>>Clique pour gérer ce joueur");
+
+        addItemInList(this);
     }
 
     @Override

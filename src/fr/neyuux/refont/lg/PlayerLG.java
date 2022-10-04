@@ -12,6 +12,8 @@ import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class PlayerLG {
 
     public void sendMessage(String msg) {
         if (this.human != null) {
-            this.getPlayer().sendMessage(LG.getPrefix() + msg);
+            this.getPlayer().sendMessage(msg);
         }
     }
 
@@ -119,60 +121,96 @@ public class PlayerLG {
 
     public String getNameWithAttributes(PlayerLG receiver) {
         String name = "";
+        String lastcolor = "§e";
 
         if (this.isLG() && receiver.isLG()) {
-            if (receiver.getPlayer().getScoreboard().getTeam("LG").hasEntry(this.getPlayer().getName())) {
-                name = "§c§lLG §c";
-            }
+            name = "§c§lLG ";
+            lastcolor = "§c";
         }
 
         if (receiver.getRole() instanceof Soeur) {
-            PlayerLG soeur = (PlayerLG) receiver.getCache().get("soeur");
+            Soeur soeur = (Soeur) receiver.getRole();
 
-            if (soeur != null && soeur.equals(this))
-                name += "§d§lSoeur §d";
+            if (soeur.getSister().equals(this))
+                name += "§d§lSoeur ";
+            lastcolor = "§d";
         }
 
         if (receiver.getRole() instanceof Frere) {
-            List<PlayerLG> brothers = (List<PlayerLG>) receiver.getCache().get("frere");
+            Frere brother = (Frere)receiver.getRole();
 
-            if (brothers != null && brothers.contains(this)) {
+            if (brother.getBrothers().contains(this)) {
                 name += "§3§lFrère §d";
+                lastcolor = "§d";
             }
         }
 
         if (this.getRole() instanceof VillageoisVillageois) {
-            name += name + "§a§lV§e-§a§lV §a";
+            name += name + "§a§lV§e-§a§lV ";
+            lastcolor = "§a";
         }
 
         if (this.isMayor()) {
-            name += "§6§lMaire §e";
-        }
-
-        if (this.getCache().has("couple") && this.getCache().get("couple") != null) {
-            PlayerLG couple = (PlayerLG) this.getCache().get("couple");
-
-            if (couple.equals(receiver) || receiver.getRole() instanceof Cupidon) {
-                name += "§d§lCouple §d";
-            }
+            name += "§6§lMaire ";
+            lastcolor = "§e";
         }
 
         if (receiver.getRole() instanceof Mercenaire && this.game.getDay() == 1) {
             PlayerLG target = (PlayerLG) receiver.getCache().get("target");
 
-            if (target != null && target.equals(this))
-                name += "§c§lCible §5";
+            if (target != null && target.equals(this)) {
+                name += "§c§lCible ";
+                lastcolor = "§5";
+            }
+
         }
 
         if (receiver.getRole() instanceof Jumeau) {
             PlayerLG twin = (PlayerLG) receiver.getCache().get("twin");
 
-            if (twin != null && twin.equals(this))
-                name += "§5§lJumeau §d";
+            if (twin != null && twin.equals(this)) {
+                name += "§5§lJumeau ";
+                lastcolor = "§d";
+            }
         }
 
-        name += this.human.getName();
+        name += lastcolor + this.human.getName();
+
+        if (this.getCache().has("couple") && this.getCache().get("couple") != null) {
+            PlayerLG couple = (PlayerLG) this.getCache().get("couple");
+
+            if (couple.equals(receiver) || receiver.getRole() instanceof Cupidon) {
+                name += "§d \u2764";
+            }
+        }
         return name;
+    }
+
+    public void createScoreboard() {
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Scoreboard main = Bukkit.getScoreboardManager().getMainScoreboard();
+
+        LG.registerBaseTeams(scoreboard);
+        for (Team team : main.getTeams()) {
+            Team newteam = scoreboard.getTeam(team.getName());
+            if (newteam != null)
+                for (String entry : team.getEntries())
+                    newteam.addEntry(entry);
+        }
+        this.getPlayer().setScoreboard(scoreboard);
+    }
+
+    public void updateGamePlayerScoreboard() {
+        Scoreboard scoreboard = this.getPlayer().getScoreboard();
+
+        for (PlayerLG targetLG : LG.getInstance().getGame().getPlayersInGame()) {
+            Team team = scoreboard.registerNewTeam(targetLG.getName());
+            String[] prefixsuffix = targetLG.getNameWithAttributes(this).split(targetLG.getName());
+
+            team.setPrefix(prefixsuffix[0]);
+            if (prefixsuffix.length > 1)team.setSuffix(prefixsuffix[1]);
+            team.addEntry(targetLG.getName());
+        }
     }
 
     public Player getPlayer() {
@@ -182,20 +220,10 @@ public class PlayerLG {
     }
 
     public boolean isOP() {
-        if (this.game == null) {
-            this.game = LG.getInstance().getGame();
-            return true;
-        } else if (this.game != LG.getInstance().getGame())
-            this.game = LG.getInstance().getGame();
         return this.game.getOPs().contains(this.human);
     }
 
     public boolean isSpectator() {
-        if (this.game == null) {
-            this.game = LG.getInstance().getGame();
-            return false;
-        } else if (this.game != LG.getInstance().getGame())
-            this.game = LG.getInstance().getGame();
         return this.game.getSpectators().contains(this);
     }
 

@@ -20,6 +20,8 @@ public class ParameterDayCycleItemStack extends CustomItemStack {
         this.dayCycleParameter = LG.getInstance().getGame().getConfig().getDayCycle();
 
         this.setLore("§fActive ou non le changement", "§fd'atmosphère selon le cycle jour/nuit", "§f§o(Faisant passer du jour à la nuit)", "", "§bValeur : " + dayCycleParameter.getVisibleValue(), "", "§7>>Clique pour modifier");
+
+        addItemInList(this);
     }
 
     @Override

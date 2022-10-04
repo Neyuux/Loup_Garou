@@ -13,6 +13,8 @@ public class ChangeGameTypeToFreeItemStack extends CustomItemStack {
         super(Material.ENDER_PORTAL_FRAME, 1, "§e§lLibre");
 
         this.setLore("§7Les joueurs sont libres de se balader", "§7dans le village.");
+
+        addItemInList(this);
     }
 
     @Override

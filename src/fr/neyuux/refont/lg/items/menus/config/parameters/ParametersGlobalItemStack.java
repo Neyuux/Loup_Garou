@@ -12,6 +12,8 @@ public class ParametersGlobalItemStack extends CustomItemStack {
         super(Material.WATER_LILY, 1, "§a§lParamètres Globaux de la Partie");
 
         this.setLore("§fPermet de changer les", "§foptions globalles de la partie.");
+
+        addItemInList(this);
     }
 
     @Override

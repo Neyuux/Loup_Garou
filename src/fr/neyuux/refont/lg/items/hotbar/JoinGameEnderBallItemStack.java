@@ -13,6 +13,8 @@ public class JoinGameEnderBallItemStack extends CustomItemStack {
        super(Material.EYE_OF_ENDER, 1, "§a§lJouer");
 
        this.setLore("§fMets le joueur dans la liste", "§fdes participants de la partie", "§b>>Clique droit");
+
+       addItemInList(this);
    }
 
     @Override

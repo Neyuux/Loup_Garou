@@ -12,6 +12,8 @@ public class CancelBarrierItemStack extends CustomItemStack {
         super(Material.BARRIER, 1, "§cAnnuler");
 
         this.setLore("§7Annule l'action", "§7en cours.");
+
+        addItemInList(this);
     }
 
     @Override

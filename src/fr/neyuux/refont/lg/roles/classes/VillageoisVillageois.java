@@ -1,9 +1,12 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class VillageoisVillageois extends Role {
@@ -46,5 +49,13 @@ public class VillageoisVillageois extends Role {
     @Override
     public String getActionMessage() {
         return "";
+    }
+
+    @Override
+    public void onPlayerJoin(PlayerLG playerLG) {
+        super.onPlayerJoin(playerLG);
+
+        Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + " §ade la partie est §e§l" + playerLG.getName());
+        LG.setPlayerInScoreboardTeam("RVillageois", playerLG.getPlayer());
     }
 }

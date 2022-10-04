@@ -13,6 +13,8 @@ public class ChangeGameTypeItemStack extends CustomItemStack {
         super(Material.ITEM_FRAME, 1, "§2Changer le §lType §2de jeu");
 
         this.setLore("§fPermet de changer le", "§ftype de jeu de la partie.", "", "§eActuel : §c§l" + LG.getInstance().getGame().getGameType().getName());
+
+        addItemInList(this);
     }
 
     @Override

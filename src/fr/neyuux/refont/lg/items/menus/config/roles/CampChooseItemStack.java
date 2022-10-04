@@ -12,7 +12,9 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.Inventory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -47,7 +49,14 @@ public class CampChooseItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        new RolesListRolesInv(deck, camp).open(player);
+        RolesListRolesInv newInv = new RolesListRolesInv(deck, camp);
+        newInv.registerItems();
+
+        if (newInv.getItemsMap().size() == 1) {
+            GameLG.playNegativeSound((Player) player);
+            player.sendMessage(LG.getPrefix() + "§cLe deck §b" + deck.getName() + " §cne contient pas de rôle du camp " + camp.getColor() + "§l" + camp.getName() + " §c!");
+        } else
+            newInv.open(player);
     }
 
 }

@@ -84,10 +84,13 @@ public class LG extends JavaPlugin {
             this.roles.put("Ancien", Ancien.class.getConstructor());
             this.roles.put("Ange", Ange.class.getConstructor());
             this.roles.put("Ankou", Ankou.class.getConstructor());
+            this.roles.put("Assassin", Assassin.class.getConstructor());
             this.roles.put("BoucEmissaire", BoucEmissaire.class.getConstructor());
+            this.roles.put("Bouffon", Bouffon.class.getConstructor());
             this.roles.put("Chaman", Chaman.class.getConstructor());
             this.roles.put("ChaperonRouge", ChaperonRouge.class.getConstructor());
             this.roles.put("Chasseur", Chasseur.class.getConstructor());
+            this.roles.put("ChasseurDeVampire", ChasseurDeVampire.class.getConstructor());
             this.roles.put("ChevalierALEpeeRouillee", ChevalierALEpeeRouillee.class.getConstructor());
             this.roles.put("ChienLoup", ChienLoup.class.getConstructor());
             this.roles.put("Comedien", Comedien.class.getConstructor());
@@ -118,9 +121,11 @@ public class LG extends JavaPlugin {
             this.roles.put("Pacifiste", Pacifiste.class.getConstructor());
             this.roles.put("PetiteFille", PetiteFille.class.getConstructor());
             this.roles.put("PetiteFilleWO", PetiteFilleWO.class.getConstructor());
+            this.roles.put("Pirate", Pirate.class.getConstructor());
             this.roles.put("PorteurDeLAmulette", PorteurDeLAmulette.class.getConstructor());
             this.roles.put("President", President.class.getConstructor());
             this.roles.put("Pretre", Pretre.class.getConstructor());
+            this.roles.put("Pronostiqueur", Pronostiqueur.class.getConstructor());
             this.roles.put("Pyromane", Pyromane.class.getConstructor());
             this.roles.put("Renard", Renard.class.getConstructor());
             this.roles.put("Salvateur", Salvateur.class.getConstructor());
@@ -128,6 +133,7 @@ public class LG extends JavaPlugin {
             this.roles.put("SimpleVillageois", SimpleVillageois.class.getConstructor());
             this.roles.put("Soeur", Soeur.class.getConstructor());
             this.roles.put("Sorciere", Sorciere.class.getConstructor());
+            this.roles.put("Vampire", Vampire.class.getConstructor());
             this.roles.put("VilainGarcon", VilainGarcon.class.getConstructor());
             this.roles.put("VillageoisVillageois", VillageoisVillageois.class.getConstructor());
             this.roles.put("Voleur", Voleur.class.getConstructor());

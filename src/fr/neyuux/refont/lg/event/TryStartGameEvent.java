@@ -5,17 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerJoinGameEvent extends Event {
-    final PlayerLG playerLG;
-
-
-    public PlayerJoinGameEvent(PlayerLG playerLG) {
-        this.playerLG = playerLG;
-    }
-
-    public PlayerLG getPlayerLG() {
-        return playerLG;
-    }
+public class TryStartGameEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 

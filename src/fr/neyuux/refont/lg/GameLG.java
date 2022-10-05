@@ -1,7 +1,7 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.config.GameConfig;
-import fr.neyuux.refont.lg.event.PlayerJoinGameEvent;
+import fr.neyuux.refont.lg.event.TryStartGameEvent;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -147,16 +147,16 @@ public class GameLG implements Listener {
         player.setPlayerListName(player.getName());
         player.sendMessage(this.getPrefix() + "§9Vous avez été retiré du mode Spectateur.");
         player.setGameMode(GameMode.ADVENTURE);
-        //TODO player.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f));
+        player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
 
         Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
     }
 
     public boolean joinGame(PlayerLG playerLG) {
         if (this.gameType.equals(GameType.FREE)) {
-            //TODO TP
+            playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), 363.5, 84, 635.5, 180f, 0f));
         } else if (this.gameType.equals(GameType.MEETING)) {
-            //TODO TP
+            playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), 102.5, 30.5, 847, -157.6f, 0f));
         } else if (this.gameType.equals(GameType.NONE)) {
             playerLG.sendMessage(LG.getPrefix() + "§cVous devez attendre qu'un OP choisisse le type de jeu (Libre ou Réunion) !");
             playNegativeSound(playerLG.getPlayer());
@@ -170,7 +170,7 @@ public class GameLG implements Listener {
         playerLG.sendTitle("§5§ka §4§ka §c§ka §a§lVous jouerez cette partie ! §6§ka §e§ka §f§ka ", "§6Il y a désormais §e" + this.playersInGame.size() + "§6 joueur"+ LG.getPlurial(this.playersInGame.size()) +".", 20, 60, 20);
         playPositiveSound(playerLG.getPlayer());
 
-        PlayerJoinGameEvent ev = new PlayerJoinGameEvent(playerLG);
+        TryStartGameEvent ev = new TryStartGameEvent();
         Bukkit.getPluginManager().callEvent(ev);
         //TODO updateScoreboard
 
@@ -181,7 +181,7 @@ public class GameLG implements Listener {
         if (playersInGame.contains(playerLG)) this.playersInGame.remove(playerLG);
 
         LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
-        //TODO TP
+        playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
         playerLG.sendTitle("§c§lVous avez été retiré de la partie !", "§6Pas de pot.", 20, 60, 20);
         playNegativeSound(playerLG.getPlayer());
         //TODO updateScoreboard
@@ -332,8 +332,7 @@ public class GameLG implements Listener {
             this.addNightVision(playerLG);
             this.addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
-            //TODO tp config locations.mainSpawn
-            //player.teleport(p.teleport(new Location(Bukkit.getWorld("LG"), 494, 12.2, 307, 0f, 0f)); //494 12 307)
+            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
 
             PlayerLG.removePlayerLG(player);
             PlayerLG.createPlayerLG(player);
@@ -343,10 +342,10 @@ public class GameLG implements Listener {
             if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
 
-            List<Object> spawnObjects = new ArrayList<>((List<?>) LG.getInstance().getConfig().get("spawns." + this.gameType));
-            List<Double> location = (List<Double>)spawnObjects.remove(new Random().nextInt(spawnObjects.size()));
+            //List<Object> spawnObjects = new ArrayList<>((List<?>) LG.getInstance().getConfig().get("spawns." + this.gameType));
+            //List<Double> location = (List<Double>)spawnObjects.remove(new Random().nextInt(spawnObjects.size()));
 
-            playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
+            //playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
         }
 
         Bukkit.createWorld(new WorldCreator("LG"));
@@ -467,6 +466,10 @@ public class GameLG implements Listener {
 
     public int getWaitTicks() {
         return waitTicks;
+    }
+
+    public int getWaitTicksToSeconds() {
+        return Math.floorDiv(this.waitTicks, 20) + 1;
     }
 
     public void setWaitTicks(int waitTicks) {

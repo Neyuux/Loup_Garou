@@ -54,14 +54,6 @@ public class LG extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        if (!new File(getDataFolder(), "config.yml").exists()) {
-            FileConfiguration config = this.getConfig();
-
-            config.set("locations", new ArrayList<>());
-
-            saveConfig();
-        }
-
         registerBaseTeams(Bukkit.getScoreboardManager().getMainScoreboard());
 
         if (!(new File(getDataFolder(), "config.yml")).exists()) {

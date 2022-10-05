@@ -1,13 +1,14 @@
 package fr.neyuux.refont.lg.listeners;
 
 import fr.neyuux.refont.lg.*;
-import fr.neyuux.refont.lg.event.PlayerJoinGameEvent;
+import fr.neyuux.refont.lg.event.TryStartGameEvent;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.tasks.LGStart;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import fr.neyuux.refont.old.lg.Gcycle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -20,6 +21,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ConcurrentModificationException;
+import java.util.Random;
 
 public class PreGameListener implements Listener {
 
@@ -38,7 +40,7 @@ public class PreGameListener implements Listener {
             playerLG.showAllPlayers();
             LG.getInstance().getGame().addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
-            //TODO TP
+            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
             LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
             //TODO update scoreboard
         }
@@ -153,12 +155,14 @@ public class PreGameListener implements Listener {
     }
 
     @EventHandler
-    public void onJoinGame(PlayerJoinGameEvent ev) {
+    public void onJoinGame(TryStartGameEvent ev) {
         GameLG game = LG.getInstance().getGame();
 
         if (game.getPlayersInGame().size() == Bukkit.getOnlinePlayers().size() - game.getSpectators().size() && game.getPlayersInGame().size() > 0 && game.getGameState().equals(GameState.WAITING)) {
-            LG.getInstance().getGame().setGameState(GameState.STARTING);
-            new LGStart(game).runTaskTimer(LG.getInstance(), 0, 20);
+            if (game.getConfig().getAddedRoles().size() >= game.getPlayersInGame().size()) {
+                LG.getInstance().getGame().setGameState(GameState.STARTING);
+                new LGStart(game).runTaskTimer(LG.getInstance(), 0, 20);
+            }
         }
     }
 

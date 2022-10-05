@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameState;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -12,6 +13,8 @@ public class GameRunnable extends BukkitRunnable {
     private BukkitTask deal;
 
     private final GameLG game;
+
+    private int night = 1;
 
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
@@ -30,9 +33,7 @@ public class GameRunnable extends BukkitRunnable {
             for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame())
                 playerLG.updateGamePlayerScoreboard();
 
-            this.game.wait(6, () -> {
-                nextNight
-            });
+            this.game.wait(6, this::nextNight, LG.getPrefix() + "§9Début de la nuit dans §1§l" + this.game.getWaitTicksToSeconds() + "§9 seconde" + LG.getPlurial(this.game.getWaitTicksToSeconds())  + ".");
         }
     }
 
@@ -44,5 +45,14 @@ public class GameRunnable extends BukkitRunnable {
         this.deal.cancel();
         this.deal = null;
         return true;
+    }
+
+
+    public void nextNight() {
+
+        if ((boolean)this.game.getConfig().getDayCycle().getValue())
+
+
+        this.night++;
     }
 }

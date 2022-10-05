@@ -1,13 +1,11 @@
 package fr.neyuux.refont.lg.commands;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameState;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,6 +14,8 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 
 public class LGCommand implements CommandExecutor {
     @Override
@@ -293,6 +293,33 @@ public class LGCommand implements CommandExecutor {
                             default:
                                 sender.sendMessage(LG.getPrefix() + helpplayerscommand);
                                 break;
+                        }
+                    }
+                break;
+                case "addspawn":
+                    if (checkHuman(sender)) {
+                        HumanEntity human = (HumanEntity) sender;
+                        PlayerLG playerLG = PlayerLG.createPlayerLG(human);
+                        GameType gt = LG.getInstance().getGame().getGameType();
+
+                        if (playerLG.isOP()) {
+                            if (gt != GameType.NONE) {
+                                Location loc = human.getLocation();
+                                List<Object> list = (List<Object>) LG.getInstance().getConfig().getList("spawns." + gt);
+
+                                list.add(Arrays.asList((double) loc.getBlockX(), loc.getY(), (double) loc.getBlockZ(), (double) loc.getYaw(), (double) loc.getPitch()));
+
+                                LG.getInstance().saveConfig();
+                                sender.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée !");
+                                GameLG.playPositiveSound(playerLG.getPlayer());
+                            } else {
+                                sender.sendMessage(LG.getPrefix() + "§cVous devez choisir le type de jeu avant de créer des emplacements !");
+                                GameLG.playNegativeSound(playerLG.getPlayer());
+                            }
+
+                        } else {
+                            sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour ajouter des emplacements !");
+                            GameLG.playNegativeSound(playerLG.getPlayer());
                         }
                     }
                 break;

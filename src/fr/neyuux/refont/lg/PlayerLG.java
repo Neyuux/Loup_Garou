@@ -38,13 +38,13 @@ public class PlayerLG {
 
     private final CacheLG cache = new CacheLG();
 
-    private Block block;
-
     private Camps camp;
 
     private boolean isDead;
 
     private boolean isMayor;
+
+    private Location placement;
 
     private final List<PlayerLG> blacklistChoice = new ArrayList<>();
 
@@ -277,12 +277,13 @@ public class PlayerLG {
         isMayor = mayor;
     }
 
-    public Block getBlock() {
-        return block;
+
+    public Location getPlacement() {
+        return placement;
     }
 
-    public void setBlock(Block block) {
-        this.block = block;
+    public void setPlacement(Location placement) {
+        this.placement = placement;
     }
 
 

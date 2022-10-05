@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.listeners.PreGameListener;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -62,6 +63,16 @@ public class LG extends JavaPlugin {
         }
 
         registerBaseTeams(Bukkit.getScoreboardManager().getMainScoreboard());
+
+        if (!(new File(getDataFolder(), "config.yml")).exists()) {
+            FileConfiguration config = getConfig();
+
+            for (GameType gt : GameType.values())
+                if (gt != GameType.NONE)
+                    config.set("spawns." + gt, new ArrayList<>());
+
+            saveConfig();
+        }
 
         this.itemsManager = new ItemsManager();
         this.gameLG = new GameLG();

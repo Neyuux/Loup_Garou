@@ -9,21 +9,20 @@ import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
 import fr.neyuux.refont.lg.roles.classes.Voleur;
 import fr.neyuux.refont.lg.tasks.GameRunnable;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +41,10 @@ public class GameLG implements Listener {
     private int night = 0;
 
     private PlayerLG mayor;
+    
+    private int waitTicks = 0;
+
+    private BukkitTask waitTask;
 
     private ArrayList<Constructor<? extends Role>> rolesAtStart = new ArrayList<>();
 
@@ -116,6 +119,7 @@ public class GameLG implements Listener {
         Player player = playerLG.getPlayer();
 
         this.spectators.add(playerLG);
+        this.playersInGame.remove(playerLG);
 
         this.getItemsManager().updateSpawnItems(playerLG);
         player.setGameMode(GameMode.SPECTATOR);
@@ -265,12 +269,43 @@ public class GameLG implements Listener {
                 playerLG.joinRole(role);
                 playerLG.setCamp(role.getBaseCamp());
                 playerLG.createScoreboard();
+                LG.getInstance().getItemsManager().updateStartItems(playerLG);
             }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de distribuer les rôles. Veuillez prévenir Neyuux_ ou réessayer.");
         }
         return null;
+    }
+
+    public void wait(final int seconds, final Runnable callback, final String actionBarMessage) {
+        cancelWait();
+        this.waitTicks = seconds * 20;
+        this.waitTask = (new BukkitRunnable() {
+            public void run() {
+                for (PlayerLG playerLG : playersInGame) {
+                    Player player = playerLG.getPlayer();
+
+                    player.setLevel(Math.floorDiv(GameLG.this.waitTicks, 20) + 1);
+                    player.setExp(GameLG.this.waitTicks / seconds * 20.0F);
+                    playerLG.sendActionBar(actionBarMessage);
+                }
+
+                if (GameLG.this.waitTicks == 0) {
+                    GameLG.this.waitTask = null;
+                    cancel();
+                    callback.run();
+                }
+                GameLG.this.waitTicks--;
+            }
+        }).runTaskTimer(LG.getInstance(), 0L, 1L);
+    }
+
+    public void cancelWait() {
+        if (this.waitTask != null) {
+            this.waitTask.cancel();
+            this.waitTask = null;
+        }
     }
 
     public void resetGame() {
@@ -308,6 +343,10 @@ public class GameLG implements Listener {
             if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
 
+            List<Object> spawnObjects = new ArrayList<>((List<?>) LG.getInstance().getConfig().get("spawns." + this.gameType));
+            List<Double> location = (List<Double>)spawnObjects.remove(new Random().nextInt(spawnObjects.size()));
+
+            playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
         }
 
         Bukkit.createWorld(new WorldCreator("LG"));
@@ -424,5 +463,21 @@ public class GameLG implements Listener {
 
     private void setConfig(GameConfig config) {
         this.config = config;
+    }
+
+    public int getWaitTicks() {
+        return waitTicks;
+    }
+
+    public void setWaitTicks(int waitTicks) {
+        this.waitTicks = waitTicks;
+    }
+
+    public BukkitTask getWaitTask() {
+        return waitTask;
+    }
+
+    public void setWaitTask(BukkitTask waitTask) {
+        this.waitTask = waitTask;
     }
 }

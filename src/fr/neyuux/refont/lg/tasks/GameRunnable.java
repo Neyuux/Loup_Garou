@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg.tasks;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameState;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
@@ -10,8 +11,11 @@ public class GameRunnable extends BukkitRunnable {
 
     private BukkitTask deal;
 
+    private final GameLG game;
+
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
+        this.game = LG.getInstance().getGame();
     }
 
 
@@ -25,6 +29,10 @@ public class GameRunnable extends BukkitRunnable {
         if (deal != null && this.checkDealFinished()) {
             for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame())
                 playerLG.updateGamePlayerScoreboard();
+
+            this.game.wait(6, () -> {
+                nextNight
+            });
         }
     }
 

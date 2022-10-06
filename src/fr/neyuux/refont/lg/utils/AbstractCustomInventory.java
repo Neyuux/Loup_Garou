@@ -67,15 +67,17 @@ public abstract class AbstractCustomInventory {
     public void close(Inventory inv){}
 
     public void setItem(int slot, CustomItemStack item){
+        this.itemsMap.remove(slot);
         this.itemsMap.put(slot, item);
     }
 
     public void addItem(CustomItemStack item) {
         int slot = -1;
-        for (int i = 0; slot == -1 || i >= this.size; i++)
+        for (int i = 0; slot == -1 && i < this.size; i++) {
             if (!this.itemsMap.containsKey(i)) slot = i;
+        }
 
-        this.itemsMap.put(slot, item);
+        this.setItem(slot, item);
     }
 
     public CustomItemStack getItem(int slot){

@@ -140,9 +140,14 @@ public class PlayerLG {
             Frere brother = (Frere)receiver.getRole();
 
             if (brother.getBrothers().contains(this)) {
-                name += "§3§lFrère §d";
+                name += "§3§lFrère ";
                 lastcolor = "§d";
             }
+        }
+
+        if (receiver.getRole() instanceof Macon && this.getRole() instanceof Macon) {
+            name += "§6§lMaçon ";
+            lastcolor = "§d";
         }
 
         if (this.getRole() instanceof VillageoisVillageois) {

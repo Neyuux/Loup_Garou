@@ -83,6 +83,7 @@ public class LG extends JavaPlugin {
     }
 
     public void initialiseRoles() {
+        this.roles.clear();
         try {
             this.roles.put("Ancien", Ancien.class.getConstructor());
             this.roles.put("Ange", Ange.class.getConstructor());

@@ -31,9 +31,8 @@ public class RolesListRolesInv extends AbstractCustomInventory {
     public void registerItems() {
         this.setItem(this.getSize() - 1, new ReturnArrowItemStack(new RolesCampChooseInv(deck)));
 
-        for (Role role : getRolesInDeckCamp(deck, camp)) {
+        for (Role role : getRolesInDeckCamp(deck, camp))
             this.addItem(new RoleAddingItemStack(role));
-        }
     }
 
 

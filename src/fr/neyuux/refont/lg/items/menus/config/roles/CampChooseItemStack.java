@@ -55,8 +55,10 @@ public class CampChooseItemStack extends CustomItemStack {
         if (newInv.getItemsMap().size() == 1) {
             GameLG.playNegativeSound((Player) player);
             player.sendMessage(LG.getPrefix() + "§cLe deck §b" + deck.getName() + " §cne contient pas de rôle du camp " + camp.getColor() + "§l" + camp.getName() + " §c!");
-        } else
+        } else {
+            newInv.getItemsMap().clear();
             newInv.open(player);
+        }
     }
 
 }

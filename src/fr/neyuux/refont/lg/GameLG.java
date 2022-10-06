@@ -287,7 +287,7 @@ public class GameLG implements Listener {
                     Player player = playerLG.getPlayer();
 
                     player.setLevel(Math.floorDiv(GameLG.this.waitTicks, 20) + 1);
-                    player.setExp(GameLG.this.waitTicks / seconds * 20.0F);
+                    player.setExp(GameLG.this.waitTicks / 20.0F / 10.0F);
                     playerLG.sendActionBar(actionBarMessage);
                 }
 

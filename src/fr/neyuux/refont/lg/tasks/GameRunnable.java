@@ -5,6 +5,8 @@ import fr.neyuux.refont.lg.GameState;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -51,7 +53,11 @@ public class GameRunnable extends BukkitRunnable {
     public void nextNight() {
 
         if ((boolean)this.game.getConfig().getDayCycle().getValue())
+            Bukkit.getWorld("LG").setTime(18000);
 
+        Bukkit.broadcastMessage("      §9§lNUIT " + this.night);
+        for (Player player : Bukkit.getOnlinePlayers())
+            player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
         this.night++;
     }

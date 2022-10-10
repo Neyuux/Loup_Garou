@@ -39,16 +39,15 @@ public class RoleAddingItemStack extends CustomItemStack {
         List<Constructor<? extends Role>> added = LG.getInstance().getGame().getConfig().getAddedRoles();
         int slot = CustomItemStack.getSlot(inv, this);
 
+        int times = 1;
+        if (role.getConfigName().equals("Frere")) times = 3;
+        else if (role.getConfigName().equals("Soeur")) times = 2;
         try {
             if (clickEvent.isLeftClick()) {
                 int number = 0;
                 for (Constructor<? extends Role> constructor : added)
                     if (constructor.equals(role.getClass().getConstructor()))
                         number++;
-
-                int times = 1;
-                if (role.getConfigName().equals("Frere")) times = 3;
-                else if (role.getConfigName().equals("Soeur")) times = 2;
 
                 if (number + times > role.getMaxNumber() && role.getMaxNumber() != -1) {
                     GameLG.playNegativeSound((Player) player);
@@ -59,9 +58,10 @@ public class RoleAddingItemStack extends CustomItemStack {
                 for (int i = times; i!= 0; i--)
                     added.add(role.getClass().getConstructor());
 
-
             } else if (clickEvent.isRightClick()) {
-                added.remove(role.getClass().getConstructor());
+
+                for (int i = times; i!= 0; i--)
+                    added.remove(role.getClass().getConstructor());
             }
         } catch (NoSuchMethodException e) {
             Bukkit.broadcastMessage("§4[§cErreur§4]§c La création des objets pour ajouter des rôles a échoué. Veuillez réessayer ou appeler Neyuux_.");

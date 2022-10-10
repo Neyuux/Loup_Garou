@@ -3,6 +3,7 @@ package fr.neyuux.refont.lg.roles;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.roles.classes.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -70,37 +71,3 @@ public abstract class Role implements Listener {
     public abstract String getActionMessage();
 }
 
-enum RoleNightOrder {
-    VOLEUR,
-    CUPIDON,
-    ENFANTSAUVAGE,
-    CHIENLOUP,
-    JUMEAU,
-    NOCTAMBULE,
-    COMEDIEN,
-    VOYANTE,
-    VOYANTEDAURA,
-    ENCHANTEUR,
-    DETECTIVE,
-    RENARD,
-    PACIFISTE,
-    FILLEDEJOIE,
-    GARDEDUCORPS,
-    SALVATEUR,
-    LOUPGAROU,
-    INFECTPEREDESLOUPS,
-    GRANDMECHANTLOUP,
-    LOUPGAROUBLANC,
-    PETITEFILLEWO,
-    SORCIERE,
-    PRETRE,
-    NECROMANCIEN,
-    VILAINGARCON,
-    DICTATEUR,
-    MAMIEGRINCHEUSE,
-    CORBEAU,
-    JOUEURDEFLUTE,
-    PYROMANE,
-    SOEUR,
-    FRERE
-}

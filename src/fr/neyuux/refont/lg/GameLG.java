@@ -270,6 +270,7 @@ public class GameLG implements Listener {
                 playerLG.setCamp(role.getBaseCamp());
                 playerLG.createScoreboard();
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
+                this.aliveRoles.add(role);
             }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
@@ -278,7 +279,7 @@ public class GameLG implements Listener {
         return null;
     }
 
-    public void wait(final int seconds, final Runnable callback, final String actionBarMessage) {
+    public void wait(final int seconds, final Runnable callback, final StringTimerMessage actionBarMessage) {
         cancelWait();
         this.waitTicks = seconds * 20;
         this.waitTask = (new BukkitRunnable() {
@@ -287,8 +288,8 @@ public class GameLG implements Listener {
                     Player player = playerLG.getPlayer();
 
                     player.setLevel(Math.floorDiv(GameLG.this.waitTicks, 20) + 1);
-                    player.setExp(GameLG.this.waitTicks / 20.0F / 10.0F);
-                    playerLG.sendActionBar(actionBarMessage);
+                    player.setExp(GameLG.this.waitTicks / (seconds * 20.0F));
+                    playerLG.sendActionBar(actionBarMessage.generate(playerLG, Math.floorDiv(GameLG.this.waitTicks, 20) + 1));
                 }
 
                 if (GameLG.this.waitTicks == 0) {
@@ -482,5 +483,9 @@ public class GameLG implements Listener {
 
     public void setWaitTask(BukkitTask waitTask) {
         this.waitTask = waitTask;
+    }
+
+    public interface StringTimerMessage {
+        String generate(PlayerLG param1LGPlayer, int param1Int);
     }
 }

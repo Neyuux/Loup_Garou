@@ -4,11 +4,14 @@ import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
@@ -321,6 +324,16 @@ public class LGCommand implements CommandExecutor {
                             sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour ajouter des emplacements !");
                             GameLG.playNegativeSound(playerLG.getPlayer());
                         }
+                    }
+                break;
+                case "testsleep":
+                    if (checkHuman(sender) && sender.isOp()) {
+                        Player player = (Player)sender;
+                        Block block = PlayerLG.createPlayerLG(player).getPlacement().getBlock();
+
+                        player.teleport(block.getLocation());
+                        ((CraftPlayer) player).getHandle().a(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+                        player.setSleepingIgnored(false);
                     }
                 break;
 

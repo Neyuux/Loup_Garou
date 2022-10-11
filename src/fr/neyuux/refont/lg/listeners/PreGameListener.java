@@ -9,18 +9,23 @@ import fr.neyuux.refont.old.lg.Gcycle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 import java.util.Random;
 
 public class PreGameListener implements Listener {
@@ -162,6 +167,26 @@ public class PreGameListener implements Listener {
             if (game.getConfig().getAddedRoles().size() >= game.getPlayersInGame().size()) {
                 LG.getInstance().getGame().setGameState(GameState.STARTING);
                 new LGStart(game).runTaskTimer(LG.getInstance(), 0, 20);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBreakEmplacement(BlockBreakEvent ev) {
+        Block block = ev.getBlock();
+        Player player = ev.getPlayer();
+
+        if (player.getItemInHand().getType().equals(Material.STONE_HOE) && player.isOp()) {
+            if (LG.getInstance().getGame().getGameType() != GameType.NONE) {
+                Location loc = block.getLocation();
+                List<Object> list = (List<Object>) LG.getInstance().getConfig().getList("spawns." + LG.getInstance().getGame().getGameType());
+
+                list.add(Arrays.asList((double) loc.getBlockX() + 0.5D, loc.getY(), (double) loc.getBlockZ() + 0.5D, (double) loc.getYaw(), (double) loc.getPitch()));
+
+                LG.getInstance().saveConfig();
+                player.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée ! §e§o(" + block.getType() + ")");;
+            } else {
+                player.sendMessage(LG.getPrefix() + "§cVous devez choisir le type de jeu avant de créer des emplacements !");
             }
         }
     }

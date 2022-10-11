@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
 import fr.neyuux.refont.lg.utils.CacheLG;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
@@ -12,6 +13,8 @@ import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -25,7 +28,7 @@ public class PlayerLG {
 
     private static final HashMap<HumanEntity, PlayerLG> playerHashMap = new HashMap<>();
     
-    private GameLG game;
+    private final GameLG game;
 
     public PlayerLG(HumanEntity human) {
         this.human = human;
@@ -208,13 +211,29 @@ public class PlayerLG {
     public void updateGamePlayerScoreboard() {
         Scoreboard scoreboard = this.getPlayer().getScoreboard();
 
-        for (PlayerLG targetLG : LG.getInstance().getGame().getPlayersInGame()) {
+        for (PlayerLG targetLG : this.game.getPlayersInGame()) {
             Team team = scoreboard.registerNewTeam(targetLG.getName());
             String[] prefixsuffix = targetLG.getNameWithAttributes(this).split(targetLG.getName());
 
             team.setPrefix(prefixsuffix[0]);
             if (prefixsuffix.length > 1)team.setSuffix(prefixsuffix[1]);
             team.addEntry(targetLG.getName());
+        }
+    }
+
+    public void setSleep() {
+        Player player = this.getPlayer();
+        for (PlayerLG playerLG : this.game.getPlayersInGame())
+            player.hidePlayer(playerLG.getPlayer());
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false));
+
+        if (this.game.getGameType().equals(GameType.FREE)) {
+            Block block = this.placement.getBlock();
+
+            player.teleport(placement);
+            ((CraftPlayer) player).getHandle().a(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+            player.setSleepingIgnored(false);
         }
     }
 
@@ -233,11 +252,11 @@ public class PlayerLG {
     }
 
     public boolean isInGame() {
-        if (this.game == null) {
+        /*if (this.game == null) {
             this.game = LG.getInstance().getGame();
             return false;
         } else if (this.game != LG.getInstance().getGame())
-            this.game = LG.getInstance().getGame();
+            this.game = LG.getInstance().getGame();*/
         return this.game.getPlayersInGame().contains(this);
     }
 
@@ -301,8 +320,8 @@ public class PlayerLG {
         return plg;
     }
 
-    public static PlayerLG removePlayerLG(HumanEntity human) {
-        return playerHashMap.remove(human);
+    public static void removePlayerLG(HumanEntity human) {
+        playerHashMap.remove(human);
     }
 
     public CacheLG getCache() {

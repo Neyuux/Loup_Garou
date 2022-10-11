@@ -71,6 +71,9 @@ public class GameRunnable extends BukkitRunnable {
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
                     this.rolesOrder.add(role);
 
+        for (PlayerLG playerLG : this.game.getPlayersInGame())
+            playerLG.setSleep();
+
         this.night++;
     }
 }

@@ -18,6 +18,11 @@ public class Assassin extends Role {
     }
 
     @Override
+    public String getDeterminingName() {
+        return "de l' " + this.getDisplayName();
+    }
+
+    @Override
     public int getMaxNumber() {
         return -1;
     }

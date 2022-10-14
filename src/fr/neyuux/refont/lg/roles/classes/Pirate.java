@@ -18,6 +18,11 @@ public class Pirate extends Role {
     }
 
     @Override
+    public String getDeterminingName() {
+        return null;
+    }
+
+    @Override
     public int getMaxNumber() {
         return -1;
     }

@@ -50,4 +50,12 @@ public enum RoleNightOrder {
     public Class<? extends Role> getRoleClass() {
         return roleClass;
     }
+
+
+    public static boolean contains(Class<? extends Role> roleClass) {
+        for (RoleNightOrder rno : values())
+            if (roleClass.equals(rno.getRoleClass()))
+                return true;
+        return false;
+    }
 }

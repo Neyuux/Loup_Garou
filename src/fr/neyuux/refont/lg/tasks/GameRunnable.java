@@ -74,6 +74,33 @@ public class GameRunnable extends BukkitRunnable {
         for (PlayerLG playerLG : this.game.getPlayersInGame())
             playerLG.setSleep();
 
+
+        new Runnable() {
+
+            public void run() {
+                Runnable run = this;
+
+                new BukkitRunnable() {
+
+                    public void run() {
+
+                        if (GameRunnable.this.rolesOrder.isEmpty()) {
+                            GameRunnable.this.endNight();
+                            return;
+                        }
+
+                        Role role = GameRunnable.this.rolesOrder.remove(0);
+
+                        if (role.getTurnNumber() == -1 || role.getPlayers().isEmpty())
+                            run();
+                        else
+                            role.onNightTurn(run);
+
+                    }
+                }.runTaskLater(LG.getInstance(), 60L);
+            }
+        }.run();
+
         this.night++;
     }
 }

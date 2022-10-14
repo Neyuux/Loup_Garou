@@ -19,6 +19,11 @@ public class Detective extends Role {
     }
 
     @Override
+    public String getDeterminingName() {
+        return "du " + this.getDisplayName();
+    }
+
+    @Override
     public int getMaxNumber() {
         return -1;
     }

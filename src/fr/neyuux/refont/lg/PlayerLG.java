@@ -47,6 +47,8 @@ public class PlayerLG {
 
     private boolean isMayor;
 
+    private boolean canUsePowers;
+
     private Location placement;
 
     private final List<PlayerLG> blacklistChoice = new ArrayList<>();
@@ -301,6 +303,13 @@ public class PlayerLG {
         isMayor = mayor;
     }
 
+    public boolean canUsePowers() {
+        return canUsePowers;
+    }
+
+    public void setCanUsePowers(boolean canUsePowers) {
+        this.canUsePowers = canUsePowers;
+    }
 
     public Location getPlacement() {
         return placement;

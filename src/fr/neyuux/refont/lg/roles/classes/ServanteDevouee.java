@@ -19,6 +19,11 @@ public class ServanteDevouee extends Role {
     }
 
     @Override
+    public String getDeterminingName() {
+        return "de la " + this.getDisplayName();
+    }
+
+    @Override
     public int getMaxNumber() {
         return -1;
     }

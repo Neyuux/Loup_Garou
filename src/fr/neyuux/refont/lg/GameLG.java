@@ -70,7 +70,7 @@ public class GameLG implements Listener {
     public void sendMessage(Role role, String msg) {
         for (PlayerLG playerLG : this.getAlive()) {
             if (role != null) {
-                if (Role.getPlayers().contains(playerLG))
+                if (role.getPlayers().contains(playerLG))
                     playerLG.sendMessage(msg);
             } else playerLG.sendMessage(msg);
         }

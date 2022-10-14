@@ -19,6 +19,11 @@ public class Fossoyeur extends Role {
     }
 
     @Override
+    public String getDeterminingName() {
+        return null;
+    }
+
+    @Override
     public int getMaxNumber() {
         return 2;
     }

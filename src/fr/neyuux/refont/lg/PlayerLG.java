@@ -19,10 +19,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PlayerLG {
 
@@ -49,9 +46,13 @@ public class PlayerLG {
 
     private boolean canUsePowers;
 
+    private boolean isSleeping;
+
     private Location placement;
 
-    private final List<PlayerLG> blacklistChoice = new ArrayList<>();
+    private List<PlayerLG> blacklistChoice;
+
+    private CallbackChoice callbackChoice;
 
 
     public void sendMessage(String msg) {
@@ -225,18 +226,46 @@ public class PlayerLG {
 
     public void setSleep() {
         Player player = this.getPlayer();
+        Location loc = this.placement;
+
+        player.teleport(placement);
+
         for (PlayerLG playerLG : this.game.getPlayersInGame())
             player.hidePlayer(playerLG.getPlayer());
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false));
 
         if (this.game.getGameType().equals(GameType.FREE)) {
-            Block block = this.placement.getBlock();
-
-            player.teleport(placement);
-            ((CraftPlayer) player).getHandle().a(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+            ((CraftPlayer) player).getHandle().a(new BlockPosition(loc.getX(), loc.getY(), loc.getZ()));
             player.setSleepingIgnored(false);
         }
+
+        this.isSleeping = true;
+    }
+
+    public void setWake() {
+        Player player = this.getPlayer();
+
+        this.isSleeping = false;
+
+        player.teleport(player.getBedSpawnLocation());
+        player.removePotionEffect(PotionEffectType.BLINDNESS);
+        for (PlayerLG playerLG : this.game.getPlayersInGame())
+            player.showPlayer(playerLG.getPlayer());
+    }
+
+    public void setChoosing(CallbackChoice callback, PlayerLG... blacklisted) {
+        if (blacklisted != null) this.blacklistChoice = Arrays.asList(blacklisted);
+        this.callbackChoice = callback;
+    }
+
+    public void stopChoosing() {
+        this.blacklistChoice = null;
+        this.callbackChoice = null;
+    }
+
+    public void callbackChoice(PlayerLG playerLG) {
+        this.callbackChoice.callback(playerLG);
     }
 
     public Player getPlayer() {
@@ -254,11 +283,6 @@ public class PlayerLG {
     }
 
     public boolean isInGame() {
-        /*if (this.game == null) {
-            this.game = LG.getInstance().getGame();
-            return false;
-        } else if (this.game != LG.getInstance().getGame())
-            this.game = LG.getInstance().getGame();*/
         return this.game.getPlayersInGame().contains(this);
     }
 
@@ -319,6 +343,10 @@ public class PlayerLG {
         this.placement = placement;
     }
 
+    public boolean isSleeping() {
+        return isSleeping;
+    }
+
 
     public static PlayerLG createPlayerLG(HumanEntity human) {
         if (playerHashMap.containsKey(human))
@@ -361,5 +389,10 @@ public class PlayerLG {
 
     public static HashMap<HumanEntity, PlayerLG> getPlayersMap() {
         return playerHashMap;
+    }
+
+
+    public interface CallbackChoice {
+        void callback(PlayerLG choosen);
     }
 }

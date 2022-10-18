@@ -1,19 +1,19 @@
 package fr.neyuux.refont.lg.tasks;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameState;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.RoleNightOrder;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameRunnable extends BukkitRunnable {
 
@@ -23,7 +23,7 @@ public class GameRunnable extends BukkitRunnable {
 
     private int night = 1;
 
-    private List<Role> rolesOrder = new ArrayList<>();
+    private final List<Role> rolesOrder = new ArrayList<>();
 
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
@@ -38,9 +38,20 @@ public class GameRunnable extends BukkitRunnable {
             return;
         }
 
+        if (this.game.getDayCycle().equals(DayCycle.NIGHT) && this.game.getGameType().equals(GameType.FREE))
+            this.checkSleep();
+
         if (deal != null && this.checkDealFinished()) {
-            for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame())
+            for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame()) {
                 playerLG.updateGamePlayerScoreboard();
+
+                FileConfiguration file = LG.getInstance().getConfig();
+                List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + LG.getInstance().getGame().getGameType());
+                List<Double> doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
+                Location placement = new Location(Bukkit.getWorld("LG"), doubleList.get(0), doubleList.get(1), doubleList.get(2), doubleList.get(3).floatValue(), doubleList.get(4).floatValue());
+
+                playerLG.setPlacement(placement);
+            }
 
             this.game.wait(6, this::nextNight, (playerLG, secondsLeft) -> LG.getPrefix() + "§9Début de la nuit dans §1§l" + secondsLeft + "§9 seconde" + LG.getPlurial(secondsLeft)  + ".");
         }
@@ -67,7 +78,7 @@ public class GameRunnable extends BukkitRunnable {
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
         for (RoleNightOrder order : RoleNightOrder.values())
-            for (Role role : this.game.getAliveRoles())
+            for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
                     this.rolesOrder.add(role);
 
@@ -78,14 +89,14 @@ public class GameRunnable extends BukkitRunnable {
         new Runnable() {
 
             public void run() {
-                Runnable run = this;
+                Runnable callback = this;
 
                 new BukkitRunnable() {
 
                     public void run() {
 
                         if (GameRunnable.this.rolesOrder.isEmpty()) {
-                            GameRunnable.this.endNight();
+                            //GameRunnable.this.endNight();
                             return;
                         }
 
@@ -94,7 +105,7 @@ public class GameRunnable extends BukkitRunnable {
                         if (role.getTurnNumber() == -1 || role.getPlayers().isEmpty())
                             run();
                         else
-                            role.onNightTurn(run);
+                            role.onNightTurn(callback);
 
                     }
                 }.runTaskLater(LG.getInstance(), 60L);
@@ -102,5 +113,11 @@ public class GameRunnable extends BukkitRunnable {
         }.run();
 
         this.night++;
+    }
+
+    public void checkSleep() {
+        for (PlayerLG playerLG : this.game.getPlayersInGame())
+            if (playerLG.isSleeping() && !playerLG.getPlayer().isSleeping())
+                playerLG.setSleep();
     }
 }

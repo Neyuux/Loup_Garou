@@ -6,6 +6,7 @@ import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.classes.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,42 +25,39 @@ public abstract class Role implements Listener {
         ArrayList<PlayerLG> players = (ArrayList<PlayerLG>) this.getPlayers().clone();
         GameLG game = LG.getInstance().getGame();
 
-        new Runnable() {
+        game.cancelWait();
 
-            public void run() {
-
-                game.cancelWait();
-
-                if (players.size() == 0) {
-                    Role.this.onFinishNightTurn(callback);
-                    return;
-                }
-
-                PlayerLG playerLG = players.remove(0);
-
-                if (playerLG.canUsePowers()) {
-
-                    game.wait(Role.this.getTimeout(), this, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "Au tour " + Role.this.getDeterminingName());
-                    playerLG.sendMessage("" + Role.this.getActionMessage());
-                    Role.this.onRoleNightTurn(playerLG, this);
-
-                } else {
-                    game.wait(Role.this.getTimeout(), () -> {
-
-                    }, (currentPlayer, secondsLeft) -> (currentPlayer == player) ? "ne peux pas jouer" : ("au tour " + Role.this.getFriendlyName() + " + secondsLeft + " s));
-                    final Runnable run = this;
-                    (new BukkitRunnable() {
-                        public void run() {
-                            run.run();
-                        }
-                    }).runTaskLater((Plugin)MainLg.getInstance(), (20 * (ThreadLocalRandom.current().nextInt(Role.this.getTimeout() / 3 * 2 - 4) + 4)));
-                }
+        if (this.players.isEmpty()) {
+            if (!game.isThiefRole(this)) {
+                callback.run();
+                return;
+            } else {
+                createFakeTurn(callback);
             }
-        }.run();
+        }
+
+        PlayerLG playerLG = players.remove(0);
+
+        if (playerLG.canUsePowers()) {
+
+            playerLG.setWake();
+
+            game.wait(Role.this.getTimeout(), () -> {
+                playerLG.setSleep();
+                this.onNightTurn(callback);
+
+            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "Au tour " + Role.this.getDeterminingName());
+
+            playerLG.sendMessage("" + Role.this.getActionMessage());
+            Role.this.onRoleNightTurn(playerLG, () -> this.onNightTurn(callback));
+
+        } else {
+            createFakeTurn(callback);
+        }
     }
 
-    public void onFinishNightTurn(Runnable callback) {
-
+    public void createFakeTurn(Runnable callback) {
+        LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> "Au tour " + Role.this.getDeterminingName());
     }
 
     protected void onRoleNightTurn(PlayerLG playerLG, Runnable callback) {

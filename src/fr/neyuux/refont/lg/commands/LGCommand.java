@@ -7,6 +7,8 @@ import fr.neyuux.refont.lg.roles.Role;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,10 +19,15 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class LGCommand implements CommandExecutor {
+
+    private static int n = 0;
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         String helpMessage = "§fAide pour la commande §c"+alias+"§f :§r\n§c/"+alias+" spec §a<on/off/add/remove/list/clear>\n§c/"+alias+" compo" +
@@ -324,16 +331,6 @@ public class LGCommand implements CommandExecutor {
                             sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour ajouter des emplacements !");
                             GameLG.playNegativeSound(playerLG.getPlayer());
                         }
-                    }
-                break;
-                case "testsleep":
-                    if (checkHuman(sender) && sender.isOp()) {
-                        Player player = (Player)sender;
-                        Block block = PlayerLG.createPlayerLG(player).getPlacement().getBlock();
-
-                        player.teleport(block.getLocation());
-                        ((CraftPlayer) player).getHandle().a(new BlockPosition(block.getX(), block.getY(), block.getZ()));
-                        player.setSleepingIgnored(false);
                     }
                 break;
 

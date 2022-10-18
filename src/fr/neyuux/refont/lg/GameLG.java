@@ -46,7 +46,7 @@ public class GameLG implements Listener {
 
     private BukkitTask waitTask;
 
-    private ArrayList<Constructor<? extends Role>> rolesAtStart = new ArrayList<>();
+    private ArrayList<Role> rolesAtStart = new ArrayList<>();
 
     private ArrayList<PlayerLG> waitedPlayers = new ArrayList<>();
 
@@ -205,7 +205,6 @@ public class GameLG implements Listener {
 
     public void start() {
         LG.getInstance().getGame().setGameState(GameState.PLAYING);
-        this.rolesAtStart = new ArrayList<>(this.config.getAddedRoles());
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§eLancement du jeu !");
         GameLG.sendTitleToAllPlayers("§b§lGO !", "", 20, 20, 20);
@@ -244,6 +243,8 @@ public class GameLG implements Listener {
 
                 thief.role1 = role1;
                 thief.role2 = role2;
+                this.rolesAtStart.add(role1);
+                this.rolesAtStart.add(role2);
 
                 System.out.println("rolevoleur : " + role1.getConfigName());
                 System.out.println("rolevoleur : " + role2.getConfigName());
@@ -271,6 +272,7 @@ public class GameLG implements Listener {
                 playerLG.createScoreboard();
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
                 this.aliveRoles.add(role);
+                this.rolesAtStart.add(role);
             }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
@@ -422,7 +424,7 @@ public class GameLG implements Listener {
         this.mayor = mayor;
     }
 
-    public ArrayList<Constructor<? extends Role>> getRolesAtStart() {
+    public ArrayList<Role> getRolesAtStart() {
         return rolesAtStart;
     }
 
@@ -483,6 +485,18 @@ public class GameLG implements Listener {
 
     public void setWaitTask(BukkitTask waitTask) {
         this.waitTask = waitTask;
+    }
+
+    public boolean isThiefRole(Role role) {
+        for (Role roleatStart : this.rolesAtStart) {
+            if (roleatStart instanceof Voleur) {
+                Voleur thief = (Voleur)roleatStart;
+
+                if (thief.role1.equals(role) || thief.role2.equals(role))
+                    return true;
+            }
+        }
+        return false;
     }
 
     public interface StringTimerMessage {

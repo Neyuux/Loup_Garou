@@ -177,6 +177,7 @@ public class PreGameListener implements Listener {
         Player player = ev.getPlayer();
 
         if (player.getItemInHand().getType().equals(Material.STONE_HOE) && player.isOp()) {
+            ev.setCancelled(true);
             if (LG.getInstance().getGame().getGameType() != GameType.NONE) {
                 Location loc = block.getLocation();
                 List<Object> list = (List<Object>) LG.getInstance().getConfig().getList("spawns." + LG.getInstance().getGame().getGameType());
@@ -184,7 +185,7 @@ public class PreGameListener implements Listener {
                 list.add(Arrays.asList((double) loc.getBlockX() + 0.5D, loc.getY(), (double) loc.getBlockZ() + 0.5D, (double) loc.getYaw(), (double) loc.getPitch()));
 
                 LG.getInstance().saveConfig();
-                player.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée ! §e§o(" + block.getType() + ")");;
+                player.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée ! §e§o(" + block.getType() + ")");
             } else {
                 player.sendMessage(LG.getPrefix() + "§cVous devez choisir le type de jeu avant de créer des emplacements !");
             }

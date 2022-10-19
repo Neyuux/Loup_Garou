@@ -17,12 +17,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -46,7 +43,7 @@ public class GameLG implements Listener {
 
     private BukkitTask waitTask;
 
-    private ArrayList<Role> rolesAtStart = new ArrayList<>();
+    private final ArrayList<Role> rolesAtStart = new ArrayList<>();
 
     private ArrayList<PlayerLG> waitedPlayers = new ArrayList<>();
 
@@ -57,6 +54,8 @@ public class GameLG implements Listener {
     private final ArrayList<PlayerLG> spectators = new ArrayList<>();
 
     private final ArrayList<HumanEntity> opList = new ArrayList<>();
+
+    private final ArrayList<PlayerLG> killedPlayers = new ArrayList<>();
 
 
 
@@ -70,7 +69,7 @@ public class GameLG implements Listener {
     public void sendMessage(Role role, String msg) {
         for (PlayerLG playerLG : this.getAlive()) {
             if (role != null) {
-                if (role.getPlayers().contains(playerLG))
+                if (this.getPlayersByRole(role.getClass()).contains(playerLG))
                     playerLG.sendMessage(msg);
             } else playerLG.sendMessage(msg);
         }
@@ -323,6 +322,8 @@ public class GameLG implements Listener {
         this.night = 0;
         this.mayor = null;
         this.aliveRoles.clear();
+        this.rolesAtStart.clear();
+        this.killedPlayers.clear();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerLG playerLG = PlayerLG.createPlayerLG(player);
@@ -361,15 +362,19 @@ public class GameLG implements Listener {
         //TODO update all scoreboards
     }
 
-    public List<PlayerLG> getPlayersByRole(String configname) {
+    public List<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
         List<PlayerLG> players = new ArrayList<>();
 
         for (PlayerLG playerLG : this.playersInGame)
-            if (playerLG.getRole().getConfigName().equals(configname)) {
+            if (playerLG.getRole() != null && playerLG.getRole().getClass().equals(classRole)) {
                 players.add(playerLG);
             }
 
         return players;
+    }
+
+    public ArrayList<PlayerLG> getKilledPlayers() {
+        return killedPlayers;
     }
 
     public List<HumanEntity> getOPs() {

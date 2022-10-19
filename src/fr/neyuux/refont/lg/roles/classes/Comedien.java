@@ -62,6 +62,8 @@ public class Comedien extends Role {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour choisir un rôle pour cette nuit.";
     }
 
+    
+
 
     @Override
     public void onPlayerJoin(PlayerLG playerLG) {

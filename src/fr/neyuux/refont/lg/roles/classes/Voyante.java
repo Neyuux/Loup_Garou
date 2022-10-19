@@ -1,9 +1,12 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+
+import java.util.List;
 
 public class Voyante extends Role {
 
@@ -51,4 +54,6 @@ public class Voyante extends Role {
     public String getActionMessage() {
         return "§fVous avez §d " + this.getTimeout() + " secondes§f pour espionner le rôle de quelqu'un.";
     }
+
+    
 }

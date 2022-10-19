@@ -65,6 +65,7 @@ public class Frere extends Role {
         return "§fVous avez §3" + this.getTimeout() + " secondes§f pour parler avec vos frères.";
     }
 
+    
 
 
     @Override

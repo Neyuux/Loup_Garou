@@ -7,6 +7,8 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class Sorciere extends Role {
 
     private boolean hasHealPot = true;
@@ -59,6 +61,8 @@ public class Sorciere extends Role {
     public String getActionMessage() {
         return "§fVous avez §5" + this.getTimeout() + " secondes§f pour utiliser vos potions.";
     }
+
+    
 
 
     public boolean hasHealPot() {

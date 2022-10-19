@@ -1,10 +1,13 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class Dictateur extends Role {
 
@@ -52,4 +55,6 @@ public class Dictateur extends Role {
     public String getActionMessage() {
         return "§fVous avez §2" + this.getTimeout() + " secondes pour choisir de faire un coup d'état.";
     }
+
+    
 }

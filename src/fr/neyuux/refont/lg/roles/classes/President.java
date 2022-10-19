@@ -9,6 +9,8 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class President extends Role {
 
     @Override
@@ -55,6 +57,8 @@ public class President extends Role {
     public String getActionMessage() {
         return "";
     }
+
+    
 
 
     @Override

@@ -9,11 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Role implements Listener {
-
-    private final ArrayList<PlayerLG> players = new ArrayList<>();
 
 
     public Role() {
@@ -22,12 +21,12 @@ public abstract class Role implements Listener {
 
 
     public void onNightTurn(Runnable callback) {
-        ArrayList<PlayerLG> players = (ArrayList<PlayerLG>) this.getPlayers().clone();
         GameLG game = LG.getInstance().getGame();
+        ArrayList<PlayerLG> players = (ArrayList<PlayerLG>) game.getPlayersByRole(this.getClass()).clone();
 
         game.cancelWait();
 
-        if (this.players.isEmpty()) {
+        if (Role.players.isEmpty()) {
             if (!game.isThiefRole(this)) {
                 callback.run();
                 return;
@@ -43,13 +42,13 @@ public abstract class Role implements Listener {
             playerLG.setWake();
 
             game.wait(Role.this.getTimeout(), () -> {
-                playerLG.setSleep();
+                this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
             }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "Au tour " + Role.this.getDeterminingName());
 
             playerLG.sendMessage("" + Role.this.getActionMessage());
-            Role.this.onRoleNightTurn(playerLG, () -> this.onNightTurn(callback));
+            Role.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
 
         } else {
             createFakeTurn(callback);
@@ -60,8 +59,13 @@ public abstract class Role implements Listener {
         LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> "Au tour " + Role.this.getDeterminingName());
     }
 
-    protected void onRoleNightTurn(PlayerLG playerLG, Runnable callback) {
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
 
+    }
+
+    protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        playerLG.stopChoosing();
+        playerLG.setSleep();
     }
 
 
@@ -77,13 +81,7 @@ public abstract class Role implements Listener {
         }
     }
 
-    public ArrayList<PlayerLG> getPlayers() {
-        return players;
-    }
-
     public void onPlayerJoin(PlayerLG playerLG) {
-        players.add(playerLG);
-
         System.out.println(playerLG.getName() + " >> " + this.getConfigName());
 
         playerLG.sendTitle("§fVous êtes " + this.getDisplayName(), "§fVotre camp : §e" + this.getBaseCamp().getName(), 10, 60, 10);

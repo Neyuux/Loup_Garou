@@ -9,6 +9,8 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class VillageoisVillageois extends Role {
 
     @Override
@@ -55,6 +57,8 @@ public class VillageoisVillageois extends Role {
     public String getActionMessage() {
         return "";
     }
+
+    
 
     @Override
     public void onPlayerJoin(PlayerLG playerLG) {

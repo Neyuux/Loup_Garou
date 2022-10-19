@@ -1,10 +1,13 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class Detective extends Role {
 
@@ -52,4 +55,6 @@ public class Detective extends Role {
     public String getActionMessage() {
         return "Vous avez §7" + getTimeout() + " secondes§f pour choisir 2 personnes à enquêter.";
     }
+
+    
 }

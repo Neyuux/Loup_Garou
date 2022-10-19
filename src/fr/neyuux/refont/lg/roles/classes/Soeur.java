@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Random;
 
 public class Soeur extends Role {
@@ -61,6 +62,8 @@ public class Soeur extends Role {
     public String getActionMessage() {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour parler à votre soeur.";
     }
+
+    
 
 
     public PlayerLG getSister() {

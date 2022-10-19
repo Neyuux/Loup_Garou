@@ -3,6 +3,7 @@ package fr.neyuux.refont.lg.tasks;
 import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.RoleNightOrder;
+import fr.neyuux.refont.lg.roles.classes.Bouffon;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -80,7 +81,11 @@ public class GameRunnable extends BukkitRunnable {
         for (RoleNightOrder order : RoleNightOrder.values())
             for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    this.rolesOrder.add(role);
+                    if (!(role instanceof Bouffon))
+                        this.rolesOrder.add(role);
+                    else {
+                        for (PlayerLG playerLG : role.getPlayers())
+                    }
 
         for (PlayerLG playerLG : this.game.getPlayersInGame())
             playerLG.setSleep();

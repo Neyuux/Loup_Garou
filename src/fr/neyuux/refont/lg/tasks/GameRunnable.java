@@ -81,11 +81,7 @@ public class GameRunnable extends BukkitRunnable {
         for (RoleNightOrder order : RoleNightOrder.values())
             for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    if (!(role instanceof Bouffon))
-                        this.rolesOrder.add(role);
-                    else {
-                        for (PlayerLG playerLG : role.getPlayers())
-                    }
+                    this.rolesOrder.add(role);
 
         for (PlayerLG playerLG : this.game.getPlayersInGame())
             playerLG.setSleep();
@@ -107,7 +103,7 @@ public class GameRunnable extends BukkitRunnable {
 
                         Role role = GameRunnable.this.rolesOrder.remove(0);
 
-                        if (role.getTurnNumber() == -1 || role.getPlayers().isEmpty())
+                        if (role.getTurnNumber() == -1 || game.getPlayersByRole(role.getClass()).isEmpty())
                             run();
                         else
                             role.onNightTurn(callback);

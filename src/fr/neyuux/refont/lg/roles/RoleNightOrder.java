@@ -25,6 +25,7 @@ public enum RoleNightOrder {
     GRANDMECHANTLOUP(GrandMechantLoup.class),
     LOUPGAROUBLANC(LoupGarouBlanc.class),
     PETITEFILLEWO(PetiteFilleWO.class),
+    CHAMAN(Chaman.class),
     SORCIERE(Sorciere.class),
     CHASSEURDEVAMPIRE(ChasseurDeVampire.class),
     VAMPIRE(Vampire.class),

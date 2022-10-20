@@ -362,8 +362,8 @@ public class GameLG implements Listener {
         //TODO update all scoreboards
     }
 
-    public List<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
-        List<PlayerLG> players = new ArrayList<>();
+    public ArrayList<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
+        ArrayList<PlayerLG> players = new ArrayList<>();
 
         for (PlayerLG playerLG : this.playersInGame)
             if (playerLG.getRole() != null && playerLG.getRole().getClass().equals(classRole)) {

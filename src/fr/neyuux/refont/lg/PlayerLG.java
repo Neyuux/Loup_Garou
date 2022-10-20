@@ -50,8 +50,6 @@ public class PlayerLG {
 
     private Location placement;
 
-    private List<PlayerLG> blacklistChoice;
-
     private CallbackChoice callbackChoice;
 
 
@@ -254,13 +252,11 @@ public class PlayerLG {
             player.showPlayer(playerLG.getPlayer());
     }
 
-    public void setChoosing(CallbackChoice callback, PlayerLG... blacklisted) {
-        if (blacklisted != null) this.blacklistChoice = Arrays.asList(blacklisted);
+    public void setChoosing(CallbackChoice callback) {
         this.callbackChoice = callback;
     }
 
     public void stopChoosing() {
-        this.blacklistChoice = null;
         this.callbackChoice = null;
     }
 

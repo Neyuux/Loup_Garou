@@ -22,11 +22,11 @@ public abstract class Role implements Listener {
 
     public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        ArrayList<PlayerLG> players = (ArrayList<PlayerLG>) game.getPlayersByRole(this.getClass()).clone();
+        ArrayList<PlayerLG> players = game.getPlayersByRole(this.getClass());
 
         game.cancelWait();
 
-        if (Role.players.isEmpty()) {
+        if (players.isEmpty()) {
             if (!game.isThiefRole(this)) {
                 callback.run();
                 return;
@@ -45,7 +45,7 @@ public abstract class Role implements Listener {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "Au tour " + Role.this.getDeterminingName());
+            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "§9§lAu tour " + Role.this.getDeterminingName());
 
             playerLG.sendMessage("" + Role.this.getActionMessage());
             Role.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));

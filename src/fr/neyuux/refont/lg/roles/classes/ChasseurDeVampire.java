@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -55,5 +56,25 @@ public class ChasseurDeVampire extends Role {
         return "§fVous avez §a " + this.getTimeout() + " secondes§f pour examiner un joueur.";
     }
 
-    
+
+    @Override
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        playerLG.setChoosing(choosen -> {
+            if (choosen != null && choosen != playerLG) {
+                LG.getInstance().getGame().getKilledPlayers().add(choosen);
+
+                playerLG.sendMessage(LG.getPrefix() + "§aTu élimines " + choosen.getNameWithAttributes(playerLG) + "§a.");
+                GameLG.playPositiveSound(playerLG.getPlayer());
+
+                super.onPlayerTurnFinish(playerLG);
+                callback.run();
+            }
+        });
+    }
+
+    @Override
+    protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        super.onPlayerTurnFinish(playerLG);
+        playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+    }
 }

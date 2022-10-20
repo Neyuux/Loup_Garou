@@ -62,11 +62,11 @@ public class Assassin extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         playerLG.setChoosing(choosen -> {
-            if (choosen != null) {
+            if (choosen != null && choosen != playerLG) {
                 LG.getInstance().getGame().getKilledPlayers().add(choosen);
                 choosen.getCache().put("killedby", "assassin");
 
-                playerLG.sendMessage(LG.getPrefix() + "§cTu as assassiné " + choosen.getNameWithAttributes(playerLG) + "§c.");
+                playerLG.sendMessage(LG.getPrefix() + "§1Tu as assassiné " + choosen.getNameWithAttributes(playerLG) + "§1.");
                 GameLG.playPositiveSound(playerLG.getPlayer());
 
                 super.onPlayerTurnFinish(playerLG);

@@ -3,13 +3,10 @@ package fr.neyuux.refont.lg.roles;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
-import fr.neyuux.refont.lg.roles.classes.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Role implements Listener {

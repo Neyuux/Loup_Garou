@@ -81,7 +81,8 @@ public class GameRunnable extends BukkitRunnable {
         for (RoleNightOrder order : RoleNightOrder.values())
             for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    this.rolesOrder.add(role);
+                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.night % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.night == 1)
+                        this.rolesOrder.add(role);
 
         for (PlayerLG playerLG : this.game.getPlayersInGame())
             playerLG.setSleep();

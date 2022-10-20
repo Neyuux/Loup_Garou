@@ -3,14 +3,23 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChienLoupInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class ChienLoup extends Role {
+
+    public boolean isInvOpen = false;
 
     @Override
     public String getDisplayName() {
@@ -60,25 +69,24 @@ public class ChienLoup extends Role {
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
-
-
-        playerLG.setChoosing(choosen -> {
-            if (choosen != null && choosen != playerLG) {
-                LG.getInstance().getGame().getKilledPlayers().add(choosen);
-                choosen.getCache().put("killedby", "assassin");
-
-                playerLG.sendMessage(LG.getPrefix() + "§1Tu as assassiné " + choosen.getNameWithAttributes(playerLG) + "§1.");
-                GameLG.playPositiveSound(playerLG.getPlayer());
-
-                super.onPlayerTurnFinish(playerLG);
-                callback.run();
-            }
-        });
+        new ChienLoupInv(this, callback).open(playerLG.getPlayer());
+        this.isInvOpen = true;
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        this.isInvOpen = false;
+        playerLG.getPlayer().closeInventory();
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+    }
+
+
+    @EventHandler
+    public void onCloseCLInv(InventoryCloseEvent ev) {
+        Inventory inv = ev.getInventory();
+
+        if (inv.getName().equals(this.getDisplayName()))
+            ev.getPlayer().openInventory(inv);
     }
 }

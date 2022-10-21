@@ -76,7 +76,6 @@ public class ChienLoup extends Role {
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
         this.isInvOpen = false;
-        playerLG.getPlayer().closeInventory();
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
@@ -86,7 +85,7 @@ public class ChienLoup extends Role {
     public void onCloseCLInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
 
-        if (inv.getName().equals(this.getDisplayName()))
+        if (inv.getName().equals(this.getDisplayName()) && this.isInvOpen)
             ev.getPlayer().openInventory(inv);
     }
 }

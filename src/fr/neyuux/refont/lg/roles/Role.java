@@ -62,6 +62,7 @@ public abstract class Role implements Listener {
 
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
         playerLG.stopChoosing();
+        playerLG.getPlayer().closeInventory();
         playerLG.setSleep();
     }
 

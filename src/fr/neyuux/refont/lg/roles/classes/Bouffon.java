@@ -1,8 +1,10 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -96,26 +98,54 @@ public class Bouffon extends Role {
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
         List<PlayerLG> choosable = new ArrayList<>();
-        for (PlayerLG voterLG : LG.getInstance().getGame().getPlayersInGame())
+        for (PlayerLG voterLG : LG.getInstance().getGame().getAlive())
             if (!voterLG.isDead()) //TODO hasvotedForBouffon
                 choosable.add(voterLG);
 
-        playerLG.setChoosing(choosen -> {
-            if (choosen != null)
-                if (choosable.contains(choosen)) {
-                    LG.getInstance().getGame().getKilledPlayers().add(choosen);
+        if (game.getGameType().equals(GameType.MEETING)) {
 
-                    playerLG.sendMessage(LG.getPrefix() + "§7Tu décides de hanter " + choosen.getNameWithAttributes(playerLG) + "§7.");
-                    GameLG.playPositiveSound(playerLG.getPlayer());
-
+            playerLG.setChoosing(choosen -> {
+                if (choosen != null) {
+                    haunt(choosen, playerLG, choosable);
                     super.onPlayerTurnFinish(playerLG);
                     callback.run();
-                } else {
-                    playerLG.sendMessage(LG.getPrefix() + "§cCe joueur n'a pas voté pour vous !");
-                    GameLG.playNegativeSound(playerLG.getPlayer());
                 }
             });
+        } else if (game.getGameType().equals(GameType.FREE)) {
+            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, new RoleChoosePlayerInv.ActionsGenerator() {
+
+                @Override
+                public String[] generateLore(PlayerLG paramPlayerLG) {
+                    return new String[] {"§7Voulez-vous §5hanter " + paramPlayerLG.getNameWithAttributes(playerLG) + "§7 ?", "§7Il sera §céliminé§d de la partie.", "", "§7>>Clique pour choisir"};
+                }
+
+                @Override
+                public void doActionsAfterClick(PlayerLG choosenLG) {
+                    haunt(choosenLG, playerLG, choosable);
+
+                    playerLG.getPlayer().closeInventory();
+                    playerLG.setSleep();
+                    callback.run();
+                }
+            });
+        }
+    }
+
+    private void haunt(PlayerLG choosen, PlayerLG playerLG, List<PlayerLG> choosable) {
+        if (choosen == null) return;
+
+        if (choosable.contains(choosen)) {
+            LG.getInstance().getGame().getKilledPlayers().add(choosen);
+
+            playerLG.sendMessage(LG.getPrefix() + "§7Tu décides de hanter " + choosen.getNameWithAttributes(playerLG) + "§7.");
+            GameLG.playPositiveSound(playerLG.getPlayer());
+
+        } else {
+            playerLG.sendMessage(LG.getPrefix() + "§cCe joueur n'a pas voté pour vous !");
+            GameLG.playNegativeSound(playerLG.getPlayer());
+        }
     }
 
 }

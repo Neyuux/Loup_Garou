@@ -68,11 +68,7 @@ public class Assassin extends Role {
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
                 if (choosen != null && choosen != playerLG) {
-                    game.getKilledPlayers().add(choosen);
-                    choosen.getCache().put("killedby", "assassin");
-
-                    playerLG.sendMessage(LG.getPrefix() + "§1Tu as assassiné " + choosen.getNameWithAttributes(playerLG) + "§1.");
-                    GameLG.playPositiveSound(playerLG.getPlayer());
+                    assassinate(choosen, playerLG);
 
                     super.onPlayerTurnFinish(playerLG);
                     callback.run();
@@ -89,11 +85,7 @@ public class Assassin extends Role {
 
                 @Override
                 public void doActionsAfterClick(PlayerLG choosenLG) {
-                    game.getKilledPlayers().add(choosenLG);
-                    choosenLG.getCache().put("killedby", "assassin");
-
-                    playerLG.sendMessage(LG.getPrefix() + "§eVous avez choisi le camp du §a§lVillage§e !");
-                    GameLG.playPositiveSound(playerLG.getPlayer());
+                    assassinate(choosenLG, playerLG);
 
                     playerLG.getPlayer().closeInventory();
                     playerLG.setSleep();
@@ -101,6 +93,16 @@ public class Assassin extends Role {
                 }
             });
         }
+    }
+
+    private void assassinate(PlayerLG choosen, PlayerLG playerLG) {
+        if (choosen == null) return;
+
+        LG.getInstance().getGame().getKilledPlayers().add(choosen);
+        choosen.getCache().put("killedby", "assassin");
+
+        playerLG.sendMessage(LG.getPrefix() + "§1Tu as assassiné " + choosen.getNameWithAttributes(playerLG) + "§1.");
+        GameLG.playPositiveSound(playerLG.getPlayer());
     }
 
     @Override

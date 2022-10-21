@@ -8,8 +8,12 @@ import org.bukkit.event.inventory.ClickType;
 
 public class CancelBarrierItemStack extends CustomItemStack {
 
-    public CancelBarrierItemStack() {
+    private final Runnable callback;
+
+    public CancelBarrierItemStack(Runnable callback) {
         super(Material.BARRIER, 1, "§cAnnuler");
+
+        this.callback = callback;
 
         this.setLore("§7Annule l'action", "§7en cours.");
 
@@ -18,6 +22,6 @@ public class CancelBarrierItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        //TODO
+        callback.run();
     }
 }

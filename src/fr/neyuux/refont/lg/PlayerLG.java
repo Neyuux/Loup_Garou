@@ -212,7 +212,7 @@ public class PlayerLG {
     public void updateGamePlayerScoreboard() {
         Scoreboard scoreboard = this.getPlayer().getScoreboard();
 
-        for (PlayerLG targetLG : this.game.getPlayersInGame()) {
+        for (PlayerLG targetLG : this.game.getAlive()) {
             Team team = scoreboard.registerNewTeam(targetLG.getName());
             String[] prefixsuffix = targetLG.getNameWithAttributes(this).split(targetLG.getName());
 
@@ -228,7 +228,7 @@ public class PlayerLG {
 
         player.teleport(placement);
 
-        for (PlayerLG playerLG : this.game.getPlayersInGame())
+        for (PlayerLG playerLG : this.game.getAlive())
             player.hidePlayer(playerLG.getPlayer());
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false));
@@ -248,7 +248,7 @@ public class PlayerLG {
 
         player.teleport(player.getBedSpawnLocation());
         player.removePotionEffect(PotionEffectType.BLINDNESS);
-        for (PlayerLG playerLG : this.game.getPlayersInGame())
+        for (PlayerLG playerLG : this.game.getAlive())
             player.showPlayer(playerLG.getPlayer());
     }
 

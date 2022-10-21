@@ -43,7 +43,7 @@ public class GameRunnable extends BukkitRunnable {
             this.checkSleep();
 
         if (deal != null && this.checkDealFinished()) {
-            for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame()) {
+            for (PlayerLG playerLG : LG.getInstance().getGame().getAlive()) {
                 playerLG.updateGamePlayerScoreboard();
 
                 FileConfiguration file = LG.getInstance().getConfig();
@@ -60,7 +60,7 @@ public class GameRunnable extends BukkitRunnable {
 
 
     private boolean checkDealFinished() {
-        for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersInGame())
+        for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
             if (playerLG.getRole() == null) return false;
 
         this.deal.cancel();
@@ -78,13 +78,9 @@ public class GameRunnable extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
-        for (RoleNightOrder order : RoleNightOrder.values())
-            for (Role role : this.game.getRolesAtStart())
-                if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.night % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.night == 1)
-                        this.rolesOrder.add(role);
+        this.calculateRoleOrder();
 
-        for (PlayerLG playerLG : this.game.getPlayersInGame())
+        for (PlayerLG playerLG : this.game.getAlive())
             playerLG.setSleep();
 
 
@@ -118,8 +114,21 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void checkSleep() {
-        for (PlayerLG playerLG : this.game.getPlayersInGame())
+        for (PlayerLG playerLG : this.game.getAlive())
             if (playerLG.isSleeping() && !playerLG.getPlayer().isSleeping())
                 playerLG.setSleep();
+    }
+
+
+    public List<Role> getRolesOrder() {
+        return rolesOrder;
+    }
+
+    public void calculateRoleOrder() {
+        for (RoleNightOrder order : RoleNightOrder.values())
+            for (Role role : this.game.getRolesAtStart())
+                if (role.getClass().getName().equals(order.getRoleClass().getName()))
+                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.night % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.night == 1)
+                        this.rolesOrder.add(role);
     }
 }

@@ -1,10 +1,5 @@
 package fr.neyuux.refont.lg.config;
 
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.roles.Role;
-
-import java.lang.reflect.Constructor;
-
 public enum ComedianPowers {
 
     VOYANTE("Voyante"),

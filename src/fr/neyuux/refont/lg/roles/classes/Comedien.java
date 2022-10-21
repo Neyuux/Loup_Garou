@@ -4,17 +4,23 @@ import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.config.ComedianPowers;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChienLoupInv;
+import fr.neyuux.refont.lg.inventories.roleinventories.ComedienInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Comedien extends Role {
 
-    private ArrayList<ComedianPowers> powers = new ArrayList<>();
+    private final ArrayList<ComedianPowers> powers = new ArrayList<>();
+    public boolean isInvOpen = false;
 
 
     @Override
@@ -62,8 +68,6 @@ public class Comedien extends Role {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour choisir un rôle pour cette nuit.";
     }
 
-    
-
 
     @Override
     public void onPlayerJoin(PlayerLG playerLG) {
@@ -74,5 +78,28 @@ public class Comedien extends Role {
             powers.add(comedianPower);
             playerLG.sendMessage("§d - §a§l" + comedianPower.getName());
         }
+    }
+
+
+    @Override
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        new ComedienInv(this, playerLG, callback).open(playerLG.getPlayer());
+        this.isInvOpen = true;
+    }
+
+    @Override
+    protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        if (isInvOpen) playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+        this.isInvOpen = false;
+        super.onPlayerTurnFinish(playerLG);
+    }
+
+
+    @EventHandler
+    public void onCloseComedianInv(InventoryCloseEvent ev) {
+        Inventory inv = ev.getInventory();
+
+        if (inv.getName().equals(this.getDisplayName()) && this.isInvOpen)
+            ev.getPlayer().openInventory(inv);
     }
 }

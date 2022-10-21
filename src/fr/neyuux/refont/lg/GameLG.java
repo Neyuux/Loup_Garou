@@ -43,6 +43,8 @@ public class GameLG implements Listener {
 
     private BukkitTask waitTask;
 
+    private GameRunnable gameRunnable;
+
     private final ArrayList<Role> rolesAtStart = new ArrayList<>();
 
     private ArrayList<PlayerLG> waitedPlayers = new ArrayList<>();
@@ -85,7 +87,7 @@ public class GameLG implements Listener {
         ArrayList<PlayerLG> alive = new ArrayList<>();
 
         for (PlayerLG playerLG : this.playersInGame)
-            if (playerLG.isDead())
+            if (!playerLG.isDead())
                 alive.add(playerLG);
 
         return alive;
@@ -218,7 +220,8 @@ public class GameLG implements Listener {
 
         BukkitTask deal = this.dealRoles();
 
-        new GameRunnable(deal).runTaskTimer(LG.getInstance(), 0, 20);
+        this.gameRunnable = new GameRunnable(deal);
+        this.gameRunnable.runTaskTimer(LG.getInstance(), 0, 20L);
     }
 
     public BukkitTask dealRoles() {
@@ -448,6 +451,10 @@ public class GameLG implements Listener {
 
     public ItemsManager getItemsManager() {
         return LG.getInstance().getItemsManager();
+    }
+
+    public GameRunnable getGameRunnable() {
+        return this.gameRunnable;
     }
 
     public String getPrefix() {

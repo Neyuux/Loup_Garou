@@ -79,7 +79,7 @@ public class Soeur extends Role {
 
         if (sister != null) {
 
-            if (getPlayers().contains(sister)) {
+            if (LG.getInstance().getGame().getPlayersByRole(this.getClass()).contains(sister)) {
                 playerLG.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + "§d est §a§l" + sister.getName());
                 sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + sister.getName());
             }

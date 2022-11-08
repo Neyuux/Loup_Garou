@@ -1,27 +1,23 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.config.ComedianPowers;
-import fr.neyuux.refont.lg.inventories.roleinventories.ChienLoupInv;
+import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ComedienInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Comedien extends Role {
 
     private final ArrayList<ComedianPowers> powers = new ArrayList<>();
-    public boolean isInvOpen = false;
-
 
     @Override
     public String getDisplayName() {
@@ -84,13 +80,13 @@ public class Comedien extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         new ComedienInv(this, playerLG, callback).open(playerLG.getPlayer());
-        this.isInvOpen = true;
+        playerLG.getCache().put("unclosableInv", true);
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        if (isInvOpen) playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
-        this.isInvOpen = false;
+        if ((boolean)playerLG.getCache().get("unclosableInv")) playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+        playerLG.getCache().put("unclosableInv", false);
         super.onPlayerTurnFinish(playerLG);
     }
 
@@ -98,8 +94,29 @@ public class Comedien extends Role {
     @EventHandler
     public void onCloseComedianInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
+        HumanEntity player = ev.getPlayer();
 
-        if (inv.getName().equals(this.getDisplayName()) && this.isInvOpen)
-            ev.getPlayer().openInventory(inv);
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.openInventory(inv);
+                }
+            }.runTaskLater(LG.getInstance(), 1L);
+        }
+    }
+
+    @EventHandler
+    public void onNightEnd(NightEndEvent ev) {
+        for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
+            if (playerLG.getCache().has("comedianpower")) {
+                playerLG.setRole((Role) playerLG.getCache().get("comedianpower"));
+                playerLG.getCache().remove("comedianpower");
+            }
+    }
+
+
+    public ArrayList<ComedianPowers> getRemaningPowers() {
+        return powers;
     }
 }

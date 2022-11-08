@@ -194,7 +194,7 @@ public class LGAutoStart extends BukkitRunnable {
 				LG.sendTitle(player, "§fVous êtes " + role.getDisplayName(), "§fVotre camp : §e" + role.getCamp(), 10, 60, 10);
 				playerlg.setRole(role);
 				playerlg.setCamp(role.getCamp());
-				player.getInventory().setItem(4, main.getRoleMap(role));
+				//player.getInventory().setItem(4, main.getRoleMap(role));
 
 
 
@@ -304,7 +304,7 @@ public class LGAutoStart extends BukkitRunnable {
 			playersWithoutRole.remove(player);
 			roles.remove(role);
 			try {
-				player.getInventory().setItem(4, main.getRoleMap(role));
+				//player.getInventory().setItem(4, main.getRoleMap(role));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -23,7 +23,7 @@ public class Ankou extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "de l'" + this.getDisplayName();
     }
 
     @Override
@@ -56,5 +56,8 @@ public class Ankou extends Role {
         return "";
     }
 
-    
+
+    //TODO onVote
+
+    //TODO onDeath getCache().put("vote", null)
 }

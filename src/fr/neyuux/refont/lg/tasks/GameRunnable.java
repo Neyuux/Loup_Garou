@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.tasks;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.NightStartEvent;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.RoleNightOrder;
 import fr.neyuux.refont.lg.roles.classes.Bouffon;
@@ -21,8 +22,6 @@ public class GameRunnable extends BukkitRunnable {
     private BukkitTask deal;
 
     private final GameLG game;
-
-    private int night = 1;
 
     private final List<Role> rolesOrder = new ArrayList<>();
 
@@ -49,7 +48,7 @@ public class GameRunnable extends BukkitRunnable {
                 FileConfiguration file = LG.getInstance().getConfig();
                 List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + LG.getInstance().getGame().getGameType());
                 List<Double> doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
-                Location placement = new Location(Bukkit.getWorld("LG"), doubleList.get(0), doubleList.get(1), doubleList.get(2), doubleList.get(3).floatValue(), doubleList.get(4).floatValue());
+                Location placement = new Location(Bukkit.getWorld("LG"), doubleList.get(0) + 0.5, doubleList.get(1), doubleList.get(2) + 0.5, doubleList.get(3).floatValue(), doubleList.get(4).floatValue());
 
                 playerLG.setPlacement(placement);
             }
@@ -71,10 +70,14 @@ public class GameRunnable extends BukkitRunnable {
 
     public void nextNight() {
 
+        Bukkit.getPluginManager().callEvent(new NightStartEvent());
+
+        game.setDayCycle(DayCycle.NIGHT);
+
         if ((boolean)this.game.getConfig().getDayCycle().getValue())
             Bukkit.getWorld("LG").setTime(18000);
 
-        Bukkit.broadcastMessage("      §9§lNUIT " + this.night);
+        Bukkit.broadcastMessage("      §9§lNUIT " + game.getNight());
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
@@ -95,22 +98,18 @@ public class GameRunnable extends BukkitRunnable {
 
                         if (GameRunnable.this.rolesOrder.isEmpty()) {
                             //GameRunnable.this.endNight();
+                            System.out.println("endnight");
                             return;
                         }
 
-                        Role role = GameRunnable.this.rolesOrder.remove(0);
-
-                        if (role.getTurnNumber() == -1 || game.getPlayersByRole(role.getClass()).isEmpty())
-                            run();
-                        else
-                            role.onNightTurn(callback);
+                        GameRunnable.this.rolesOrder.remove(0).newNightTurn(callback);
 
                     }
-                }.runTaskLater(LG.getInstance(), 60L);
+                }.runTaskLater(LG.getInstance(), 5L);
             }
         }.run();
 
-        this.night++;
+        game.addNight();
     }
 
     public void checkSleep() {
@@ -125,10 +124,13 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void calculateRoleOrder() {
+        System.out.println("rolesorder :");
         for (RoleNightOrder order : RoleNightOrder.values())
             for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.night % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.night == 1)
+                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.game.getNight() % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.game.getNight() == 1) {
                         this.rolesOrder.add(role);
+                         System.out.println("  " + role.getConfigName());
+                    }
     }
 }

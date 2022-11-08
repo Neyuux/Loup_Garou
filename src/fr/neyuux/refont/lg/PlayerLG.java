@@ -11,10 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -40,17 +42,19 @@ public class PlayerLG {
 
     private Camps camp;
 
-    private boolean isDead;
+    private boolean isDead = false;
 
-    private boolean isMayor;
+    private boolean isMayor = false;
 
-    private boolean canUsePowers;
+    private boolean canUsePowers = true;
 
-    private boolean isSleeping;
+    private boolean isSleeping = false;
 
     private Location placement;
 
     private CallbackChoice callbackChoice;
+
+    private ArmorStand armorStand;
 
 
     public void sendMessage(String msg) {
@@ -175,7 +179,7 @@ public class PlayerLG {
         }
 
         if (receiver.getRole() instanceof Jumeau) {
-            PlayerLG twin = (PlayerLG) receiver.getCache().get("twin");
+            PlayerLG twin = (PlayerLG) receiver.getCache().get("jumeau");
 
             if (twin != null && twin.equals(this)) {
                 name += "§5§lJumeau ";
@@ -185,7 +189,7 @@ public class PlayerLG {
 
         name += lastcolor + this.human.getName();
 
-        if (this.getCache().has("couple") && this.getCache().get("couple") != null) {
+        if (this.getCache().has("couple") && this.getCache().get("couple") != null || receiver.getRole() instanceof Cupidon) {
             PlayerLG couple = (PlayerLG) this.getCache().get("couple");
 
             if (couple.equals(receiver) || receiver.getRole() instanceof Cupidon) {
@@ -246,7 +250,7 @@ public class PlayerLG {
 
         this.isSleeping = false;
 
-        player.teleport(player.getBedSpawnLocation());
+        if (game.getGameType().equals(GameType.FREE)) player.teleport(player.getBedSpawnLocation());
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         for (PlayerLG playerLG : this.game.getAlive())
             player.showPlayer(playerLG.getPlayer());
@@ -299,6 +303,12 @@ public class PlayerLG {
         return this.game.getLGs().contains(this);
     }
 
+    public void joinCamp(Camps camp) {
+        if (camp.equals(Camps.VAMPIRE) || camp.equals(Camps.LOUP_GAROU))
+            game.getAlive().forEach(playerLG -> playerLG.sendMessage(game.getPrefix() + this.getNameWithAttributes(playerLG) + "§c a rejoint votre camp !"));
+        this.setCamp(camp);
+    }
+
     public Camps getCamp() {
         return this.camp;
     }
@@ -341,6 +351,25 @@ public class PlayerLG {
 
     public boolean isSleeping() {
         return isSleeping;
+    }
+
+    public ArmorStand getArmorStand() {
+        return armorStand;
+    }
+
+    public void setArmorStand(ArmorStand armorStand) {
+        if (armorStand == null) this.armorStand.remove();
+        this.armorStand = armorStand;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (PlayerLG.this.armorStand == null) {
+                    cancel();
+                    return;
+                }
+                armorStand.teleport(PlayerLG.this.getPlayer().getEyeLocation());
+            }
+        }.runTaskTimer(LG.getInstance(), 1L, 1L);
     }
 
 

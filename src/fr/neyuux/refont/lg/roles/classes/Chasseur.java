@@ -56,5 +56,6 @@ public class Chasseur extends Role {
         return "";
     }
 
-    
+
+    //TODO onDeath
 }

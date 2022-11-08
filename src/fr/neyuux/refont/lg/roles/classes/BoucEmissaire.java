@@ -56,5 +56,6 @@ public class BoucEmissaire extends Role {
         return "";
     }
 
-    
+
+    //TODO onFinishVote
 }

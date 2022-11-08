@@ -125,24 +125,24 @@ public class NightRunnable extends BukkitRunnable {
 							Roles r1 = main.RolesVoleur.get(0);
 							Roles r2 = main.RolesVoleur.get(1);
 							
-							ItemStack it1 = new ItemStack(Material.MAP, 1, main.getRoleMap(r1).getDurability());
+							/*ItemStack it1 = new ItemStack(Material.MAP, 1, main.getRoleMap(r1).getDurability());
 							ItemMeta itm1 = it1.getItemMeta();
 							itm1.setDisplayName(r1.getDisplayName());
 							itm1.setLore(Arrays.asList("§7Vous transforme en " + r1.getDisplayName() + "§7.", "§7Cela veut dire que vous gagnerez", "§7avec le camp de ce rôle.", "§7Donc, il n'y aura pas de " + r2.getDisplayName(), "§7dans la partie.", "", "§b>>Clique pour devenir"));
 							itm1.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-							it1.setItemMeta(itm1);
+							it1.setItemMeta(itm1);*/
 							
-							ItemStack it2 = new ItemStack(Material.MAP, 1, main.getRoleMap(r2).getDurability());
+							/*ItemStack it2 = new ItemStack(Material.MAP, 1, main.getRoleMap(r2).getDurability());
 							ItemMeta itm2 = it2.getItemMeta();
 							itm2.setDisplayName(r2.getDisplayName());
 							itm2.setLore(Arrays.asList("§7Vous transforme en " + r2.getDisplayName() + "§7.", "§7Cela veut dire que vous gagnerez", "§7avec le camp de ce rôle.", "§7Donc, il n'y aura pas de " + r1.getDisplayName(), "§7dans la partie.", "", "§b>>Clique pour devenir"));
 							itm2.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-							it2.setItemMeta(itm2);
+							it2.setItemMeta(itm2);*/
 							
 							
 							inv.setItem(2, main.getItem(Material.BARRIER, Roles.VOLEUR.getDisplayName(), Arrays.asList("§7Vous gardez votre rôle. Vous gagnerez donc", "§7avec le Village et les rôles", r1.getDisplayName() + " §7et " + r2.getDisplayName() + " §7ne seront pas dans la partie.", "", "§b>>Clique pour devenir")));
-							inv.setItem(0, it1);
-							inv.setItem(4, it2);
+							//inv.setItem(0, it1);
+							//inv.setItem(4, it2);
 							
 							setWake(player);
 							player.openInventory(inv);
@@ -667,14 +667,14 @@ public class NightRunnable extends BukkitRunnable {
 									inv.setItem(8, main.getItem(Material.BARRIER, "§c§lAnnuler", Collections.singletonList("§7N'effectue pas l'action en cours.")));
 									
 									for (Roles r : main.pouvoirsComédien) {
-										ItemStack it = new ItemStack(Material.MAP, 1, main.getRoleMap(r).getDurability());
+										/*ItemStack it = new ItemStack(Material.MAP, 1, main.getRoleMap(r).getDurability());
 										ItemMeta itm = it.getItemMeta();
 										itm.setDisplayName(r.getDisplayName());
 										itm.setLore(Arrays.asList("§7Vous donne le pouvoir du rôle " + r.getDisplayName(), "§7pour ce tour. Pour ne pourrez donc plus l'utiliser.", "", "§b>>Clique pour sélectionner"));
 										itm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 										it.setItemMeta(itm);
 										
-										inv.addItem(it);
+										inv.addItem(it);*/
 									}
 									
 									setWake(player);

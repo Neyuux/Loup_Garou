@@ -1,11 +1,14 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class Ancien extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "de l'" + getDisplayName();
     }
 
     @Override
@@ -55,5 +58,15 @@ public class Ancien extends Role {
         return "";
     }
 
-    
+
+    @EventHandler
+    public void onLGChoice(RoleChoiceEvent ev) {
+        for (PlayerLG ancienLG : LG.getInstance().getGame().getPlayersByRole(this.getClass()))
+            if (ev.getRole() instanceof LoupGarou && ancienLG.equals(ev.getChoosen())) {
+                if (!ancienLG.getCache().has("ancienSecondLife")) {
+                    ancienLG.getCache().put("ancienSecondLife", new Object());
+                    ev.setCancelled(true);
+                }
+            }
+    }
 }

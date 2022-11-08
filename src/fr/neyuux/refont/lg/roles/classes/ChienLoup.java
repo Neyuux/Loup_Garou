@@ -1,6 +1,5 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChienLoupInv;
@@ -8,18 +7,12 @@ import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChienLoup extends Role {
-
-    public boolean isInvOpen = false;
 
     @Override
     public String getDisplayName() {
@@ -33,7 +26,7 @@ public class ChienLoup extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "du " + this.getDisplayName();
     }
 
     @Override
@@ -70,12 +63,12 @@ public class ChienLoup extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         new ChienLoupInv(this, callback).open(playerLG.getPlayer());
-        this.isInvOpen = true;
+        playerLG.getCache().put("unclosableInv", true);
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        this.isInvOpen = false;
+        playerLG.getCache().put("unclosableInv", false);
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
@@ -84,8 +77,15 @@ public class ChienLoup extends Role {
     @EventHandler
     public void onCloseCLInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
+        HumanEntity player = ev.getPlayer();
 
-        if (inv.getName().equals(this.getDisplayName()) && this.isInvOpen)
-            ev.getPlayer().openInventory(inv);
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.openInventory(inv);
+                }
+            }.runTaskLater(LG.getInstance(), 1L);
+        }
     }
 }

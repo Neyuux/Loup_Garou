@@ -6,8 +6,7 @@ import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
-import fr.neyuux.refont.lg.roles.classes.LoupGarouBlanc;
-import fr.neyuux.refont.lg.roles.classes.Voleur;
+import fr.neyuux.refont.lg.roles.classes.*;
 import fr.neyuux.refont.lg.tasks.GameRunnable;
 import org.bukkit.*;
 import org.bukkit.entity.HumanEntity;
@@ -20,6 +19,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -33,9 +33,9 @@ public class GameLG implements Listener {
 
     private DayCycle dayCycle = DayCycle.NONE;
 
-    private int day = 0;
+    private int day = 1;
 
-    private int night = 0;
+    private int night = 1;
 
     private PlayerLG mayor;
     
@@ -68,11 +68,14 @@ public class GameLG implements Listener {
         this.resetGame();
     }
 
-    public void sendMessage(Role role, String msg) {
+    public void sendMessage(Class<? extends Role> role, String msg) {
         for (PlayerLG playerLG : this.getAlive()) {
             if (role != null) {
-                if (this.getPlayersByRole(role.getClass()).contains(playerLG))
+                if (this.getPlayersByRole(role).contains(playerLG))
                     playerLG.sendMessage(msg);
+            else if (role.equals(LoupGarou.class))
+                for (PlayerLG lg : this.getLGs())
+                    lg.sendMessage(msg);
             } else playerLG.sendMessage(msg);
         }
     }
@@ -83,13 +86,19 @@ public class GameLG implements Listener {
         }
     }
 
-    public List<PlayerLG> getAlive() {
+    public ArrayList<PlayerLG> getAlive() {
         ArrayList<PlayerLG> alive = new ArrayList<>();
 
         for (PlayerLG playerLG : this.playersInGame)
             if (!playerLG.isDead())
                 alive.add(playerLG);
 
+        return alive;
+    }
+
+    public List<PlayerLG> getAliveExcept(PlayerLG... playersLG) {
+        ArrayList<PlayerLG> alive = this.getAlive();
+        alive.removeAll(Arrays.asList(playersLG));
         return alive;
     }
 
@@ -321,8 +330,8 @@ public class GameLG implements Listener {
         this.playersInGame.clear();
         this.waitedPlayers.clear();
         this.spectators.clear();
-        this.day = 0;
-        this.night = 0;
+        this.day = 1;
+        this.night = 1;
         this.mayor = null;
         this.aliveRoles.clear();
         this.rolesAtStart.clear();
@@ -376,6 +385,22 @@ public class GameLG implements Listener {
         return players;
     }
 
+    public void kill(PlayerLG playerLG) {
+
+        if (playerLG.getRole() instanceof DurACuire) {
+            if (!playerLG.getCache().has("durACuire")) playerLG.getCache().put("durACuire", 2);
+            if ((int)playerLG.getCache().get("durACuire") != 0) return;
+        }
+
+        if (playerLG.getRole() instanceof ChaperonRouge)
+            for (PlayerLG chasseurLG : this.getPlayersByRole(Chasseur.class)) {
+                chasseurLG.sendMessage(LG.getPrefix() + "§aVous avez protégé le §c§lChaperon §e" + playerLG.getNameWithAttributes(chasseurLG) + "§a.");
+                return;
+            }
+
+        this.getKilledPlayers().add(playerLG);
+    }
+
     public ArrayList<PlayerLG> getKilledPlayers() {
         return killedPlayers;
     }
@@ -417,7 +442,7 @@ public class GameLG implements Listener {
     }
 
     public int getNight() {
-        return night;
+        return this.night;
     }
 
     public void addNight() {

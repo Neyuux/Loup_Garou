@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.commands.LGCommand;
 import fr.neyuux.refont.lg.items.ItemsManager;
+import fr.neyuux.refont.lg.listeners.DayListener;
 import fr.neyuux.refont.lg.listeners.NightListener;
 import fr.neyuux.refont.lg.listeners.PreGameListener;
 import fr.neyuux.refont.lg.roles.Role;
@@ -75,6 +76,7 @@ public class LG extends JavaPlugin {
         this.getCommand("lg").setExecutor(new LGCommand());
         this.getServer().getPluginManager().registerEvents(new PreGameListener(), this);
         this.getServer().getPluginManager().registerEvents(new NightListener(), this);
+        this.getServer().getPluginManager().registerEvents(new DayListener(), this);
 
         super.onEnable();
     }

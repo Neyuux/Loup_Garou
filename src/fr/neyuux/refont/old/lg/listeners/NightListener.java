@@ -484,8 +484,8 @@ public class NightListener implements Listener {
 					p1.playSound(p1.getLocation(), Sound.CLICK, 8, 1.5f);
 					p2.sendMessage(main.getPrefix() + main.SendArrow + "§bVotre rôle a été échangé avec quelqu'un d'autre par le " + Roles.VILAIN_GARÇON.getDisplayName() + "§b. Vous êtes maintenant " + r1.getDisplayName() + "§b.");
 					p2.playSound(p2.getLocation(), Sound.CLICK, 8, 1.5f);
-					p1.getInventory().setItem(4, main.getRoleMap(r2));
-					p2.getInventory().setItem(4, main.getRoleMap(r1));
+					//p1.getInventory().setItem(4, main.getRoleMap(r2));
+					//p2.getInventory().setItem(4, main.getRoleMap(r1));
 					p1.sendMessage(main.getPrefix() + main.SendArrow + r2.getDescription());
 					LG.sendTitle(p1, "§fVous êtes " + r2.getDisplayName(), "§fVotre camp : §e" + p1lg.getCamp(), 10, 60, 10);
 					p2.sendMessage(main.getPrefix() + main.SendArrow + r1.getDescription());

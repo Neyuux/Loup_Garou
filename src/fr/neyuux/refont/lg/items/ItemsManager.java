@@ -35,7 +35,7 @@ public class ItemsManager {
         PlayerInventory playerInv = playerLG.getPlayer().getInventory();
 
         playerInv.clear();
-        if (playerLG.getRole() != null) {
+        /*if (playerLG.getRole() != null) {
             ItemStack it = null;
             ItemMeta itm = null;
             List<Block> chests = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ItemsManager {
             }
             it.setItemMeta(itm);
             playerInv.setItem(4, it);
-        }
+        }TODO*/
     }
 
 }

@@ -22,7 +22,7 @@ public class Necromancien extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "du " + this.getDisplayName();
     }
 
     @Override

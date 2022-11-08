@@ -23,7 +23,7 @@ public class ChaperonRouge extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "du " + this.getDisplayName();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ChaperonRouge extends Role {
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Tant que qu'un chasseur sera encore présent dans la partie, les Loups ne §9pourront pas vous tuer§f.";
+        return "§fVous êtes "+this.getDisplayName()+"§f, votre but est d'éliminer les §c§lLoups-Garous §f(ou rôles solos). Tant que qu'un chasseur sera encore présent dans la partie, vous ne pourrez §9pas mourrir§f.";
     }
 
     @Override

@@ -8,6 +8,8 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +20,7 @@ import java.util.Random;
 public class Frere extends Role {
 
     private final List<PlayerLG> brothers = new ArrayList<>();
+    private final List<PlayerLG> listeningBrothers = new ArrayList<>();
 
 
     @Override
@@ -32,7 +35,7 @@ public class Frere extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "des " + this.getDisplayName() + "s";
     }
 
     @Override
@@ -128,5 +131,55 @@ public class Frere extends Role {
 
     public List<PlayerLG> getBrothers() {
         return this.brothers;
+    }
+
+
+    @Override
+    public void onNightTurn(Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> players = game.getPlayersByRole(this.getClass());
+
+        game.cancelWait();
+
+        if (players.isEmpty()) {
+            if (!game.isThiefRole(this)) callback.run();
+            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            return;
+        }
+
+        for (PlayerLG brotherLG : players)
+            if (brotherLG.canUsePowers())
+                listeningBrothers.add(brotherLG);
+
+        if (!listeningBrothers.isEmpty()) {
+
+            listeningBrothers.forEach(PlayerLG::setWake);
+
+            game.wait(this.getTimeout(), () -> {
+                listeningBrothers.forEach(PlayerLG::setSleep);
+                listeningBrothers.clear();
+                super.onNightTurn(callback);
+
+            }, (currentPlayerLG, secondsLeft) -> (listeningBrothers.contains(currentPlayerLG)) ? "§3§lTu discutes avec tes frères..." : "§9§lAu tour " + this.getDeterminingName());
+
+            listeningBrothers.forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + this.getActionMessage()));
+
+        } else {
+            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+        }
+    }
+
+    @EventHandler
+    public void onFrereChat(AsyncPlayerChatEvent ev) {
+        if (!listeningBrothers.isEmpty()) {
+            PlayerLG senderLG = PlayerLG.createPlayerLG(ev.getPlayer());
+            if (listeningBrothers.contains(senderLG)) {
+                Frere senderRole = (Frere) senderLG.getRole();
+                ev.getRecipients().clear();
+                senderRole.getBrothers().forEach(playerLG -> ev.getRecipients().add(playerLG.getPlayer()));
+                ev.getRecipients().add(senderLG.getPlayer());
+                ev.setFormat(this.getDisplayName() +" §d" + senderLG.getName() + " §8» §f" + ev.getMessage());
+            }
+        }
     }
 }

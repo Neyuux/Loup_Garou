@@ -27,6 +27,7 @@ public class RoleChoosePlayerItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
+        player.getOpenInventory().getTopInventory().remove(this);
         generator.doActionsAfterClick(playerLG);
     }
 }

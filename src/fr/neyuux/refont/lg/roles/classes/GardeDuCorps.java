@@ -1,11 +1,21 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.GameType;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -56,5 +66,78 @@ public class GardeDuCorps extends Role {
         return "§fVous avez §7" + this.getTimeout() + " secondes §fpour protéger quelqu'un.";
     }
 
-    
+
+    @Override
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+
+        if (game.getGameType().equals(GameType.MEETING)) {
+            playerLG.setChoosing(choosen -> {
+                if (choosen != null && choosen != playerLG) {
+                    protect(choosen, playerLG);
+
+                    super.onPlayerTurnFinish(playerLG);
+                    callback.run();
+                }
+            });
+
+        } else if (game.getGameType().equals(GameType.FREE)) {
+            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new RoleChoosePlayerInv.ActionsGenerator() {
+
+                @Override
+                public String[] generateLore(PlayerLG paramPlayerLG) {
+                    return new String[] {"§eVoulez-vous §7protéger §e" + paramPlayerLG.getNameWithAttributes(playerLG) + "§ece soir ?", "§eS'il est censé mourir cette nuit," + "§evous §cmourrez à sa place§e.", "", "§7>>Clique pour choisir"};
+                }
+
+                @Override
+                public void doActionsAfterClick(PlayerLG choosenLG) {
+                    protect(choosenLG, playerLG);
+
+                    playerLG.getCache().put("unclosableInv", false);
+                    playerLG.getPlayer().closeInventory();
+                    playerLG.setSleep();
+                    callback.run();
+                }
+            });
+            playerLG.getCache().put("unclosableInv", true);
+        }
+    }
+
+    private void protect(PlayerLG choosen, PlayerLG playerLG) {
+        if (choosen == null) return;
+        RoleChoiceEvent roleChoiceEvent = new RoleChoiceEvent(this, choosen);
+
+        Bukkit.getPluginManager().callEvent(roleChoiceEvent);
+        if (roleChoiceEvent.isCancelled()) return;
+
+        choosen.getCache().put("gardeDuCorpsProtectedBy", playerLG);
+
+        playerLG.sendMessage(LG.getPrefix() + "§7Tu protèges §e" + choosen.getNameWithAttributes(playerLG) + "§7 ce soir.");
+        GameLG.playPositiveSound(playerLG.getPlayer());
+    }
+
+    @Override
+    protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        playerLG.getCache().put("unclosableInv", false);
+        super.onPlayerTurnFinish(playerLG);
+        playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+    }
+
+
+    @EventHandler
+    public void onCloseFilleDeJoieInv(InventoryCloseEvent ev) {
+        Inventory inv = ev.getInventory();
+        HumanEntity player = ev.getPlayer();
+
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.openInventory(inv);
+                }
+            }.runTaskLater(LG.getInstance(), 1L);
+        }
+    }
+
+    //TODO onKill
 }

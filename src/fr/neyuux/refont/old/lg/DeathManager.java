@@ -115,7 +115,7 @@ public class DeathManager {
 			player.sendMessage(main.getPrefix() + main.SendArrow + r.getDescription());
 			LG.sendTitle(player, "§fVous êtes " + r.getDisplayName(), "§fVotre camp : §e" + main.playerlg.get(p.getName()).getCamp(), 10, 60, 10);
 			main.playerlg.get(p.getName()).setRole(r);
-			player.getInventory().setItem(4, main.getRoleMap(r));
+			//player.getInventory().setItem(4, main.getRoleMap(r));
 		}
 		
 		if (r.equals(Roles.ANGE) && main.days == 1 && main.isDisplayState(DisplayState.ANNONCES_DES_MORTS_JOUR)) winAnge(player);

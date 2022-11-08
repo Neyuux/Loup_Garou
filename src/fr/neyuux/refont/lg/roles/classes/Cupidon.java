@@ -1,11 +1,21 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.lg.utils.CacheLG;
+import fr.neyuux.refont.old.lg.role.Roles;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -23,7 +33,7 @@ public class Cupidon extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "du " + this.getDisplayName();
     }
 
     @Override
@@ -54,8 +64,133 @@ public class Cupidon extends Role {
     @Override
     public String getActionMessage() {
         return "§fVous avez §d" + this.getTimeout() + " secondes §f pour choisir le couple de cette partie.";
-    } //TODO prevenir si cupiEnCoupleOn et coupleRandomOn
+    }
 
-    
 
+    @Override
+    public void onPlayerJoin(PlayerLG playerLG) {
+        super.onPlayerJoin(playerLG);
+        if ((boolean)LG.getInstance().getGame().getConfig().getRandomCouple().getValue())
+            playerLG.sendMessage(LG.getPrefix() + "§d§lRAPPEL : §dLe paramètre §7§lCouple Random§d est activé et vous ne pourrez pas choisir le couple.");
+        if ((boolean)LG.getInstance().getGame().getConfig().getCupiInCouple().getValue())
+            playerLG.sendMessage(LG.getPrefix() + "§d§lRAPPEL : §dLe paramètre §5§lCupi en Couple§d est activé. Par conséquent, vous serez forcément en couple.");
+        if ((boolean)LG.getInstance().getGame().getConfig().getCupiWinWithCouple().getValue())
+            playerLG.sendMessage(LG.getPrefix() + "§d§lRAPPEL : §dLe paramètre §a§lCupi gagne avec le Couple§d est activé. Par conséquent, vous pouvez gagner avec votre couple.");
+    }
+
+    @Override
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+
+        if (game.getGameType().equals(GameType.MEETING)) {
+            new Runnable() {
+                @Override
+                public void run() {
+                    playerLG.setChoosing(choosen -> {
+                        if (choosen != null && choosen != playerLG) {
+
+                            if (couple(choosen, playerLG)) {
+
+                                Cupidon.super.onPlayerTurnFinish(playerLG);
+                                callback.run();
+                            } else
+                                run();
+                        }
+                    });
+                }
+            }.run();
+
+
+        } else if (game.getGameType().equals(GameType.FREE)) {
+            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new RoleChoosePlayerInv.ActionsGenerator() {
+
+                @Override
+                public String[] generateLore(PlayerLG paramPlayerLG) {
+                    return new String[] {"§9Voulez-vous §dmettre en couple " + paramPlayerLG.getNameWithAttributes(playerLG) + "§9 ?", "§9Son destin sera lié avec une deuxième personne.", "", "§7>>Clique pour choisir"};
+                }
+
+                @Override
+                public void doActionsAfterClick(PlayerLG choosenLG) {
+                    if (couple(choosenLG, playerLG)) {
+                        playerLG.getCache().put("unclosableInv", false);
+                        playerLG.getPlayer().closeInventory();
+                        playerLG.setSleep();
+                        callback.run();
+                    }
+                }
+            });
+            playerLG.getCache().put("unclosableInv", true);
+        }
+    }
+
+    private boolean couple(PlayerLG choosen, PlayerLG playerLG) {
+        if (choosen == null) return true;
+        RoleChoiceEvent roleChoiceEvent = new RoleChoiceEvent(this, choosen);
+
+        Bukkit.getPluginManager().callEvent(roleChoiceEvent);
+        if (roleChoiceEvent.isCancelled()) return true;
+
+        if (playerLG.getCache().has("cupidonFirstChoice")) {
+            PlayerLG choosen2 = (PlayerLG) playerLG.getCache().get("cupidonFirstChoice");
+
+            choosen.getCache().put("couple", choosen2);
+            choosen2.getCache().put("couple", choosen);
+
+            choosen.sendMessage(LG.getPrefix() + "§dVous recevez soudainement une flèche, elle vous transperce. Regardant au loin, vous apercevez §5" + choosen2.getName() + " §d, vous vous effondrez de joie et remerciez " + this.getDisplayName() + " §dpour avoir fait ce choix. §r\n§dVous êtes amoureux de §5" + choosen2.getName() + " §d, vous devez gagner ensemble et si l'un d'entre-vous meurt, il emporte l'autre avec un chagrin d'amour...");
+            choosen.sendMessage(LG.getPrefix() + "§9Utilisez §e! §9pour lui parler de manière privée.");
+            choosen2.sendMessage(LG.getPrefix() + "§dVous recevez soudainement une flèche, elle vous transperce. Regardant au loin, vous apercevez §5" + choosen.getName() + " §d, vous vous effondrez de joie et remerciez " + this.getDisplayName() + " §dpour avoir fait ce choix. §r\n§dVous êtes amoureux de §5" + choosen.getName() + " §d, vous devez gagner ensemble et si l'un d'entre-vous meurt, il emporte l'autre avec un chagrin d'amour...");
+            choosen2.sendMessage(LG.getPrefix() + "§9Utilisez §e! §9pour lui parler de manière privée.");
+
+            choosen.updateGamePlayerScoreboard();
+            choosen2.updateGamePlayerScoreboard();
+
+            playerLG.sendMessage(LG.getPrefix() + "§dVos 2 flèches ont bien transpercé §5" + choosen.getNameWithAttributes(playerLG) + " §det §5" + choosen2.getNameWithAttributes(playerLG) + "§d. Ils ne se quitteront plus désormais...");
+            playerLG.getCache().remove("cupidonFirstChoice");
+            playerLG.updateGamePlayerScoreboard();
+            GameLG.playPositiveSound(playerLG.getPlayer());
+            return true;
+
+        } else {
+            playerLG.getCache().put("cupidonFirstChoice", choosen);
+            return false;
+        }
+    }
+
+    @Override
+    protected void onPlayerTurnFinish(PlayerLG playerLG) {
+        playerLG.getCache().put("unclosableInv", false);
+        super.onPlayerTurnFinish(playerLG);
+        playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
+    }
+
+
+    @EventHandler
+    public void onCloseCupidonInv(InventoryCloseEvent ev) {
+        Inventory inv = ev.getInventory();
+        HumanEntity player = ev.getPlayer();
+
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.openInventory(inv);
+                }
+            }.runTaskLater(LG.getInstance(), 1L);
+        }
+    }
+
+    @EventHandler
+    public void onCoupleChat(AsyncPlayerChatEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        PlayerLG playerLG = PlayerLG.createPlayerLG(ev.getPlayer());
+        CacheLG playerCache = playerLG.getCache();
+        if (game.getGameState().equals(GameState.PLAYING) && ev.getMessage().startsWith("!") && playerCache.has("couple")) {
+            PlayerLG coupleLG = ((PlayerLG)playerCache.get("couple"));
+
+            ev.setCancelled(true);
+            playerLG.sendMessage("§d§lCouple §5" + playerLG.getName() + "§7» §d");
+            coupleLG.sendMessage("§d§lCouple §5" + playerLG.getNameWithAttributes(coupleLG) + "§7» §d");
+        }
+    }
+    //TODO onDeath
 }

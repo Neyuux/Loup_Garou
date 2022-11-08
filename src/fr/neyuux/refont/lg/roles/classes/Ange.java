@@ -1,11 +1,14 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.NightStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public class Ange extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "de l'" + this.getDisplayName();
     }
 
     @Override
@@ -57,5 +60,18 @@ public class Ange extends Role {
     }
 
     
+    //TODO winsonDeath
 
+    @EventHandler
+    public void onNightStart(NightStartEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        if (game.getNight() == 2) {
+            for (PlayerLG playerLG : game.getPlayersByRole(this.getClass())) {
+                SimpleVillageois sv = new SimpleVillageois();
+                playerLG.joinRole(sv);
+                if (playerLG.getCamp().equals(this.getBaseCamp())) playerLG.setCamp(sv.getBaseCamp());
+                playerLG.getCache().put("angeAtStart", this);
+            }
+        }
+    }
 }

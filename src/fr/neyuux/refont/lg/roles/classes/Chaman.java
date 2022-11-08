@@ -7,6 +7,9 @@ import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -71,12 +74,9 @@ public class Chaman extends Role {
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (!game.isThiefRole(this)) {
-                callback.run();
-                return;
-            } else {
-                createFakeTurn(callback);
-            }
+            if (!game.isThiefRole(this)) callback.run();
+            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            return;
         }
 
         for (PlayerLG chaman : players)
@@ -97,7 +97,31 @@ public class Chaman extends Role {
             listeningChamans.forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + this.getActionMessage()));
 
         } else {
-            createFakeTurn(callback);
+            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+        }
+    }
+
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onChamanChat(AsyncPlayerChatEvent ev) {
+        if (!listeningChamans.isEmpty()) {
+            ev.setCancelled(false);
+            PlayerLG senderLG = PlayerLG.createPlayerLG(ev.getPlayer());
+            GameLG game = LG.getInstance().getGame();
+
+            if (senderLG.isSpectator()) {
+                ev.getRecipients().clear();
+                game.getSpectators().forEach(playerLG -> ev.getRecipients().add(playerLG.getPlayer()));
+                listeningChamans.forEach(playerLG -> ev.getRecipients().add(playerLG.getPlayer()));
+                ev.setFormat("§7§lSpectateur §7" + senderLG.getName() + " §8» §b" + ev.getMessage());
+            }
+
+            if (listeningChamans.contains(senderLG) && (boolean)game.getConfig().getChamanChat().getValue()) {
+                ev.getRecipients().clear();
+                game.getSpectators().forEach(playerLG -> ev.getRecipients().add(playerLG.getPlayer()));
+                ev.getRecipients().add(senderLG.getPlayer());
+                ev.setFormat(this.getDisplayName() + " §e" + senderLG.getName() + " §8» §a" + ev.getMessage());
+            }
         }
     }
 }

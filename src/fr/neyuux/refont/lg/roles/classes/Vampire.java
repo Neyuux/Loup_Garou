@@ -22,7 +22,7 @@ public class Vampire extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "des " + this.getDisplayName() + "s";
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Sorciere extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "de la " + this.getDisplayName();
     }
 
     @Override

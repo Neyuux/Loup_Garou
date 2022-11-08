@@ -25,7 +25,7 @@ public class President extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "du " + this.getDisplayName();
     }
 
     @Override

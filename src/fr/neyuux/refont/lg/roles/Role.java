@@ -11,25 +11,28 @@ import java.util.logging.Level;
 
 public abstract class Role implements Listener {
 
+    private ArrayList<PlayerLG> players;
+
 
     public Role() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
     }
 
 
+    public void newNightTurn(Runnable callback) {
+        this.updatePlayers();
+        this.onNightTurn(callback);
+    }
+
     public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        ArrayList<PlayerLG> players = game.getPlayersByRole(this.getClass());
 
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (!game.isThiefRole(this)) {
-                callback.run();
-                return;
-            } else {
-                createFakeTurn(callback);
-            }
+            if (!game.isThiefRole(this)) callback.run();
+            else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName());
+            return;
         }
 
         PlayerLG playerLG = players.remove(0);
@@ -42,18 +45,14 @@ public abstract class Role implements Listener {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "§9§lAu tour " + Role.this.getDeterminingName());
+            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Role.this.getDeterminingName());
 
-            playerLG.sendMessage("" + Role.this.getActionMessage());
+            playerLG.sendMessage(LG.getPrefix() + Role.this.getActionMessage());
             Role.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
 
         } else {
-            createFakeTurn(callback);
+            LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName());
         }
-    }
-
-    public void createFakeTurn(Runnable callback) {
-        LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> "Au tour " + Role.this.getDeterminingName());
     }
 
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
@@ -85,6 +84,10 @@ public abstract class Role implements Listener {
         playerLG.sendTitle("§fVous êtes " + this.getDisplayName(), "§fVotre camp : §e" + this.getBaseCamp().getName(), 10, 60, 10);
         playerLG.sendMessage(LG.getPrefix() + this.getDescription());
         //TODO give role map
+    }
+
+    private void updatePlayers() {
+        this.players = LG.getInstance().getGame().getPlayersByRole(this.getClass());
     }
 
 

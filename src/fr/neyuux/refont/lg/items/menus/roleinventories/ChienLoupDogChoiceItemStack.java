@@ -41,7 +41,7 @@ public class ChienLoupDogChoiceItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§eVous avez choisi le camp du §a§lVillage§e !");
         GameLG.playPositiveSound((Player) player);
 
-        chienLoup.isInvOpen = false;
+        playerLG.getCache().put("unclosableInv", false);
         player.closeInventory();
         playerLG.setSleep();
         callback.run();

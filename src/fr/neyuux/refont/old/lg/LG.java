@@ -613,35 +613,39 @@ public class LG extends JavaPlugin {
 		String name = "";
 		PlayerLG plg = this.playerlg.get(player.getName());
 		PlayerLG rlg = this.playerlg.get(receveier.getName());
-		
-		if (rlg.isCamp(RCamp.LOUP_GAROU) || rlg.isCamp(RCamp.LOUP_GAROU_BLANC)) 
-			if (plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC))
-				if (receveier.getScoreboard().getTeam("LG").hasEntry(player.getName()))
-					name = "§c§lLG §c";
-		if (rlg.isRole(Roles.SOEUR))
-			if (plg.isRole(Roles.SOEUR))
-				name = name + "§d§lSoeur §d";
-		if (rlg.isRole(Roles.FRÈRE))
-			if (plg.isRole(Roles.FRÈRE))
-				name = name + "§3§lFrère §3";
-		if (plg.isRole(Roles.VILLAGEOIS_VILLAGEOIS))
-			name = name + "§a§lV§e-§a§lV §a";
-		if (plg.isMaire()) name = name + "§6§lMaire §e";
-		if (!plg.getCouple().isEmpty())
-			if (plg.getCouple().get(0).equals(receveier)) name = name + "§d§lCou§9§lple §d";
-		if (rlg.isRole(Roles.MERCENAIRE) && days == 1 && !plg.getTargetOf().isEmpty())
-			if (plg.getTargetOf().get(0).equals(player))
-				name = name + "§c§lCible §5";
-		if (rlg.isRole(Roles.JUMEAU) && !plg.getJumeauOf().isEmpty())
-			if (plg.getJumeauOf().contains(player))
-				name = name + "§5§lJumeau §d";
-		
+
+		try {
+			if (rlg.isCamp(RCamp.LOUP_GAROU) || rlg.isCamp(RCamp.LOUP_GAROU_BLANC))
+				if (plg.isCamp(RCamp.LOUP_GAROU) || plg.isCamp(RCamp.LOUP_GAROU_BLANC))
+					if (receveier.getScoreboard().getTeam("LG").hasEntry(player.getName()))
+						name = "§c§lLG §c";
+			if (rlg.isRole(Roles.SOEUR))
+				if (plg.isRole(Roles.SOEUR))
+					name = name + "§d§lSoeur §d";
+			if (rlg.isRole(Roles.FRÈRE))
+				if (plg.isRole(Roles.FRÈRE))
+					name = name + "§3§lFrère §3";
+			if (plg.isRole(Roles.VILLAGEOIS_VILLAGEOIS))
+				name = name + "§a§lV§e-§a§lV §a";
+			if (plg.isMaire()) name = name + "§6§lMaire §e";
+			if (!plg.getCouple().isEmpty())
+				if (plg.getCouple().get(0).equals(receveier)) name = name + "§d§lCou§9§lple §d";
+			if (rlg.isRole(Roles.MERCENAIRE) && days == 1 && !plg.getTargetOf().isEmpty())
+				if (plg.getTargetOf().get(0).equals(player))
+					name = name + "§c§lCible §5";
+			if (rlg.isRole(Roles.JUMEAU) && !plg.getJumeauOf().isEmpty())
+				if (plg.getJumeauOf().contains(player))
+					name = name + "§5§lJumeau §d";
+
+		} catch (Exception e) {
+
+		}
 		name = name + player.getName();
 		return name;
 	}
 	
 	
-	public ItemStack getRoleMap(Roles r) {
+	/*public ItemStack getRoleMap(Roles r) {
 		ItemStack it = null;
 		ItemMeta itm = null;
 		List<Block> chests = new ArrayList<>();
@@ -667,7 +671,7 @@ public class LG extends JavaPlugin {
 		
 		it.setItemMeta(itm);
 		return it;
-	}
+	}*/
 	
 	
 	public void sendRoleMessage(String message, Roles r) {

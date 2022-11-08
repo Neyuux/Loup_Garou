@@ -15,13 +15,11 @@ import org.bukkit.event.Event;
 
 public class ComedianPowerChoiceItemStack extends CustomItemStack {
 
-    private final Comedien comedian;
     private final Runnable callback;
     private Role newRole = null;
 
-    public ComedianPowerChoiceItemStack(ComedianPowers power, Comedien comedian, Runnable callback) {
+    public ComedianPowerChoiceItemStack(ComedianPowers power, Runnable callback) {
         super(Material.MAP, 1, power.getName());
-        this.comedian = comedian;
 
         this.callback = callback;
         try {
@@ -43,7 +41,7 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
         GameLG game = LG.getInstance().getGame();
 
-        playerLG.getCache().put("comedianpower", newRole);
+        playerLG.getCache().put("comedianpower", playerLG.getRole());
         playerLG.setRole(newRole);
 
         game.getAliveRoles().add(newRole);
@@ -58,7 +56,7 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§dPour cette nuit, vous obtenez le pouvoir " + newRole.getDeterminingName() + "§d.");
         GameLG.playPositiveSound((Player) player);
 
-        comedian.isInvOpen = false;
+        playerLG.getCache().put("unclosableInv", false);
 
         player.closeInventory();
         playerLG.setSleep();

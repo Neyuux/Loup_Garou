@@ -354,7 +354,7 @@ public class GameRunnable extends BukkitRunnable {
 							plg.setRole(Roles.SIMPLE_VILLAGEOIS);
 						}
 						try {
-							p.getInventory().setItem(4, main.getRoleMap(plg.getRole()));
+							//p.getInventory().setItem(4, main.getRoleMap(plg.getRole()));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

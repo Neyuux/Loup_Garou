@@ -1,11 +1,15 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.old.lg.role.Roles;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -23,7 +27,7 @@ public class HumainMaudit extends Role {
 
     @Override
     public String getDeterminingName() {
-        return null;
+        return "de l'" + this.getDisplayName();
     }
 
     @Override
@@ -56,5 +60,15 @@ public class HumainMaudit extends Role {
         return "";
     }
 
-    
+
+    @EventHandler
+    public void onLGTurn(RoleChoiceEvent ev) {
+        PlayerLG choosenLG = ev.getChoosen();
+        if (ev.getRole() instanceof LoupGarou && choosenLG.getRole() instanceof HumainMaudit && choosenLG.getCamp() != Camps.LOUP_GAROU) {
+            ev.setCancelled(true);
+            choosenLG.setCamp(Camps.LOUP_GAROU);
+            choosenLG.sendMessage(LG.getPrefix() + "§cVous avez été attaqué par les Loups cette nuit. Vous devenez donc l'un d'entre eux.");
+            LG.getInstance().getGame().sendMessage(LoupGarou.class, LG.getPrefix() + "§c§l" + choosenLG.getName() + " §cest en fait humain maudit. Il se transforme donc un Loup-Garou suite à votre attaque.");
+        }
+    }
 }

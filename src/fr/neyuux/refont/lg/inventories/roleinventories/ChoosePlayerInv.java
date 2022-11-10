@@ -8,13 +8,13 @@ import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
 import java.util.List;
 
-public class RoleChoosePlayerInv extends AbstractCustomInventory {
+public class ChoosePlayerInv extends AbstractCustomInventory {
 
     private final PlayerLG targetLG;
     private final ActionsGenerator generator;
     private List<PlayerLG> choosable;
 
-    public RoleChoosePlayerInv(String name, PlayerLG targetLG, List<PlayerLG> choosable, ActionsGenerator generator) {
+    public ChoosePlayerInv(String name, PlayerLG targetLG, List<PlayerLG> choosable, ActionsGenerator generator) {
         super(name, 36);
         this.adaptIntToInvSize(LG.getInstance().getGame().getAlive().size());
 

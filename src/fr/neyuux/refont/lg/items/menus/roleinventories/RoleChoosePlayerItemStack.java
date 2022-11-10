@@ -1,7 +1,7 @@
 package fr.neyuux.refont.lg.items.menus.roleinventories;
 
 import fr.neyuux.refont.lg.PlayerLG;
-import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -9,10 +9,10 @@ import org.bukkit.event.Event;
 
 public class RoleChoosePlayerItemStack extends CustomItemStack {
 
-    private final RoleChoosePlayerInv.ActionsGenerator generator;
+    private final ChoosePlayerInv.ActionsGenerator generator;
     private final PlayerLG playerLG;
 
-    public RoleChoosePlayerItemStack(PlayerLG targetLG, PlayerLG playerLG, RoleChoosePlayerInv.ActionsGenerator generator) {
+    public RoleChoosePlayerItemStack(PlayerLG targetLG, PlayerLG playerLG, ChoosePlayerInv.ActionsGenerator generator) {
         super(Material.SKULL_ITEM, 1, playerLG.getNameWithAttributes(targetLG));
 
         this.generator = generator;

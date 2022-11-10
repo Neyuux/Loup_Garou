@@ -5,7 +5,7 @@ import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
-import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -15,8 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
 
 public class ChasseurDeVampire extends Role {
 
@@ -78,7 +76,7 @@ public class ChasseurDeVampire extends Role {
                 }
             });
         } else if (LG.getInstance().getGame().getGameType().equals(GameType.FREE)) {
-            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, LG.getInstance().getGame().getAliveExcept(playerLG), new RoleChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, LG.getInstance().getGame().getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {

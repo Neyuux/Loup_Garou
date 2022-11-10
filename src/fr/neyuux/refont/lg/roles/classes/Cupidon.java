@@ -2,22 +2,18 @@ package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
-import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.utils.CacheLG;
-import fr.neyuux.refont.old.lg.role.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
 
 public class Cupidon extends Role {
 
@@ -102,7 +98,7 @@ public class Cupidon extends Role {
 
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new RoleChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {

@@ -359,6 +359,7 @@ public class PlayerLG {
 
     public void setArmorStand(ArmorStand armorStand) {
         if (armorStand == null) this.armorStand.remove();
+
         this.armorStand = armorStand;
         new BukkitRunnable() {
             @Override
@@ -367,6 +368,7 @@ public class PlayerLG {
                     cancel();
                     return;
                 }
+                //noinspection ConstantConditions
                 armorStand.teleport(PlayerLG.this.getPlayer().getEyeLocation());
             }
         }.runTaskTimer(LG.getInstance(), 1L, 1L);

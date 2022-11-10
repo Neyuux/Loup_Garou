@@ -1,25 +1,20 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.event.VoteStartEvent;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.classes.Ankou;
-import fr.neyuux.refont.old.lg.DisplayState;
-import fr.neyuux.refont.old.lg.Gtype;
-import fr.neyuux.refont.old.lg.role.RCamp;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class VoteLG {
 
-    private int timer;
+    private final int timer;
 
     private final boolean randomIfEqual;
 
@@ -31,32 +26,36 @@ public class VoteLG {
 
     private Runnable callback;
 
-    private List<PlayerLG> votable;
+    private final List<PlayerLG> votable;
 
-    private List<PlayerLG> voters;
+    private final List<PlayerLG> voters;
 
-    private List<PlayerLG> observers;
+    private final List<PlayerLG> observers;
+
+    private PlayerLG choosen;
 
 
-    public VoteLG(int timer, boolean randomIfEqual, GameLG.StringTimerMessage timerMessage, ChatColor firstColor, ChatColor secondColor) {
+    public VoteLG(int timer, boolean randomIfEqual, GameLG.StringTimerMessage timerMessage, ChatColor firstColor, ChatColor secondColor, List<PlayerLG> votable, List<PlayerLG> voters, List<PlayerLG> observers) {
         this.timer = timer;
         this.randomIfEqual = randomIfEqual;
         this.timerMessage = timerMessage;
         this.firstColor = firstColor;
         this.secondColor = secondColor;
-    }
-
-
-    public void start(Runnable callback, List<PlayerLG> votable, List<PlayerLG> voters, List<PlayerLG> observers) {
-        this.callback = callback;
         this.votable = votable;
         this.voters = voters;
         this.observers = observers;
+    }
 
-        LG.getInstance().getGame().wait(timer, this::end, timerMessage);
+
+    public void start(Runnable callback) {
+        this.callback = callback;
+
+        LG.getInstance().getGame().wait(timer, () -> this.end(false), timerMessage);
+
         for (PlayerLG voterLG : voters) {
             voterLG.getCache().put("vote", null);
             voterLG.setChoosing(choosen -> this.vote(voterLG, choosen));
+            voterLG.setArmorStand(null);
         }
 
         Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
@@ -118,7 +117,130 @@ public class VoteLG {
         }
     }
 
-    private void end() {
+    private void end(boolean cancel) {
+        GameLG game = LG.getInstance().getGame();
+        int max = 0;
+        List<PlayerLG> finalists = new ArrayList<>();
+        StringBuilder builder = new StringBuilder();
+
+        for (PlayerLG playerLG : this.votable) {
+            List<PlayerLG> playerVoters = this.getVotesFor(playerLG);
+
+            if (playerVoters.size() > 0) finalists.add(playerLG);
+
+            playerLG.setArmorStand(null);
+            for (PlayerLG voter : playerVoters)
+                if (voter.getRole() instanceof Ankou && voter.isDead())
+                    Bukkit.broadcastMessage(LG.getPrefix() + "§4L'" + voter.getRole().getDisplayName() + " §cavait voté pour §4" + playerLG.getName() + "§c.");
+        }
+
+        while (finalists.size() <= 1) {
+            Integer i1 = this.getVotesFor(finalists.get(0)).size();
+            int i2 = this.getVotesFor(finalists.get(1)).size();
+            int comparator = i1.compareTo(i2);
+
+            if (comparator > 0)
+                finalists.remove(1);
+            else if (comparator < 0)
+                finalists.remove(0);
+            else {
+                if (finalists.size() == 2)
+                    break;
+            }
+
+            if (i1 > max) max = i1;
+            if (i2 > max) max = i2;
+        }
+
+        if (this.getVotesFor(finalists.get(0)).isEmpty())
+            cancel = true;
+
+        for (PlayerLG playerLG : this.voters) {
+            playerLG.getCache().remove("vote");
+            playerLG.stopChoosing();
+        }
+
+        if (finalists.size() > 1) {
+            if (cancel) {
+               Bukkit.broadcastMessage(LG.getPrefix() + "§cAucun vote n'a été enregistré pour un habitant. Il n'y aura donc aucune exécution.");
+               this.callback.run();
+               return;
+            }
+            builder.append(LG.getPrefix()).append(firstColor).append("Il y a égalité dans les votes ! ").append(secondColor).append(finalists.size()).append(firstColor).append(" joueurs ont obtenus le même nombre de votes :");
+            for (PlayerLG finalist : finalists)
+                builder.append(secondColor).append(finalist.getName()).append(firstColor).append(",");
+            builder.deleteCharAt(builder.lastIndexOf(","));
+            builder.append("\n");
+
+            if (this.randomIfEqual) {
+                this.choosen = finalists.get(new Random().nextInt(finalists.size()));
+                builder.append("Un joueur va donc être chosi aléatoirement parmi ceux qui ont été le plus votés... \n").append(LG.getPrefix()).append(this.choosen.getDisplayName()).append(firstColor).append((" a été désigné pour être éliminer."));
+                game.cancelWait();
+                this.callback.run();
+
+            } else {
+                if (game.getMayor() != null) {
+                    builder.append(firstColor).append("Le §6Maire ").append(firstColor).append("a ").append(secondColor).append(30).append(" secondes").append(firstColor).append(" pour départager les joueurs.");
+
+                    PlayerLG mayor = game.getMayor();
+
+                    if (game.getGameType().equals(GameType.MEETING)) {
+                        game.wait(30, () -> {
+                            mayor.getCache().put("unclosableInv", false);
+                            mayor.getPlayer().closeInventory();
+                            VoteLG.this.end(true);
+                        },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + "§6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."));
+
+                        mayor.setChoosing(choosen -> {
+                            if (choosen != null)
+                                if (!finalists.contains(choosen)) {
+                                    mayor.sendMessage(LG.getPrefix() + "§cCe joueur n'est pas concerné !");
+                                    GameLG.playNegativeSound(mayor.getPlayer());
+
+                                } else VoteLG.this.choosen = choosen;
+                        });
+
+                    } else if (game.getGameType().equals(GameType.FREE)) {
+                        new ChoosePlayerInv("§eDépartager les Votes", mayor, finalists, new ChoosePlayerInv.ActionsGenerator() {
+
+                            @Override
+                            public String[] generateLore(PlayerLG paramPlayerLG) {
+                                return new String[] {firstColor + "Chosis le joueur " + secondColor + paramPlayerLG.getNameWithAttributes(mayor) + firstColor + ".",firstColor + "Si vous le choisissez, il sera §céliminé" + firstColor + " de la partie.", "", "§7>>Cliquer pour choisir"};
+                            }
+
+                            @Override
+                            public void doActionsAfterClick(PlayerLG choosenLG) {
+                                mayor.getCache().put("unclosableInv", false);
+                                mayor.getPlayer().closeInventory();
+                                VoteLG.this.end(true);
+                            }
+                        });
+                        mayor.getCache().put("unclosableInv", true);
+                    }
+                } else {
+                    builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
+                    VoteLG secondVote = new VoteLG(30, true, (playerLG, secondsLeft) -> {
+                        if (playerLG.getCache().has("vote"))
+                            if (playerLG.getCache().get("vote") == null)
+                                return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
+                            else
+                                return LG.getPrefix() + "§eVous votez pour §6§l" + ((PlayerLG)playerLG.getCache().get("vote")).getName() + "§e.";
+
+                        return null;
+                    }, firstColor, secondColor, finalists, VoteLG.this.voters, this.observers);
+
+                    secondVote.start(() -> VoteLG.this.choosen = this.getChoosen());
+                }
+            }
+        } else {
+            PlayerLG eliminated = finalists.get(0);
+
+            builder.append(LG.getPrefix()).append("§eLe vote du village possède un résultat : §6").append(eliminated.getName()).append(" §ea obtenu le plus de votes(§6").append(max).append("§e). Il sera donc éliminé.");
+            this.choosen = eliminated;
+        }
+        game.cancelWait();
+        Bukkit.broadcastMessage(builder.toString());
+        this.callback.run();
     }
 
 
@@ -163,12 +285,11 @@ public class VoteLG {
         playerLG.setArmorStand(as);
     }
 
-
-    public List<PlayerLG> getVotable() {
-        return votable;
-    }
-
     public List<PlayerLG> getVoters() {
         return voters;
+    }
+
+    public PlayerLG getChoosen() {
+        return choosen;
     }
 }

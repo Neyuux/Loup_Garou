@@ -5,7 +5,7 @@ import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
-import fr.neyuux.refont.lg.inventories.roleinventories.RoleChoosePlayerInv;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -93,7 +93,7 @@ public class Detective extends Role {
             }.run();
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new RoleChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).toArray(new PlayerLG[0])), new RoleChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).toArray(new PlayerLG[0])), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {

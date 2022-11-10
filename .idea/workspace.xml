@@ -1,98 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="finish Bouffon Assassin ChienLoup Comedien">
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/VoteLG.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/event/NightEndEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/event/NightStartEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/event/RoleChoiceEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/event/VoteStartEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/DictateurInv.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/InfectPereDesLoupsInv.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/DictateurDoRebellionItemStack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/InfectPereDesLoupsInfectItemStack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/listeners/DayListener.java" afterDir="false" />
+    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="continue role night actions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/GameLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/GameLG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/LG.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/PlayerLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/PlayerLG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/RoleChoosePlayerInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/RoleChoosePlayerInv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/ItemsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/ItemsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/VoteLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/VoteLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/RoleChoosePlayerInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/inventories/roleinventories/ChoosePlayerInv.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/RoleChoosePlayerItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/items/menus/roleinventories/RoleChoosePlayerItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/listeners/NightListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/listeners/NightListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ancien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ancien.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ankou.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Ankou.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/listeners/DayListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/listeners/DayListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Assassin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Assassin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/BoucEmissaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/BoucEmissaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/BoucEmissaire.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Bouffon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Bouffon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Chaman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Chaman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChaperonRouge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChaperonRouge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Chasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Chasseur.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChevalierALEpeeRouillee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChevalierALEpeeRouillee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChienLoup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/ChienLoup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Comedien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Comedien.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Corbeau.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Corbeau.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Cupidon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Cupidon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Detective.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Detective.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Dictateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Dictateur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/DurACuire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/DurACuire.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/EnfantSauvage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/EnfantSauvage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/FilleDeJoie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/FilleDeJoie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Fossoyeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Fossoyeur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Frere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Frere.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/GardeDuCorps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/GardeDuCorps.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/HumainMaudit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/HumainMaudit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/IdiotDuVillage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/IdiotDuVillage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Jumeau.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Jumeau.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/LoupGarou.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/LoupGarou.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Macon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Macon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Necromancien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Necromancien.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Noctambule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Noctambule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pacifiste.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pacifiste.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PetiteFille.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PetiteFille.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pirate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pirate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PorteurDeLAmulette.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/PorteurDeLAmulette.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/President.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/President.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pretre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pretre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pronostiqueur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Pronostiqueur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Salvateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Salvateur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/SimpleVillageois.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/SimpleVillageois.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Soeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Soeur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Sorciere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Sorciere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Vampire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Vampire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/VilainGarcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/VilainGarcon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Voleur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Voleur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Voyante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/Voyante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/tasks/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/lg/tasks/GameRunnable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/DeathManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/DeathManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/LG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/listeners/NightListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/listeners/NightListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/GameRunnable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/LGAutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/LGAutoStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/NightRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/task/NightRunnable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
     </list>
-    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="finish placements and bed management">
+    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="workspace.xml">
       <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/spigot_1_8_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_8_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Les Loups-Garous de Thiercelieux.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Les Loups-Garous de Thiercelieux.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/plugin.yml" afterDir="false" />
-    </list>
-    <list id="a0ec65e2-62cc-4744-af65-783274d843c3" name="old bin" comment="old bin">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LG.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LG.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Anvil.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" beforeDir="false" />
@@ -153,34 +87,19 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$PROJECT_DIR$/../../Serv/spigot.jar!/org/bukkit/potion/PotionEffect.class" root0="SKIP_INSPECTION" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="2" end1="2" start2="2" end2="14" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="3" end1="9" start2="15" end2="26" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="11" end1="11" start2="28" end2="29" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="12" end1="16" start2="30" end2="97" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="17" end1="18" start2="98" end2="99" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="19" end1="21" start2="100" end2="136" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="38" end1="39" start2="153" end2="154" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="52" end1="60" start2="167" end2="192" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="63" end1="63" start2="195" end2="199" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="73" end1="74" start2="209" end2="209" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="75" end1="77" start2="210" end2="212" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="79" end1="80" start2="214" end2="216" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="83" end1="83" start2="219" end2="223" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="84" end1="88" start2="224" end2="224" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="98" end1="98" start2="234" end2="235" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="250" end1="251" start2="387" end2="486" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="266" end1="278" start2="501" end2="501" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="287" end1="304" start2="510" end2="527" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-      </ranges>
-    </file>
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/roles/RLoupGarouNoir.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/classes/LGGame.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/roles/RAnge.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/roles/Role.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/utils/VariableCache.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/roles/RSorciere.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/classes/LGPlayer.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar!/fr/leomelki/loupgarou/classes/chat/LGChat.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/Documents/Programmation privée/Java/Minecraft/spigot-1.8.8.jar!/org/bukkit/inventory/ItemStack.class" root0="SKIP_INSPECTION" />
   </component>
   <component name="NamedScopeManager">
     <scope name="Libraries" pattern="lib:fr.leomelki.*" />
+    <scope name="Refont" pattern="src:fr.neyuux.refont.lg..*" />
   </component>
   <component name="ProjectId" id="1hCBbxVkGi0SQmu8HWgKXe1Bw9Z" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -412,7 +331,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/fr/neyuux/refont/lg/roles/classes/EnfantSauvage.java</url>
-          <line>48</line>
+          <line>45</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

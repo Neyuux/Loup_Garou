@@ -24,11 +24,19 @@ public class ComedienInv extends AbstractCustomInventory {
 
     @Override
     public void registerItems() {
-        this.setItem(this.getSize() - 1, new CancelBarrierItemStack(() -> {
-            playerLG.getCache().put("unclosableInv", false);
-            playerLG.getPlayer().closeInventory();
-            playerLG.setSleep();
-            callback.run();
+        this.setItem(this.getSize() - 1, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
+            @Override
+            public String[] generateLore(PlayerLG paramPlayerLG) {
+                return new String[0];
+            }
+
+            @Override
+            public void doActionsAfterClick(PlayerLG choosenLG) {
+                playerLG.getCache().put("unclosableInv", false);
+                playerLG.getPlayer().closeInventory();
+                playerLG.setSleep();
+                callback.run();
+            }
         }));
 
         for (ComedianPowers power : comedian.getRemaningPowers())

@@ -1,11 +1,15 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -57,7 +61,21 @@ public class Ankou extends Role {
     }
 
 
-    //TODO onVote
+    @Override
+    public void onPlayerJoin(PlayerLG playerLG) {
+        playerLG.getCache().put("ankouVotes", 2);
+        super.onPlayerJoin(playerLG);
+    }
 
-    //TODO onDeath getCache().put("vote", null)
+    //TODO onVote
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        VoteLG vote = ev.getVote();
+
+        for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersByRole(this.getClass())) {
+            if ((int)playerLG.getCache().get("ankouVotes") > 0 && playerLG.isDead())
+                vote.getVoters().add(playerLG);
+        }
+
+    }
 }

@@ -56,5 +56,7 @@ public class ChevalierALEpeeRouillee extends Role {
         return "";
     }
 
+
+    //TODO onKillLGEvent kill next lg
     
 }

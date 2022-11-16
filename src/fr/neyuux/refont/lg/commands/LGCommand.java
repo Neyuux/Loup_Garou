@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.lg.roles.classes.Ankou;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -158,7 +159,31 @@ public class LGCommand implements CommandExecutor {
 
                 break;
 
-                case "ankou": //TODO ankouCommand
+                case "ankou":
+                    final String helpankoumessage = "§6La commande ankou permet de voter lorsque l'Ankou est mort.\nArgument possibles : \n" +
+                            "§a[joueur] §6: Joueur choisi\n" +
+                            "§creset §6: Permet de reset son vote";
+                    GameLG game = LG.getInstance().getGame();
+                    VoteLG vote = game.getVote();
+
+                    if (game.getGameState().equals(GameState.PLAYING)) {
+                        if (this.checkHuman(sender)) {
+                            PlayerLG playerLG = PlayerLG.createPlayerLG((HumanEntity) sender);
+
+                            if (playerLG.getRole() instanceof Ankou) {
+                                if (playerLG.isDead() && vote.getVoters().contains(playerLG)) {
+                                    if (args.length > 1) {
+                                        playerLG.callbackChoice(PlayerLG.createPlayerLG(Bukkit.getPlayer(args[1])));
+                                    } else
+                                        sender.sendMessage(LG.getPrefix() + helpankoumessage);
+                                } else
+                                    sender.sendMessage(LG.getPrefix() + "§cVous ne pouvez pas encore utiliser cette commande !");
+                            } else
+                                sender.sendMessage(LG.getPrefix() + "§cCe n'est pas votre rôle.");
+                        } else
+                            sender.sendMessage(LG.getPrefix() + "§cVous devez être un joueur pour effectuer cette commande.");
+                    } else
+                        sender.sendMessage(LG.getPrefix() + "§cLa partie n'est même pas commencée !");
                 break;
 
                 case "op":

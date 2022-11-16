@@ -25,11 +25,19 @@ public class InfectPereDesLoupsInv extends AbstractCustomInventory {
         this.setAllCorners((byte)14);
 
         this.setItem(11, new InfectPereDesLoupsInfectItemStack(callback, infectPereDesLoups.getLastTargetedByLG()));
-        this.setItem(15, new CancelBarrierItemStack(() -> {
-            playerLG.getCache().put("unclosableInv", false);
-            playerLG.getPlayer().closeInventory();
-            playerLG.setSleep();
-            callback.run();
+        this.setItem(15, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
+            @Override
+            public String[] generateLore(PlayerLG paramPlayerLG) {
+                return new String[0];
+            }
+
+            @Override
+            public void doActionsAfterClick(PlayerLG choosenLG) {
+                playerLG.getCache().put("unclosableInv", false);
+                playerLG.getPlayer().closeInventory();
+                playerLG.setSleep();
+                callback.run();
+            }
         }));
     }
 }

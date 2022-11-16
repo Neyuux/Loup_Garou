@@ -69,4 +69,6 @@ public class Ancien extends Role {
                 }
             }
     }
+
+    //TODO onKillEvent is Vote remove all powers
 }

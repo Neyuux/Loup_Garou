@@ -1,5 +1,7 @@
 package fr.neyuux.refont.lg.items.menus;
 
+import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -8,12 +10,12 @@ import org.bukkit.event.inventory.ClickType;
 
 public class CancelBarrierItemStack extends CustomItemStack {
 
-    private final Runnable callback;
+    private final ChoosePlayerInv.ActionsGenerator actionsGenerator;
 
-    public CancelBarrierItemStack(Runnable callback) {
+    public CancelBarrierItemStack(ChoosePlayerInv.ActionsGenerator actionsGenerator) {
         super(Material.BARRIER, 1, "§cAnnuler");
 
-        this.callback = callback;
+        this.actionsGenerator = actionsGenerator;
 
         this.setLore("§7Annule l'action", "§7en cours.");
 
@@ -22,6 +24,6 @@ public class CancelBarrierItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        callback.run();
+        actionsGenerator.doActionsAfterClick(PlayerLG.createPlayerLG(player));
     }
 }

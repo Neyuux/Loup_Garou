@@ -3,6 +3,7 @@ package fr.neyuux.refont.lg;
 import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.classes.Ankou;
+import fr.neyuux.refont.lg.roles.classes.Bouffon;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,18 +45,25 @@ public class VoteLG {
         this.votable = votable;
         this.voters = voters;
         this.observers = observers;
+        
+        this.observers.addAll(LG.getInstance().getGame().getSpectators());
     }
 
 
     public void start(Runnable callback) {
+        LG lg = LG.getInstance();
+        GameLG game = lg.getGame();
+
         this.callback = callback;
 
-        LG.getInstance().getGame().wait(timer, () -> this.end(false), timerMessage);
+        game.wait(timer, () -> this.end(false), timerMessage);
+        game.setVote(this);
 
         for (PlayerLG voterLG : voters) {
             voterLG.getCache().put("vote", null);
             voterLG.setChoosing(choosen -> this.vote(voterLG, choosen));
             voterLG.setArmorStand(null);
+            lg.getItemsManager().updateVoteItems(voterLG);
         }
 
         Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
@@ -113,25 +121,29 @@ public class VoteLG {
             } else
                 message.append("a annulé son vote.");
 
-            Bukkit.broadcastMessage(message.toString());
+            this.sendObserversMessage(message.toString());
         }
     }
 
     private void end(boolean cancel) {
         GameLG game = LG.getInstance().getGame();
-        int max = 0;
+        List<PlayerLG> killers = new ArrayList<>();
         List<PlayerLG> finalists = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
 
         for (PlayerLG playerLG : this.votable) {
             List<PlayerLG> playerVoters = this.getVotesFor(playerLG);
 
+            if (playerLG.getRole() instanceof Bouffon) playerLG.getCache().put("bouffonVoters", playerVoters);
+
             if (playerVoters.size() > 0) finalists.add(playerLG);
 
             playerLG.setArmorStand(null);
             for (PlayerLG voter : playerVoters)
-                if (voter.getRole() instanceof Ankou && voter.isDead())
-                    Bukkit.broadcastMessage(LG.getPrefix() + "§4L'" + voter.getRole().getDisplayName() + " §cavait voté pour §4" + playerLG.getName() + "§c.");
+                if (voter.getRole() instanceof Ankou && voter.isDead()) {
+                    this.sendObserversMessage(LG.getPrefix() + "§4L'" + voter.getRole().getDisplayName() + " §cavait voté pour §4" + playerLG.getName() + "§c.");
+                    voter.getCache().put("ankouVotes", (int)voter.getCache().get("ankouVotes") - 1);
+                }
         }
 
         while (finalists.size() <= 1) {
@@ -148,8 +160,8 @@ public class VoteLG {
                     break;
             }
 
-            if (i1 > max) max = i1;
-            if (i2 > max) max = i2;
+            if (i1 > killers.size()) killers = this.getVotesFor(finalists.get(0));
+            if (i2 > killers.size()) killers = this.getVotesFor(finalists.get(1));
         }
 
         if (this.getVotesFor(finalists.get(0)).isEmpty())
@@ -162,7 +174,7 @@ public class VoteLG {
 
         if (finalists.size() > 1) {
             if (cancel) {
-               Bukkit.broadcastMessage(LG.getPrefix() + "§cAucun vote n'a été enregistré pour un habitant. Il n'y aura donc aucune exécution.");
+               this.sendObserversMessage(LG.getPrefix() + "§cAucun vote n'a été enregistré pour un habitant. Il n'y aura donc aucune exécution.");
                this.callback.run();
                return;
             }
@@ -235,12 +247,13 @@ public class VoteLG {
         } else {
             PlayerLG eliminated = finalists.get(0);
 
-            builder.append(LG.getPrefix()).append("§eLe vote du village possède un résultat : §6").append(eliminated.getName()).append(" §ea obtenu le plus de votes(§6").append(max).append("§e). Il sera donc éliminé.");
+            builder.append(LG.getPrefix()).append(firstColor).append("Le vote possède un résultat : ").append(secondColor).append(eliminated.getName()).append(" ").append(firstColor).append("a obtenu le plus de votes(").append(secondColor).append(killers.size()).append(firstColor).append("). Il sera donc éliminé.");
             this.choosen = eliminated;
         }
         game.cancelWait();
-        Bukkit.broadcastMessage(builder.toString());
+        this.sendObserversMessage(builder.toString());
         this.callback.run();
+        game.setVote(null);
     }
 
 
@@ -291,5 +304,22 @@ public class VoteLG {
 
     public PlayerLG getChoosen() {
         return choosen;
+    }
+
+    public ChatColor getFirstColor() {
+        return firstColor;
+    }
+
+    public ChatColor getSecondColor() {
+        return secondColor;
+    }
+
+    public List<PlayerLG> getVotable() {
+        return votable;
+    }
+    
+    
+    private void sendObserversMessage(String message) {
+        this.observers.forEach(playerLG -> playerLG.sendMessage(message));
     }
 }

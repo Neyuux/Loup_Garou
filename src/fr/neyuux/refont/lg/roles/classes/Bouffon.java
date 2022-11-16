@@ -5,6 +5,7 @@ import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -177,5 +178,12 @@ public class Bouffon extends Role {
             }.runTaskLater(LG.getInstance(), 1L);
         }
     }
+
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        LG.getInstance().getGame().getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.getCache().put("bouffonVoters", new ArrayList<>()));
+    }
+
+    //TODO onKillEvent add NeedToPlay
 
 }

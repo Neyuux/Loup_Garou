@@ -45,6 +45,8 @@ public class GameLG implements Listener {
 
     private GameRunnable gameRunnable;
 
+    private VoteLG vote;
+
     private final ArrayList<Role> rolesAtStart = new ArrayList<>();
 
     private ArrayList<PlayerLG> waitedPlayers = new ArrayList<>();
@@ -480,6 +482,14 @@ public class GameLG implements Listener {
 
     public GameRunnable getGameRunnable() {
         return this.gameRunnable;
+    }
+
+    public VoteLG getVote() {
+        return this.vote;
+    }
+
+    public void setVote(VoteLG vote) {
+        this.vote = vote;
     }
 
     public String getPrefix() {

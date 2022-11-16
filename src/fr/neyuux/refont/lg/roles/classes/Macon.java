@@ -1,11 +1,12 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -56,5 +57,14 @@ public class Macon extends Role {
         return "";
     }
 
-    
+
+    @EventHandler
+    public void onNightEnd(NightEndEvent ev) {
+        StringBuilder builder = new StringBuilder(LG.getPrefix() + "§dListe des maçons encore en jeu : \n");
+        List<PlayerLG> macons = LG.getInstance().getGame().getPlayersByRole(this.getClass());
+
+        macons.forEach(playerLG -> builder.append("§5§l - §d§l").append(playerLG.getName()));
+
+        macons.forEach(playerLG -> playerLG.sendMessage(builder.toString()));
+    }
 }

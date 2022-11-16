@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -87,7 +88,6 @@ public abstract class AbstractCustomInventory {
     public Map<Integer, CustomItemStack> getItemsMap() {
         return itemsMap;
     }
-
 
     public void setCorner(byte color, int slot, byte direction) {
         CustomItemStack glass = new CustomItemStack(Material.STAINED_GLASS_PANE, 1, color);

@@ -5,18 +5,17 @@ import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
-public class RoleChoosePlayerItemStack extends CustomItemStack {
+public class ChoosePlayerItemStack extends CustomItemStack {
 
     private final ChoosePlayerInv.ActionsGenerator generator;
-    private final PlayerLG playerLG;
 
-    public RoleChoosePlayerItemStack(PlayerLG targetLG, PlayerLG playerLG, ChoosePlayerInv.ActionsGenerator generator) {
-        super(Material.SKULL_ITEM, 1, playerLG.getNameWithAttributes(targetLG));
+    public ChoosePlayerItemStack(PlayerLG receiverLG, PlayerLG playerLG, ChoosePlayerInv.ActionsGenerator generator) {
+        super(Material.SKULL_ITEM, 1, playerLG.getNameWithAttributes(receiverLG));
 
         this.generator = generator;
-        this.playerLG = playerLG;
 
         this.setDamage(3);
         this.setSkullOwner(playerLG.getName());
@@ -28,6 +27,6 @@ public class RoleChoosePlayerItemStack extends CustomItemStack {
     @Override
     public void use(HumanEntity player, Event event) {
         player.getOpenInventory().getTopInventory().remove(this);
-        generator.doActionsAfterClick(playerLG);
+        generator.doActionsAfterClick(PlayerLG.createPlayerLG(player));
     }
 }

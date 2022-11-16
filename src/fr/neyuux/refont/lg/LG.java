@@ -8,6 +8,7 @@ import fr.neyuux.refont.lg.listeners.PreGameListener;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -52,6 +53,52 @@ public class LG extends JavaPlugin {
         else return "§cNon";
     }
 
+    public static byte translateChatColorToByte(ChatColor chatColor) {
+        switch (chatColor) {
+            case BLACK:
+                return 15;
+
+            case DARK_BLUE:
+            case BLUE:
+                return 11;
+
+            case DARK_GREEN:
+                return 13;
+
+            case DARK_AQUA:
+                return 9;
+
+            case DARK_RED:
+            case RED:
+                return 14;
+
+            case DARK_PURPLE:
+                return 10;
+
+            case GOLD:
+                return 1;
+
+            case GRAY:
+                return 8;
+
+            case DARK_GRAY:
+                return 7;
+
+            case GREEN:
+                return 5;
+
+            case AQUA:
+                return 3;
+
+            case LIGHT_PURPLE:
+                return 6;
+
+            case YELLOW:
+                return 4;
+        }
+        return 0;
+    }
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -93,7 +140,6 @@ public class LG extends JavaPlugin {
             this.roles.put("Ange", Ange.class.getConstructor());
             this.roles.put("Ankou", Ankou.class.getConstructor());
             this.roles.put("Assassin", Assassin.class.getConstructor());
-            this.roles.put("BoucEmissaire", BoucEmissaire.class.getConstructor());
             this.roles.put("Bouffon", Bouffon.class.getConstructor());
             this.roles.put("Chaman", Chaman.class.getConstructor());
             this.roles.put("ChaperonRouge", ChaperonRouge.class.getConstructor());

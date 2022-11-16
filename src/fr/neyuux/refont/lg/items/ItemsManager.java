@@ -3,9 +3,11 @@ package fr.neyuux.refont.lg.items;
 import fr.neyuux.refont.lg.GameState;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
 import fr.neyuux.refont.lg.items.hotbar.JoinGameEnderBallItemStack;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.items.hotbar.SpectatorTearItemStack;
+import fr.neyuux.refont.lg.items.hotbar.VoteBookItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
@@ -21,7 +23,7 @@ public class ItemsManager {
     public void updateSpawnItems(PlayerLG playerLG) {
         PlayerInventory playerInv = playerLG.getPlayer().getInventory();
 
-        playerInv.clear();
+        this.clearInventory(playerLG);
         if (!playerLG.isSpectator() && LG.getInstance().getGame().getGameState().equals(GameState.WAITING)) {
             playerInv.setItem(1, new SpectatorTearItemStack());
             if (!playerLG.isInGame()) playerInv.setItem(5, new JoinGameEnderBallItemStack());
@@ -34,7 +36,7 @@ public class ItemsManager {
     public void updateStartItems(PlayerLG playerLG) {
         PlayerInventory playerInv = playerLG.getPlayer().getInventory();
 
-        playerInv.clear();
+        this.clearInventory(playerLG);
         /*if (playerLG.getRole() != null) {
             ItemStack it = null;
             ItemMeta itm = null;
@@ -64,6 +66,26 @@ public class ItemsManager {
             it.setItemMeta(itm);
             playerInv.setItem(4, it);
         }TODO*/
+    }
+
+    public void updateVoteItems(PlayerLG playerLG) {
+        VoteLG vote = LG.getInstance().getGame().getVote();
+
+        if (vote.getVoters().contains(playerLG)) {
+            playerLG.getPlayer().getInventory().setItem(2, new VoteBookItemStack(vote));
+        }
+    }
+
+    public void clearInventory(PlayerLG playerLG) {
+        PlayerInventory playerInventory = playerLG.getPlayer().getInventory();
+
+        playerInventory.clear();
+        playerInventory.setArmorContents(null);
+    }
+
+    public void clearAllInventories() {
+        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
+            this.clearInventory(playerLG);
     }
 
 }

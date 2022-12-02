@@ -35,8 +35,10 @@ public class VoteLG {
 
     private PlayerLG choosen;
 
+    private final String name;
 
-    public VoteLG(int timer, boolean randomIfEqual, GameLG.StringTimerMessage timerMessage, ChatColor firstColor, ChatColor secondColor, List<PlayerLG> votable, List<PlayerLG> voters, List<PlayerLG> observers) {
+
+    public VoteLG(String name, int timer, boolean randomIfEqual, GameLG.StringTimerMessage timerMessage, ChatColor firstColor, ChatColor secondColor, List<PlayerLG> votable, List<PlayerLG> voters, List<PlayerLG> observers) {
         this.timer = timer;
         this.randomIfEqual = randomIfEqual;
         this.timerMessage = timerMessage;
@@ -45,6 +47,7 @@ public class VoteLG {
         this.votable = votable;
         this.voters = voters;
         this.observers = observers;
+        this.name = name;
         
         this.observers.addAll(LG.getInstance().getGame().getSpectators());
     }
@@ -56,7 +59,7 @@ public class VoteLG {
 
         this.callback = callback;
 
-        game.wait(timer, () -> this.end(false), timerMessage);
+        game.wait(timer, () -> this.end(false), timerMessage, false);
         game.setVote(this);
 
         for (PlayerLG voterLG : voters) {
@@ -125,7 +128,7 @@ public class VoteLG {
         }
     }
 
-    private void end(boolean cancel) {
+    public void end(boolean cancel) {
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> killers = new ArrayList<>();
         List<PlayerLG> finalists = new ArrayList<>();
@@ -201,7 +204,7 @@ public class VoteLG {
                             mayor.getCache().put("unclosableInv", false);
                             mayor.getPlayer().closeInventory();
                             VoteLG.this.end(true);
-                        },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + "§6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."));
+                        },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + "§6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."), true);
 
                         mayor.setChoosing(choosen -> {
                             if (choosen != null)
@@ -231,7 +234,7 @@ public class VoteLG {
                     }
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
-                    VoteLG secondVote = new VoteLG(30, true, (playerLG, secondsLeft) -> {
+                    VoteLG secondVote = new VoteLG("Second vote du Village",30, true, (playerLG, secondsLeft) -> {
                         if (playerLG.getCache().has("vote"))
                             if (playerLG.getCache().get("vote") == null)
                                 return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
@@ -317,8 +320,15 @@ public class VoteLG {
     public List<PlayerLG> getVotable() {
         return votable;
     }
-    
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public Runnable getCallback() {
+        return callback;
+    }
+
     private void sendObserversMessage(String message) {
         this.observers.forEach(playerLG -> playerLG.sendMessage(message));
     }

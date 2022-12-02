@@ -69,10 +69,13 @@ public class LoupGarouBlanc extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> choosable = game.getLGs();
+
+        choosable.remove(playerLG);
 
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
-                if (choosen != null && choosen != playerLG) {
+                if (choosable.contains(choosen) && choosen != null && choosen != playerLG) {
                     devour(choosen, playerLG);
 
                     super.onPlayerTurnFinish(playerLG);
@@ -81,10 +84,6 @@ public class LoupGarouBlanc extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            List<PlayerLG> choosable = game.getLGs();
-
-            choosable.remove(playerLG);
-
             new ChoosePlayerInv(this.getDisplayName(), playerLG, choosable, new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override

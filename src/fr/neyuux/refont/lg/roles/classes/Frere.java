@@ -143,7 +143,7 @@ public class Frere extends Role {
 
         if (players.isEmpty()) {
             if (!game.isThiefRole(this)) callback.run();
-            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }
 
@@ -160,12 +160,12 @@ public class Frere extends Role {
                 listeningBrothers.clear();
                 super.onNightTurn(callback);
 
-            }, (currentPlayerLG, secondsLeft) -> (listeningBrothers.contains(currentPlayerLG)) ? "§3§lTu discutes avec tes frères..." : "§9§lAu tour " + this.getDeterminingName());
+            }, (currentPlayerLG, secondsLeft) -> (listeningBrothers.contains(currentPlayerLG)) ? "§3§lTu discutes avec tes frères..." : "§9§lAu tour " + this.getDeterminingName(), true);
 
             listeningBrothers.forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + this.getActionMessage()));
 
         } else {
-            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
         }
     }
 

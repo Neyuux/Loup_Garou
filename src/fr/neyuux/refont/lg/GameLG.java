@@ -43,6 +43,8 @@ public class GameLG implements Listener {
 
     private BukkitTask waitTask;
 
+    private Runnable waitCallback;
+
     private GameRunnable gameRunnable;
 
     private VoteLG vote;
@@ -294,27 +296,36 @@ public class GameLG implements Listener {
         return null;
     }
 
-    public void wait(final int seconds, final Runnable callback, final StringTimerMessage actionBarMessage) {
-        cancelWait();
-        this.waitTicks = seconds * 20;
-        this.waitTask = (new BukkitRunnable() {
+    public void wait(final int seconds, final Runnable callback, final StringTimerMessage actionBarMessage, boolean cancelOthers) {
+        final int[] waitTicks = {seconds * 20};
+        BukkitRunnable waitRunnable = (new BukkitRunnable() {
             public void run() {
                 for (PlayerLG playerLG : playersInGame) {
                     Player player = playerLG.getPlayer();
 
                     player.setLevel(Math.floorDiv(GameLG.this.waitTicks, 20) + 1);
                     player.setExp(GameLG.this.waitTicks / (seconds * 20.0F));
-                    playerLG.sendActionBar(actionBarMessage.generate(playerLG, Math.floorDiv(GameLG.this.waitTicks, 20) + 1));
+                    playerLG.sendActionBar(actionBarMessage.generate(playerLG, Math.floorDiv(waitTicks[0], 20) + 1));
                 }
 
-                if (GameLG.this.waitTicks == 0) {
+                if (waitTicks[0] == 0) {
                     GameLG.this.waitTask = null;
                     cancel();
                     callback.run();
                 }
-                GameLG.this.waitTicks--;
+                waitTicks[0]--;
             }
-        }).runTaskTimer(LG.getInstance(), 0L, 1L);
+        });
+
+        if (cancelOthers) cancelWait();
+
+        this.waitCallback = callback;
+        this.waitTicks = seconds * 20;
+        this.waitTask = waitRunnable.runTaskTimer(LG.getInstance(), 0L, 1L);
+    }
+
+    public Runnable getWaitCallback() {
+        return waitCallback;
     }
 
     public void cancelWait() {

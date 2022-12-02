@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class DayListener implements Listener {
 
     @EventHandler
-    public void onCloseAssassinInv(InventoryCloseEvent ev) {
+    public void onCloseMaireInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
         HumanEntity player = ev.getPlayer();
 

@@ -75,7 +75,7 @@ public class Chaman extends Role {
 
         if (players.isEmpty()) {
             if (!game.isThiefRole(this)) callback.run();
-            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }
 
@@ -92,12 +92,12 @@ public class Chaman extends Role {
                 listeningChamans.clear();
                 super.onNightTurn(callback);
 
-            }, (currentPlayerLG, secondsLeft) -> (listeningChamans.contains(currentPlayerLG)) ? "§a§lTu écoutes les morts..." : "§9§lAu tour " + this.getDeterminingName());
+            }, (currentPlayerLG, secondsLeft) -> (listeningChamans.contains(currentPlayerLG)) ? "§a§lTu écoutes les morts..." : "§9§lAu tour " + this.getDeterminingName(), true);
 
             listeningChamans.forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + this.getActionMessage()));
 
         } else {
-            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName());
+            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
         }
     }
 

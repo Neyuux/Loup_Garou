@@ -18,7 +18,7 @@ public class VoteBookItemStack extends CustomItemStack {
 
         this.vote = vote;
 
-        this.setDisplayName(vote.getFirstColor() + "Voter");
+        this.setDisplayName(vote.getFirstColor() + vote.getName());
         this.setLore("§7>>Cliquer pour ouvrir l'inventaire de vote");
 
         addItemInList(this);

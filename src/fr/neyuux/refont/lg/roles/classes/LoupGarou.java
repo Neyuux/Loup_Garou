@@ -77,7 +77,7 @@ public class LoupGarou extends Role {
                 playerLG.setWake();
             }
 
-        VoteLG lgvote = new VoteLG(50, true, (paramPlayerLG, secondsLeft) -> {
+        VoteLG lgvote = new VoteLG("Vote des Loups", 50, true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))
                 if (paramPlayerLG.getCache().get("vote") == null)
                     return LG.getPrefix() + "§cVous ne votez pour §4§lpersonne§c.";

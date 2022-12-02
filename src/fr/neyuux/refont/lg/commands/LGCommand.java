@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class LGCommand implements CommandExecutor {
 
@@ -33,6 +34,7 @@ public class LGCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         String helpMessage = "§fAide pour la commande §c"+alias+"§f :§r\n§c/"+alias+" spec §a<on/off/add/remove/list/clear>\n§c/"+alias+" compo" +
                 "\n§c/"+alias+" ankou §a[joueur]\n§c/" + alias + " op §a<add/remove/list>\n§c/"+alias+ " players §a<list/add/remove>";
+        GameLG game = LG.getInstance().getGame();
 
         if (args.length > 0) {
             switch(args[0].toLowerCase()) {
@@ -163,7 +165,6 @@ public class LGCommand implements CommandExecutor {
                     final String helpankoumessage = "§6La commande ankou permet de voter lorsque l'Ankou est mort.\nArgument possibles : \n" +
                             "§a[joueur] §6: Joueur choisi\n" +
                             "§creset §6: Permet de reset son vote";
-                    GameLG game = LG.getInstance().getGame();
                     VoteLG vote = game.getVote();
 
                     if (game.getGameState().equals(GameState.PLAYING)) {
@@ -356,6 +357,16 @@ public class LGCommand implements CommandExecutor {
                             sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour ajouter des emplacements !");
                             GameLG.playNegativeSound(playerLG.getPlayer());
                         }
+                    }
+                break;
+                case "alive":
+                    if (game.getGameState().equals(GameState.PLAYING)) {
+                        List<String> list = new ArrayList<>();
+                        game.getAlive().forEach(playerLG -> list.add(playerLG.getName()));
+
+                        list.sort(String.CASE_INSENSITIVE_ORDER);
+
+                        sender.sendMessage(list.stream().map(s -> "§6§l- §6" + s + "\n").collect(Collectors.joining("", LG.getPrefix() + "§eListe des joueurs encore vie : \n", "")));
                     }
                 break;
 

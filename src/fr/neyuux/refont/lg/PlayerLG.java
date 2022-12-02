@@ -11,9 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -199,6 +197,62 @@ public class PlayerLG {
         return name;
     }
 
+    public List<PlayerLG> get2NearbyPlayers(boolean addself) {
+        List<PlayerLG> nearbys = new ArrayList<>();
+
+        if (game.getGameType().equals(GameType.FREE)) {
+            List<String> list = new ArrayList<>();
+            game.getAlive().forEach(playerLG -> list.add(playerLG.getName()));
+
+            list.sort(String.CASE_INSENSITIVE_ORDER);
+
+            if (addself) nearbys.add(1, this);
+
+            int j = list.lastIndexOf(this.getName());
+
+            if (j - 1 > -1)
+                nearbys.add(0, PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(j - 1))));
+            else
+                nearbys.add(0, PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(list.size() - 1))));
+
+            PlayerLG playerLG;
+            if (j + 1 < list.size())
+                playerLG = PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(j + 1)));
+            else
+                playerLG = PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(0)));
+
+            if (!nearbys.contains(playerLG))
+                nearbys.add(2, playerLG);
+
+        } else if (game.getGameType().equals(GameType.MEETING)) {
+            PlayerLG closest1 = this.getClosestPlayer(game.getAliveExcept(this));
+
+            nearbys.add(0, closest1);
+
+            PlayerLG closest2 = this.getClosestPlayer(game.getAliveExcept(nearbys.get(0), this));
+            if (closest2 != null && !nearbys.contains(closest2))
+                nearbys.add(2, closest2);
+        }
+
+        return nearbys;
+    }
+
+    public PlayerLG getClosestPlayer(List<PlayerLG> choosable) {
+        PlayerLG result = null;
+        double lastDistance = Double.MAX_VALUE;
+        for(PlayerLG plg : choosable) {
+            Player p = plg.getPlayer();
+
+            double distance = this.getPlayer().getLocation().distanceSquared(p.getLocation());
+            if(distance < lastDistance) {
+                lastDistance = distance;
+                result = plg;
+            }
+        }
+
+        return result;
+    }
+
     public void createScoreboard() {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Scoreboard main = Bukkit.getScoreboardManager().getMainScoreboard();
@@ -338,6 +392,8 @@ public class PlayerLG {
     }
 
     public void setCanUsePowers(boolean canUsePowers) {
+        if (this.cache.has("noctambuleCantUsePower") && !canUsePowers)
+            this.cache.remove("noctambuleCantUsePower");
         this.canUsePowers = canUsePowers;
     }
 

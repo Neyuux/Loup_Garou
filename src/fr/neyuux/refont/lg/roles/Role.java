@@ -31,7 +31,7 @@ public abstract class Role implements Listener {
 
         if (players.isEmpty()) {
             if (!game.isThiefRole(this)) callback.run();
-            else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName());
+            else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
             return;
         }
 
@@ -45,13 +45,13 @@ public abstract class Role implements Listener {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Role.this.getDeterminingName());
+            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Role.this.getDeterminingName(), true);
 
             playerLG.sendMessage(LG.getPrefix() + Role.this.getActionMessage());
             Role.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
 
         } else {
-            LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName());
+            LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
         }
     }
 

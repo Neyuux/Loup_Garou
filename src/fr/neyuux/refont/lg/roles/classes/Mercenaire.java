@@ -1,13 +1,17 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.DayStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
+import java.util.Random;
 
 public class Mercenaire extends Role {
 
@@ -57,6 +61,20 @@ public class Mercenaire extends Role {
     }
 
     
+    @EventHandler
+    public void onDayStart(DayStartEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> choosable = game.getAlive();
 
-    //check if player is aleardy targeted by another mercenaire
+        for (PlayerLG playerLG : game.getPlayersByRole(this.getClass())) {
+            PlayerLG targetLG = choosable.get(new Random().nextInt(choosable.size()));
+
+            choosable.remove(targetLG);
+            playerLG.sendTitle("§c§l" + targetLG.getNameWithAttributes(playerLG), "§c§lest votre cible pour ce vote !", 10, 50, 10);
+            playerLG.sendMessage(LG.getPrefix() + "§5§l" + targetLG.getNameWithAttributes(playerLG) + "§c est votre §5§lCible §cpour ce tour ! Convainquez les autres de le voter pour gagner la partie.");
+            targetLG.getCache().put("mercenaireTarget", playerLG);
+        }
+    }
+
+    //TODO onTargetDeath Victory
 }

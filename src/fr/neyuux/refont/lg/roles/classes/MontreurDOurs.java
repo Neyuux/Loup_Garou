@@ -1,13 +1,18 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
-import java.util.List;
+import java.util.logging.Level;
+
 
 public class MontreurDOurs extends Role {
 
@@ -57,5 +62,18 @@ public class MontreurDOurs extends Role {
     }
 
     
+    @EventHandler
+    public void onNightEnd(NightEndEvent ev) {
+        for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersByRole(this.getClass())) {
+            for (PlayerLG nearLG : playerLG.get2NearbyPlayers(true))
+                if (nearLG.isLG()) {
+                    Bukkit.broadcastMessage(LG.getPrefix() + "§6GRRRRRRRRRRRRRRRRRR !");
 
+                    for (Player player : Bukkit.getOnlinePlayers())
+                        player.playSound(player.getLocation(), Sound.WOLF_GROWL, 7f, 1.1f);
+
+                    Bukkit.getLogger().log(Level.INFO, "Montreur " + playerLG.getName() + " growl " + nearLG.getName());
+                }
+        }
+    }
 }

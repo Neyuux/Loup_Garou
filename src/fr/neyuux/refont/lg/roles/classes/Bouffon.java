@@ -91,7 +91,7 @@ public class Bouffon extends Role {
         game.wait(this.getTimeout(), () -> {
             this.onPlayerTurnFinish(playerLG);
             this.onNightTurn(callback);
-         }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "§9§lAu tour " + this.getDeterminingName());
+         }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : "§9§lAu tour " + this.getDeterminingName(), true);
 
         playerLG.sendMessage("" + this.getActionMessage());
         this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));

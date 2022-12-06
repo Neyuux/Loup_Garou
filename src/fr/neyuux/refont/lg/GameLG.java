@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.config.GameConfig;
+import fr.neyuux.refont.lg.event.ResetEvent;
 import fr.neyuux.refont.lg.event.TryStartGameEvent;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
@@ -336,6 +337,8 @@ public class GameLG implements Listener {
     }
 
     public void resetGame() {
+        Bukkit.getPluginManager().callEvent(new ResetEvent());
+
         this.setGameState(GameState.WAITING);
         this.setGameType(GameType.NONE);
         this.setDayCycle(DayCycle.NONE);

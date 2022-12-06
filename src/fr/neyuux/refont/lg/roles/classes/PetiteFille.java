@@ -1,13 +1,13 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.DayCycle;
 import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import org.bukkit.entity.Player;
-
-import java.util.List;
+import org.bukkit.event.EventHandler;
 
 public class PetiteFille extends Role {
 
@@ -56,5 +56,12 @@ public class PetiteFille extends Role {
         return "";
     }
 
-    
+
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+
+        if (game.getDayCycle().equals(DayCycle.NIGHT))
+            LoupGarou.CHAT.addSpies(game.getPlayersByRole(this.getClass()));
+    }
 }

@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoupGarou extends Role {
+
+    public static final ChatLG CHAT = new ChatLG("§c", ChatColor.RED, null);
 
     @Override
     public String getDisplayName() {
@@ -77,6 +80,8 @@ public class LoupGarou extends Role {
                 playerLG.setWake();
             }
 
+        CHAT.openChat(new ArrayList<>(), voters);
+
         VoteLG lgvote = new VoteLG("Vote des Loups", 50, true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))
                 if (paramPlayerLG.getCache().get("vote") == null)
@@ -89,6 +94,8 @@ public class LoupGarou extends Role {
 
         lgvote.start(() -> {
             eliminate(lgvote.getChoosen());
+
+            CHAT.closeChat();
 
             for (PlayerLG lg : game.getLGs()) {
                 lg.getPlayer().closeInventory();

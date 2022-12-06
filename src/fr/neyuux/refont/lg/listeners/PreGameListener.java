@@ -1,8 +1,11 @@
 package fr.neyuux.refont.lg.listeners;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.ResetEvent;
 import fr.neyuux.refont.lg.event.TryStartGameEvent;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
+import fr.neyuux.refont.lg.roles.classes.Cupidon;
+import fr.neyuux.refont.lg.roles.classes.LoupGarou;
 import fr.neyuux.refont.lg.tasks.LGStart;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import fr.neyuux.refont.old.lg.Gcycle;
@@ -67,6 +70,12 @@ public class PreGameListener implements Listener {
         if (PlayerLG.getPlayersMap().containsKey(player) && (LG.getInstance().getGame().getGameState().equals(GameState.WAITING) || LG.getInstance().getGame().getGameState().equals(GameState.STARTING))) {
             PlayerLG.removePlayerLG(player);
         }
+    }
+
+    @EventHandler
+    public void onReset(ResetEvent ev) {
+        LoupGarou.CHAT.closeChat();
+        Cupidon.CHAT.closeChat();
     }
 
     @EventHandler

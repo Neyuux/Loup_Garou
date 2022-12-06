@@ -102,14 +102,14 @@ public class Necromancien extends Role {
 
                 if (choosableLG.isDead() && choosableLG.isSpectator() && !choosableLG.getCamp().equals(Camps.VILLAGE)) {
                     Location loc = choosableLG.getLocation();
-                    CraftWorld cworld = (CraftWorld)loc.getWorld();
+                    WorldServer cworld = ((CraftWorld)loc.getWorld()).getHandle();
                     GameProfile gameProfile = new GameProfile(choosable.getUniqueId(), choosable.getName());
                     String[] properties = getTextures(choosable.getName());
 
                     //noinspection ConstantConditions
                     gameProfile.getProperties().put("textures", new Property("textures", properties[0], properties[1]));
 
-                    EntityPlayer fakePlayer = new EntityPlayer(MinecraftServer.getServer(), cworld.getHandle(), gameProfile, new PlayerInteractManager(cworld.getHandle()));
+                    EntityPlayer fakePlayer = new EntityPlayer(MinecraftServer.getServer(), cworld, gameProfile, new PlayerInteractManager(cworld));
 
                     loc = loc.setDirection(playerLG.getLocation().subtract(loc).toVector());
                     fakePlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());

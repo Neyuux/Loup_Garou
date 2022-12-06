@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -8,6 +9,7 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.utils.CacheLG;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -15,7 +17,12 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Cupidon extends Role {
+
+    public static final ChatLG CHAT = new ChatLG("§9\u2764 ", ChatColor.LIGHT_PURPLE, '!');
 
     @Override
     public String getDisplayName() {
@@ -132,6 +139,8 @@ public class Cupidon extends Role {
             choosen.getCache().put("couple", choosen2);
             choosen2.getCache().put("couple", choosen);
 
+            CHAT.openChat(new ArrayList<>(), Arrays.asList(choosen, choosen2));
+
             choosen.sendMessage(LG.getPrefix() + "§dVous recevez soudainement une flèche, elle vous transperce. Regardant au loin, vous apercevez §5" + choosen2.getName() + " §d, vous vous effondrez de joie et remerciez " + this.getDisplayName() + " §dpour avoir fait ce choix. §r\n§dVous êtes amoureux de §5" + choosen2.getName() + " §d, vous devez gagner ensemble et si l'un d'entre-vous meurt, il emporte l'autre avec un chagrin d'amour...");
             choosen.sendMessage(LG.getPrefix() + "§9Utilisez §e! §9pour lui parler de manière privée.");
             choosen2.sendMessage(LG.getPrefix() + "§dVous recevez soudainement une flèche, elle vous transperce. Regardant au loin, vous apercevez §5" + choosen.getName() + " §d, vous vous effondrez de joie et remerciez " + this.getDisplayName() + " §dpour avoir fait ce choix. §r\n§dVous êtes amoureux de §5" + choosen.getName() + " §d, vous devez gagner ensemble et si l'un d'entre-vous meurt, il emporte l'autre avec un chagrin d'amour...");
@@ -175,18 +184,5 @@ public class Cupidon extends Role {
         }
     }
 
-    @EventHandler
-    public void onCoupleChat(AsyncPlayerChatEvent ev) {
-        GameLG game = LG.getInstance().getGame();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(ev.getPlayer());
-        CacheLG playerCache = playerLG.getCache();
-        if (game.getGameState().equals(GameState.PLAYING) && ev.getMessage().startsWith("!") && playerCache.has("couple")) {
-            PlayerLG coupleLG = ((PlayerLG)playerCache.get("couple"));
-
-            ev.setCancelled(true);
-            playerLG.sendMessage("§d§lCouple §5" + playerLG.getName() + "§7» §d");
-            coupleLG.sendMessage("§d§lCouple §5" + playerLG.getNameWithAttributes(coupleLG) + "§7» §d");
-        }
-    }
     //TODO onDeath
 }

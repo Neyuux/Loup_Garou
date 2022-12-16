@@ -8,6 +8,8 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.ClickType;
 
+import java.util.Arrays;
+
 public class CancelBarrierItemStack extends CustomItemStack {
 
     private final ChoosePlayerInv.ActionsGenerator actionsGenerator;
@@ -18,6 +20,9 @@ public class CancelBarrierItemStack extends CustomItemStack {
         this.actionsGenerator = actionsGenerator;
 
         this.setLore("§7Annule l'action", "§7en cours.");
+
+        if (!Arrays.equals(actionsGenerator.generateLore(null), new String[0]))
+            this.setLore(actionsGenerator.generateLore(null));
 
         addItemInList(this);
     }

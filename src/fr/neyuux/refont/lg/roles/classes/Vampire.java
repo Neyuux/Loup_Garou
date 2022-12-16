@@ -1,10 +1,25 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
+import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
+import fr.neyuux.refont.lg.chat.ChatLG;
+import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import fr.neyuux.refont.old.lg.role.RCamp;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vampire extends Role {
+
+    private final static ChatLG CHAT = new ChatLG("§6", ChatColor.RED, null);
 
     @Override
     public String getDisplayName() {
@@ -51,5 +66,62 @@ public class Vampire extends Role {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour voter pour choisir qui mordre.";
     }
 
-    
+
+    @Override
+    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> voters = new ArrayList<>();
+
+        for (PlayerLG vampire : game.getPlayersByRole(this.getClass()))
+            if (vampire.canUsePowers()) {
+                voters.add(vampire);
+                playerLG.setWake();
+            }
+
+        CHAT.openChat(new ArrayList<>(), voters);
+
+        VoteLG lgvote = new VoteLG("Vote des Vampires", this.getTimeout(), true, (paramPlayerLG, secondsLeft) -> {
+            if (paramPlayerLG.getCache().has("vote"))
+                if (paramPlayerLG.getCache().get("vote") == null)
+                    return LG.getPrefix() + "§5Vous ne votez pour §4§lpersonne§c.";
+                else
+                    return LG.getPrefix() + "§5Vous votez pour §4§l" + ((PlayerLG)paramPlayerLG.getCache().get("vote")).getName() + "§5.";
+
+            return null;
+        }, ChatColor.RED, ChatColor.DARK_PURPLE, game.getAlive(), voters, voters);
+
+        lgvote.start(() -> {
+            eliminate(lgvote.getChoosen());
+
+            CHAT.closeChat();
+
+            for (PlayerLG lg : game.getPlayersByRole(this.getClass())) {
+                lg.getPlayer().closeInventory();
+                lg.setSleep();
+            }
+            callback.run();
+        });
+    }
+
+    private void eliminate(PlayerLG choosen) {
+        if (choosen == null) return;
+
+        GameLG game = LG.getInstance().getGame();
+        RoleChoiceEvent roleChoiceEvent = new RoleChoiceEvent(this, choosen);
+
+        Bukkit.getPluginManager().callEvent(roleChoiceEvent);
+        if (roleChoiceEvent.isCancelled()) return;
+
+        game.getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§5Vous avez mordu §4" + choosen.getNameWithAttributes(playerLG) + "§5."));
+
+        if (game.getNight() % 2 == 0) game.kill(choosen);
+        else {
+            game.getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §d a rejoint le camp des Vampires !"));
+            choosen.getCache().put("vampireInfected", choosen.getRole());
+            choosen.joinRole(new Vampire());
+            choosen.setCamp(Camps.VAMPIRE);
+            choosen.sendMessage(LG.getPrefix() + "§5Vous avez été infecté par un vampire ! Vous devenez l'un d'entre eux et perdez vos pouvoirs.");
+            choosen.getPlayer().playSound(choosen.getLocation(), Sound.ENDERDRAGON_WINGS, 8f, 1.6f);
+        }
+    }
 }

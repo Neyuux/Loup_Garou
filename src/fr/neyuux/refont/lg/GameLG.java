@@ -79,7 +79,7 @@ public class GameLG implements Listener {
                 if (this.getPlayersByRole(role).contains(playerLG))
                     playerLG.sendMessage(msg);
             else if (role.equals(LoupGarou.class))
-                for (PlayerLG lg : this.getLGs())
+                for (PlayerLG lg : this.getLGs(true))
                     lg.sendMessage(msg);
             } else playerLG.sendMessage(msg);
         }
@@ -107,10 +107,12 @@ public class GameLG implements Listener {
         return alive;
     }
 
-    public List<PlayerLG> getLGs() {
+    public List<PlayerLG> getLGs(boolean alive) {
         ArrayList<PlayerLG> lgs = new ArrayList<>();
+        ArrayList<PlayerLG> addable = (ArrayList<PlayerLG>) this.playersInGame.clone();
+        if (alive) addable = this.getAlive();
 
-        for (PlayerLG playerLG : this.playersInGame)
+        for (PlayerLG playerLG : addable)
             if (playerLG.getCamp().equals(Camps.LOUP_GAROU)
                 || playerLG.getRole().getClass().equals(LoupGarouBlanc.class))
                 lgs.add(playerLG);
@@ -301,12 +303,15 @@ public class GameLG implements Listener {
         final int[] waitTicks = {seconds * 20};
         BukkitRunnable waitRunnable = (new BukkitRunnable() {
             public void run() {
+                int secondsLeft = Math.floorDiv(waitTicks[0], 20) + 1;
+
                 for (PlayerLG playerLG : playersInGame) {
                     Player player = playerLG.getPlayer();
+                    String barString = actionBarMessage.generate(playerLG, secondsLeft);
 
-                    player.setLevel(Math.floorDiv(GameLG.this.waitTicks, 20) + 1);
-                    player.setExp(GameLG.this.waitTicks / (seconds * 20.0F));
-                    playerLG.sendActionBar(actionBarMessage.generate(playerLG, Math.floorDiv(waitTicks[0], 20) + 1));
+                    player.setLevel(secondsLeft);
+                    player.setExp(waitTicks[0] / (seconds * 20.0F));
+                    if (barString != null) playerLG.sendActionBar(barString);
                 }
 
                 if (waitTicks[0] == 0) {
@@ -393,7 +398,7 @@ public class GameLG implements Listener {
     public ArrayList<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
         ArrayList<PlayerLG> players = new ArrayList<>();
 
-        for (PlayerLG playerLG : this.playersInGame)
+        for (PlayerLG playerLG : this.getAlive())
             if (playerLG.getRole() != null && playerLG.getRole().getClass().equals(classRole)) {
                 players.add(playerLG);
             }

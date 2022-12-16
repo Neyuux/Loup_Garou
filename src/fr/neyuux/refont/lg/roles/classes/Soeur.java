@@ -3,18 +3,24 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.ChatColor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Soeur extends Role {
+
+    public static final ChatLG CHAT = new ChatLG("§d", ChatColor.LIGHT_PURPLE, null);
+
 
     private PlayerLG sister;
 
@@ -118,8 +124,47 @@ public class Soeur extends Role {
                     newsister.setRole(newRole);
                 }
             }
-
-
         }
+    }
+
+    @Override
+    public void onNightTurn(Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> players = game.getPlayersByRole(this.getClass());
+
+        game.cancelWait();
+
+        if (players.isEmpty()) {
+            if (!game.isThiefRole(this)) callback.run();
+            else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
+            return;
+        }
+
+        PlayerLG sisterLG1 = players.remove(0);
+        PlayerLG[] sisters = new PlayerLG[]{sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()};
+        List<PlayerLG> playableSisters = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
+
+        players.remove(sisters[1]);
+
+        if (playableSisters.isEmpty()) {
+            game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
+            return;
+        }
+
+        CHAT.openChat(playableSisters, playableSisters);
+
+        for (PlayerLG sisterLG : sisters) {
+            if (sisterLG.canUsePowers()) {
+                sisterLG.setWake();
+                sisterLG.sendMessage(LG.getPrefix() + this.getActionMessage());
+            }
+        }
+
+        game.wait(this.getTimeout(), () -> {
+            playableSisters.forEach(super::onPlayerTurnFinish);
+            CHAT.closeChat();
+            this.onNightTurn(callback);
+
+        }, (currentPlayer, secondsLeft) -> (playableSisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
     }
 }

@@ -55,7 +55,7 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
 
             ((InfectPereDesLoups)playerLG.getRole()).setLastTargetedByLG(null);
 
-            LG.getInstance().getGame().getLGs().forEach(PlayerLG::updateGamePlayerScoreboard);
+            LG.getInstance().getGame().getLGs(false).forEach(PlayerLG::updateGamePlayerScoreboard);
         }
 
         playerLG.getCache().put("unclosableInv", false);

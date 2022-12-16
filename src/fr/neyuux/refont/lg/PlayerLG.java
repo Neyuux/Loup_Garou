@@ -354,7 +354,7 @@ public class PlayerLG {
     }
 
     public boolean isLG () {
-        return this.game.getLGs().contains(this);
+        return this.game.getLGs(false).contains(this);
     }
 
     public void joinCamp(Camps camp) {
@@ -383,8 +383,14 @@ public class PlayerLG {
         return isMayor;
     }
 
-    public void setMayor(boolean mayor) {
-        isMayor = mayor;
+    public void setMayor() {
+        this.isMayor = true;
+        game.setMayor(this);
+    }
+
+    public void removeMayor() {
+        this.isMayor = false;
+        if (game.getMayor().equals(this)) game.setMayor(null);
     }
 
     public boolean canUsePowers() {
@@ -414,7 +420,7 @@ public class PlayerLG {
     }
 
     public void setArmorStand(ArmorStand armorStand) {
-        if (armorStand == null) this.armorStand.remove();
+        if (armorStand == null && this.armorStand != null && !this.armorStand.isDead()) this.armorStand.remove();
 
         this.armorStand = armorStand;
         new BukkitRunnable() {
@@ -427,7 +433,7 @@ public class PlayerLG {
                 //noinspection ConstantConditions
                 armorStand.teleport(PlayerLG.this.getPlayer().getEyeLocation());
             }
-        }.runTaskTimer(LG.getInstance(), 1L, 1L);
+        }.runTaskTimer(LG.getInstance(), 2L, 1L);
     }
 
 

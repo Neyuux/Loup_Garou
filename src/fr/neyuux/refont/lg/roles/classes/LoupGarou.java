@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.chat.ChatLG;
+import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -22,6 +23,7 @@ import java.util.List;
 public class LoupGarou extends Role {
 
     public static final ChatLG CHAT = new ChatLG("§c", ChatColor.RED, null);
+    private static PlayerLG lastTargetedByLG;
 
     @Override
     public String getDisplayName() {
@@ -60,7 +62,7 @@ public class LoupGarou extends Role {
 
     @Override
     public int getTimeout() {
-        return 35;
+        return 50;
     }
 
     @Override
@@ -74,7 +76,7 @@ public class LoupGarou extends Role {
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> voters = new ArrayList<>();
 
-        for (PlayerLG lg : game.getLGs())
+        for (PlayerLG lg : game.getLGs(true))
             if (lg.canUsePowers()) {
                 voters.add(lg);
                 playerLG.setWake();
@@ -82,7 +84,7 @@ public class LoupGarou extends Role {
 
         CHAT.openChat(new ArrayList<>(), voters);
 
-        VoteLG lgvote = new VoteLG("Vote des Loups", 50, true, (paramPlayerLG, secondsLeft) -> {
+        VoteLG lgvote = new VoteLG("Vote des Loups", this.getTimeout(), true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))
                 if (paramPlayerLG.getCache().get("vote") == null)
                     return LG.getPrefix() + "§cVous ne votez pour §4§lpersonne§c.";
@@ -97,7 +99,7 @@ public class LoupGarou extends Role {
 
             CHAT.closeChat();
 
-            for (PlayerLG lg : game.getLGs()) {
+            for (PlayerLG lg : game.getLGs(true)) {
                 lg.getPlayer().closeInventory();
                 lg.setSleep();
             }
@@ -115,7 +117,23 @@ public class LoupGarou extends Role {
         if (roleChoiceEvent.isCancelled()) return;
 
         game.kill(choosen);
+        setLastTargetedByLG(choosen);
 
-        game.getLGs().forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cVous avez dévoré §4" + choosen.getNameWithAttributes(playerLG) + "§c."));
+        game.getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cVous avez dévoré §4" + choosen.getNameWithAttributes(playerLG) + "§c."));
+    }
+
+
+    @EventHandler
+    public void onEndNight(NightEndEvent ev) {
+        lastTargetedByLG = null;
+    }
+
+
+    public static PlayerLG getLastTargetedByLG() {
+        return lastTargetedByLG;
+    }
+
+    public static void setLastTargetedByLG(PlayerLG newlasttarget) {
+        lastTargetedByLG = newlasttarget;
     }
 }

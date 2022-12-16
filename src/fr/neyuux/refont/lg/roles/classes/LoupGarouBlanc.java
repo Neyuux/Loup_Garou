@@ -69,7 +69,7 @@ public class LoupGarouBlanc extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> choosable = game.getLGs();
+        List<PlayerLG> choosable = game.getLGs(true);
 
         choosable.remove(playerLG);
 
@@ -100,7 +100,7 @@ public class LoupGarouBlanc extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }

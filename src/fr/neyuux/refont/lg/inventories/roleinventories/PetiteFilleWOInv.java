@@ -2,17 +2,19 @@ package fr.neyuux.refont.lg.inventories.roleinventories;
 
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.items.menus.CancelBarrierItemStack;
-import fr.neyuux.refont.lg.items.menus.roleinventories.InfectPereDesLoupsInfectItemStack;
-import fr.neyuux.refont.lg.roles.classes.LoupGarou;
+import fr.neyuux.refont.lg.items.menus.roleinventories.DictateurDoRebellionItemStack;
+import fr.neyuux.refont.lg.items.menus.roleinventories.PetiteFilleWOInspectionItemStack;
+import fr.neyuux.refont.lg.roles.classes.Dictateur;
+import fr.neyuux.refont.lg.roles.classes.PetiteFilleWO;
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
-public class InfectPereDesLoupsInv extends AbstractCustomInventory {
+public class PetiteFilleWOInv extends AbstractCustomInventory {
 
     private final Runnable callback;
     private final PlayerLG playerLG;
 
-    public InfectPereDesLoupsInv(fr.neyuux.refont.lg.roles.classes.InfectPereDesLoups infectPereDesLoups, PlayerLG playerLG, Runnable callback) {
-        super(infectPereDesLoups.getDisplayName(), 27);
+    public PetiteFilleWOInv(PetiteFilleWO petiteFilleWO, PlayerLG playerLG, Runnable callback) {
+        super(petiteFilleWO.getDisplayName(), 27);
 
         this.callback = callback;
         this.playerLG = playerLG;
@@ -22,7 +24,7 @@ public class InfectPereDesLoupsInv extends AbstractCustomInventory {
     public void registerItems() {
         this.setAllCorners((byte)14);
 
-        this.setItem(11, new InfectPereDesLoupsInfectItemStack(callback, LoupGarou.getLastTargetedByLG()));
+        this.setItem(11, new PetiteFilleWOInspectionItemStack(callback));
         this.setItem(15, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {

@@ -2,11 +2,13 @@ package fr.neyuux.refont.lg.items.menus.roleinventories;
 
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
+import fr.neyuux.refont.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.Inventory;
 
 public class ChoosePlayerItemStack extends CustomItemStack {
 
@@ -26,7 +28,9 @@ public class ChoosePlayerItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        player.getOpenInventory().getTopInventory().remove(this);
+        Inventory chooseInv = player.getOpenInventory().getTopInventory();
+        chooseInv.remove(this);
+        chooseInv.setItem(chooseInv.getSize() - 1, new CancelBarrierItemStack(generator));
         generator.doActionsAfterClick(PlayerLG.createPlayerLG(player));
     }
 }

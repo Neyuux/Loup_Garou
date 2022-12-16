@@ -95,7 +95,7 @@ public class EnfantSauvage extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }
@@ -135,4 +135,6 @@ public class EnfantSauvage extends Role {
             }.runTaskLater(LG.getInstance(), 1L);
         }
     }
+
+    //TODO onDeath
 }

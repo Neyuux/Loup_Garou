@@ -5,18 +5,31 @@ import fr.neyuux.refont.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
-import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.Inventory;
 
 public class ReturnArrowItemStack extends CustomItemStack {
 
     private final AbstractCustomInventory previousInv;
+    private final Inventory inv;
 
     public ReturnArrowItemStack(AbstractCustomInventory previousInv) {
         super(Material.ARROW, 1, "§cRetour");
 
         this.previousInv = previousInv;
+        this.inv = null;
 
         this.setLore("§7Revenir au menu", "§7précédent. §0(" + previousInv.getID() + "§0)");
+
+        addItemInList(this);
+    }
+
+    public ReturnArrowItemStack(Inventory previousInv) {
+        super(Material.ARROW, 1, "§cRetour");
+
+        this.inv = previousInv;
+        this.previousInv = null;
+
+        this.setLore("§7Revenir au menu", "§7précédent.");
 
         addItemInList(this);
     }
@@ -24,6 +37,7 @@ public class ReturnArrowItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        this.previousInv.open(player);
+        if (inv == null) this.previousInv.open(player);
+        else player.openInventory(this.inv);
     }
 }

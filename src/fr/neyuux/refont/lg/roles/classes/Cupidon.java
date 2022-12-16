@@ -90,7 +90,7 @@ public class Cupidon extends Role {
                 @Override
                 public void run() {
                     playerLG.setChoosing(choosen -> {
-                        if (choosen != null && choosen != playerLG) {
+                        if (choosen != null) {
 
                             if (couple(choosen, playerLG)) {
 

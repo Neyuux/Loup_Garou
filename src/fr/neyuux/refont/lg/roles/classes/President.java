@@ -8,6 +8,7 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.List;
 
@@ -58,7 +59,6 @@ public class President extends Role {
         return "";
     }
 
-    
 
 
     @Override
@@ -67,5 +67,16 @@ public class President extends Role {
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + " §ade la partie est §e§l" + playerLG.getName());
         LG.setPlayerInScoreboardTeam("RPresident", playerLG.getPlayer());
+
+        if (LG.getInstance().getGame().getConfig().getMayor().getValue().equals(true)) {
+            playerLG.setMayor();
+            Bukkit.broadcastMessage("§a§l" + playerLG.getName() + " §best désormais maire du village !");
+        }
     }
+
+    /*TODO
+        onDeath
+            kill all villagers
+     */
+
 }

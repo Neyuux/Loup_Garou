@@ -6,6 +6,8 @@ softdepend: [NeyGin_Core]
 commands:
   lg:
     description: Commande plugin LG
+#  ankou:
+#    description: commande de l'ankou
 #  end:
 #    description: Redemarre la map
 #    permission: end.use

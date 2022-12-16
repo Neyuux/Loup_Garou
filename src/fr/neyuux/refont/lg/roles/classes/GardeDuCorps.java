@@ -95,7 +95,7 @@ public class GardeDuCorps extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }

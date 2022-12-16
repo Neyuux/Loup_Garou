@@ -74,7 +74,7 @@ public class Pacifiste extends Role {
 
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
-                if (choosen != null && choosen != playerLG) {
+                if (choosen != null) {
                     reveal(choosen, playerLG);
 
                     super.onPlayerTurnFinish(playerLG);
@@ -83,7 +83,7 @@ public class Pacifiste extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -99,7 +99,7 @@ public class Pacifiste extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }

@@ -66,15 +66,9 @@ public class JoueurDeFlute extends Role {
         return "§fVous avez §5" + this.getTimeout()+ " secondes §fpour choisir qui vous voulez enchanter.";
     }
 
-
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> nonEnchanted = new ArrayList<>();
-
-        for (PlayerLG aliveLG : game.getAlive())
-            if (!aliveLG.getCache().has("enchanted") && !(aliveLG.getRole() instanceof JoueurDeFlute))
-                nonEnchanted.add(aliveLG);
 
         if (game.getGameType().equals(GameType.MEETING)) {
             new Runnable() {
@@ -94,7 +88,7 @@ public class JoueurDeFlute extends Role {
             }.run();
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, nonEnchanted, new ChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, this.getNonEnchantedPlayers(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -159,5 +153,16 @@ public class JoueurDeFlute extends Role {
                 }
             }.runTaskLater(LG.getInstance(), 1L);
         }
+    }
+
+
+    private List<PlayerLG> getNonEnchantedPlayers() {
+        List<PlayerLG> nonEnchanted = new ArrayList<>();
+
+        for (PlayerLG aliveLG : LG.getInstance().getGame().getAlive())
+            if (!aliveLG.getCache().has("enchanted") && !(aliveLG.getRole() instanceof JoueurDeFlute))
+                nonEnchanted.add(aliveLG);
+
+        return nonEnchanted;
     }
 }

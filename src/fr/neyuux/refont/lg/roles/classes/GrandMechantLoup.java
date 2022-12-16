@@ -79,7 +79,7 @@ public class GrandMechantLoup extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(game.getLGs().toArray(new PlayerLG[0])), new ChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(game.getLGs(true).toArray(new PlayerLG[0])), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -95,7 +95,7 @@ public class GrandMechantLoup extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }

@@ -5,6 +5,8 @@ import fr.neyuux.refont.old.lg.Gcycle;
 import fr.neyuux.refont.old.lg.Gstate;
 import fr.neyuux.refont.old.lg.Gtype;
 import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutBed;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -23,9 +25,11 @@ public class NightListener implements Listener {
         if (playerLG.isSleeping()) {
             Location loc = playerLG.getPlacement();
 
-            player.teleport(loc);
-            ((CraftPlayer) player).getHandle().a(new BlockPosition(loc.getX(), loc.getY(), loc.getZ()));
-            player.setSleepingIgnored(false);
+            BlockPosition bp = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
+            EntityPlayer ePlayer = ((CraftPlayer) player).getHandle();
+            PacketPlayOutBed packet = new PacketPlayOutBed(ePlayer, bp);
+
+            ePlayer.playerConnection.sendPacket(packet);
         }
 
     }

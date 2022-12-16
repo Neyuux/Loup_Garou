@@ -2,18 +2,20 @@ package fr.neyuux.refont.lg.inventories.roleinventories;
 
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.items.menus.CancelBarrierItemStack;
-import fr.neyuux.refont.lg.items.menus.roleinventories.InfectPereDesLoupsInfectItemStack;
-import fr.neyuux.refont.lg.roles.classes.LoupGarou;
+import fr.neyuux.refont.lg.items.menus.roleinventories.PyromaneKillItemStack;
+import fr.neyuux.refont.lg.items.menus.roleinventories.PyromanePutOilItemStack;
+import fr.neyuux.refont.lg.roles.classes.Pyromane;
 import fr.neyuux.refont.lg.utils.AbstractCustomInventory;
 
-public class InfectPereDesLoupsInv extends AbstractCustomInventory {
+public class PyromaneInv extends AbstractCustomInventory {
 
+    private final Pyromane pyromane;
     private final Runnable callback;
     private final PlayerLG playerLG;
 
-    public InfectPereDesLoupsInv(fr.neyuux.refont.lg.roles.classes.InfectPereDesLoups infectPereDesLoups, PlayerLG playerLG, Runnable callback) {
-        super(infectPereDesLoups.getDisplayName(), 27);
-
+    public PyromaneInv(Pyromane pyromane, PlayerLG playerLG, Runnable callback) {
+        super(pyromane.getDisplayName(), 27);
+        this.pyromane = pyromane;
         this.callback = callback;
         this.playerLG = playerLG;
     }
@@ -22,7 +24,8 @@ public class InfectPereDesLoupsInv extends AbstractCustomInventory {
     public void registerItems() {
         this.setAllCorners((byte)14);
 
-        this.setItem(11, new InfectPereDesLoupsInfectItemStack(callback, LoupGarou.getLastTargetedByLG()));
+        this.setItem(11, new PyromanePutOilItemStack(pyromane, callback, this));
+        this.setItem(13, new PyromaneKillItemStack(pyromane, callback));
         this.setItem(15, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {

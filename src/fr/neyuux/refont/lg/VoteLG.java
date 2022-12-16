@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.event.VoteEndEvent;
 import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.classes.Ankou;
@@ -177,6 +178,8 @@ public class VoteLG {
 
         if (finalists.size() > 1) {
             if (cancel) {
+                this.choosen = null;
+                Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
                this.sendObserversMessage(LG.getPrefix() + "§cAucun vote n'a été enregistré pour un habitant. Il n'y aura donc aucune exécution.");
                this.callback.run();
                return;
@@ -244,7 +247,14 @@ public class VoteLG {
                         return null;
                     }, firstColor, secondColor, finalists, VoteLG.this.voters, this.observers);
 
-                    secondVote.start(() -> VoteLG.this.choosen = this.getChoosen());
+                    secondVote.start(() -> {
+                        VoteLG.this.choosen = this.getChoosen();
+                        Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
+                        game.cancelWait();
+                        this.callback.run();
+                        game.setVote(null);
+                    });
+                    return;
                 }
             }
         } else {
@@ -253,6 +263,8 @@ public class VoteLG {
             builder.append(LG.getPrefix()).append(firstColor).append("Le vote possède un résultat : ").append(secondColor).append(eliminated.getName()).append(" ").append(firstColor).append("a obtenu le plus de votes(").append(secondColor).append(killers.size()).append(firstColor).append("). Il sera donc éliminé.");
             this.choosen = eliminated;
         }
+
+        Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
         game.cancelWait();
         this.sendObserversMessage(builder.toString());
         this.callback.run();
@@ -327,6 +339,10 @@ public class VoteLG {
 
     public Runnable getCallback() {
         return callback;
+    }
+
+    public void setCallback(Runnable callback) {
+        this.callback = callback;
     }
 
     private void sendObserversMessage(String message) {

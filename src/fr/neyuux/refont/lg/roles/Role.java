@@ -45,7 +45,7 @@ public abstract class Role implements Listener {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Role.this.getDeterminingName(), true);
+            }, (currentPlayer, secondsLeft) -> (game.getVote() == null) ? (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Role.this.getDeterminingName() : null, true);
 
             playerLG.sendMessage(LG.getPrefix() + Role.this.getActionMessage());
             Role.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));

@@ -71,7 +71,7 @@ public class Corbeau extends Role {
 
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
-                if (choosen != null && choosen != playerLG) {
+                if (choosen != null) {
                     visit(choosen, playerLG);
 
                     super.onPlayerTurnFinish(playerLG);
@@ -96,7 +96,7 @@ public class Corbeau extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }

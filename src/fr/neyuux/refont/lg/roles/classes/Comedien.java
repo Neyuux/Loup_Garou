@@ -12,6 +12,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 

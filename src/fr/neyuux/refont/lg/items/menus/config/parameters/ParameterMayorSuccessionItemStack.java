@@ -30,8 +30,8 @@ public class ParameterMayorSuccessionItemStack extends CustomItemStack {
         int slot = CustomItemStack.getSlot(inv, this);
 
         mayorSuccessionParameter.setValue(MayorSuccession.getNext(((MayorSuccession)mayorSuccessionParameter.getValue()).getId()));
-        this.setLoreLine(4, "§bValeur : " + mayorSuccessionParameter.getVisibleValue());
-        this.setLoreLine(5, ((MayorSuccession)mayorSuccessionParameter.getValue()).getDescription());
+        this.setLoreLine(2, "§bValeur : " + mayorSuccessionParameter.getVisibleValue());
+        this.setLoreLine(3, ((MayorSuccession)mayorSuccessionParameter.getValue()).getDescription());
 
         inv.setItem(slot, this);
     }

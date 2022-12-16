@@ -153,7 +153,8 @@ public class LGCommand implements CommandExecutor {
                             sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
 
                             for (Role role : LG.getInstance().getGame().getAliveRoles())
-                                sender.sendMessage("  " + camp.getColor() + "§l- " + role.getDisplayName());
+                                if (role.getBaseCamp().equals(camp))
+                                    sender.sendMessage("  " + camp.getColor() + "§l- " + role.getDisplayName());
 
                             sender.sendMessage(" ");
                         }
@@ -368,6 +369,15 @@ public class LGCommand implements CommandExecutor {
 
                         sender.sendMessage(list.stream().map(s -> "§6§l- §6" + s + "\n").collect(Collectors.joining("", LG.getPrefix() + "§eListe des joueurs encore vie : \n", "")));
                     }
+                break;
+                case "end":
+                case "reset":
+                case "stop":
+                    if (sender.isOp()) {
+                        Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §ea reset le jeu !");
+                        game.resetGame();
+                    } else
+                        sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour effectuer cette commande.");
                 break;
 
                 default:

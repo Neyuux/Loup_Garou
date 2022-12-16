@@ -16,8 +16,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class InfectPereDesLoups extends Role {
 
-    private PlayerLG lastTargetedByLG;
-
     @Override
     public String getDisplayName() {
         return "§2§lInfect Père §c§ldes Loups";
@@ -91,25 +89,5 @@ public class InfectPereDesLoups extends Role {
                 }
             }.runTaskLater(LG.getInstance(), 1L);
         }
-    }
-
-    @EventHandler
-    public void onChoiceLG(RoleChoiceEvent ev) {
-        if (ev.getRole() instanceof LoupGarou)
-            this.lastTargetedByLG = ev.getChoosen();
-    }
-
-    @EventHandler
-    public void onEndNight(NightEndEvent ev) {
-        this.lastTargetedByLG = null;
-    }
-
-
-    public PlayerLG getLastTargetedByLG() {
-        return this.lastTargetedByLG;
-    }
-
-    public void setLastTargetedByLG(PlayerLG lastTargetedByLG) {
-        this.lastTargetedByLG = lastTargetedByLG;
     }
 }

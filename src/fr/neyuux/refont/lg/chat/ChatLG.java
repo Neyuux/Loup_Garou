@@ -44,6 +44,7 @@ public class ChatLG implements Listener {
     public void onChat(AsyncPlayerChatEvent ev) {
         String msg = ev.getMessage();
 
+        ev.setCancelled(true);
         if (this.textCode == null || this.textCode.compareTo(msg.charAt(0)) == 0) {
             this.actors.forEach(actorLG -> actorLG.sendMessage(namePrefix + PlayerLG.createPlayerLG(ev.getPlayer()).getNameWithAttributes(actorLG) + " §8§l» " + textColor + msg.substring(1).trim()));
             this.spies.forEach(spyLG -> spyLG.sendMessage(namePrefix + "§kZIZITOUDUR" + " §8§l» " + textColor + msg.substring(1).trim()));

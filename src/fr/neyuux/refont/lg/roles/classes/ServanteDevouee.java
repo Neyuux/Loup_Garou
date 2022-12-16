@@ -1,13 +1,15 @@
 package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.GameLG;
+import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
+import fr.neyuux.refont.lg.event.VoteEndEvent;
+import fr.neyuux.refont.lg.inventories.roleinventories.ServanteDevoueeInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import org.bukkit.entity.Player;
-
-import java.util.List;
+import org.bukkit.event.EventHandler;
 
 public class ServanteDevouee extends Role {
 
@@ -28,7 +30,7 @@ public class ServanteDevouee extends Role {
 
     @Override
     public int getMaxNumber() {
-        return -1;
+        return 1;
     }
 
     @Override
@@ -56,5 +58,25 @@ public class ServanteDevouee extends Role {
         return "§fVous avez §d" + this.getTimeout() + " secondes§f pour choisir de prendre le rôle du joueur mort.";
     }
 
-    
+
+    @EventHandler
+    public void onVoteEnd(VoteEndEvent ev) {
+        PlayerLG choosen = ev.getChoosen();
+        PlayerLG servante;
+        VoteLG vote = ev.getVote();
+        GameLG game = LG.getInstance().getGame();
+
+        if (game.getPlayersByRole(this.getClass()).isEmpty()) return;
+        else servante = game.getPlayersByRole(this.getClass()).get(0);
+
+        if (vote.getName().equals("Vote du Village") && choosen != null && !choosen.getRole().getClass().equals(this.getClass()) && servante.canUsePowers()) {
+            vote.setCallback(() -> {
+                new ServanteDevoueeInv(this, servante, choosen, vote.getCallback()).open(servante.getPlayer());
+                game.wait(35, () -> {
+                    servante.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps.");
+                    vote.getCallback().run();
+                }, ((param1LGPlayer, secondsLeft) -> LG.getPrefix() + "§fAu tour " + this.getDeterminingName()), true);
+            });
+        }
+    }
 }

@@ -95,7 +95,7 @@ public class FilleDeJoie extends Role {
                     playerLG.setSleep();
                     callback.run();
                 }
-            });
+            }).open(playerLG.getPlayer());
             playerLG.getCache().put("unclosableInv", true);
         }
     }
@@ -112,7 +112,7 @@ public class FilleDeJoie extends Role {
         playerLG.sendMessage(LG.getPrefix() + "§dTu baises §e" + choosen.getNameWithAttributes(playerLG) + "§d ce soir.");
         GameLG.playPositiveSound(playerLG.getPlayer());
 
-        if (LG.getInstance().getGame().getLGs().contains(choosen)) {
+        if (LG.getInstance().getGame().getLGs(true).contains(choosen)) {
             playerLG.sendMessage(LG.getPrefix() + "§cEn allant chez lui, tu t'aperçois qu'il est Loup-Garou. Vous ne survivrez pas cette nuit");
             choosen.sendMessage(LG.getPrefix() + "§dTu découvres §e" + playerLG.getNameWithAttributes(choosen) + "§d qui s'introduit chez toi pour passer du bon temps. Tu décides donc de le tuer.");
         }
@@ -154,7 +154,7 @@ public class FilleDeJoie extends Role {
                     }
                 } else if (fdjLG.getCache().has("filleDeJoieInHomeOf") && fdjLG.getCache().get("filleDeJoieInHomeOf").equals(choosenLG)) {
                     LG.getInstance().getGame().kill(fdjLG);
-                    game.getLGs().forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§dEn vous rendant chez §e" + choosenLG.getName() + "§d, vous découvrez " + fdjLG.getNameWithAttributes(playerLG) + "§d à poil. Vous la tuez donc au passage."));
+                    game.getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§dEn vous rendant chez §e" + choosenLG.getName() + "§d, vous découvrez " + fdjLG.getNameWithAttributes(playerLG) + "§d à poil. Vous la tuez donc au passage."));
                 }
     }
 }

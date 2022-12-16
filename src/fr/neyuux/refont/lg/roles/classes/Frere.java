@@ -3,10 +3,12 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -14,13 +16,17 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Frere extends Role {
 
     private final List<PlayerLG> brothers = new ArrayList<>();
     private final List<PlayerLG> listeningBrothers = new ArrayList<>();
+
+    public static final ChatLG CHAT = new ChatLG("§d", ChatColor.DARK_AQUA, null);
 
 
     @Override
@@ -147,39 +153,31 @@ public class Frere extends Role {
             return;
         }
 
-        for (PlayerLG brotherLG : players)
-            if (brotherLG.canUsePowers())
-                listeningBrothers.add(brotherLG);
+        PlayerLG sisterLG1 = players.remove(0);
+        PlayerLG[] sisters = new PlayerLG[]{sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()};
+        List<PlayerLG> playableSisters = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
 
-        if (!listeningBrothers.isEmpty()) {
+        players.remove(sisters[1]);
 
-            listeningBrothers.forEach(PlayerLG::setWake);
-
-            game.wait(this.getTimeout(), () -> {
-                listeningBrothers.forEach(PlayerLG::setSleep);
-                listeningBrothers.clear();
-                super.onNightTurn(callback);
-
-            }, (currentPlayerLG, secondsLeft) -> (listeningBrothers.contains(currentPlayerLG)) ? "§3§lTu discutes avec tes frères..." : "§9§lAu tour " + this.getDeterminingName(), true);
-
-            listeningBrothers.forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + this.getActionMessage()));
-
-        } else {
-            LG.getInstance().getGame().wait(this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
+        if (playableSisters.isEmpty()) {
+            game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
+            return;
         }
-    }
 
-    @EventHandler
-    public void onFrereChat(AsyncPlayerChatEvent ev) {
-        if (!listeningBrothers.isEmpty()) {
-            PlayerLG senderLG = PlayerLG.createPlayerLG(ev.getPlayer());
-            if (listeningBrothers.contains(senderLG)) {
-                Frere senderRole = (Frere) senderLG.getRole();
-                ev.getRecipients().clear();
-                senderRole.getBrothers().forEach(playerLG -> ev.getRecipients().add(playerLG.getPlayer()));
-                ev.getRecipients().add(senderLG.getPlayer());
-                ev.setFormat(this.getDisplayName() +" §d" + senderLG.getName() + " §8» §f" + ev.getMessage());
+        CHAT.openChat(playableSisters, playableSisters);
+
+        for (PlayerLG sisterLG : sisters) {
+            if (sisterLG.canUsePowers()) {
+                sisterLG.setWake();
+                sisterLG.sendMessage(LG.getPrefix() + this.getActionMessage());
             }
         }
+
+        game.wait(this.getTimeout(), () -> {
+            playableSisters.forEach(super::onPlayerTurnFinish);
+            CHAT.closeChat();
+            this.onNightTurn(callback);
+
+        }, (currentPlayer, secondsLeft) -> (playableSisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
     }
 }

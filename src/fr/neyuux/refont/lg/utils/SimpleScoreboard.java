@@ -12,11 +12,11 @@ import org.bukkit.scoreboard.Team;
 import java.util.*;
 
 public class SimpleScoreboard {
-    private Scoreboard scoreboard;
-    private Objective obj;
+    private final Scoreboard scoreboard;
+    private final Objective obj;
 
-    private Map<Integer, NameData> scoreMap = new HashMap<>();
-    private Map<String, Integer> nameMap = new HashMap<>();
+    private final Map<Integer, NameData> scoreMap = new HashMap<>();
+    private final Map<String, Integer> nameMap = new HashMap<>();
 
     public SimpleScoreboard(String title, Player player) {
     	if (title.equals("§c§lLoups§e§l-§6§lGarous")) {

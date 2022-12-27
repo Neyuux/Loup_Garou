@@ -1,9 +1,11 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.DayCycle;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.event.NightEndEvent;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -65,5 +67,17 @@ public class DurACuire extends Role {
         for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
             if (playerLG.getCache().has("durACuire"))
                 playerLG.getCache().put("durACuire", (int)playerLG.getCache().get("durACuire") - 1);
+    }
+
+    @EventHandler
+    public void onElimination(PlayerEliminationEvent ev) {
+        PlayerLG playerLG = ev.getEliminated();
+
+        if (LG.getInstance().getGame().getDayCycle().equals(DayCycle.NIGHT)) {
+            if (playerLG.getRole() instanceof DurACuire) {
+                if (!playerLG.getCache().has("durACuire")) playerLG.getCache().put("durACuire", 2);
+                if ((int)playerLG.getCache().get("durACuire") != 0) ev.setCancelled(true);
+            }
+        }
     }
 }

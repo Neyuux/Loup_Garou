@@ -1,5 +1,6 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
@@ -8,8 +9,8 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
@@ -107,6 +108,10 @@ public class PlayerLG {
             this.getPlayer().showPlayer(p);
     }
 
+    public boolean canSee(PlayerLG playerLG) {
+        return this.getPlayer().canSee(playerLG.getPlayer());
+    }
+
     public String getName() {
         if (this.human != null)
             return this.human.getName();
@@ -201,14 +206,11 @@ public class PlayerLG {
         List<PlayerLG> nearbys = new ArrayList<>();
 
         if (game.getGameType().equals(GameType.FREE)) {
-            List<String> list = new ArrayList<>();
-            game.getAlive().forEach(playerLG -> list.add(playerLG.getName()));
-
-            list.sort(String.CASE_INSENSITIVE_ORDER);
+            List<String> list = game.getAliveAlphabecticlySorted();
 
             if (addself) nearbys.add(1, this);
 
-            int j = list.lastIndexOf(this.getName());
+            int j = list.indexOf(this.getName());
 
             if (j - 1 > -1)
                 nearbys.add(0, PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(j - 1))));
@@ -251,6 +253,27 @@ public class PlayerLG {
         }
 
         return result;
+    }
+
+    public PlayerLG getPlayerOnCursor(List<PlayerLG> choosable) {
+        Location loc = this.getPlayer().getLocation();
+
+        if (loc.getPitch() > 60F && choosable.contains(this))
+            return this;
+
+        for (int i = 0; i < 50; i++) {
+
+            loc.add(loc.getDirection());
+
+            for (PlayerLG playerLG : choosable) {
+
+                if (playerLG != this && !playerLG.isDead() &&
+                        this.canSee(playerLG) &&
+                        LG.distanceSquaredXZ(loc, playerLG.getLocation()) < 0.35D && Math.abs(loc.getY() - playerLG.getLocation().getY()) < 2.0D)
+                    return playerLG;
+            }
+        }
+        return null;
     }
 
     public void createScoreboard() {
@@ -310,6 +333,31 @@ public class PlayerLG {
             player.showPlayer(playerLG.getPlayer());
     }
 
+    public void eliminate() {
+        PlayerEliminationEvent event = new PlayerEliminationEvent(this);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) return;
+
+        this.isDead = true;
+
+        game.getSpectators().add(this);
+        this.getPlayer().setGameMode(GameMode.SPECTATOR);
+        this.getPlayer().setPlayerListName("§8[§7Spectateur§8] §7" + this.getName());
+        this.getPlayer().setDisplayName(this.getPlayer().getPlayerListName());
+
+        game.getAliveRoles().remove(this.getRole());
+        //TODO updateScoreboard
+
+        this.showAllPlayers();
+
+        Bukkit.broadcastMessage(LG.getPrefix() + "§6Le village a perdu un de ses membres : §e" + this.getName() + "§6 est §nmort§6. Il était " + this.getRole().getDisplayName() + "§6.");
+        this.sendMessage(LG.getPrefix() + "§9Le jeu a déjà démarré !");
+        this.sendMessage(LG.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
+
+        //TODO checkwin
+    }
+
     public void setChoosing(CallbackChoice callback) {
         this.callbackChoice = callback;
     }
@@ -320,6 +368,10 @@ public class PlayerLG {
 
     public void callbackChoice(PlayerLG playerLG) {
         this.callbackChoice.callback(playerLG);
+    }
+
+    public boolean isChoosing(){
+        return this.callbackChoice != null;
     }
 
     public Player getPlayer() {

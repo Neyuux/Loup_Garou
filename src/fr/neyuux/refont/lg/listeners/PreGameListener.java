@@ -4,8 +4,7 @@ import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.ResetEvent;
 import fr.neyuux.refont.lg.event.TryStartGameEvent;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
-import fr.neyuux.refont.lg.roles.classes.Cupidon;
-import fr.neyuux.refont.lg.roles.classes.LoupGarou;
+import fr.neyuux.refont.lg.roles.classes.*;
 import fr.neyuux.refont.lg.tasks.LGStart;
 import fr.neyuux.refont.lg.utils.CustomItemStack;
 import fr.neyuux.refont.old.lg.Gcycle;
@@ -76,6 +75,10 @@ public class PreGameListener implements Listener {
     public void onReset(ResetEvent ev) {
         LoupGarou.CHAT.closeChat();
         Cupidon.CHAT.closeChat();
+        Soeur.CHAT.closeChat();
+        Frere.CHAT.closeChat();
+        Bouffon.NEED_TO_PLAY.clear();
+        Chasseur.NEED_TO_PLAY.clear();
     }
 
     @EventHandler

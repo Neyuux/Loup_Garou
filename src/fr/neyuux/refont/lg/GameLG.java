@@ -34,9 +34,9 @@ public class GameLG implements Listener {
 
     private DayCycle dayCycle = DayCycle.NONE;
 
-    private int day = 1;
+    private int day = 0;
 
-    private int night = 1;
+    private int night = 0;
 
     private PlayerLG mayor;
     
@@ -105,6 +105,15 @@ public class GameLG implements Listener {
         ArrayList<PlayerLG> alive = this.getAlive();
         alive.removeAll(Arrays.asList(playersLG));
         return alive;
+    }
+
+    public List<String> getAliveAlphabecticlySorted() {
+        List<String> list = new ArrayList<>();
+        this.getAlive().forEach(playerLG -> list.add(playerLG.getName()));
+
+        list.sort(String.CASE_INSENSITIVE_ORDER);
+
+        return list;
     }
 
     public List<PlayerLG> getLGs(boolean alive) {
@@ -407,12 +416,6 @@ public class GameLG implements Listener {
     }
 
     public void kill(PlayerLG playerLG) {
-
-        if (playerLG.getRole() instanceof DurACuire) {
-            if (!playerLG.getCache().has("durACuire")) playerLG.getCache().put("durACuire", 2);
-            if ((int)playerLG.getCache().get("durACuire") != 0) return;
-        }
-
         if (playerLG.getRole() instanceof ChaperonRouge)
             for (PlayerLG chasseurLG : this.getPlayersByRole(Chasseur.class)) {
                 chasseurLG.sendMessage(LG.getPrefix() + "§aVous avez protégé le §c§lChaperon §e" + playerLG.getNameWithAttributes(chasseurLG) + "§a.");

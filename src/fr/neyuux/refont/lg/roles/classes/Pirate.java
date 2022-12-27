@@ -1,10 +1,8 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameType;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.event.VoteEndEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -138,5 +136,16 @@ public class Pirate extends Role {
         }
     }
 
-    //TODO onEventDeath check pirateHostage
+    @EventHandler
+    public void onVoteEnd(VoteEndEvent ev) {
+        VoteLG vote = ev.getVote();
+        PlayerLG choosen = vote.getChoosen();
+
+        if (vote.getName().equals("Vote du Village") && choosen.getRole() instanceof Pirate && choosen.getCache().has("pirateHostage")) {
+            PlayerLG hostage = (PlayerLG) choosen.getCache().get("pirateHostage");
+
+            vote.setChoosen(hostage);
+            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + this.getDisplayName() + " §e§l" + choosen.getName() + " §6possédait §c§l" + hostage.getName() + " §6en otage. Ce dernier sera donc pendy à la place du Pirate.");
+        }
+    }
 }

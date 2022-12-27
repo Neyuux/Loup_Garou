@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -15,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 public class EnfantSauvage extends Role {
 
@@ -61,6 +64,55 @@ public class EnfantSauvage extends Role {
     @Override
     public String getActionMessage() {
         return "§fVous avez §6" + this.getTimeout() + " secondes §fpour choisir votre modèle.";
+    }
+
+
+    @Override
+    public void onPlayerJoin(PlayerLG playerLG) {
+        if ((boolean)LG.getInstance().getGame().getConfig().getWildChildRandomModel().getValue())
+            playerLG.sendMessage(LG.getPrefix() + "§6§lRAPPEL : §6Le paramètre §a§lModèle Random§6 est activé et vous ne pourrez pas choisir votre modèle.");
+    }
+
+    @Override
+    public void onNightTurn(Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+
+        game.cancelWait();
+
+        if (players.isEmpty()) {
+            if (!game.isThiefRole(this)) callback.run();
+            else game.wait(EnfantSauvage.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
+            return;
+        }
+
+        PlayerLG playerLG = players.get(0);
+
+        if (playerLG.canUsePowers()) {
+
+            if ((boolean)game.getConfig().getWildChildRandomModel().getValue()) {
+                game.wait(EnfantSauvage.this.getTimeout() / 4, () -> {
+                    model(game.getAliveExcept(playerLG).get(new Random().nextInt(game.getAliveExcept(playerLG).size())), playerLG);
+                    callback.run();
+                }, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
+
+
+            } else {
+
+                playerLG.setWake();
+
+                game.wait(EnfantSauvage.this.getTimeout(), () -> {
+                    this.onPlayerTurnFinish(playerLG);
+                    this.onNightTurn(callback);
+
+                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + EnfantSauvage.this.getDeterminingName(), true);
+
+                playerLG.sendMessage(LG.getPrefix() + EnfantSauvage.this.getActionMessage());
+                EnfantSauvage.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
+            }
+
+        } else {
+            game.wait(EnfantSauvage.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
+        }
     }
 
 
@@ -136,5 +188,17 @@ public class EnfantSauvage extends Role {
         }
     }
 
-    //TODO onDeath
+    @EventHandler
+    public void onElimination(PlayerEliminationEvent ev) {
+        PlayerLG choosen = ev.getEliminated();
+
+        if (choosen.getCache().has("enfantSauvageModel")) {
+            PlayerLG esLG = (PlayerLG) choosen.getCache().get("enfantSauvageModel");
+
+            esLG.setCamp(Camps.LOUP_GAROU);
+
+            LG.getInstance().getGame().getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cUn joueur à rejoint votre camp !"));
+            esLG.sendMessage(LG.getPrefix() + "§cVotre Modèle est mort ! Vous devenez donc Loup-Garou.");
+        }
+    }
 }

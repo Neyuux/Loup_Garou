@@ -144,7 +144,7 @@ public class VoteLG {
 
             playerLG.setArmorStand(null);
             for (PlayerLG voter : playerVoters)
-                if (voter.getRole() instanceof Ankou && voter.isDead()) {
+                if (voter != null && voter.getRole() instanceof Ankou && voter.isDead()) {
                     this.sendObserversMessage(LG.getPrefix() + "§4L'" + voter.getRole().getDisplayName() + " §cavait voté pour §4" + playerLG.getName() + "§c.");
                     voter.getCache().put("ankouVotes", (int)voter.getCache().get("ankouVotes") - 1);
                 }
@@ -237,7 +237,7 @@ public class VoteLG {
                     }
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
-                    VoteLG secondVote = new VoteLG("Second vote du Village",30, true, (playerLG, secondsLeft) -> {
+                    VoteLG secondVote = new VoteLG("Second vote du Village", 70, true, (playerLG, secondsLeft) -> {
                         if (playerLG.getCache().has("vote"))
                             if (playerLG.getCache().get("vote") == null)
                                 return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
@@ -281,6 +281,11 @@ public class VoteLG {
         for (PlayerLG playerLG : this.getVoters())
             if (playerLG.getCache().get("vote").equals(target))
                 voters.add(playerLG);
+
+        if (target.getCache().has("corbeauTargeted")) {
+            voters.add(null);
+            voters.add(null);
+        }
         return voters;
     }
 
@@ -321,6 +326,10 @@ public class VoteLG {
         return choosen;
     }
 
+    public void setChoosen(PlayerLG choosen) {
+        this.choosen = choosen;
+    }
+
     public ChatColor getFirstColor() {
         return firstColor;
     }
@@ -331,6 +340,10 @@ public class VoteLG {
 
     public List<PlayerLG> getVotable() {
         return votable;
+    }
+
+    public List<PlayerLG> getObservers() {
+        return observers;
     }
 
     public String getName() {

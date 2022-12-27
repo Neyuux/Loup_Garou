@@ -65,7 +65,7 @@ public class ItemsManager {
             }
             it.setItemMeta(itm);
             playerInv.setItem(4, it);
-        }TODO*/
+        }*/
     }
 
     public void updateVoteItems(PlayerLG playerLG) {

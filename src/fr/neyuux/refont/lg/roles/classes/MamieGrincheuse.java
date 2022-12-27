@@ -142,13 +142,15 @@ public class MamieGrincheuse extends Role {
     public void onVoteStart(VoteStartEvent ev) {
         VoteLG vote = ev.getVote();
         for (PlayerLG playerLG : vote.getVoters())
-            if (playerLG.getCache().has("mamieGrincheuseCancelVote")) {
+            if (vote.getName().equals("Vote du Village") && playerLG.getCache().has("mamieGrincheuseCancelVote")) {
                 vote.getVoters().remove(playerLG);
                 playerLG.sendMessage(LG.getPrefix() + "§cLa " + this.getDisplayName() + " §ca annulé votre droit de vote pour ce tour.");
                 playerLG.getCache().put("vote", null);
                 playerLG.stopChoosing();
                 playerLG.setArmorStand(null);
                 LG.getInstance().getItemsManager().updateVoteItems(playerLG);
+
+                playerLG.getCache().remove("mamieGrincheuseCancelVote");
             }
     }
 }

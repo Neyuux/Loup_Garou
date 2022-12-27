@@ -3,6 +3,7 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.event.NightEndEvent;
+import fr.neyuux.refont.lg.event.NightStartEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -82,7 +83,7 @@ public class LoupGarou extends Role {
                 playerLG.setWake();
             }
 
-        CHAT.openChat(new ArrayList<>(), voters);
+        if ((boolean)game.getConfig().getChatLG().getValue()) CHAT.openChat(new ArrayList<>(), voters);
 
         VoteLG lgvote = new VoteLG("Vote des Loups", this.getTimeout(), true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))
@@ -124,7 +125,7 @@ public class LoupGarou extends Role {
 
 
     @EventHandler
-    public void onEndNight(NightEndEvent ev) {
+    public void onEndNight(NightStartEvent ev) {
         lastTargetedByLG = null;
     }
 

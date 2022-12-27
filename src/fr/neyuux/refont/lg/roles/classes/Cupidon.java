@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.chat.ChatLG;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -19,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Cupidon extends Role {
 
@@ -82,6 +84,51 @@ public class Cupidon extends Role {
     }
 
     @Override
+    public void onNightTurn(Runnable callback) {
+        GameLG game = LG.getInstance().getGame();
+
+        game.cancelWait();
+
+        if (game.getPlayersByRole(this.getClass()).isEmpty()) {
+            if (!game.isThiefRole(this)) callback.run();
+            else game.wait(Cupidon.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Cupidon.this.getDeterminingName(), true);
+            return;
+        }
+
+        PlayerLG playerLG = game.getPlayersByRole(this.getClass()).get(0);
+
+        if (playerLG.canUsePowers()) {
+
+            if ((boolean)game.getConfig().getRandomCouple().getValue()) {
+                game.wait(Cupidon.this.getTimeout() / 4, () -> {
+                    Random random = new Random();
+                    while (!couple(game.getAlive().get(random.nextInt(game.getAlive().size())), playerLG)) {
+                        couple(game.getAlive().get(random.nextInt(game.getAlive().size())), playerLG);
+                    }
+                    callback.run();
+                }, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Cupidon.this.getDeterminingName(), true);
+
+
+            } else {
+
+                playerLG.setWake();
+
+                game.wait(Cupidon.this.getTimeout(), () -> {
+                    this.onPlayerTurnFinish(playerLG);
+                    this.onNightTurn(callback);
+
+                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Cupidon.this.getDeterminingName(), true);
+
+                playerLG.sendMessage(LG.getPrefix() + Cupidon.this.getActionMessage());
+                Cupidon.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
+            }
+
+        } else {
+            game.wait(Cupidon.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Cupidon.this.getDeterminingName(), true);
+        }
+    }
+
+    @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
@@ -132,6 +179,12 @@ public class Cupidon extends Role {
 
         Bukkit.getPluginManager().callEvent(roleChoiceEvent);
         if (roleChoiceEvent.isCancelled()) return true;
+
+        if ((boolean)LG.getInstance().getGame().getConfig().getCupiInCouple().getValue() && !playerLG.getCache().has("cupidonFirstChoice")) {
+            playerLG.getCache().put("cupidonFirstChoice", playerLG);
+            if (choosen.equals(playerLG))
+                return false;
+        }
 
         if (playerLG.getCache().has("cupidonFirstChoice")) {
             PlayerLG choosen2 = (PlayerLG) playerLG.getCache().get("cupidonFirstChoice");
@@ -184,5 +237,17 @@ public class Cupidon extends Role {
         }
     }
 
-    //TODO onDeath
+    @EventHandler
+    public void onCoupleElimination(PlayerEliminationEvent ev) {
+        PlayerLG playerLG = ev.getEliminated();
+
+        if (playerLG.getCache().has("couple")) {
+            PlayerLG coupleLG = (PlayerLG) playerLG.getCache().get("couple");
+
+            Bukkit.broadcastMessage(LG.getPrefix() + "§cDans un chagrin d'amour suite à la mort de son bien-aimé, §e" + coupleLG.getName() + "§c met fin à sa vie...");
+            coupleLG.eliminate();
+
+            Bukkit.broadcastMessage(LG.getPrefix() + "§d§l\u2764 §e" + playerLG.getName() + " §det §e" + coupleLG.getName() + " §détaient en Couple ! §d§l\u2764");
+        }
+    }
 }

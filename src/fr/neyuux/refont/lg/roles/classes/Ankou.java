@@ -63,7 +63,6 @@ public class Ankou extends Role {
         super.onPlayerJoin(playerLG);
     }
 
-    //TODO onVote
     @EventHandler
     public void onVoteStart(VoteStartEvent ev) {
         VoteLG vote = ev.getVote();

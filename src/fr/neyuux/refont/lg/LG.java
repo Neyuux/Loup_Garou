@@ -2,8 +2,7 @@ package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.commands.LGCommand;
 import fr.neyuux.refont.lg.items.ItemsManager;
-import fr.neyuux.refont.lg.listeners.DayListener;
-import fr.neyuux.refont.lg.listeners.NightListener;
+import fr.neyuux.refont.lg.listeners.GameListener;
 import fr.neyuux.refont.lg.listeners.PreGameListener;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
@@ -99,6 +98,10 @@ public class LG extends JavaPlugin {
         return 0;
     }
 
+    public static double distanceSquaredXZ(Location to, Location from) {
+        return Math.pow(from.getX() - to.getX(), 2.0D) + Math.pow(from.getZ() - to.getZ(), 2.0D);
+    }
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -122,8 +125,7 @@ public class LG extends JavaPlugin {
 
         this.getCommand("lg").setExecutor(new LGCommand());
         this.getServer().getPluginManager().registerEvents(new PreGameListener(), this);
-        this.getServer().getPluginManager().registerEvents(new NightListener(), this);
-        this.getServer().getPluginManager().registerEvents(new DayListener(), this);
+        this.getServer().getPluginManager().registerEvents(new GameListener(), this);
 
         super.onEnable();
     }

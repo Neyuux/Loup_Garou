@@ -5,6 +5,7 @@ import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.event.VoteEndEvent;
 import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class Bouffon extends Role {
 
-    private static final List<PlayerLG> needToPlay = new ArrayList<>();
+    public static final List<PlayerLG> NEED_TO_PLAY = new ArrayList<>();
 
 
     @Override
@@ -77,12 +78,16 @@ public class Bouffon extends Role {
 
         game.cancelWait();
 
-        if (needToPlay.isEmpty()) {
+        if (NEED_TO_PLAY.isEmpty()) {
             callback.run();
             return;
         }
 
-        PlayerLG playerLG = needToPlay.remove(0);
+        PlayerLG playerLG = NEED_TO_PLAY.remove(0);
+        if (!playerLG.getPlayer().isOnline()) {
+            this.onNightTurn(callback);
+            return;
+        }
 
 
         playerLG.getPlayer().setGameMode(GameMode.ADVENTURE);
@@ -109,8 +114,12 @@ public class Bouffon extends Role {
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> choosable = new ArrayList<>();
         for (PlayerLG voterLG : LG.getInstance().getGame().getAlive())
-            if (!voterLG.isDead()) //TODO hasvotedForBouffon
+            if (!voterLG.isDead() && ((List<PlayerLG>)playerLG.getCache().get("bouffonVoters")).contains(voterLG))
                 choosable.add(voterLG);
+
+        for (PlayerLG aliveLG : game.getAlive())
+            if (!choosable.contains(aliveLG))
+                playerLG.getPlayer().hidePlayer(aliveLG.getPlayer());
 
         if (game.getGameType().equals(GameType.MEETING)) {
 
@@ -184,6 +193,14 @@ public class Bouffon extends Role {
         LG.getInstance().getGame().getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.getCache().put("bouffonVoters", new ArrayList<>()));
     }
 
-    //TODO onKillEvent add NeedToPlay
+    @EventHandler
+    public void onVoteEnd(VoteEndEvent ev) {
+        PlayerLG choosen = ev.getChoosen();
+
+        if (choosen.getRole() instanceof Bouffon) {
+            NEED_TO_PLAY.add(choosen);
+            Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + "§a réussi son objectif !");
+        }
+    }
 
 }

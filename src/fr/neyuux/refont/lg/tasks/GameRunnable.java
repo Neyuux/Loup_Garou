@@ -1,7 +1,10 @@
 package fr.neyuux.refont.lg.tasks;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.DayEndEvent;
+import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.event.NightStartEvent;
+import fr.neyuux.refont.lg.event.VoteEndEvent;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.RoleNightOrder;
 import fr.neyuux.refont.lg.roles.classes.Bouffon;
@@ -72,6 +75,8 @@ public class GameRunnable extends BukkitRunnable {
 
         Bukkit.getPluginManager().callEvent(new NightStartEvent());
 
+        game.addNight();
+
         game.setDayCycle(DayCycle.NIGHT);
 
         if ((boolean)this.game.getConfig().getDayCycle().getValue())
@@ -97,7 +102,7 @@ public class GameRunnable extends BukkitRunnable {
                     public void run() {
 
                         if (GameRunnable.this.rolesOrder.isEmpty()) {
-                            //GameRunnable.this.endNight();
+                            GameRunnable.this.endNight();
                             System.out.println("endnight");
                             return;
                         }
@@ -108,8 +113,33 @@ public class GameRunnable extends BukkitRunnable {
                 }.runTaskLater(LG.getInstance(), 5L);
             }
         }.run();
+    }
 
-        game.addNight();
+    public void nextDay() {
+    }
+
+    public void endNight() {
+        NightEndEvent event = new NightEndEvent();
+        Bukkit.getPluginManager().callEvent(event);
+
+        for (PlayerLG playerLG : game.getKilledPlayers())
+            playerLG.eliminate();
+        game.getKilledPlayers().clear();
+
+        if (event.isCancelled()) return;
+
+        this.nextDay();
+    }
+
+    public void endDay(PlayerLG killedLG) {
+        DayEndEvent event = new DayEndEvent();
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (killedLG != null) killedLG.eliminate();
+
+        if (event.isCancelled()) return;
+
+        this.nextNight();
     }
 
     public void checkSleep() {

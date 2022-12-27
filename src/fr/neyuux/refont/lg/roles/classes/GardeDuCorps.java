@@ -4,6 +4,8 @@ import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.NightStartEvent;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -12,6 +14,7 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -122,7 +125,7 @@ public class GardeDuCorps extends Role {
 
 
     @EventHandler
-    public void onCloseFilleDeJoieInv(InventoryCloseEvent ev) {
+    public void onCloseGardeDuCorpsInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
         HumanEntity player = ev.getPlayer();
 
@@ -136,5 +139,23 @@ public class GardeDuCorps extends Role {
         }
     }
 
-    //TODO onKill
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onKill(PlayerEliminationEvent ev) {
+        PlayerLG playerLG = ev.getEliminated();
+
+        if (playerLG.getCache().has("gardeDuCorpsProtectedBy")) {
+            PlayerLG protectorLG = (PlayerLG) playerLG.getCache().get("gardeDuCorpsProtectedBy");
+
+            ev.setCancelled(true);
+            protectorLG.eliminate();
+            playerLG.sendMessage(LG.getPrefix() + "§7§l" + protectorLG.getName() + " §7vous a protégé !");
+        }
+    }
+
+    @EventHandler
+    public void onNightStart(NightStartEvent ev) {
+        for(PlayerLG playerLG : LG.getInstance().getGame().getAlive())
+            if (playerLG.getCache().has("gardeDuCorpsProtectedBy"))
+                playerLG.getCache().remove("gardeDuCorpsProtectedBy");
+    }
 }

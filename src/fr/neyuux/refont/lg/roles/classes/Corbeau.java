@@ -1,11 +1,9 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameType;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.NightStartEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -143,5 +141,15 @@ public class Corbeau extends Role {
             playerLG.getCache().remove("corbeauTargeted");
     }
 
-    //TODO onVoteStart
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        VoteLG vote = ev.getVote();
+
+        for (PlayerLG playerLG : vote.getVotable())
+            if (playerLG.getCache().has("corbeauTargeted")) {
+
+                vote.updateArmorStand(playerLG);
+                Bukkit.broadcastMessage(LG.getPrefix() + "§7Le " + this.getDisplayName() + " §7a rendu visite à §e" + playerLG.getName() + "§7.");
+            }
+    }
 }

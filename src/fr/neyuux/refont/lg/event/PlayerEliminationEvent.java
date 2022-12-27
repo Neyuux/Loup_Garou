@@ -7,13 +7,12 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class VoteEndEvent extends Event {
+public class PlayerEliminationEvent extends Event implements Cancellable {
 
     private final PlayerLG choosen;
-    private final VoteLG vote;
+    private boolean cancel;
 
-    public VoteEndEvent(VoteLG vote, PlayerLG choosenLG) {
-        this.vote = vote;
+    public PlayerEliminationEvent(PlayerLG choosenLG) {
         this.choosen = choosenLG;
     }
 
@@ -27,11 +26,17 @@ public class VoteEndEvent extends Event {
         return handlers;
     }
 
-    public PlayerLG getChoosen() {
+    public PlayerLG getEliminated() {
         return choosen;
     }
 
-    public VoteLG getVote() {
-        return vote;
+    @Override
+    public boolean isCancelled() {
+        return this.cancel;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancel = cancel;
     }
 }

@@ -3,12 +3,18 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
+import fr.neyuux.refont.lg.event.VoteEndEvent;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 
 import java.util.List;
 
@@ -59,16 +65,38 @@ public class Ancien extends Role {
     }
 
 
-    @EventHandler
-    public void onLGChoice(RoleChoiceEvent ev) {
-        for (PlayerLG ancienLG : LG.getInstance().getGame().getPlayersByRole(this.getClass()))
-            if (ev.getRole() instanceof LoupGarou && ancienLG.equals(ev.getChoosen())) {
-                if (!ancienLG.getCache().has("ancienSecondLife")) {
-                    ancienLG.getCache().put("ancienSecondLife", new Object());
-                    ev.setCancelled(true);
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onVoteEnd(VoteEndEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        VoteLG vote = ev.getVote();
+        PlayerLG choosen = ev.getChoosen();
+
+        if (vote.getName().equals("Vote du Village") && choosen.getRole() instanceof Ancien) {
+            Bukkit.broadcastMessage(LG.getPrefix() + "§cLe Village a éliminé l'" + this.getDisplayName() + " §c! Tous les villageois perdent donc leurs pouvoirs.");
+            for (Player p : Bukkit.getOnlinePlayers())
+                p.playSound(p.getLocation(), Sound.WITHER_HURT, 8f, 1.05f);
+
+            for (PlayerLG playerLG : game.getAlive())
+                if (playerLG.getCamp().equals(Camps.VILLAGE)) {
+
+                    game.getAliveRoles().remove(playerLG.getRole());
+                    playerLG.setRole(new SimpleVillageois());
+                    game.getAliveRoles().add(playerLG.getRole());
                 }
-            }
+        }
     }
 
-    //TODO onKillEvent is Vote remove all powers
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        VoteLG vote = ev.getVote();
+        for (PlayerLG playerLG : vote.getVoters())
+            if (playerLG.getCache().has("idiotDuVillageVoted")) {
+                vote.getVoters().remove(playerLG);
+                playerLG.sendMessage(LG.getPrefix() + "§cVous ne pouvez plus voter...");
+                playerLG.getCache().put("vote", null);
+                playerLG.stopChoosing();
+                playerLG.setArmorStand(null);
+                LG.getInstance().getItemsManager().updateVoteItems(playerLG);
+            }
+    }
 }

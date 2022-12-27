@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public abstract class Role implements Listener {
 
-    private ArrayList<PlayerLG> players;
+    public ArrayList<PlayerLG> players;
 
 
     public Role() {

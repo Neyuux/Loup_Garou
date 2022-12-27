@@ -1,16 +1,25 @@
 package fr.neyuux.refont.lg.roles.classes;
 
+import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.VoteLG;
+import fr.neyuux.refont.lg.event.NightStartEvent;
+import fr.neyuux.refont.lg.event.VoteStartEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.DictateurInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Dictateur extends Role {
 
@@ -89,6 +98,51 @@ public class Dictateur extends Role {
         }
     }
 
+    @EventHandler
+    public void onNightStart(NightStartEvent ev) {
+        for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
+            playerLG.getCache().remove("dictateurCoupDEtat");
+    }
 
-    //TODO onRebellion
+
+    @EventHandler
+    public void onVoteStart(VoteStartEvent ev) {
+        VoteLG vote = ev.getVote();
+
+        if (vote.getName().equals("Vote du Village"))
+            for (PlayerLG playerLG : vote.getVoters())
+                if (playerLG.getCache().has("dictateurCoupDEtat")) {
+
+                    VoteLG dictaVote = new VoteLG("Vote du Dictateur", 60, true, (voterLG, secondsLeft) -> {
+                        if (voterLG.getCache().has("vote"))
+                            if (voterLG.getCache().get("vote") == null)
+                                return LG.getPrefix() + "§4Vous ne votez pour §c§lpersonne§4.";
+                            else
+                                return LG.getPrefix() + "§4Vous votez pour §c§l" + ((PlayerLG)voterLG.getCache().get("vote")).getName() + "§c.";
+
+                        return null;
+                    }, ChatColor.DARK_RED, ChatColor.RED, vote.getVotable(), Collections.singletonList(playerLG), vote.getObservers());
+
+                    dictaVote.start(() -> {
+                        PlayerLG choosen = dictaVote.getChoosen();
+                        GameLG game = LG.getInstance().getGame();
+
+                        if (choosen.isLG()) {
+                            playerLG.setMayor();
+
+                            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + Dictateur.this.getDisplayName() + " §ea éliminé un Loup-Garou ! Il prend donc le rôle de maire.");
+                        } else {
+                            game.kill(playerLG);
+
+                            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + Dictateur.this.getDisplayName() + " §ea éliminé un Villageois ! Il se suicidera donc demain.");
+                        }
+
+                        game.getGameRunnable().endDay(choosen);
+                    });
+
+                    playerLG.setCanUsePowers(false);
+
+                    return;
+                }
+    }
 }

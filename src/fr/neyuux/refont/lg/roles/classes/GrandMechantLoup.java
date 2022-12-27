@@ -4,6 +4,7 @@ import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.GameType;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -136,5 +137,10 @@ public class GrandMechantLoup extends Role {
         }
     }
 
-    //TODO onLGDeath
+    @EventHandler
+    public void onLGElimination(PlayerEliminationEvent ev) {
+        if (ev.getEliminated().isLG())
+            for (PlayerLG playerLG : LG.getInstance().getGame().getPlayersByRole(this.getClass()))
+                playerLG.setCanUsePowers(false);
+    }
 }

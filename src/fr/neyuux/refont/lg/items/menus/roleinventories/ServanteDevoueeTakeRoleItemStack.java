@@ -48,6 +48,7 @@ public class ServanteDevoueeTakeRoleItemStack extends CustomItemStack {
 
         playerLG.sendMessage(LG.getPrefix() + "§dVous avez prit le rôle de " +choosen.getName() +" !");
         GameLG.playPositiveSound((Player) player);
+        playerLG.getCache().put("servanteDevouee", role1);
 
         playerLG.getCache().put("unclosableInv", false);
         player.closeInventory();

@@ -1,9 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameType;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
@@ -80,7 +77,7 @@ public class EnfantSauvage extends Role {
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (!game.isThiefRole(this)) callback.run();
+            if (game.isNotThiefRole(this)) callback.run();
             else game.wait(EnfantSauvage.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
             return;
         }

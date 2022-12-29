@@ -3,13 +3,17 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.WinCamps;
+import fr.neyuux.refont.lg.event.DayEndEvent;
 import fr.neyuux.refont.lg.event.NightStartEvent;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Ange extends Role {
@@ -60,7 +64,14 @@ public class Ange extends Role {
     }
 
     
-    //TODO winsonDeath
+    @EventHandler
+    public void onDayEndElimination(DayEndEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        PlayerLG killedLG = ev.getKilledLG();
+
+        if (ev.getKilledLG().getRole() instanceof Ange && game.getDay() == 1)
+            game.win(WinCamps.CUSTOM, Collections.singletonList(killedLG));
+    }
 
     @EventHandler
     public void onNightStart(NightStartEvent ev) {

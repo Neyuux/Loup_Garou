@@ -1,9 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameType;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.DayEndEvent;
 import fr.neyuux.refont.lg.event.NightEndEvent;
 import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
@@ -161,7 +158,7 @@ public class Chasseur extends Role {
     public void onNightEnd(NightEndEvent ev) {
         if (!NEED_TO_PLAY.isEmpty()) {
             ev.setCancelled(true);
-            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().nextDay());
+            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().endNight());
         }
     }
 
@@ -169,7 +166,7 @@ public class Chasseur extends Role {
     public void onDayEnd(DayEndEvent ev) {
         if (!NEED_TO_PLAY.isEmpty()) {
             ev.setCancelled(true);
-            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().nextDay());
+            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().endDay(null));
         }
     }
 

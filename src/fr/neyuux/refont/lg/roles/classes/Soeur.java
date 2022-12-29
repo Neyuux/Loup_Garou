@@ -135,7 +135,7 @@ public class Soeur extends Role {
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (!game.isThiefRole(this)) callback.run();
+            if (game.isNotThiefRole(this)) callback.run();
             else LG.getInstance().getGame().wait(this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }

@@ -42,6 +42,8 @@ public class VoleurGetNewRoleItemStack extends CustomItemStack {
         playerLG.joinRole(this.role);
         playerLG.setCamp(this.role.getBaseCamp());
 
+        playerLG.getCache().put("voleur", voleur);
+
         GameLG.playPositiveSound((Player) player);
         player.sendMessage(LG.getPrefix() + "§3Vous avez sélectionné le rôle " + this.role.getDisplayName() + "§3. Vous incarnerez donc ce-dernier et supprimez les rôles " + voleur.getDisplayName() + " §3et " + role2.getDisplayName() + " §3de la partie.");
 

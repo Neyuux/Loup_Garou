@@ -2,6 +2,7 @@ package fr.neyuux.refont.lg.roles.classes;
 
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.WinCamps;
 import fr.neyuux.refont.lg.inventories.roleinventories.SorciereInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -15,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Sorciere extends Role {
 
     private boolean hasHealPot = true;
-    private boolean hasKillPot = true;;
+    private boolean hasKillPot = true;
 
 
     @Override

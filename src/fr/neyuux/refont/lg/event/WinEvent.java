@@ -1,19 +1,22 @@
 package fr.neyuux.refont.lg.event;
 
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.WinCamps;
+import fr.neyuux.refont.lg.roles.Camps;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class DayEndEvent extends Event implements Cancellable {
+public class WinEvent extends Event implements Cancellable {
+
+    public WinEvent(WinCamps camp) {
+        this.camp = camp;
+    }
+
     private static final HandlerList handlers = new HandlerList();
 
     private boolean cancel = false;
-    private PlayerLG killedLG;
 
-    public DayEndEvent(PlayerLG killedLG) {
-        this.killedLG = killedLG;
-    }
+    private WinCamps camp;
 
     public HandlerList getHandlers() {
         return handlers;
@@ -33,11 +36,11 @@ public class DayEndEvent extends Event implements Cancellable {
         this.cancel = b;
     }
 
-    public PlayerLG getKilledLG() {
-        return killedLG;
+    public WinCamps getCamp() {
+        return camp;
     }
 
-    public void setKilledLG(PlayerLG killedLG) {
-        this.killedLG = killedLG;
+    public void setCamp(WinCamps camp) {
+        this.camp = camp;
     }
 }

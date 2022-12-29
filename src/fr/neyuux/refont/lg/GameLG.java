@@ -1,28 +1,32 @@
 package fr.neyuux.refont.lg;
 
 import fr.neyuux.refont.lg.config.GameConfig;
+import fr.neyuux.refont.lg.config.MayorSuccession;
 import fr.neyuux.refont.lg.event.ResetEvent;
 import fr.neyuux.refont.lg.event.TryStartGameEvent;
+import fr.neyuux.refont.lg.event.WinEvent;
+import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.items.ItemsManager;
 import fr.neyuux.refont.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
 import fr.neyuux.refont.lg.tasks.GameRunnable;
+import fr.neyuux.refont.lg.tasks.LGStop;
+import fr.neyuux.refont.lg.utils.CacheLG;
 import org.bukkit.*;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class GameLG implements Listener {
 
@@ -153,7 +157,7 @@ public class GameLG implements Listener {
         player.setPlayerListName(player.getDisplayName());
         player.sendMessage(this.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
         player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/lg spec off§c.");
-        //TODO update all scoreboard (less players)
+        this.sendLobbySideScoreboardToAllPlayers();
     }
 
     public void removeSpectator(PlayerLG playerLG) {
@@ -198,7 +202,7 @@ public class GameLG implements Listener {
 
         TryStartGameEvent ev = new TryStartGameEvent();
         Bukkit.getPluginManager().callEvent(ev);
-        //TODO updateScoreboard
+        this.sendLobbySideScoreboardToAllPlayers();
 
         return true;
     }
@@ -210,7 +214,7 @@ public class GameLG implements Listener {
         playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
         playerLG.sendTitle("§c§lVous avez été retiré de la partie !", "§6Pas de pot.", 20, 60, 20);
         playNegativeSound(playerLG.getPlayer());
-        //TODO updateScoreboard
+        this.sendLobbySideScoreboardToAllPlayers();
     }
 
     public void addNightVision(PlayerLG playerLG) {
@@ -350,6 +354,112 @@ public class GameLG implements Listener {
         }
     }
 
+    public void checkWin() {
+        PluginManager pm = Bukkit.getPluginManager();
+
+        if (this.getAlive().size() == 1) {
+            pm.callEvent(new WinEvent(WinCamps.CUSTOM));
+        } else if (this.getAlive().size() == 0) {
+            pm.callEvent(new WinEvent(null));
+        } else {
+            int lgalive = 0;
+            int villagealive = 0;
+            int couplealive = 0;
+
+            for (PlayerLG playerLG : this.getAlive()) {
+                if (playerLG.getCamp().equals(Camps.LOUP_GAROU))
+                    lgalive++;
+                else if (playerLG.getCamp().equals(Camps.VILLAGE))
+                    villagealive++;
+
+                if (playerLG.getCache().has("couple") || (playerLG.getRole() instanceof Cupidon && (boolean)this.config.getCupiWinWithCouple().getValue()))
+                    couplealive++;
+            }
+
+            if (lgalive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.LOUP_GAROU));
+            if (villagealive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.VILLAGE));
+            if (couplealive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.COUPLE));
+            if (JoueurDeFlute.getNonEnchantedPlayers().size() == 0)
+                win(WinCamps.CUSTOM, Collections.singletonList(this.getPlayersByRole(JoueurDeFlute.class).get(0)));
+        }
+    }
+
+    public void win(WinCamps camp, List<PlayerLG> winners) {
+        String determingName = camp.getDetermingName();
+        if (camp.equals(WinCamps.CUSTOM))
+            determingName = winners.get(0).getRole().getDeterminingName();
+
+        sendTitleToAllPlayers("§c§l§n§kaa§r §e§l§nVictoire " + determingName + " §c§l§n§kaa", camp.getVictoryTitle().getSecondLine(winners), 10, 90, 20);
+
+        Bukkit.broadcastMessage(LG.getPrefix() + "§eVictoire " + determingName +"§e !");
+
+        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 9f, 1f);
+
+        this.setGameState(GameState.FINISHED);
+
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage("§6Liste des §a§ljoueurs §e/ §6§lrôles §e: ");
+
+        try {
+            for (PlayerLG playerlg : playersInGame) {
+                String s;
+                if (winners.contains(playerlg))
+                    s = "§a";
+                else s = "§c";
+
+                s = s + playerlg.getName();
+
+                CacheLG cache = playerlg.getCache();
+                HashMap<String, Constructor<? extends Role>> roles = LG.getInstance().getRoles();
+
+                s = s + " §7» " + playerlg.getRole().getDisplayName();
+
+                if (playerlg.getRole() instanceof Soeur) s = s + "§d (avec §o" + ((Soeur)playerlg.getRole()).getSister().getName() + "§d)";
+
+                if (playerlg.getRole() instanceof Frere) {
+                    List<PlayerLG> brothers = ((Frere)playerlg.getRole()).getBrothers();
+                    s = s + "§d (avec §3§o" + brothers.get(0).getName() + "§d et §3§o" + brothers.get(1).getName() + "§d)";
+                }
+
+                if (cache.has("servanteDevouee"))
+                    s = s + " §d(" + roles.get("ServanteDevouee").newInstance().getDisplayName() + "§d)";
+
+                if (cache.has("angeAtStart"))
+                    s = s + " §b(" + roles.get("Ange").newInstance().getDisplayName() + "§b)";
+
+                if (cache.has("infected")) s = s + " §c§oInfecté";
+
+                if (cache.has("couple")) s = s + " §den couple avec §l" + ((PlayerLG)cache.get("couple")).getName();
+
+                if (!JoueurDeFlute.getNonEnchantedPlayers().contains(playerlg)) s = s + " §5§oCharmé";
+
+                if (cache.has("voleur")) s = s + " §3(" + roles.get("voleur").newInstance().getDisplayName() + "§3)";
+
+                if (playerlg.isMayor()) s = s + " §b§oMaire";
+
+                Bukkit.broadcastMessage(s);
+            }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible d'afficher la suite de la liste des roles de la partie.");
+            e.printStackTrace();
+        }
+
+        for (Role role : rolesAtStart)
+            if (role instanceof Voleur) {
+                Voleur voleur = (Voleur)role;
+
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage("§3§lRôles §3non distribués :");
+            Bukkit.broadcastMessage(voleur.role1.getDisplayName());
+            Bukkit.broadcastMessage(voleur.role2.getDisplayName());
+        }
+
+        new LGStop().runTaskTimer(LG.getInstance(), 0, 20);
+    }
+
     public void resetGame() {
         Bukkit.getPluginManager().callEvent(new ResetEvent());
 
@@ -392,6 +502,8 @@ public class GameLG implements Listener {
             //List<Double> location = (List<Double>)spawnObjects.remove(new Random().nextInt(spawnObjects.size()));
 
             //playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
+
+            playerLG.sendLobbySideScoreboard();
         }
 
         Bukkit.createWorld(new WorldCreator("LG"));
@@ -400,8 +512,18 @@ public class GameLG implements Listener {
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
 
         this.setConfig(new GameConfig(this));
+    }
 
-        //TODO update all scoreboards
+    public void sendLobbySideScoreboardToAllPlayers() {
+        Bukkit.getOnlinePlayers().forEach(player -> PlayerLG.createPlayerLG(player).sendLobbySideScoreboard());
+    }
+
+    public void sendListRolesSideScoreboardToAllPlayers() {
+        Bukkit.getOnlinePlayers().forEach(player -> PlayerLG.createPlayerLG(player).sendListRolesSideScoreboard());
+    }
+
+    public void sendComedianPowersSideScoreboardToAllPlayers() {
+        Bukkit.getOnlinePlayers().forEach(player -> PlayerLG.createPlayerLG(player).sendComedianPowersSideScoreboard());
     }
 
     public ArrayList<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
@@ -423,6 +545,89 @@ public class GameLG implements Listener {
             }
 
         this.getKilledPlayers().add(playerLG);
+    }
+
+    public VoteLG getMayorVote() {
+        return new VoteLG("Vote du Maire", 120, true, (playerLG, secondsLeft) -> {
+            if (playerLG.getCache().has("vote"))
+                if (playerLG.getCache().get("vote") == null)
+                    return LG.getPrefix() + "§bVous ne votez pour §3§lpersonne§e.";
+                else
+                    return LG.getPrefix() + "§bVous votez pour §3§l" + ((PlayerLG)playerLG.getCache().get("vote")).getName() + "§b.";
+
+            return null;
+        }, ChatColor.AQUA, ChatColor.DARK_AQUA, this.getAlive(), this.getAlive(), this.getAlive());
+    }
+
+    public void chooseNewMayor(DayCycle dayCycle) {
+        switch ((MayorSuccession) this.getConfig().getMayorSuccession().getValue()) {
+            case CHOOSE:
+                PlayerLG mayorLG = this.getMayor();
+
+                Bukkit.broadcastMessage(LG.getPrefix() + "§bUn nouveau maire doit être choisi. D'après les lois du village c'est à §3" + mayorLG.getName() + " §bde choisir son successeur.");
+
+                this.wait(30, () -> {
+                    if (dayCycle.equals(DayCycle.DAY)) this.gameRunnable.endDay(null);
+                    else this.gameRunnable.endNight();
+                    mayorLG.getCache().remove("unclosableInv");
+                }, (param1LGPlayer, param1Int) -> LG.getPrefix() + "§bLe Maire §3§l" + mayorLG.getName() + "§b choisit son successeur...", true);
+
+                mayorLG.getPlayer().setGameMode(GameMode.ADVENTURE);
+                mayorLG.getPlayer().teleport(mayorLG.getLocation());
+                mayorLG.showAllPlayers();
+
+                if (this.getGameType().equals(GameType.MEETING)) {
+                    mayorLG.setChoosing(choosen -> {
+                        if (choosen != null && !choosen.isDead()) {
+                            choosen.setMayor();
+
+                            mayorLG.getPlayer().setGameMode(GameMode.SPECTATOR);
+                            if (dayCycle.equals(DayCycle.DAY)) this.gameRunnable.endDay(null);
+                            else this.gameRunnable.endNight();
+                        }
+                    });
+
+                } else if (this.getGameType().equals(GameType.FREE)) {
+                    new ChoosePlayerInv("§bChoix du §3§lSuccesseur", mayorLG, this.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
+
+                        @Override
+                        public String[] generateLore(PlayerLG paramPlayerLG) {
+                            return new String[]{"§bVoulez-vous §3choisir " + paramPlayerLG.getNameWithAttributes(mayorLG) + "§bcomme successeur ?", "§bIl obtiendra le pouvoir de départager les votes.", "", "§7>>Clique pour choisir"};
+                        }
+
+                        @Override
+                        public void doActionsAfterClick(PlayerLG choosenLG) {
+                            choosenLG.setMayor();
+
+                            mayorLG.getPlayer().setGameMode(GameMode.SPECTATOR);
+                            mayorLG.getCache().put("unclosableInv", false);
+                            mayorLG.getPlayer().closeInventory();
+                            mayorLG.setSleep();
+                            if (dayCycle.equals(DayCycle.DAY)) GameLG.this.gameRunnable.endDay(null);
+                            else GameLG.this.gameRunnable.endNight();
+                        }
+                    }).open(mayorLG.getPlayer());
+                    mayorLG.getCache().put("unclosableInv", true);
+                }
+                break;
+
+            case REVOTE:
+                Bukkit.broadcastMessage(LG.getPrefix() + "§bUn nouveau maire doit être choisi. D'après les lois du village, il doit y avoir un nouveau vote.");
+                Bukkit.broadcastMessage(LG.getPrefix() + "§bVotez pour le nouveau maire !");
+
+                VoteLG mayorVote = this.getMayorVote();
+                mayorVote.start(() -> {
+                    mayorVote.getChoosen().setMayor();
+                    if (dayCycle.equals(DayCycle.DAY)) this.gameRunnable.endDay(null);
+                    else this.gameRunnable.endNight();
+                });
+                break;
+
+            default:
+                if (dayCycle.equals(DayCycle.DAY)) this.gameRunnable.endDay(null);
+                else this.gameRunnable.endNight();
+                break;
+        }
     }
 
     public ArrayList<PlayerLG> getKilledPlayers() {
@@ -556,19 +761,23 @@ public class GameLG implements Listener {
         this.waitTask = waitTask;
     }
 
-    public boolean isThiefRole(Role role) {
+    public boolean isNotThiefRole(Role role) {
         for (Role roleatStart : this.rolesAtStart) {
             if (roleatStart instanceof Voleur) {
                 Voleur thief = (Voleur)roleatStart;
 
                 if (thief.role1.equals(role) || thief.role2.equals(role))
-                    return true;
+                    return false;
             }
         }
-        return false;
+        return true;
     }
 
     public interface StringTimerMessage {
         String generate(PlayerLG param1LGPlayer, int param1Int);
+    }
+
+    public interface StringVictoryTitle {
+        String getSecondLine(List<PlayerLG> winners);
     }
 }

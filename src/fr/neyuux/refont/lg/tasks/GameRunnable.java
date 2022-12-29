@@ -1,16 +1,11 @@
 package fr.neyuux.refont.lg.tasks;
 
 import fr.neyuux.refont.lg.*;
-import fr.neyuux.refont.lg.event.DayEndEvent;
-import fr.neyuux.refont.lg.event.NightEndEvent;
-import fr.neyuux.refont.lg.event.NightStartEvent;
-import fr.neyuux.refont.lg.event.VoteEndEvent;
+import fr.neyuux.refont.lg.event.*;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.RoleNightOrder;
-import fr.neyuux.refont.lg.roles.classes.Bouffon;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import fr.neyuux.refont.lg.roles.classes.Comedien;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,6 +22,8 @@ public class GameRunnable extends BukkitRunnable {
     private final GameLG game;
 
     private final List<Role> rolesOrder = new ArrayList<>();
+
+    private int timer = 7;
 
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
@@ -58,6 +55,20 @@ public class GameRunnable extends BukkitRunnable {
 
             this.game.wait(6, this::nextNight, (playerLG, secondsLeft) -> LG.getPrefix() + "§9Début de la nuit dans §1§l" + secondsLeft + "§9 seconde" + LG.getPlurial(secondsLeft)  + ".", false);
         }
+
+        if (timer == 0) {
+            timer = 14;
+            if (game.getPlayersByRole(Comedien.class).isEmpty())
+                game.sendListRolesSideScoreboardToAllPlayers();
+            else
+                game.sendComedianPowersSideScoreboardToAllPlayers();
+        }
+
+        if (timer == 7) {
+            game.sendListRolesSideScoreboardToAllPlayers();
+        }
+
+        timer--;
     }
 
 
@@ -116,6 +127,49 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void nextDay() {
+        Bukkit.getPluginManager().callEvent(new DayStartEvent());
+
+        game.addDay();
+
+        game.setDayCycle(DayCycle.DAY);
+
+        if ((boolean)this.game.getConfig().getDayCycle().getValue())
+            Bukkit.getWorld("LG").setTime(0);
+
+        Bukkit.broadcastMessage("      §e§lJOUR " + game.getDay());
+        for (Player player : Bukkit.getOnlinePlayers())
+            player.playSound(player.getLocation(), Sound.CHICKEN_IDLE, 4f, 0.5f);
+
+        this.continueDay();
+
+    }
+
+    public void continueDay() {
+        if ((boolean)game.getConfig().getMayor().getValue() && game.getMayor() == null && game.getDay() == 1) {
+            Bukkit.broadcastMessage(LG.getPrefix() + "§bUn Maire doit être choisi pour gouverner le Village. Il aura le pouvoir de départager les votes en cas d'égalité. Choisissez-le avec précaution, un Loup-Garou ne doit pas avoir ce rôle.");
+            Bukkit.broadcastMessage(LG.getPrefix() + "§bVous avez 2 minutes pour choisir le Maire du Village.");
+
+            VoteLG mayorVote = game.getMayorVote();
+            mayorVote.start(()-> {
+                mayorVote.getChoosen().setMayor();
+                this.continueDay();
+            });
+        } else {
+            Bukkit.broadcastMessage(LG.getPrefix() + "§eC'est l'heure du Vote du Village ! A vous de voter avec minutie pour un joueur qui vous semble être un Loup-Garou. Le joueur qui obtiendra le plus de votes sera §céliminé§e de la partie.");
+            Bukkit.broadcastMessage(LG.getPrefix() + "§eVous avez 3 minutes pour choisir qui éliminer aujourd'hui.");
+
+            VoteLG voteLG = new VoteLG("Vote du Village", 180, true, (playerLG, secondsLeft) -> {
+                if (playerLG.getCache().has("vote"))
+                    if (playerLG.getCache().get("vote") == null)
+                        return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
+                    else
+                        return LG.getPrefix() + "§eVous votez pour §6§l" + ((PlayerLG)playerLG.getCache().get("vote")).getName() + "§e.";
+
+                return null;
+            }, ChatColor.YELLOW, ChatColor.GOLD, game.getAlive(), game.getAlive(), game.getAlive());
+
+            voteLG.start(()-> GameRunnable.this.endDay(voteLG.getChoosen()));
+        }
     }
 
     public void endNight() {
@@ -128,16 +182,26 @@ public class GameRunnable extends BukkitRunnable {
 
         if (event.isCancelled()) return;
 
+        if (game.getMayor() != null && game.getMayor().isDead() && game.getMayor().getPlayer().isOnline()) {
+            game.chooseNewMayor(DayCycle.NIGHT);
+            return;
+        }
+
         this.nextDay();
     }
 
     public void endDay(PlayerLG killedLG) {
-        DayEndEvent event = new DayEndEvent();
+        DayEndEvent event = new DayEndEvent(killedLG);
         Bukkit.getPluginManager().callEvent(event);
 
         if (killedLG != null) killedLG.eliminate();
 
         if (event.isCancelled()) return;
+
+        if (game.getMayor() != null && game.getMayor().isDead() && game.getMayor().getPlayer().isOnline()) {
+            game.chooseNewMayor(DayCycle.DAY);
+            return;
+        }
 
         this.nextNight();
     }

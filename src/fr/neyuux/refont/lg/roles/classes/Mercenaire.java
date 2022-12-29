@@ -3,6 +3,8 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.WinCamps;
+import fr.neyuux.refont.lg.event.DayEndEvent;
 import fr.neyuux.refont.lg.event.DayStartEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
@@ -10,6 +12,7 @@ import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -76,5 +79,12 @@ public class Mercenaire extends Role {
         }
     }
 
-    //TODO onTargetDeath Victory
+    @EventHandler
+    public void onDayEndElimination(DayEndEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+        PlayerLG killedLG = ev.getKilledLG();
+
+        if (ev.getKilledLG().getCache().has("mercenaireTarget"))
+            game.win(WinCamps.CUSTOM, Collections.singletonList((PlayerLG)killedLG.getCache().get("mercenaireTarget")));
+    }
 }

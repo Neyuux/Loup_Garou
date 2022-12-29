@@ -3,6 +3,8 @@ package fr.neyuux.refont.lg.roles.classes;
 import fr.neyuux.refont.lg.GameLG;
 import fr.neyuux.refont.lg.LG;
 import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.WinCamps;
+import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
@@ -74,9 +76,12 @@ public class President extends Role {
         }
     }
 
-    /*TODO
-        onDeath
-            kill all villagers
-     */
+    @EventHandler
+    public void onElimination(PlayerEliminationEvent ev) {
+        if (ev.getEliminated().getRole() instanceof President) {
+            GameLG game = LG.getInstance().getGame();
+            game.win(WinCamps.LOUP_GAROU, game.getAlive());
+        }
+    }
 
 }

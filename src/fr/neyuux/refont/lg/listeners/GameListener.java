@@ -1,6 +1,7 @@
 package fr.neyuux.refont.lg.listeners;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.event.WinEvent;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBed;
@@ -11,6 +12,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
@@ -113,6 +115,14 @@ public class GameListener implements Listener {
 
         if (ev.getAnimationType().equals(PlayerAnimationType.ARM_SWING) && playerLG.isChoosing())
             playerLG.callbackChoice(playerLG.getPlayerOnCursor(LG.getInstance().getGame().getAlive()));
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onWinEvent(WinEvent ev) {
+        if (!ev.isCancelled()) {
+            GameLG game = LG.getInstance().getGame();
+            game.win(ev.getCamp(), game.getAlive());
+        }
     }
 
 }

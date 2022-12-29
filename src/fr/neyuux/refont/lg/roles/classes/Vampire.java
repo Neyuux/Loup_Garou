@@ -1,9 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
-import fr.neyuux.refont.lg.VoteLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.chat.ChatLG;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.roles.Camps;

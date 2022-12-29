@@ -37,19 +37,21 @@ public class PreGameListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+        LG lg = LG.getInstance();
+        GameLG game = lg.getGame();
 
 
-        if (!LG.getInstance().getGame().getGameState().equals(GameState.PLAYING)) {
+        if (!game.getGameState().equals(GameState.PLAYING)) {
 
             LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) LG.getInstance().getGame().OP(playerLG);
 
             playerLG.showAllPlayers();
-            LG.getInstance().getGame().addSaturation(playerLG);
+            game.addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
             player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
-            LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
-            //TODO update scoreboard
+            lg.getItemsManager().updateSpawnItems(playerLG);
+            game.sendLobbySideScoreboardToAllPlayers();
         }
     }
 
@@ -57,16 +59,17 @@ public class PreGameListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+        GameLG game = LG.getInstance().getGame();
 
-        LG.getInstance().getGame().getOPs().remove(player);
+        game.getOPs().remove(player);
 
-        if (!LG.getInstance().getGame().getGameState().equals(GameState.PLAYING)) {
+        if (!game.getGameState().equals(GameState.PLAYING)) {
 
-            LG.getInstance().getGame().leaveGame(playerLG);
-            //TODO updateScoreboard
+            game.leaveGame(playerLG);
+            game.sendLobbySideScoreboardToAllPlayers();
         }
 
-        if (PlayerLG.getPlayersMap().containsKey(player) && (LG.getInstance().getGame().getGameState().equals(GameState.WAITING) || LG.getInstance().getGame().getGameState().equals(GameState.STARTING))) {
+        if (PlayerLG.getPlayersMap().containsKey(player) && (game.getGameState().equals(GameState.WAITING) || game.getGameState().equals(GameState.STARTING))) {
             PlayerLG.removePlayerLG(player);
         }
     }

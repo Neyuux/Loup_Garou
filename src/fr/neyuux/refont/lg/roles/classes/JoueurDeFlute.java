@@ -1,9 +1,6 @@
 package fr.neyuux.refont.lg.roles.classes;
 
-import fr.neyuux.refont.lg.GameLG;
-import fr.neyuux.refont.lg.GameType;
-import fr.neyuux.refont.lg.LG;
-import fr.neyuux.refont.lg.PlayerLG;
+import fr.neyuux.refont.lg.*;
 import fr.neyuux.refont.lg.event.RoleChoiceEvent;
 import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
@@ -88,7 +85,7 @@ public class JoueurDeFlute extends Role {
             }.run();
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, this.getNonEnchantedPlayers(), new ChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, getNonEnchantedPlayers(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -122,6 +119,8 @@ public class JoueurDeFlute extends Role {
 
         playerLG.sendMessage(LG.getPrefix() + "§dLe " + this.getDisplayName() + " §dvous a charmé.");
         GameLG.playPositiveSound(playerLG.getPlayer());
+        
+        LG.getInstance().getGame().checkWin();
 
         if (playerLG.getCache().has("joueurDeFluteFirstChoice")) {
             playerLG.getCache().remove("joueurDeFluteFirstChoice");
@@ -156,7 +155,7 @@ public class JoueurDeFlute extends Role {
     }
 
 
-    private List<PlayerLG> getNonEnchantedPlayers() {
+    public static List<PlayerLG> getNonEnchantedPlayers() {
         List<PlayerLG> nonEnchanted = new ArrayList<>();
 
         for (PlayerLG aliveLG : LG.getInstance().getGame().getAlive())

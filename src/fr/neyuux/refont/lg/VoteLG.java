@@ -248,7 +248,7 @@ public class VoteLG {
                     }, firstColor, secondColor, finalists, VoteLG.this.voters, this.observers);
 
                     secondVote.start(() -> {
-                        VoteLG.this.choosen = this.getChoosen();
+                        VoteLG.this.choosen = secondVote.getChoosen();
                         Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
                         game.cancelWait();
                         this.callback.run();

@@ -1,18 +1,23 @@
 package fr.neyuux.refont.lg;
 
+import fr.neyuux.refont.lg.config.ComedianPowers;
+import fr.neyuux.refont.lg.config.MayorSuccession;
 import fr.neyuux.refont.lg.event.PlayerEliminationEvent;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.*;
 import fr.neyuux.refont.lg.utils.CacheLG;
+import fr.neyuux.refont.lg.utils.SimpleScoreboard;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,6 +25,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class PlayerLG {
@@ -303,6 +309,55 @@ public class PlayerLG {
         }
     }
 
+    public void sendLobbySideScoreboard() {
+        SimpleScoreboard ss = new SimpleScoreboard(game.getPrefix(), this.getPlayer());
+
+        ss.add(this.getPlayer().getDisplayName(), 15);
+        ss.blankLine(14);
+        ss.add("§6Nombre de §lRôles §f: §e" + game.getConfig().getAddedRoles().size(), 13);
+        ss.add("§aNombre de §lJoueurs §f: §e" + game.getPlayersInGame().size(), 12);
+        ss.add("§7Joueurs en ligne §f: §e" + Bukkit.getOnlinePlayers().size(), 11);
+        ss.add("§2§lType §2de jeu §f: §c" + game.getGameType().getName(), 10);
+        ss.blankLine(9);
+        ss.add("§8------------", 8);
+        ss.add("§e§oMap by §c§l§oNeyuux_", 7);
+        this.getPlayer().setScoreboard(ss.getScoreboard());
+    }
+
+    public void sendListRolesSideScoreboard() {
+        SimpleScoreboard scoreboard = new SimpleScoreboard("§6§lRôles", this.getPlayer());
+        HashMap<String, Integer> roles = new HashMap<>();
+
+        for (Role role : game.getAliveRoles())
+            if (roles.containsKey(role.getDisplayName()))
+                roles.put(role.getDisplayName(), roles.get(role.getDisplayName() + 1));
+            else
+                roles.put(role.getDisplayName(), 1);
+
+        for (Map.Entry<String, Integer> entry : roles.entrySet())
+            scoreboard.add(entry.getKey(), entry.getValue());
+
+        this.getPlayer().setScoreboard(scoreboard.getScoreboard());
+
+    }
+
+    public void sendComedianPowersSideScoreboard() {
+        SimpleScoreboard scoreboard = new SimpleScoreboard("§5§lPouvoirs du Comédien", this.getPlayer());
+        List<ComedianPowers> powers = ((Comedien)game.getPlayersByRole(Comedien.class).get(0).getRole()).getRemaningPowers();
+        int i = 15;
+
+        for (ComedianPowers power : powers) {
+            try {
+                scoreboard.add(LG.getInstance().getRoles().get(power.getName()).newInstance().getDisplayName(), i);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            i--;
+        }
+
+        this.getPlayer().setScoreboard(scoreboard.getScoreboard());
+    }
+
     public void setSleep() {
         Player player = this.getPlayer();
         Location loc = this.placement;
@@ -355,7 +410,25 @@ public class PlayerLG {
         this.sendMessage(LG.getPrefix() + "§9Le jeu a déjà démarré !");
         this.sendMessage(LG.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
 
-        //TODO checkwin
+        if (this.isMayor) {
+            this.removeMayor();
+
+            switch ((MayorSuccession)game.getConfig().getMayorSuccession().getValue()) {
+                case RANDOM:
+                    game.getAlive().get(new Random().nextInt(game.getAlive().size())).setMayor();
+                break;
+
+                case CHOOSE:
+                case REVOTE:
+                    game.setMayor(this);
+                break;
+
+                default:
+                break;
+            }
+        }
+
+        game.checkWin();
     }
 
     public void setChoosing(CallbackChoice callback) {
@@ -438,11 +511,14 @@ public class PlayerLG {
     public void setMayor() {
         this.isMayor = true;
         game.setMayor(this);
+        Bukkit.broadcastMessage(LG.getPrefix() + "§3§l" + this.getName() + " §ba été choisi comme nouveau maire !");
+        this.getPlayer().getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
     }
 
     public void removeMayor() {
         this.isMayor = false;
         if (game.getMayor().equals(this)) game.setMayor(null);
+        this.getPlayer().getInventory().setChestplate(null);
     }
 
     public boolean canUsePowers() {

@@ -1,5 +1,5 @@
 name: LG
-version: beta2.0.0
+version: alpha1.0.0old
 author: Neyuux_
 main: fr.neyuux.refont.lg.LG
 softdepend: [NeyGin_Core]

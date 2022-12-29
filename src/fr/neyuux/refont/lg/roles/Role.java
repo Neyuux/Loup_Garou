@@ -30,7 +30,7 @@ public abstract class Role implements Listener {
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (!game.isThiefRole(this)) callback.run();
+            if (game.isNotThiefRole(this)) callback.run();
             else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
             return;
         }

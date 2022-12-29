@@ -8,13 +8,11 @@ import fr.neyuux.refont.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
-import fr.neyuux.refont.lg.utils.CacheLG;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -90,7 +88,7 @@ public class Cupidon extends Role {
         game.cancelWait();
 
         if (game.getPlayersByRole(this.getClass()).isEmpty()) {
-            if (!game.isThiefRole(this)) callback.run();
+            if (game.isNotThiefRole(this)) callback.run();
             else game.wait(Cupidon.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Cupidon.this.getDeterminingName(), true);
             return;
         }

@@ -36,9 +36,6 @@ public class PyromanePutOilItemStack extends CustomItemStack {
         addItemInList(this);
     }
 
-    pu
-
-
     @Override
     public void use(HumanEntity player, Event event) {
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);

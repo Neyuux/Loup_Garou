@@ -53,7 +53,7 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
             choosenLG.sendMessage(LG.getPrefix() + "§cVous avez été infecté par " + playerLG.getRole().getDisplayName().substring(3) + ". Votre nouvel objectif est de gagner avec les Loups-Garou et d'éliminer les Villageois. Vous pourrez vous réveiller chaque nuit pour tuer un villageois, cependant, vous gardez vos pouvoirs.");
             choosenLG.getPlayer().playSound(choosenLG.getLocation(), Sound.WOLF_GROWL, 8f, 1.3f);
 
-            ((InfectPereDesLoups)playerLG.getRole()).setLastTargetedByLG(null);
+            LG.getInstance().getGame().getKilledPlayers().remove(choosenLG);
 
             LG.getInstance().getGame().getLGs(false).forEach(PlayerLG::updateGamePlayerScoreboard);
         }

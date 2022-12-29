@@ -171,7 +171,7 @@ public class Frere extends Role {
         }
 
         game.wait(this.getTimeout(), () -> {
-            playableSisters.forEach(super::onPlayerTurnFinish);
+            for (PlayerLG playableSister : playableSisters) super.onPlayerTurnFinish(playableSister);
             CHAT.closeChat();
             this.onNightTurn(callback);
 

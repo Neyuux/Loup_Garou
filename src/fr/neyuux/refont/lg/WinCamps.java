@@ -7,7 +7,7 @@ public enum WinCamps {
     COUPLE("§ddu §lCouple", winners -> {
         StringBuilder builder = new StringBuilder("§6§l§nBravo à§f : ");
         winners.forEach(playerLG -> builder.append("§e§l").append(playerLG.getName()).append("§f, "));
-        return builder.substring(0, 2);
+        return builder.substring(0, builder.length() - 2);
     }),
     CUSTOM("", winners -> "§6§l§nBravo à§f : §e§l" + winners.get(0).getName());
 

@@ -310,7 +310,7 @@ public class PlayerLG {
     }
 
     public void sendLobbySideScoreboard() {
-        SimpleScoreboard ss = new SimpleScoreboard(game.getPrefix(), this.getPlayer());
+        SimpleScoreboard ss = new SimpleScoreboard(game.getPrefix().substring(0, game.getPrefix().length() - 9), this.getPlayer());
 
         ss.add(this.getPlayer().getDisplayName(), 15);
         ss.blankLine(14);

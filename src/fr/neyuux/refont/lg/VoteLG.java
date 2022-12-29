@@ -106,7 +106,7 @@ public class VoteLG {
 
         if (voter.getRole() instanceof Ankou && voter.isDead()) {
             String name = voter.getRole().getDeterminingName().substring(3);
-            StringBuilder message = new StringBuilder(LG.getPrefix() + name.substring(0, 1).toUpperCase() + name.substring(1) + " §4" + voter.getName() + " §c");
+            StringBuilder message = new StringBuilder(LG.getPrefix() + name.substring(0, name.length() - 1).toUpperCase() + name.substring(1) + " §4" + voter.getName() + " §c");
 
             if (voted != null) {
                 if (voteChanged) message.append("change son vote pour §4").append(voted.getName()).append("§c.");

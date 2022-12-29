@@ -199,9 +199,8 @@ public class PlayerLG {
         name += lastcolor + this.human.getName();
 
         if (this.getCache().has("couple") && this.getCache().get("couple") != null || receiver.getRole() instanceof Cupidon) {
-            PlayerLG couple = (PlayerLG) this.getCache().get("couple");
 
-            if (couple.equals(receiver) || receiver.getRole() instanceof Cupidon) {
+            if (receiver.getRole() instanceof Cupidon || this.getCache().get("couple").equals(receiver)) {
                 name += "§d \u2764";
             }
         }

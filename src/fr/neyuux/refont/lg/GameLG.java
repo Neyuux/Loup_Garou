@@ -285,7 +285,7 @@ public class GameLG implements Listener {
                 toGive.add(constructor.newInstance());
 
             return Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
-                PlayerLG playerLG = this.waitedPlayers.get(random.nextInt(this.waitedPlayers.size()));
+                PlayerLG playerLG = this.waitedPlayers.remove(random.nextInt(this.waitedPlayers.size()));
                 Role role;
 
                 if (playerLG.getRole() != null) {
@@ -701,6 +701,7 @@ public class GameLG implements Listener {
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
         if (gameType != GameType.NONE) sendTitleToAllPlayers(gameType.getName(), "§fa été choisi comme nouveau type de jeu !" , 20, 60, 20);
+        this.sendLobbySideScoreboardToAllPlayers();
     }
 
     public ItemsManager getItemsManager() {

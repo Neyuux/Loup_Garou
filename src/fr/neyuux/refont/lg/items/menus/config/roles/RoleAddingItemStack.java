@@ -63,6 +63,8 @@ public class RoleAddingItemStack extends CustomItemStack {
                 for (int i = times; i!= 0; i--)
                     added.remove(role.getClass().getConstructor());
             }
+
+            LG.getInstance().getGame().sendLobbySideScoreboardToAllPlayers();
         } catch (NoSuchMethodException e) {
             Bukkit.broadcastMessage("§4[§cErreur§4]§c La création des objets pour ajouter des rôles a échoué. Veuillez réessayer ou appeler Neyuux_.");
             e.printStackTrace();

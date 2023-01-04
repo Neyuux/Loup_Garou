@@ -19,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class LoupGarou extends Role {
@@ -38,7 +39,7 @@ public class LoupGarou extends Role {
 
     @Override
     public String getDeterminingName() {
-        return "des " + this.getDisplayName();
+        return "des §c§lLoups-Garous";
     }
 
     @Override
@@ -83,7 +84,7 @@ public class LoupGarou extends Role {
                 playerLG.setWake();
             }
 
-        if ((boolean)game.getConfig().getChatLG().getValue()) CHAT.openChat(new ArrayList<>(), voters);
+        if ((boolean)game.getConfig().getChatLG().getValue()) CHAT.openChat(new HashSet<>(), new HashSet<>(voters));
 
         VoteLG lgvote = new VoteLG("Vote des Loups", this.getTimeout(), true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))
@@ -92,7 +93,7 @@ public class LoupGarou extends Role {
                 else
                     return LG.getPrefix() + "§cVous votez pour §4§l" + ((PlayerLG)paramPlayerLG.getCache().get("vote")).getName() + "§c.";
 
-            return null;
+            return null;//TODO send Au tour des Loups Garous
         }, ChatColor.RED, ChatColor.DARK_RED, game.getAlive(), voters, voters);
 
         lgvote.start(() -> {

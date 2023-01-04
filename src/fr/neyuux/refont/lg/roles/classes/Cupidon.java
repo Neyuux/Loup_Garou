@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Cupidon extends Role {
@@ -113,12 +114,12 @@ public class Cupidon extends Role {
 
                 game.wait(Cupidon.this.getTimeout(), () -> {
                     this.onPlayerTurnFinish(playerLG);
-                    this.onNightTurn(callback);
+                    callback.run();
 
                 }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Cupidon.this.getDeterminingName(), true);
 
                 playerLG.sendMessage(LG.getPrefix() + Cupidon.this.getActionMessage());
-                Cupidon.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
+                Cupidon.this.onPlayerNightTurn(playerLG, callback);
             }
 
         } else {
@@ -184,13 +185,13 @@ public class Cupidon extends Role {
                 return false;
         }
 
-        if (playerLG.getCache().has("cupidonFirstChoice")) {
+        if (playerLG.getCache().has("cupidonFirstChoice") && !playerLG.getCache().get("cupidonFirstChoice").equals(choosen)) {
             PlayerLG choosen2 = (PlayerLG) playerLG.getCache().get("cupidonFirstChoice");
 
             choosen.getCache().put("couple", choosen2);
             choosen2.getCache().put("couple", choosen);
 
-            CHAT.openChat(new ArrayList<>(), Arrays.asList(choosen, choosen2));
+            CHAT.openChat(new HashSet<>(), new HashSet<>(Arrays.asList(choosen, choosen2)));
 
             choosen.sendMessage(LG.getPrefix() + "§dVous recevez soudainement une flèche, elle vous transperce. Regardant au loin, vous apercevez §5" + choosen2.getName() + " §d, vous vous effondrez de joie et remerciez " + this.getDisplayName() + " §dpour avoir fait ce choix. §r\n§dVous êtes amoureux de §5" + choosen2.getName() + " §d, vous devez gagner ensemble et si l'un d'entre-vous meurt, il emporte l'autre avec un chagrin d'amour...");
             choosen.sendMessage(LG.getPrefix() + "§9Utilisez §e! §9pour lui parler de manière privée.");
@@ -242,10 +243,16 @@ public class Cupidon extends Role {
         if (playerLG.getCache().has("couple")) {
             PlayerLG coupleLG = (PlayerLG) playerLG.getCache().get("couple");
 
-            Bukkit.broadcastMessage(LG.getPrefix() + "§cDans un chagrin d'amour suite à la mort de son bien-aimé, §e" + coupleLG.getName() + "§c met fin à sa vie...");
-            coupleLG.eliminate();
+            if (coupleLG.isDead()) return;
 
-            Bukkit.broadcastMessage(LG.getPrefix() + "§d§l\u2764 §e" + playerLG.getName() + " §det §e" + coupleLG.getName() + " §détaient en Couple ! §d§l\u2764");
+            Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+                if (coupleLG.isDead()) return;
+                Bukkit.broadcastMessage(LG.getPrefix() + "§cDans un chagrin d'amour suite à la mort de son bien-aimé, §e" + coupleLG.getName() + "§c met fin à sa vie...");
+
+                coupleLG.eliminate();
+
+                Bukkit.broadcastMessage(LG.getPrefix() + "§d§l\u2764 §e" + playerLG.getName() + " §det §e" + coupleLG.getName() + " §détaient en Couple ! §d§l\u2764");
+            }, 1L);
         }
     }
 }

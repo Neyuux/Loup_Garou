@@ -15,6 +15,7 @@ public class LGStop extends BukkitRunnable {
 
     public LGStop() {
         this.game = LG.getInstance().getGame();
+        this.game.cancelWait();
     }
 
     @Override

@@ -45,7 +45,7 @@ public class VoteInv extends AbstractCustomInventory {
                 if (this.getItem(slot) == null) {
 
                     this.setItem(slot, new ChoosePlayerItemStack(receiverLG, votableLG, generator));
-                    return;
+                    break;
                 }
     }
 }

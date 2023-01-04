@@ -194,7 +194,7 @@ public class Bouffon extends Role {
     public void onVoteEnd(VoteEndEvent ev) {
         PlayerLG choosen = ev.getChoosen();
 
-        if (choosen.getRole() instanceof Bouffon) {
+        if (choosen.getRole() != null && choosen.getRole() instanceof Bouffon) {
             NEED_TO_PLAY.add(choosen);
             Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + "§a réussi son objectif !");
         }

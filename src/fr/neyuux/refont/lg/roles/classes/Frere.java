@@ -12,16 +12,12 @@ import org.bukkit.ChatColor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Frere extends Role {
 
     private final List<PlayerLG> brothers = new ArrayList<>();
-    private final List<PlayerLG> listeningBrothers = new ArrayList<>();
 
     public static final ChatLG CHAT = new ChatLG("§d", ChatColor.DARK_AQUA, null);
 
@@ -152,16 +148,16 @@ public class Frere extends Role {
 
         PlayerLG sisterLG1 = players.remove(0);
         PlayerLG[] sisters = new PlayerLG[]{sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()};
-        List<PlayerLG> playableSisters = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
+        List<PlayerLG> playableBrothers = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
 
         players.remove(sisters[1]);
 
-        if (playableSisters.isEmpty()) {
+        if (playableBrothers.isEmpty()) {
             game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }
 
-        CHAT.openChat(playableSisters, playableSisters);
+        CHAT.openChat(new HashSet<>(playableBrothers), new HashSet<>(playableBrothers));
 
         for (PlayerLG sisterLG : sisters) {
             if (sisterLG.canUsePowers()) {
@@ -171,10 +167,10 @@ public class Frere extends Role {
         }
 
         game.wait(this.getTimeout(), () -> {
-            for (PlayerLG playableSister : playableSisters) super.onPlayerTurnFinish(playableSister);
+            for (PlayerLG playableSister : playableBrothers) super.onPlayerTurnFinish(playableSister);
             CHAT.closeChat();
             this.onNightTurn(callback);
 
-        }, (currentPlayer, secondsLeft) -> (playableSisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
+        }, (currentPlayer, secondsLeft) -> (playableBrothers.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
     }
 }

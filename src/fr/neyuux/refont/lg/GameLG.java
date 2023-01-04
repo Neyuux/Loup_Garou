@@ -285,6 +285,7 @@ public class GameLG implements Listener {
                 toGive.add(constructor.newInstance());
 
             return Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
+                if (waitedPlayers.isEmpty()) return;
                 PlayerLG playerLG = this.waitedPlayers.remove(random.nextInt(this.waitedPlayers.size()));
                 Role role;
 
@@ -304,6 +305,7 @@ public class GameLG implements Listener {
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
                 this.aliveRoles.add(role);
                 this.rolesAtStart.add(role);
+
             }, 0, 13);
         } catch (Exception e) {
             e.printStackTrace();
@@ -333,13 +335,13 @@ public class GameLG implements Listener {
                     callback.run();
                 }
                 waitTicks[0]--;
+                if (cancelOthers) GameLG.this.waitTicks = waitTicks[0];
             }
         });
 
         if (cancelOthers) cancelWait();
 
         this.waitCallback = callback;
-        this.waitTicks = seconds * 20;
         this.waitTask = waitRunnable.runTaskTimer(LG.getInstance(), 0L, 1L);
     }
 
@@ -356,6 +358,8 @@ public class GameLG implements Listener {
 
     public void checkWin() {
         PluginManager pm = Bukkit.getPluginManager();
+
+        if (this.getGameState().equals(GameState.FINISHED)) return;
 
         if (this.getAlive().size() == 1) {
             pm.callEvent(new WinEvent(WinCamps.CUSTOM));
@@ -376,14 +380,14 @@ public class GameLG implements Listener {
                     couplealive++;
             }
 
-            if (lgalive == this.getAlive().size())
-                pm.callEvent(new WinEvent(WinCamps.LOUP_GAROU));
-            if (villagealive == this.getAlive().size())
-                pm.callEvent(new WinEvent(WinCamps.VILLAGE));
-            if (couplealive == this.getAlive().size())
-                pm.callEvent(new WinEvent(WinCamps.COUPLE));
             if (JoueurDeFlute.getNonEnchantedPlayers().size() == 0)
                 win(WinCamps.CUSTOM, Collections.singletonList(this.getPlayersByRole(JoueurDeFlute.class).get(0)));
+            else if (couplealive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.COUPLE));
+            else if (lgalive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.LOUP_GAROU));
+            else if (villagealive == this.getAlive().size())
+                pm.callEvent(new WinEvent(WinCamps.VILLAGE));
         }
     }
 
@@ -392,8 +396,9 @@ public class GameLG implements Listener {
         if (camp.equals(WinCamps.CUSTOM))
             determingName = winners.get(0).getRole().getDeterminingName();
 
-        sendTitleToAllPlayers("§c§l§n§kaa§r §e§l§nVictoire " + determingName + " §c§l§n§kaa", camp.getVictoryTitle().getSecondLine(winners), 10, 90, 20);
+        sendTitleToAllPlayers("§c§l§n§kaa§r §e§l§nVictoire§e§l " + determingName + " §c§l§n§kaa", camp.getVictoryTitle().getSecondLine(winners), 10, 90, 20);
 
+        Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(LG.getPrefix() + "§eVictoire " + determingName +"§e !");
 
         for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 9f, 1f);
@@ -434,7 +439,7 @@ public class GameLG implements Listener {
 
                 if (cache.has("couple")) s = s + " §den couple avec §l" + ((PlayerLG)cache.get("couple")).getName();
 
-                if (!JoueurDeFlute.getNonEnchantedPlayers().contains(playerlg)) s = s + " §5§oCharmé";
+                if (cache.has("enchanted")) s = s + " §5§oCharmé";
 
                 if (cache.has("voleur")) s = s + " §3(" + roles.get("voleur").newInstance().getDisplayName() + "§3)";
 
@@ -442,6 +447,7 @@ public class GameLG implements Listener {
 
                 Bukkit.broadcastMessage(s);
             }
+            Bukkit.broadcastMessage("");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible d'afficher la suite de la liste des roles de la partie.");
             e.printStackTrace();
@@ -470,8 +476,8 @@ public class GameLG implements Listener {
         this.playersInGame.clear();
         this.waitedPlayers.clear();
         this.spectators.clear();
-        this.day = 1;
-        this.night = 1;
+        this.day = 0;
+        this.night = 0;
         this.mayor = null;
         this.aliveRoles.clear();
         this.rolesAtStart.clear();
@@ -504,6 +510,7 @@ public class GameLG implements Listener {
             //playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
 
             playerLG.sendLobbySideScoreboard();
+            playerLG.showAllPlayers();
         }
 
         Bukkit.createWorld(new WorldCreator("LG"));

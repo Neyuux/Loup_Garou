@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -151,7 +152,7 @@ public class Soeur extends Role {
             return;
         }
 
-        CHAT.openChat(playableSisters, playableSisters);
+        CHAT.openChat(new HashSet<>(playableSisters), new HashSet<>(playableSisters));
 
         for (PlayerLG sisterLG : sisters) {
             if (sisterLG.canUsePowers()) {

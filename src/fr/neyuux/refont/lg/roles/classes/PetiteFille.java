@@ -10,6 +10,8 @@ import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import org.bukkit.event.EventHandler;
 
+import java.util.HashSet;
+
 public class PetiteFille extends Role {
 
     @Override
@@ -63,6 +65,6 @@ public class PetiteFille extends Role {
         GameLG game = LG.getInstance().getGame();
 
         if (game.getDayCycle().equals(DayCycle.NIGHT))
-            LoupGarou.CHAT.addSpies(game.getPlayersByRole(this.getClass()));
+            LoupGarou.CHAT.addSpies(new HashSet<>(game.getPlayersByRole(this.getClass())));
     }
 }

@@ -14,7 +14,7 @@ public class VoteBookItemStack extends CustomItemStack {
     private final VoteLG vote;
 
     public VoteBookItemStack(VoteLG vote) {
-        super(Material.BOOK_AND_QUILL);
+        super(Material.BOOK);
 
         this.vote = vote;
 
@@ -31,6 +31,7 @@ public class VoteBookItemStack extends CustomItemStack {
         new VoteInv(vote, receiverLG, new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG playerLG) {
+                if (playerLG == null) return new String[0];
                 return new String[] {vote.getFirstColor() + "Choisis le joueur " + playerLG.getNameWithAttributes(receiverLG) + vote.getFirstColor() + " pour le vote.", "", "§7>>Clique pour voter"};
             }
 
@@ -38,6 +39,6 @@ public class VoteBookItemStack extends CustomItemStack {
             public void doActionsAfterClick(PlayerLG paramPlayerLG) {
                 receiverLG.callbackChoice(paramPlayerLG);
             }
-        });
+        }).open(player);
     }
 }

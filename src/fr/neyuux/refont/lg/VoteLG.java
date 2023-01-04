@@ -60,7 +60,7 @@ public class VoteLG {
 
         this.callback = callback;
 
-        game.wait(timer, () -> this.end(false), timerMessage, false);
+        game.wait(timer, () -> this.end(false), timerMessage, true);
         game.setVote(this);
 
         for (PlayerLG voterLG : voters) {
@@ -81,7 +81,7 @@ public class VoteLG {
             return;
         }
 
-        if (!this.votable.contains(voted)) {
+        if (voted != null && !this.votable.contains(voted)) {
             voter.sendMessage(LG.getPrefix() + voted.getNameWithAttributes(voter) + "§c n'est pas votable.");
             GameLG.playNegativeSound(voter.getPlayer());
             return;
@@ -102,7 +102,16 @@ public class VoteLG {
 
         voter.getCache().put("vote", voted);
         if (voted != null) this.updateArmorStand(voted);
-        
+
+        int votes = 0;
+        for (PlayerLG playerLG : this.getVoters())
+            if (this.getVote(playerLG) != null)
+                votes++;
+
+        if (votes == this.getVoters().size() && LG.getInstance().getGame().getWaitTicksToSeconds() > timer / 6) {
+            LG.getInstance().getGame().cancelWait();
+            LG.getInstance().getGame().wait(timer / 6, () -> this.end(false), timerMessage, false);
+        }
 
         if (voter.getRole() instanceof Ankou && voter.isDead()) {
             String name = voter.getRole().getDeterminingName().substring(3);
@@ -129,9 +138,10 @@ public class VoteLG {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void end(boolean cancel) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> killers = new ArrayList<>();
+        List<PlayerLG> killers = null;
         List<PlayerLG> finalists = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
 
@@ -150,7 +160,7 @@ public class VoteLG {
                 }
         }
 
-        while (finalists.size() <= 1) {
+        while (finalists.size() > 1) {
             Integer i1 = this.getVotesFor(finalists.get(0)).size();
             int i2 = this.getVotesFor(finalists.get(1)).size();
             int comparator = i1.compareTo(i2);
@@ -163,12 +173,12 @@ public class VoteLG {
                 if (finalists.size() == 2)
                     break;
             }
-
-            if (i1 > killers.size()) killers = this.getVotesFor(finalists.get(0));
-            if (i2 > killers.size()) killers = this.getVotesFor(finalists.get(1));
         }
 
-        if (this.getVotesFor(finalists.get(0)).isEmpty())
+        if (!finalists.isEmpty())
+            killers = this.getVotesFor(finalists.get(0));
+
+        if (finalists.isEmpty() || this.getVotesFor(finalists.get(0)).isEmpty())
             cancel = true;
 
         for (PlayerLG playerLG : this.voters) {
@@ -176,7 +186,7 @@ public class VoteLG {
             playerLG.stopChoosing();
         }
 
-        if (finalists.size() > 1) {
+        if (finalists.size() != 1) {
             if (cancel) {
                 this.choosen = null;
                 Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
@@ -260,7 +270,7 @@ public class VoteLG {
         } else {
             PlayerLG eliminated = finalists.get(0);
 
-            builder.append(LG.getPrefix()).append(firstColor).append("Le vote possède un résultat : ").append(secondColor).append(eliminated.getName()).append(" ").append(firstColor).append("a obtenu le plus de votes(").append(secondColor).append(killers.size()).append(firstColor).append("). Il sera donc éliminé.");
+            builder.append(LG.getPrefix()).append(firstColor).append("Le vote possède un résultat : ").append(secondColor).append(eliminated.getName()).append(" ").append(firstColor).append("a obtenu le plus de votes(").append(secondColor).append(killers.size()).append(firstColor).append("). Il a donc été choisi.");
             this.choosen = eliminated;
         }
 
@@ -279,7 +289,7 @@ public class VoteLG {
     private List<PlayerLG> getVotesFor(PlayerLG target) {
         List<PlayerLG> voters = new ArrayList<>();
         for (PlayerLG playerLG : this.getVoters())
-            if (playerLG.getCache().get("vote").equals(target))
+            if (playerLG.getCache().has("vote") && playerLG.getCache().get("vote") != null && playerLG.getCache().get("vote").equals(target))
                 voters.add(playerLG);
 
         if (target.getCache().has("corbeauTargeted")) {

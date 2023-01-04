@@ -198,11 +198,9 @@ public class PlayerLG {
 
         name += lastcolor + this.human.getName();
 
-        if (this.getCache().has("couple") && this.getCache().get("couple") != null || receiver.getRole() instanceof Cupidon) {
-
-            if (receiver.getRole() instanceof Cupidon || this.getCache().get("couple").equals(receiver)) {
+        if (this.getCache().has("couple")) {
+            if (receiver.getRole() instanceof Cupidon || (this.getCache().get("couple") != null && receiver.getCache().has("couple") && receiver.getCache().get("couple") != null && this.getCache().get("couple").equals(receiver)))
                 name += "§d \u2764";
-            }
         }
         return name;
     }
@@ -298,6 +296,13 @@ public class PlayerLG {
     public void updateGamePlayerScoreboard() {
         Scoreboard scoreboard = this.getPlayer().getScoreboard();
 
+        for (Team team : scoreboard.getTeams())
+            for (Player player : Bukkit.getOnlinePlayers())
+                if (team.getName().equals(player.getName())) {
+                    team.unregister();
+                    break;
+                }
+
         for (PlayerLG targetLG : this.game.getAlive()) {
             Team team = scoreboard.registerNewTeam(targetLG.getName());
             String[] prefixsuffix = targetLG.getNameWithAttributes(this).split(targetLG.getName());
@@ -326,15 +331,18 @@ public class PlayerLG {
     public void sendListRolesSideScoreboard() {
         SimpleScoreboard scoreboard = new SimpleScoreboard("§6§lRôles", this.getPlayer());
         HashMap<String, Integer> roles = new HashMap<>();
+        int i = 15;
 
         for (Role role : game.getAliveRoles())
             if (roles.containsKey(role.getDisplayName()))
-                roles.put(role.getDisplayName(), roles.get(role.getDisplayName() + 1));
+                roles.put(role.getDisplayName(), roles.get(role.getDisplayName()) + 1);
             else
                 roles.put(role.getDisplayName(), 1);
 
-        for (Map.Entry<String, Integer> entry : roles.entrySet())
-            scoreboard.add(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Integer> entry : roles.entrySet()) {
+            scoreboard.add(entry.getKey() + " §f: §e" + entry.getValue(), i);
+            i--;
+        }
 
         this.getPlayer().setScoreboard(scoreboard.getScoreboard());
 
@@ -366,7 +374,7 @@ public class PlayerLG {
         for (PlayerLG playerLG : this.game.getAlive())
             player.hidePlayer(playerLG.getPlayer());
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, false, false));
 
         if (this.game.getGameType().equals(GameType.FREE)) {
             ((CraftPlayer) player).getHandle().a(new BlockPosition(loc.getX(), loc.getY(), loc.getZ()));
@@ -395,13 +403,16 @@ public class PlayerLG {
 
         this.isDead = true;
 
+        this.setWake();
         game.getSpectators().add(this);
         this.getPlayer().setGameMode(GameMode.SPECTATOR);
         this.getPlayer().setPlayerListName("§8[§7Spectateur§8] §7" + this.getName());
         this.getPlayer().setDisplayName(this.getPlayer().getPlayerListName());
 
+        Bukkit.getWorld("LG").strikeLightningEffect(this.getLocation());
+
         game.getAliveRoles().remove(this.getRole());
-        //TODO updateScoreboard
+        game.sendListRolesSideScoreboardToAllPlayers();
 
         this.showAllPlayers();
 

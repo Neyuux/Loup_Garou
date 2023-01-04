@@ -108,14 +108,14 @@ public class VoyanteDAura extends Role {
 
         if (LG.getInstance().getGame().getLGs(false).contains(choosen)) {
             playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §da une Aura §4§lSombre§d, il est donc du côté des Loups-Garous !");
-            playerLG.sendTitle("§4§lSombre", "§dVous avez senti l'aura de §5§l" + playerLG.getDisplayName() + "§d !", 5, 80, 5);
+            playerLG.sendTitle("§4§lSombre", "§dVous avez senti l'aura de §5§l" + choosen.getDisplayName() + "§d !", 5, 80, 5);
             if ((boolean)LG.getInstance().getGame().getConfig().getChattyVoyante().getValue())
                 playerLG.sendMessage(LG.getPrefix() + "§dLa " + this.getDisplayName() + "§d a espionné un joueur dont l'aura est §4§lSombre§d !");
 
 
         } else {
             playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §da une Aura §f§lClaire§d, il n'est donc §apas §ddu côté des Loups-Garous !");
-            playerLG.sendTitle("§f§lClaire", "§dVous avez senti l'aura de §5§l" + playerLG.getDisplayName() + "§d !", 5, 80, 5);
+            playerLG.sendTitle("§f§lClaire", "§dVous avez senti l'aura de §5§l" + choosen.getDisplayName() + "§d !", 5, 80, 5);
             if ((boolean)LG.getInstance().getGame().getConfig().getChattyVoyante().getValue())
                 playerLG.sendMessage(LG.getPrefix() + "§dLa " + this.getDisplayName() + "§d a espionné un joueur dont l'aura est §f§lClaire§d !");
         }

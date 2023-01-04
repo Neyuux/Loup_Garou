@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Vampire extends Role {
@@ -75,7 +76,7 @@ public class Vampire extends Role {
                 playerLG.setWake();
             }
 
-        CHAT.openChat(new ArrayList<>(), voters);
+        CHAT.openChat(new HashSet<>(), new HashSet<>(voters));
 
         VoteLG lgvote = new VoteLG("Vote des Vampires", this.getTimeout(), true, (paramPlayerLG, secondsLeft) -> {
             if (paramPlayerLG.getCache().has("vote"))

@@ -107,7 +107,7 @@ public class Voyante extends Role {
         if (roleChoiceEvent.isCancelled()) return;
 
         playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §dest " + choosen.getRole().getDisplayName() + " §d!");
-        playerLG.sendTitle(choosen.getRole().getDisplayName(), "§dVous avez espionné le rôle de §5§l" + playerLG.getDisplayName() + "§d !", 5, 80, 5);
+        playerLG.sendTitle(choosen.getRole().getDisplayName(), "§dVous avez espionné le rôle de §5§l" + choosen.getDisplayName() + "§d !", 5, 80, 5);
         if ((boolean)LG.getInstance().getGame().getConfig().getChattyVoyante().getValue())
             playerLG.sendMessage(LG.getPrefix() + "§dLa " + this.getDisplayName() + "§d a espionné un joueur dont le rôle est " + choosen.getRole().getDisplayName() + "§d !");
 

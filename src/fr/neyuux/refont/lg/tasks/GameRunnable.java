@@ -23,11 +23,15 @@ public class GameRunnable extends BukkitRunnable {
 
     private final List<Role> rolesOrder = new ArrayList<>();
 
+    private final List<List<Double>> usedLocations;
+    //TODO BUG
+
     private int timer = 7;
 
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
         this.game = LG.getInstance().getGame();
+        this.usedLocations = new ArrayList<>();
     }
 
 
@@ -48,15 +52,22 @@ public class GameRunnable extends BukkitRunnable {
                 FileConfiguration file = LG.getInstance().getConfig();
                 List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + LG.getInstance().getGame().getGameType());
                 List<Double> doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
+                if (this.usedLocations.contains(doubleList))
+                    while (this.usedLocations.contains(doubleList)) {
+                        doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
+                    }
+
                 Location placement = new Location(Bukkit.getWorld("LG"), doubleList.get(0) + 0.5, doubleList.get(1), doubleList.get(2) + 0.5, doubleList.get(3).floatValue(), doubleList.get(4).floatValue());
 
+                this.usedLocations.add(doubleList);
+                System.out.println(this.usedLocations);
                 playerLG.setPlacement(placement);
             }
 
             this.game.wait(6, this::nextNight, (playerLG, secondsLeft) -> LG.getPrefix() + "§9Début de la nuit dans §1§l" + secondsLeft + "§9 seconde" + LG.getPlurial(secondsLeft)  + ".", false);
         }
 
-        if (timer == 0) {
+        if (timer == 0 && game.getDayCycle() != DayCycle.NONE) {
             timer = 14;
             if (game.getPlayersByRole(Comedien.class).isEmpty())
                 game.sendListRolesSideScoreboardToAllPlayers();
@@ -64,7 +75,7 @@ public class GameRunnable extends BukkitRunnable {
                 game.sendComedianPowersSideScoreboardToAllPlayers();
         }
 
-        if (timer == 7) {
+        if (timer == 7 && game.getDayCycle() != DayCycle.NONE) {
             game.sendListRolesSideScoreboardToAllPlayers();
         }
 
@@ -83,6 +94,7 @@ public class GameRunnable extends BukkitRunnable {
 
 
     public void nextNight() {
+        if (game.getGameState().equals(GameState.FINISHED)) return;
 
         Bukkit.getPluginManager().callEvent(new NightStartEvent());
 
@@ -127,6 +139,8 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void nextDay() {
+        if (game.getGameState().equals(GameState.FINISHED)) return;
+
         Bukkit.getPluginManager().callEvent(new DayStartEvent());
 
         game.addDay();
@@ -176,9 +190,13 @@ public class GameRunnable extends BukkitRunnable {
         NightEndEvent event = new NightEndEvent();
         Bukkit.getPluginManager().callEvent(event);
 
+        Bukkit.broadcastMessage("");
+
         for (PlayerLG playerLG : game.getKilledPlayers())
             playerLG.eliminate();
         game.getKilledPlayers().clear();
+
+        game.getAlive().forEach(PlayerLG::setWake);
 
         if (event.isCancelled()) return;
 
@@ -222,7 +240,7 @@ public class GameRunnable extends BukkitRunnable {
         for (RoleNightOrder order : RoleNightOrder.values())
             for (Role role : this.game.getRolesAtStart())
                 if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.game.getNight() % 2 == 0 || order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.game.getNight() == 1) {
+                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.game.getNight() % 2 == 0) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.game.getNight() == 1)) {
                         this.rolesOrder.add(role);
                          System.out.println("  " + role.getConfigName());
                     }

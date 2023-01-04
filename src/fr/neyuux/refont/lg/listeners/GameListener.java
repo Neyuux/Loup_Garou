@@ -125,4 +125,17 @@ public class GameListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent ev) {
+        GameLG game = LG.getInstance().getGame();
+
+        if (!game.getGameState().equals(GameState.PLAYING)) return;
+
+        if (game.getDayCycle().equals(DayCycle.DAY)) {
+            ev.setFormat(ev.getPlayer().getDisplayName() + " §8§l» §f" + ev.getMessage().trim());
+        } else {
+            ev.setCancelled(true);
+        }
+    }
+
 }

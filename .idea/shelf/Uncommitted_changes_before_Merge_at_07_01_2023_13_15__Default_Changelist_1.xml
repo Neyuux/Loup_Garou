@@ -1,0 +1,1424 @@
+<changelist name="Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1" date="1673093823397" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 07/01/2023 13:15 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/PlayerLG$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerLG$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterChattyVoyanteItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterChattyVoyanteItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/utils/CacheLG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/CacheLG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/listeners/LGThierceListener$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGThierceListener$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Necromancien.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Necromancien.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/EnfantSauvage.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersRolesInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersRolesInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/JoueurDeFlute$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/ItemsManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ItemsManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/listeners/LGThierceListener.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGThierceListener.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pirate$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pirate$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/utils/SimpleScoreboard.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SimpleScoreboard.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/VoleurInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoleurInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Bouffon$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Bouffon$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/tasks/GameRunnable$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameRunnable$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/players/PlayerConfigInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerConfigInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VilainGarcon$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/WinCamps.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/WinCamps.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/PlayerLG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerLG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/roles/RoleAddingItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RoleAddingItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/PetiteFille.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFille.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pyromane$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pyromane$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/ChangeGameTypeInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChangeGameTypeInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Comedien.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Comedien.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GrandMechantLoup$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/DeathManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DeathManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChevalierALEpeeRouillee.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChevalierALEpeeRouillee.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Corbeau$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Corbeau$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/role/RCamp.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RCamp.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ChangeGameTypeItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChangeGameTypeItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Frere.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Frere.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ServanteDevoueeInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ServanteDevoueeInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Dictateur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Dictateur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/SorciereInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChasseurDeVampire$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Sorciere$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Sorciere$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/commands/SpecExecutor.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SpecExecutor.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ServanteDevouee.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ServanteDevouee.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterMayorItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterMayorItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/utils/AbstractCustomInventory.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/AbstractCustomInventory.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/InfectPereDesLoupsInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/InfectPereDesLoupsInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKillItemStack$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereKillItemStack$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Ange.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Ange.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/ScoreboardSign.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ScoreboardSign.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/NightEndEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/NightEndEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ComedienInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChaperonRouge.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChaperonRouge.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Fossoyeur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Fossoyeur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFilleWO.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VilainGarcon.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Corbeau.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Corbeau.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/JoueurDeFlute.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG$StringTimerMessage.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG$StringTimerMessage.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/FilleDeJoie$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/players/SetPlayerToSpectatorItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SetPlayerToSpectatorItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Salvateur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Salvateur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Fossoyeur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Fossoyeur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/tasks/LGStop.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGStop.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Comedien$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Comedien$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/VoleurInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoleurInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterDayCycleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterDayCycleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Voleur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Voleur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/VoleurGetNewRoleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoleurGetNewRoleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GrandMechantLoup.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/Decks.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Decks.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Vampire.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Vampire.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ServanteDevoueeInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ServanteDevoueeInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Jumeau$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Jumeau$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/utils/CustomItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/CustomItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/MamieGrincheuse$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/OpListItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/OpListItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/roles/CampChooseItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/CampChooseItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/Anvil.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Anvil.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/ServanteDevoueeTakeRoleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ServanteDevoueeTakeRoleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ParametersItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/EnfantSauvage$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/roles/DecksItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DecksItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/listeners/PreGameListener.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PreGameListener.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/Gtype.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Gtype.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/tasks/GameRunnable.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameRunnable.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VillageoisVillageois.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VillageoisVillageois.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Cupidon$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Cupidon$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/listeners/NightListener.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/NightListener.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Assassin$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Assassin$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/hotbar/VoteBookItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteBookItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/ScoreboardSign$VirtualTeam.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ScoreboardSign$VirtualTeam.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParametersRolesItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersRolesItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParametersGlobalItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersGlobalItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/config/Parameter.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Parameter.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/roles/RolesListRolesInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RolesListRolesInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/DurACuire.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DurACuire.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ChoosePlayerInv$ActionsGenerator.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChoosePlayerInv$ActionsGenerator.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Sorciere.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Sorciere.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/VoteEndEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteEndEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/task/DayRunnable.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DayRunnable.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/DictateurInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DictateurInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoyanteDAura.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoyanteDAura$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/SimpleScoreboard$NameData.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SimpleScoreboard$NameData.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Necromancien$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Necromancien$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterWildChildRandomModelItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterWildChildRandomModelItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/HumainMaudit.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/HumainMaudit.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Chasseur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Chasseur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/listeners/GameListener.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameListener.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/PlayerLG$CallbackChoice.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerLG$CallbackChoice.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/PorteurDeLAmulette.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PorteurDeLAmulette.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/PyromaneInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PyromaneInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromanePutOilItemStack$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PyromanePutOilItemStack$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Detective$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Detective$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/changegametypeinv/ChangeGameTypeToMeetingItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChangeGameTypeToMeetingItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GardeDuCorps$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Voyante$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Voyante$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/DayCycle.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DayCycle.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterRandomCoupleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterRandomCoupleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChoosePlayerItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChoosePlayerItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VilainGarcon$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/InfectPereDesLoupsInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/InfectPereDesLoupsInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LoupGarouBlanc$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameType.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameType.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/LG$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LG$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/InfectPereDesLoups.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/role/RDeck.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RDeck.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/changegametypeinv/ChangeGameTypeToFreeItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChangeGameTypeToFreeItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pretre$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pretre$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/DayEndEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DayEndEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ChoosePlayerInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChoosePlayerInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersGlobalInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParametersGlobalInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Noctambule$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Noctambule$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/players/PlayerConfigItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerConfigItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChienLoup$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChienLoup$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/config/ComedianPowers.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ComedianPowers.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/listeners/GameListener$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameListener$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Dictateur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Dictateur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/PlayerLG$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerLG$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/commands/CommandAnkou.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/CommandAnkou.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Voleur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Voleur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/PlayersMenuItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayersMenuItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/RolesFirstMenuItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RolesFirstMenuItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ComedianPowerGlassItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ComedianPowerGlassItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/FilleDeJoie.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/chat/ChatLG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChatLG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/JoueurDeFlute$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/JoueurDeFlute$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Macon.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Macon.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/DictateurDoRebellionItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DictateurDoRebellionItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFilleWO$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/PetiteFilleWOInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFilleWOInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pirate$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pirate$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameState.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameState.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterCupiWinWithCoupleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterCupiWinWithCoupleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/hotbar/JoinGameEnderBallItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/JoinGameEnderBallItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromaneKillItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PyromaneKillItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/InfectPereDesLoupsInfectItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/InfectPereDesLoupsInfectItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/FakeAnvil.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/FakeAnvil.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/config/ParameterType.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterType.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Salvateur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Salvateur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/NightStartEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/NightStartEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/CancelBarrierItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/CancelBarrierItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ResetGameItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ResetGameItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LoupGarouBlanc$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Soeur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Soeur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Chaman.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Chaman.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pretre$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pretre$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/FilleDeJoie$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/Role.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Role.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Mercenaire.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Mercenaire.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/hotbar/SpectatorTearItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SpectatorTearItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pacifiste$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pacifiste$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/commands/LGCommand.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGCommand.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/LG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/IdiotDuVillage.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/IdiotDuVillage.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Noctambule.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Noctambule.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoyanteDAura$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/roles/RolesCampChooseInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RolesCampChooseInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Jumeau.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Jumeau.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/PetiteFilleWOInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFilleWOInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Voyante.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Voyante.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/config/MayorSuccession.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/MayorSuccession.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChasseurDeVampire.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pronostiqueur$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/task/NightRunnable.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/NightRunnable.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/gameinventories/VoteInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChienLoupDogChoiceItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Salvateur$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Salvateur$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/PlayerEliminationEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PlayerEliminationEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Renard$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Renard$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Detective$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Detective$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/WinEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/WinEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Assassin.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Assassin.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/RoleChoiceEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RoleChoiceEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG$StringVictoryTitle.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG$StringVictoryTitle.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChienLoup.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChienLoup.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/InfectPereDesLoups$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/VoteLG$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteLG$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VilainGarcon$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/VoteStartEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteStartEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/reset/YesResetMapItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/YesResetMapItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/DictateurInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DictateurInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/RoleNightOrder$RecurrenceType.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RoleNightOrder$RecurrenceType.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/DeathManager$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DeathManager$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/ReturnArrowItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ReturnArrowItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pirate.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pirate.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/VoteLG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteLG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/VoyanteApprentie.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoyanteApprentie.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKilledItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereKilledItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pyromane.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pyromane.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Renard.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Renard.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Ankou.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Ankou.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromanePutOilItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PyromanePutOilItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/task/LGAutoStop.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGAutoStop.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LoupGarouBlanc.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/SorciereInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/MamieGrincheuse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/reset/NoResetMapItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/NoResetMapItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/LoupGarou.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LoupGarou.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/MamieGrincheuse$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pronostiqueur.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Jumeau$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Jumeau$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pretre.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pretre.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/EnfantSauvage$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterChamanChatItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterChamanChatItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/hotbar/VoteBookItemStack$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteBookItemStack$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/ConfigurationInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ConfigurationInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Cupidon.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Cupidon.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GardeDuCorps.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/Gcycle.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Gcycle.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/task/LGAutoStart.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGAutoStart.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Cupidon$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Cupidon$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Cupidon$3.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Cupidon$3.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pacifiste.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pacifiste.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/RoleNightOrder.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RoleNightOrder.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/tasks/GameRunnable$1$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameRunnable$1$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterCupiInCoupleItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterCupiInCoupleItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ComedianPowerChoiceItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterLGChatItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterLGChatItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ChienLoupInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChienLoupInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Noctambule$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Noctambule$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereReviveItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereReviveItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/DayStartEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/DayStartEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Bouffon.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Bouffon.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChasseurDeVampire$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/tasks/LGStart.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/LGStart.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/listeners/GameListener$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameListener$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/roles/RoleDecksInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/RoleDecksInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pronostiqueur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Necromancien$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Necromancien$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/PetiteFilleWOInspectionItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PetiteFilleWOInspectionItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/config/GameConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/gameinventories/VoteInv$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/VoteInv$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/ScoreboardSign$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ScoreboardSign$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/players/ListPlayersInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ListPlayersInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Renard$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Renard$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/Gstate.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Gstate.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterComedianPowersItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterComedianPowersItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Detective$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Detective$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/ResetEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ResetEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/MontreurDOurs.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/MontreurDOurs.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Ancien.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Ancien.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/SimpleVillageois.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SimpleVillageois.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Voyante$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Voyante$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/event/TryStartGameEvent.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/TryStartGameEvent.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GardeDuCorps$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/GameLG.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GameLG.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Detective.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Detective.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ComedienInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/roleinventories/PyromaneInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/PyromaneInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Assassin$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Assassin$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Chasseur$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Chasseur$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Corbeau$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Corbeau$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKillItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/SorciereKillItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterMayorSuccessionItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterMayorSuccessionItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/Camps.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Camps.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Bouffon$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Bouffon$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/Pacifiste$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/Pacifiste$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/parameters/ParameterComedianPowersInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ParameterComedianPowersInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/GrandMechantLoup$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ChienLoupWolfChoiceItemStack.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/roles/classes/President.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/President.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/inventories/config/ResetInv.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/ResetInv.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/lg/items/hotbar/OpComparatorItemStack.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Default_Changelist]1/OpComparatorItemStack.class" />
+  </binary>
+</changelist>

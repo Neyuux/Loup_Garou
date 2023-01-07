@@ -1,0 +1,710 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"LG\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"BranchesTreeState\">\r\n    <expand>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n    </expand>\r\n    <select />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"7a869ff5-b9ea-409c-9f34-4ab3032932d5\" name=\"Default Changelist\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/artifacts/LG.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/encodings.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Index.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart$1.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/bin/plugin.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/bin/plugin.yml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/plugin.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/plugin.yml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"jar://$PROJECT_DIR$/../../Serv/spigot.jar!/org/bukkit/potion/PotionEffect.class\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1hCBbxVkGi0SQmu8HWgKXe1Bw9Z\" />\r\n  <component name=\"ProjectReloadState\">\r\n    <option name=\"STATE\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../Serv/plugins\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Project\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.2\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.lookFeel\" />\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"7a869ff5-b9ea-409c-9f34-4ab3032932d5\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1599505276319</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1599505276319</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/master\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,119 +1,556 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ArtifactsWorkspaceSettings">
+-    <artifacts-to-build>
+-      <artifact name="LG" />
+-    </artifacts-to-build>
+-  </component>
+   <component name="AutoImportSettings">
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+-  <component name="BranchesTreeState">
+-    <expand>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-    </expand>
+-    <select />
+-  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/LG.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="starting merge with master, remove old.lg and optimize imports, packages">
++      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/DayCycle.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG$3.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG$StringTimerMessage.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG$StringVictoryTitle.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameState.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/GameType.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/LG$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/LG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/PlayerLG$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/PlayerLG$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/PlayerLG$CallbackChoice.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/PlayerLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/VoteLG$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/VoteLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/WinCamps.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/chat/ChatLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/commands/LGCommand.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/config/ComedianPowers.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/config/GameConfig.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/config/MayorSuccession.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/config/Parameter.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/config/ParameterType.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/DayEndEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/DayStartEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/NightEndEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/NightStartEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/PlayerEliminationEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/ResetEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/RoleChoiceEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/TryStartGameEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/VoteEndEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/VoteStartEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/event/WinEvent.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/ChangeGameTypeInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/ConfigurationInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/ResetInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/parameters/ParameterComedianPowersInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersGlobalInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/parameters/ParametersRolesInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/players/ListPlayersInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/players/PlayerConfigInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/roles/RoleDecksInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/roles/RolesCampChooseInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/config/roles/RolesListRolesInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/gameinventories/VoteInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/gameinventories/VoteInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ChienLoupInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ChoosePlayerInv$ActionsGenerator.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ChoosePlayerInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ComedienInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/DictateurInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/DictateurInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/InfectPereDesLoupsInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/InfectPereDesLoupsInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/PetiteFilleWOInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/PetiteFilleWOInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/PyromaneInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/PyromaneInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ServanteDevoueeInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/ServanteDevoueeInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/SorciereInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/SorciereInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/VoleurInv$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/inventories/roleinventories/VoleurInv.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/ItemsManager.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/hotbar/JoinGameEnderBallItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/hotbar/OpComparatorItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/hotbar/SpectatorTearItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/hotbar/VoteBookItemStack$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/hotbar/VoteBookItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/CancelBarrierItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/ReturnArrowItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/changegametypeinv/ChangeGameTypeToFreeItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/changegametypeinv/ChangeGameTypeToMeetingItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ChangeGameTypeItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/OpListItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ParametersItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/PlayersMenuItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/ResetGameItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/mainmenu/RolesFirstMenuItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ComedianPowerGlassItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterChamanChatItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterChattyVoyanteItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterComedianPowersItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterCupiInCoupleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterCupiWinWithCoupleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterDayCycleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterLGChatItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterMayorItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterMayorSuccessionItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterRandomCoupleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParameterWildChildRandomModelItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParametersGlobalItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/parameters/ParametersRolesItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/players/PlayerConfigItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/players/SetPlayerToSpectatorItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/reset/NoResetMapItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/reset/YesResetMapItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/roles/CampChooseItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/roles/DecksItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/config/roles/RoleAddingItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/ChoosePlayerItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/DictateurDoRebellionItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/InfectPereDesLoupsInfectItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/PetiteFilleWOInspectionItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromaneKillItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromanePutOilItemStack$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/PyromanePutOilItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/ServanteDevoueeTakeRoleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKillItemStack$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKillItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereKilledItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/SorciereReviveItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/items/menus/roleinventories/VoleurGetNewRoleItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/listeners/GameListener$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/listeners/GameListener$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/listeners/GameListener.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/listeners/PreGameListener.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/Camps.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/Decks.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/Role.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/RoleNightOrder$RecurrenceType.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/RoleNightOrder.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Ancien.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Ange.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Ankou.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Assassin$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Assassin$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Assassin.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Bouffon$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Bouffon$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Bouffon.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Chaman.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChaperonRouge.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Chasseur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Chasseur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChasseurDeVampire.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChevalierALEpeeRouillee.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChienLoup$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ChienLoup.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Comedien$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Comedien.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Corbeau$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Corbeau$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Corbeau.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Cupidon$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Cupidon$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Cupidon$3.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Cupidon.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Detective$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Detective$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Detective$3.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Detective.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Dictateur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Dictateur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/DurACuire.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/EnfantSauvage.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/FilleDeJoie.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Fossoyeur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Fossoyeur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Frere.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GardeDuCorps.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/GrandMechantLoup.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/HumainMaudit.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/IdiotDuVillage.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/InfectPereDesLoups.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute$3.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/JoueurDeFlute.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Jumeau$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Jumeau$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Jumeau.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/LoupGarou.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/LoupGarouBlanc.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Macon.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/MamieGrincheuse.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Mercenaire.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/MontreurDOurs.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Necromancien$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Necromancien$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Necromancien.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Noctambule$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Noctambule$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Noctambule.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pacifiste$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pacifiste$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pacifiste.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/PetiteFille.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/PetiteFilleWO.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pirate$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pirate$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pirate.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/PorteurDeLAmulette.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/President.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pretre$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pretre$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pretre.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pronostiqueur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pyromane$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Pyromane.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Renard$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Renard$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Renard.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Salvateur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Salvateur$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Salvateur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/ServanteDevouee.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/SimpleVillageois.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Soeur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Sorciere$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Sorciere.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Vampire.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon$3.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VilainGarcon.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VillageoisVillageois.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Voleur$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Voleur.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Voyante$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Voyante$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/Voyante.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VoyanteApprentie.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura$2.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/roles/classes/VoyanteDAura.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/tasks/GameRunnable$1$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/tasks/GameRunnable$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/tasks/GameRunnable.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/tasks/LGStart.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/tasks/LGStop.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/utils/AbstractCustomInventory.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/utils/CacheLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/utils/CustomItemStack.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/utils/SimpleScoreboard$NameData.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/lg/utils/SimpleScoreboard.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/Anvil.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/DeathManager$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/DeathManager.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/FakeAnvil.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/Gcycle.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/Gstate.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/Gtype.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/LG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/PlayerLG.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/ScoreboardSign$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/ScoreboardSign$VirtualTeam.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/ScoreboardSign.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/SimpleScoreboard$NameData.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/commands/CommandAnkou.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/commands/SpecExecutor.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/listeners/LGThierceListener$1.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/listeners/LGThierceListener.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/listeners/NightListener.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/role/RCamp.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/role/RDeck.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/task/DayRunnable.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/task/GameRunnable.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/task/LGAutoStart.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/task/LGAutoStop.class" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/task/NightRunnable.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Index.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart$1.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/bin/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/plugin.yml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DeathManager.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/DisplayState.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/GameConfig.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/Gtype.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/LG.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/PlayerLG.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/commands/SpecExecutor.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/DayListener.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/LGThierceListener.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RCamp.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/RDeck.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/DayRunnable.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/GameRunnable.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/LGAutoStart.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
++    </list>
++    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="prepare merge from refont">
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Anvil.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DeathManager.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/DisplayState.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/DisplayState.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/FakeAnvil.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/GameConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/GameConfig.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gcycle.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gstate.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/Gtype.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/PlayerLG.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/SimpleScoreboard$NameData.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/SimpleScoreboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/SimpleScoreboard.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/commands/StartExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/commands/StartExecutor.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/DayListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/listeners/DayListener.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/listeners/NightListener.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RCamp.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/RDeck.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/role/Roles.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fr/neyuux/refont/old/lg/role/Roles.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/DayRunnable.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/GameRunnable.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStart.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/LGAutoStop.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/bin/fr/neyuux/lgthierce/task/NightRunnable.class" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Enum" />
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Merge.Settings">
++    <option name="BRANCH" value="refont" />
++  </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="refont" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitSEFilterConfiguration">
++    <file-type-list>
++      <filtered-out-file-type name="LOCAL_BRANCH" />
++      <filtered-out-file-type name="REMOTE_BRANCH" />
++      <filtered-out-file-type name="TAG" />
++      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
++    </file-type-list>
++  </component>
+   <component name="HighlightingSettingsPerFile">
+     <setting file="jar://$PROJECT_DIR$/../../Serv/spigot.jar!/org/bukkit/potion/PotionEffect.class" root0="SKIP_INSPECTION" />
+   </component>
+-  <component name="ProjectId" id="1hCBbxVkGi0SQmu8HWgKXe1Bw9Z" />
+-  <component name="ProjectReloadState">
+-    <option name="STATE" value="1" />
++  <component name="NamedScopeManager">
++    <scope name="Libraries" pattern="lib:fr.leomelki.*" />
++    <scope name="Refont" pattern="src:fr.neyuux.refont.lg..*" />
+   </component>
++  <component name="ProjectId" id="1hCBbxVkGi0SQmu8HWgKXe1Bw9Z" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent">
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
++    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Serv/plugins" />
+-    <property name="project.structure.last.edited" value="Project" />
++    <property name="last_directory_selection" value="$PROJECT_DIR$/src/fr/neyuux/refont/lg" />
++    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/LoupGarou.v1.1.0.jar" />
++    <property name="project.structure.last.edited" value="Modules" />
+     <property name="project.structure.proportion" value="0.15" />
+     <property name="project.structure.side.proportion" value="0.2" />
+-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
++    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
++  </component>
++  <component name="RecentsManager">
++    <key name="CreateClassDialog.RecentsKey">
++      <recent name="fr.neyuux.refont.lg.utils" />
++      <recent name="fr.neyuux.refont.lg.roles.classes" />
++      <recent name="fr.neyuux.refont.lg.roles" />
++      <recent name="fr.neyuux.lg.roles.classes" />
++      <recent name="fr.neyuux.lg.roles" />
++    </key>
++    <key name="CopyClassDialog.RECENTS_KEY">
++      <recent name="fr.neyuux.refont.lg.utils" />
++    </key>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+       <changelist id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="" />
++      <changelist id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="" />
+       <created>1599505276319</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1599505276319</updated>
+     </task>
++    <task id="LOCAL-00001" summary="start refont">
++      <created>1633508441483</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1633508441483</updated>
++    </task>
++    <task id="LOCAL-00002" summary="start few roles">
++      <created>1633510595381</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1633510595381</updated>
++    </task>
++    <task id="LOCAL-00003" summary="finish role bases">
++      <created>1633677623555</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1633677623555</updated>
++    </task>
++    <task id="LOCAL-00004" summary="changes roles">
++      <created>1634284580793</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1634284580793</updated>
++    </task>
++    <task id="LOCAL-00005" summary="continuing roles">
++      <created>1634305820334</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1634305820334</updated>
++    </task>
++    <task id="LOCAL-00006" summary="continuing roles 2">
++      <created>1634558061152</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1634558061160</updated>
++    </task>
++    <task id="LOCAL-00007" summary="continuing roles 3">
++      <created>1634633952914</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1634633952914</updated>
++    </task>
++    <task id="LOCAL-00008" summary="continuing roles 4">
++      <created>1634889215561</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1634889215561</updated>
++    </task>
++    <task id="LOCAL-00009" summary="finish roles">
++      <created>1636707254966</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1636707254966</updated>
++    </task>
++    <task id="LOCAL-00010" summary="start LGGAME">
++      <created>1636728570237</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1636728570237</updated>
++    </task>
++    <task id="LOCAL-00011" summary="continue LGame + LGPlayer">
++      <created>1637250746178</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1637250746178</updated>
++    </task>
++    <task id="LOCAL-00012" summary="start ChatLG">
++      <created>1637311868858</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1637311868858</updated>
++    </task>
++    <task id="LOCAL-00013" summary="start ChatLG 2">
++      <created>1637311936110</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1637311936110</updated>
++    </task>
++    <task id="LOCAL-00014" summary="finish ChatLg plus add on playerlg">
++      <created>1637333418151</created>
++      <option name="number" value="00014" />
++      <option name="presentableId" value="LOCAL-00014" />
++      <option name="project" value="LOCAL" />
++      <updated>1637333418151</updated>
++    </task>
++    <task id="LOCAL-00015" summary="start getNameWithAttributes">
++      <created>1637567640280</created>
++      <option name="number" value="00015" />
++      <option name="presentableId" value="LOCAL-00015" />
++      <option name="project" value="LOCAL" />
++      <updated>1637567640280</updated>
++    </task>
++    <task id="LOCAL-00016" summary="finish getPlayerNameByAttributes&#10;start config">
++      <created>1638194124572</created>
++      <option name="number" value="00016" />
++      <option name="presentableId" value="LOCAL-00016" />
++      <option name="project" value="LOCAL" />
++      <updated>1638194124572</updated>
++    </task>
++    <task id="LOCAL-00017" summary="CustomItemStack &amp; ConfigItem">
++      <created>1638266132482</created>
++      <option name="number" value="00017" />
++      <option name="presentableId" value="LOCAL-00017" />
++      <option name="project" value="LOCAL" />
++      <updated>1638266132482</updated>
++    </task>
++    <task id="LOCAL-00018" summary="CustomItemStack &amp; ConfigItem 2">
++      <created>1638521475700</created>
++      <option name="number" value="00018" />
++      <option name="presentableId" value="LOCAL-00018" />
++      <option name="project" value="LOCAL" />
++      <updated>1638521475700</updated>
++    </task>
++    <task id="LOCAL-00019" summary="Non Project Files">
++      <created>1638521664813</created>
++      <option name="number" value="00019" />
++      <option name="presentableId" value="LOCAL-00019" />
++      <option name="project" value="LOCAL" />
++      <updated>1638521664813</updated>
++    </task>
++    <task id="LOCAL-00020" summary="start custom items">
++      <created>1638874582872</created>
++      <option name="number" value="00020" />
++      <option name="presentableId" value="LOCAL-00020" />
++      <option name="project" value="LOCAL" />
++      <updated>1638874582872</updated>
++    </task>
++    <task id="LOCAL-00021" summary="workspace.xml">
++      <created>1638874597936</created>
++      <option name="number" value="00021" />
++      <option name="presentableId" value="LOCAL-00021" />
++      <option name="project" value="LOCAL" />
++      <updated>1638874597936</updated>
++    </task>
++    <option name="localTasksCounter" value="22" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -121,23 +558,36 @@
+       <map>
+         <entry key="MAIN">
+           <value>
+-            <State>
+-              <option name="FILTERS">
+-                <map>
+-                  <entry key="branch">
+-                    <value>
+-                      <list>
+-                        <option value="origin/master" />
+-                      </list>
+-                    </value>
+-                  </entry>
+-                </map>
+-              </option>
+-            </State>
++            <State />
+           </value>
+         </entry>
+       </map>
+     </option>
+     <option name="oldMeFiltersMigrated" value="true" />
+   </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="start refont" />
++    <MESSAGE value="start few roles" />
++    <MESSAGE value="finish role bases" />
++    <MESSAGE value="changes roles" />
++    <MESSAGE value="continuing roles" />
++    <MESSAGE value="continuing roles 2" />
++    <MESSAGE value="continuing roles 3" />
++    <MESSAGE value="continuing roles 4" />
++    <MESSAGE value="finish roles" />
++    <MESSAGE value="start LGGAME" />
++    <MESSAGE value="continue LGame + LGPlayer" />
++    <MESSAGE value="start ChatLG" />
++    <MESSAGE value="start ChatLG 2" />
++    <MESSAGE value="finish ChatLg plus add on playerlg" />
++    <MESSAGE value="start getNameWithAttributes" />
++    <MESSAGE value="finish getPlayerNameByAttributes&#10;start config" />
++    <MESSAGE value="CustomItemStack &amp; ConfigItem" />
++    <MESSAGE value="CustomItemStack &amp; ConfigItem 2" />
++    <MESSAGE value="Non Project Files" />
++    <MESSAGE value="start custom items" />
++    <MESSAGE value="workspace.xml" />
++    <MESSAGE value="starting merge with master, remove old.lg and optimize imports, packages" />
++    <option name="LAST_COMMIT_MESSAGE" value="starting merge with master, remove old.lg and optimize imports, packages" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+--- /dev/null	
++++ b/.gitignore	
+@@ -0,0 +1,5 @@
++/.settings/
++/.idea/
++/.classpath
++/.project
++/Les Loups-Garous de Thiercelieux.iml

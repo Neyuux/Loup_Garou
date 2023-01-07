@@ -1,0 +1,19 @@
+Index: .idea/libraries/spigot_1_8_8.xml
+===================================================================
+diff --git a/.idea/libraries/spigot_1_8_8.xml b/.idea/libraries/spigot_1_8_8.xml
+deleted file mode 100644
+--- a/.idea/libraries/spigot_1_8_8.xml	
++++ /dev/null	
+@@ -1,11 +0,0 @@
+-<component name="libraryTable">
+-  <library name="spigot-1.8.8">
+-    <CLASSES>
+-      <root url="jar://$USER_HOME$/Documents/Programmation privée/Java/Minecraft/spigot-1.8.8.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES>
+-      <root url="jar://$USER_HOME$/Documents/Programmation privée/Java/Minecraft/spigot-1.8.8.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file

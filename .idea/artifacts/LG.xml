@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LG">
+    <output-path>$PROJECT_DIR$/../../Serv/plugins</output-path>
+    <root id="archive" name="LG.jar">
+      <element id="module-output" name="Les Loups-Garous de Thiercelieux" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,139 @@
+<changelist name="Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]" date="1673093748591" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 07/01/2023 13:15 [Non Project Files]" />
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/role/RDeck.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/task/LGAutoStart.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/task/DayRunnable.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/Gcycle.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/listeners/LGThierceListener.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/GameConfig.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/GameConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/GameConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/commands/SpecExecutor.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/task/LGAutoStop.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/DisplayState.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/DisplayState.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/DisplayState.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/SimpleScoreboard.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/SimpleScoreboard.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/SimpleScoreboard.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/PlayerLG.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/listeners/DayListener.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/listeners/DayListener.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/DayListener.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/SimpleScoreboard$NameData.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/role/RCamp.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/Gstate.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/task/GameRunnable.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/Gtype.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/Anvil.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/listeners/NightListener.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/role/Roles.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/role/Roles.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/Roles.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/task/NightRunnable.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/DeathManager$1.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/FakeAnvil.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/commands/StartExecutor.class" />
+    <option name="AFTER_PATH" value="bin/fr/neyuux/refont/old/lg/commands/StartExecutor.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15_[Non_Project_Files]/StartExecutor.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/DeathManager.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/commands/CommandAnkou.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/fr/neyuux/lgthierce/listeners/LGThierceListener$1.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+</changelist>

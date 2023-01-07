@@ -1,11 +1,13 @@
 name: LG
-version: 1.4.1
+version: alpha1.0.1old
 author: Neyuux_
-main: fr.neyuux.lgthierce.LG
+main: fr.neyuux.refont.lg.LG
 softdepend: [NeyGin_Core]
 commands:
-  ankou:
-    description: Commande de l'Ankou
+  lg:
+    description: Commande plugin LG
+#  ankou:
+#    description: commande de l'ankou
 #  end:
 #    description: Redemarre la map
 #    permission: end.use

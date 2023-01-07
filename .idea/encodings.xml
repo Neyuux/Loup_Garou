@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/fr/neyuux/lgthierce/listeners/NightListener.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/fr/neyuux/lgthierce/role/Roles.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/fr/neyuux/lgthierce/task/NightRunnable.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/LG.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/role/Roles.java" charset="windows-1252" />
     <file url="PROJECT" charset="windows-1252" />
   </component>
 </project>

@@ -21,6 +21,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class LG extends JavaPlugin {
 
@@ -107,6 +108,8 @@ public class LG extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
+        Bukkit.getLogger().log(Level.INFO, "LG enabling");
+
         registerBaseTeams(Bukkit.getScoreboardManager().getMainScoreboard());
 
         if (!(new File(getDataFolder(), "config.yml")).exists()) {
@@ -133,6 +136,7 @@ public class LG extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getLogger().log(Level.INFO, "LG disabling");
         super.onDisable();
     }
 
@@ -239,14 +243,6 @@ public class LG extends JavaPlugin {
 
         team.addEntry(player.getName());
         player.setDisplayName(team.getPrefix() + player.getName() + team.getSuffix());
-        player.setPlayerListName(player.getDisplayName());
-    }
-
-    public static void removePlayerInScoreboardTeam(String teamname, Player player) {
-        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamname);
-
-        team.removeEntry(player.getName());
-        player.setDisplayName(player.getName());
         player.setPlayerListName(player.getDisplayName());
     }
 

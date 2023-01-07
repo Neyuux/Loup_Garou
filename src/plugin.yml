@@ -6,11 +6,3 @@ softdepend: [NeyGin_Core]
 commands:
   lg:
     description: Commande plugin LG
-#  ankou:
-#    description: commande de l'ankou
-#  end:
-#    description: Redemarre la map
-#    permission: end.use
-#  spec:
-#    description: Commande de spectateur
-#    aliases: [s, spectateur, sp, spectateurs, spect]

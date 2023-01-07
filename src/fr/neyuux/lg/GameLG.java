@@ -93,12 +93,6 @@ public class GameLG implements Listener {
         }
     }
 
-    public void sendActionBar(String msg) {
-        for (PlayerLG playerLG : this.playersInGame) {
-            playerLG.sendActionBar(msg);
-        }
-    }
-
     public ArrayList<PlayerLG> getAlive() {
         ArrayList<PlayerLG> alive = new ArrayList<>();
 
@@ -350,10 +344,6 @@ public class GameLG implements Listener {
         this.waitTask = waitRunnable.runTaskTimer(LG.getInstance(), 0L, 1L);
     }
 
-    public Runnable getWaitCallback() {
-        return waitCallback;
-    }
-
     public void cancelWait() {
         if (this.waitTask != null) {
             this.waitTask.cancel();
@@ -508,11 +498,6 @@ public class GameLG implements Listener {
             LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) this.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
-
-            //List<Object> spawnObjects = new ArrayList<>((List<?>) LG.getInstance().getConfig().get("spawns." + this.gameType));
-            //List<Double> location = (List<Double>)spawnObjects.remove(new Random().nextInt(spawnObjects.size()));
-
-            //playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), location.get(0) + 0.5, location.get(1), location.get(2) + 0.5, location.get(3).floatValue(), location.get(4).floatValue()));
 
             playerLG.sendLobbySideScoreboard();
             playerLG.showAllPlayers();
@@ -754,20 +739,8 @@ public class GameLG implements Listener {
         this.config = config;
     }
 
-    public int getWaitTicks() {
-        return waitTicks;
-    }
-
     public int getWaitTicksToSeconds() {
         return Math.floorDiv(this.waitTicks, 20) + 1;
-    }
-
-    public BukkitTask getWaitTask() {
-        return waitTask;
-    }
-
-    public void setWaitTask(BukkitTask waitTask) {
-        this.waitTask = waitTask;
     }
 
     public boolean isNotThiefRole(Role role) {

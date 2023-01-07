@@ -32,9 +32,12 @@ public class SimpleScoreboard {
 	    	player.setScoreboard(news);
     	}
         this.scoreboard = player.getScoreboard();
-        if (scoreboard.getObjective((title.length() > 16 ? title.substring(0, 15) : title)) != null)
-        	scoreboard.getObjective((title.length() > 16 ? title.substring(0, 15) : title)).unregister();
-        obj = scoreboard.registerNewObjective((title.length() > 16 ? title.substring(0, 15) : title), "dummy");
+
+        String string = title.length() > 16 ? title.substring(0, 15) : title;
+
+        if (scoreboard.getObjective(string) != null)
+        	scoreboard.getObjective(string).unregister();
+        obj = scoreboard.registerNewObjective(string, "dummy");
         obj.setDisplayName(title);
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
@@ -113,11 +116,11 @@ public class SimpleScoreboard {
     }
 
     static int netIdx=0;
-    class NameData {
+    static class NameData {
         String prefix;
         String name;
         String suffix;
-        int idx;
+        final int idx;
 
         public NameData(String text) {
             name = text;

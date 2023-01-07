@@ -26,15 +26,6 @@ public enum Decks {
     public String getAlias() {
         return this.alias;
     }
-    public static Decks getByAlias(String alias) {
-        Decks d = null;
-
-        for (Decks decks : Decks.values()) {
-            if (decks.getAlias().equals(alias)) d = decks;
-        }
-
-        return d;
-    }
 
     public String getName() {
         return name;

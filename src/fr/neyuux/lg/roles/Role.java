@@ -78,18 +78,6 @@ public abstract class Role implements Listener {
     }
 
 
-    public int getTurnNumber() {
-        String className = this.getClass().getSimpleName().toUpperCase();
-        try {
-            RoleNightOrder roleNightOrder = RoleNightOrder.valueOf(className);
-            return roleNightOrder.ordinal();
-        } catch (IllegalArgumentException e) {
-            LG.getInstance().getLogger().log(Level.SEVERE, className + " n'a pas le meme nom dans RoleNightOrder");
-            Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de récupérer l'ordre de passage de nuit. Veuillez appeler Neyuux_ ou réessayer plus tard.");
-            return -1;
-        }
-    }
-
     public void onPlayerJoin(PlayerLG playerLG) {
         System.out.println(playerLG.getName() + " >> " + this.getConfigName());
 

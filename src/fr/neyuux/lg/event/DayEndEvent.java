@@ -9,7 +9,7 @@ public class DayEndEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
     private boolean cancel = false;
-    private PlayerLG killedLG;
+    private final PlayerLG killedLG;
 
     public DayEndEvent(PlayerLG killedLG) {
         this.killedLG = killedLG;
@@ -35,9 +35,5 @@ public class DayEndEvent extends Event implements Cancellable {
 
     public PlayerLG getKilledLG() {
         return killedLG;
-    }
-
-    public void setKilledLG(PlayerLG killedLG) {
-        this.killedLG = killedLG;
     }
 }

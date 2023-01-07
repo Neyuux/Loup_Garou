@@ -24,7 +24,7 @@ public class ChienLoupInv extends AbstractCustomInventory {
         this.setCorner((byte)14, 8, (byte)2);
         this.setCorner((byte)14, this.getSize() - 1, (byte)4);
 
-        this.setItem(11, new ChienLoupDogChoiceItemStack(chienLoup, callback));
-        this.setItem(15, new ChienLoupWolfChoiceItemStack(chienLoup, callback));
+        this.setItem(11, new ChienLoupDogChoiceItemStack(callback));
+        this.setItem(15, new ChienLoupWolfChoiceItemStack(callback));
     }
 }

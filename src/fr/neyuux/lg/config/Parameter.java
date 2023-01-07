@@ -46,9 +46,6 @@ public class Parameter {
         this.value = value;
     }
 
-    public ParameterType getParameterType() {
-        return this.parameterType;
-    }
 }
 
 enum ParameterType {

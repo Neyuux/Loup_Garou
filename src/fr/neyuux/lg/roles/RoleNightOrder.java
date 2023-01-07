@@ -59,12 +59,6 @@ public enum RoleNightOrder {
         return recurrenceType;
     }
 
-    public static boolean contains(Class<? extends Role> roleClass) {
-        for (RoleNightOrder rno : values())
-            if (roleClass.equals(rno.getRoleClass()))
-                return true;
-        return false;
-    }
 
     public enum RecurrenceType {
         FIRST_NIGHT,

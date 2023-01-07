@@ -71,7 +71,7 @@ public class MamieGrincheuse extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> choosablde = game.getAliveExcept(playerLG, (PlayerLG) playerLG.getCache().get("lastChoosen"));
+        List<PlayerLG> choosable = game.getAliveExcept(playerLG, (PlayerLG) playerLG.getCache().get("lastChoosen"));
 
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
@@ -84,7 +84,7 @@ public class MamieGrincheuse extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+            new ChoosePlayerInv(this.getDisplayName(), playerLG, choosable, new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {

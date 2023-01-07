@@ -25,6 +25,7 @@ public class ItemsManager {
         }
     }
 
+    @SuppressWarnings("GrazieInspection")
     public void updateStartItems(PlayerLG playerLG) {
         PlayerInventory playerInv = playerLG.getPlayer().getInventory();
 
@@ -73,11 +74,6 @@ public class ItemsManager {
 
         playerInventory.clear();
         playerInventory.setArmorContents(null);
-    }
-
-    public void clearAllInventories() {
-        for (PlayerLG playerLG : PlayerLG.getPlayersMap().values())
-            this.clearInventory(playerLG);
     }
 
 }

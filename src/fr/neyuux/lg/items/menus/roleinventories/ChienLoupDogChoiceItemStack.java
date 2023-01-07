@@ -14,16 +14,14 @@ import org.bukkit.event.Event;
 public class ChienLoupDogChoiceItemStack extends CustomItemStack {
 
     private final Runnable callback;
-    private final ChienLoup chienLoup;
 
-    public ChienLoupDogChoiceItemStack(ChienLoup chienLoup, Runnable callback) {
+    public ChienLoupDogChoiceItemStack(Runnable callback) {
         super(Material.STAINED_CLAY, 1, "§a§lChien");
 
         this.setLore("§eVous transforme en §a§lChien§e.", "§eVous appartiendez donc au camp du Village et devrez", "§eéliminer tous les Loups-Garous.", "", "§7>>Clique pour sélectionner");
         this.setDamage(5);
 
         this.callback = callback;
-        this.chienLoup = chienLoup;
 
         addItemInList(this);
     }

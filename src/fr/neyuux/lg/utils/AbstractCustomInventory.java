@@ -47,14 +47,6 @@ public abstract class AbstractCustomInventory {
         this.size = newsize;
     }
 
-    public void onClick(InventoryClickEvent inventoryClickEvent) {
-
-    }
-
-    public void onClose(InventoryCloseEvent inventoryCloseEvent) {
-
-    }
-
     public void open(HumanEntity player){
         Inventory inventory = Bukkit.createInventory(null, size, name);
 
@@ -64,7 +56,7 @@ public abstract class AbstractCustomInventory {
         player.openInventory(inventory);
     }
 
-    public void close(Inventory inv){}
+    public void close(){}
 
     public void setItem(int slot, CustomItemStack item){
         this.itemsMap.remove(slot);

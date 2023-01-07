@@ -42,11 +42,6 @@ public class GameConfig {
     }
 
 
-
-    public GameLG getGameLG() {
-        return gameLG;
-    }
-
     public Parameter getDayCycle() {
         return dayCycle;
     }

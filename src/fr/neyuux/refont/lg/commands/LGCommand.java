@@ -1,20 +1,16 @@
 package fr.neyuux.refont.lg.commands;
 
 import fr.neyuux.refont.lg.*;
+import fr.neyuux.refont.lg.inventories.config.ConfigurationInv;
 import fr.neyuux.refont.lg.roles.Camps;
 import fr.neyuux.refont.lg.roles.Decks;
 import fr.neyuux.refont.lg.roles.Role;
 import fr.neyuux.refont.lg.roles.classes.Ankou;
-import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
@@ -23,12 +19,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LGCommand implements CommandExecutor {
-
-    private static int n = 0;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
@@ -190,7 +183,6 @@ public class LGCommand implements CommandExecutor {
 
                 case "op":
                 case "operator":
-                case "admin":
                 case "operateur":
                     final String helpopcommand = "§6La commande op permet de gérer les gérants de la partie.\nArgument possibles : \n" +
                             "§clist §6: Affiche la liste des op.\n" +
@@ -378,6 +370,15 @@ public class LGCommand implements CommandExecutor {
                         game.resetGame();
                     } else
                         sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour effectuer cette commande.");
+                break;
+                case "admin":
+                    if (sender.isOp()) {
+                        if (checkHuman(sender))
+                            new ConfigurationInv().open((Player) sender);
+
+                        for (PlayerLG playerLG : game.getPlayersInGame())
+                            sender.sendMessage(LG.getPrefix() + playerLG.getDisplayName() + " §aPlacement : " + playerLG.getPlacement());
+                    }
                 break;
 
                 default:

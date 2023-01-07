@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public class GameRunnable extends BukkitRunnable {
 
     private final List<Role> rolesOrder = new ArrayList<>();
 
-    private final List<List<Double>> usedLocations;
+    private final HashSet<List<Double>> usedLocations;
     //TODO BUG
 
     private int timer = 7;
@@ -31,7 +32,7 @@ public class GameRunnable extends BukkitRunnable {
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
         this.game = LG.getInstance().getGame();
-        this.usedLocations = new ArrayList<>();
+        this.usedLocations = new HashSet<>();
     }
 
 
@@ -179,7 +180,7 @@ public class GameRunnable extends BukkitRunnable {
                     else
                         return LG.getPrefix() + "§eVous votez pour §6§l" + ((PlayerLG)playerLG.getCache().get("vote")).getName() + "§e.";
 
-                return null;
+                return LG.getPrefix() + "§eIl reste §6" + secondsLeft + " secondes §epour voter.";
             }, ChatColor.YELLOW, ChatColor.GOLD, game.getAlive(), game.getAlive(), game.getAlive());
 
             voteLG.start(()-> GameRunnable.this.endDay(voteLG.getChoosen()));

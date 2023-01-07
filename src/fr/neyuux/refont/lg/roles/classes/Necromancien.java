@@ -266,7 +266,7 @@ public class Necromancien extends Role {
             player.teleport(playerLG.getLocation());
 
             player.getWorld().strikeLightningEffect(player.getLocation());
-            //TODO game.updateAllScoreboards();
+            game.sendListRolesSideScoreboardToAllPlayers();
             Bukkit.broadcastMessage(LG.getPrefix() + "§9Le " + this.getDisplayName() + " §9a réssucité §1§l" + player.getName() + "§9 !");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] §cImpossible de réssuciter §e" + playerLG.getName() + "§c. Veuillez réessayer plus tard ou appeler Neyuux_.");

@@ -329,13 +329,14 @@ public class GameLG implements Listener {
                     if (barString != null) playerLG.sendActionBar(barString);
                 }
 
+                GameLG.this.waitTicks = secondsLeft * 20;
+
                 if (waitTicks[0] == 0) {
                     GameLG.this.waitTask = null;
                     cancel();
                     callback.run();
                 }
                 waitTicks[0]--;
-                if (cancelOthers) GameLG.this.waitTicks = waitTicks[0];
             }
         });
 
@@ -562,7 +563,7 @@ public class GameLG implements Listener {
                 else
                     return LG.getPrefix() + "§bVous votez pour §3§l" + ((PlayerLG)playerLG.getCache().get("vote")).getName() + "§b.";
 
-            return null;
+            return LG.getPrefix() + "§bIl reste §3" + secondsLeft + " secondes §bpour voter.";
         }, ChatColor.AQUA, ChatColor.DARK_AQUA, this.getAlive(), this.getAlive(), this.getAlive());
     }
 
@@ -755,10 +756,6 @@ public class GameLG implements Listener {
 
     public int getWaitTicksToSeconds() {
         return Math.floorDiv(this.waitTicks, 20) + 1;
-    }
-
-    public void setWaitTicks(int waitTicks) {
-        this.waitTicks = waitTicks;
     }
 
     public BukkitTask getWaitTask() {

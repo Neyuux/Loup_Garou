@@ -93,7 +93,7 @@ public class LoupGarou extends Role {
                 else
                     return LG.getPrefix() + "§cVous votez pour §4§l" + ((PlayerLG)paramPlayerLG.getCache().get("vote")).getName() + "§c.";
 
-            return null;//TODO send Au tour des Loups Garous
+            return LG.getPrefix() + "§fAu tour " + this.getDeterminingName();
         }, ChatColor.RED, ChatColor.DARK_RED, game.getAlive(), voters, voters);
 
         lgvote.start(() -> {

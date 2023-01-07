@@ -74,6 +74,7 @@ public class VoteLG {
     }
 
     private void vote(PlayerLG voter, PlayerLG voted) {
+        GameLG game = LG.getInstance().getGame();
 
         if (!this.voters.contains(voter)) {
             voter.sendMessage(LG.getPrefix() + "§cVous ne pouvez pas voter.");
@@ -108,9 +109,8 @@ public class VoteLG {
             if (this.getVote(playerLG) != null)
                 votes++;
 
-        if (votes == this.getVoters().size() && LG.getInstance().getGame().getWaitTicksToSeconds() > timer / 6) {
-            LG.getInstance().getGame().cancelWait();
-            LG.getInstance().getGame().wait(timer / 6, () -> this.end(false), timerMessage, false);
+        if (votes == this.getVoters().size() && game.getWaitTicksToSeconds() > timer / 6) {
+            game.wait(timer / 6, () -> this.end(false), timerMessage, true);
         }
 
         if (voter.getRole() instanceof Ankou && voter.isDead()) {
@@ -123,7 +123,7 @@ public class VoteLG {
             } else
                 message.append("a annulé son vote.");
 
-            LG.getInstance().getGame().getSpectators().forEach(playerLG -> playerLG.sendMessage(message.toString()));
+            game.getSpectators().forEach(playerLG -> playerLG.sendMessage(message.toString()));
 
         } else  {
             StringBuilder message = new StringBuilder(LG.getPrefix() + secondColor + voter.getName() + " " + firstColor);

@@ -85,7 +85,7 @@ public class Vampire extends Role {
                 else
                     return LG.getPrefix() + "§5Vous votez pour §4§l" + ((PlayerLG)paramPlayerLG.getCache().get("vote")).getName() + "§5.";
 
-            return null;
+            return LG.getPrefix() + "§fAu tour " + this.getDeterminingName();
         }, ChatColor.RED, ChatColor.DARK_PURPLE, game.getAlive(), voters, voters);
 
         lgvote.start(() -> {

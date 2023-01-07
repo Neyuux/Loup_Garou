@@ -1,7 +1,7 @@
 name: LG
-version: alpha1.0.1old
+version: alpha2.0.2
 author: Neyuux_
-main: fr.neyuux.refont.lg.LG
+main: fr.neyuux.lg.LG
 softdepend: [NeyGin_Core]
 commands:
   lg:

@@ -89,7 +89,7 @@ public class Fossoyeur extends Role {
 
             playerLG.setWake();
             playerLG.getPlayer().setGameMode(GameMode.ADVENTURE);
-            playerLG.getPlayer().teleport(playerLG.getLocation());
+            playerLG.getPlayer().teleport(playerLG.getPlacement());
 
             game.wait(Fossoyeur.this.getTimeout(), () -> {
                 this.onPlayerTurnFinish(playerLG);

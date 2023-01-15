@@ -12,10 +12,7 @@ import org.bukkit.ChatColor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Soeur extends Role {
@@ -62,7 +59,7 @@ public class Soeur extends Role {
 
     @Override
     public int getTimeout() {
-        return 35;
+        return 20;
     }
 
     @Override
@@ -88,7 +85,7 @@ public class Soeur extends Role {
 
             if (LG.getInstance().getGame().getPlayersByRole(this.getClass()).contains(sister)) {
                 playerLG.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + "§d est §a§l" + sister.getName());
-                sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + sister.getName());
+                sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + playerLG.getName());
             }
 
         } else {
@@ -142,17 +139,17 @@ public class Soeur extends Role {
         }
 
         PlayerLG sisterLG1 = players.remove(0);
-        PlayerLG[] sisters = new PlayerLG[]{sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()};
-        List<PlayerLG> playableSisters = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
+        Set<PlayerLG> sisters = new HashSet<>(Arrays.asList(sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()));
 
-        players.remove(sisters[1]);
+        players.removeAll(sisters);
+        sisters.removeIf(playerLG -> playerLG.isDead() || !playerLG.canUsePowers());
 
-        if (playableSisters.isEmpty()) {
+        if (sisters.size() != 2) {
             game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }
 
-        CHAT.openChat(new HashSet<>(playableSisters), new HashSet<>(playableSisters));
+        CHAT.openChat(new HashSet<>(), sisters);
 
         for (PlayerLG sisterLG : sisters) {
             if (sisterLG.canUsePowers()) {
@@ -162,12 +159,12 @@ public class Soeur extends Role {
         }
 
         game.wait(this.getTimeout(), () -> {
-            for (PlayerLG playableSister : playableSisters) {
+            for (PlayerLG playableSister : sisters) {
                 super.onPlayerTurnFinish(playableSister);
             }
             CHAT.closeChat();
             this.onNightTurn(callback);
 
-        }, (currentPlayer, secondsLeft) -> (playableSisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
+        }, (currentPlayer, secondsLeft) -> (sisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
     }
 }

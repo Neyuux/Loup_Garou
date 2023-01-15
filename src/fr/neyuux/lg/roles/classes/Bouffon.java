@@ -177,12 +177,15 @@ public class Bouffon extends Role {
     public void onCloseBouffonInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
         HumanEntity player = ev.getPlayer();
+        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
 
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    playerLG.getCache().put("unclosableInv", false);
                     player.openInventory(inv);
+                    playerLG.getCache().put("unclosableInv", true);
                 }
             }.runTaskLater(LG.getInstance(), 1L);
         }
@@ -197,7 +200,7 @@ public class Bouffon extends Role {
     public void onVoteEnd(VoteEndEvent ev) {
         PlayerLG choosen = ev.getChoosen();
 
-        if (choosen.getRole() != null && choosen.getRole() instanceof Bouffon) {
+        if (ev.getVote().getName().equals("Vote du Village") && choosen.getRole() != null && choosen.getRole() instanceof Bouffon) {
             NEED_TO_PLAY.add(choosen);
             Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + "§a réussi son objectif !");
         }

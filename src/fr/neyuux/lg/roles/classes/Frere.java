@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class Frere extends Role {
 
-    private final List<PlayerLG> brothers = new ArrayList<>();
+    private final HashSet<PlayerLG> brothers = new HashSet<>();
 
     public static final ChatLG CHAT = new ChatLG("§d", ChatColor.DARK_AQUA, null);
 
@@ -59,7 +59,7 @@ public class Frere extends Role {
 
     @Override
     public int getTimeout() {
-        return 30;
+        return 25;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Frere extends Role {
         }
     }
 
-    private static String getBrothersMessage(PlayerLG playerLG, List<PlayerLG> brothers) {
+    private static String getBrothersMessage(PlayerLG playerLG, HashSet<PlayerLG> brothers) {
         StringBuilder sb = new StringBuilder(LG.getPrefix() + "§3Vos " + playerLG.getRole().getDisplayName() + " §3sont §a§l");
         for (PlayerLG brotherLG : brothers)
             sb.append(brotherLG.getName()).append("  ");
@@ -128,7 +128,7 @@ public class Frere extends Role {
     }
 
 
-    public List<PlayerLG> getBrothers() {
+    public HashSet<PlayerLG> getBrothers() {
         return this.brothers;
     }
 
@@ -146,28 +146,28 @@ public class Frere extends Role {
             return;
         }
 
-        PlayerLG sisterLG1 = players.remove(0);
-        PlayerLG[] sisters = new PlayerLG[]{sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()};
-        List<PlayerLG> playableBrothers = Arrays.stream(sisters).filter(PlayerLG::canUsePowers).collect(Collectors.toList());
+        PlayerLG brotherLG1 = players.remove(0);
+        Set<PlayerLG> playableBrothers = new HashSet<>(this.getBrothers());
+        playableBrothers.add(brotherLG1);
 
-        players.remove(sisters[1]);
+        players.removeIf(playerLG -> playerLG.isDead() || !playerLG.canUsePowers());
 
         if (playableBrothers.isEmpty()) {
             game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
             return;
         }
 
-        CHAT.openChat(new HashSet<>(playableBrothers), new HashSet<>(playableBrothers));
+        CHAT.openChat(new HashSet<>(), new HashSet<>(playableBrothers));
 
-        for (PlayerLG sisterLG : sisters) {
-            if (sisterLG.canUsePowers()) {
-                sisterLG.setWake();
-                sisterLG.sendMessage(LG.getPrefix() + this.getActionMessage());
+        for (PlayerLG brotherLG : brothers) {
+            if (brotherLG.canUsePowers()) {
+                brotherLG.setWake();
+                brotherLG.sendMessage(LG.getPrefix() + this.getActionMessage());
             }
         }
 
         game.wait(this.getTimeout(), () -> {
-            for (PlayerLG playableSister : playableBrothers) super.onPlayerTurnFinish(playableSister);
+            for (PlayerLG brother : playableBrothers) super.onPlayerTurnFinish(brother);
             CHAT.closeChat();
             this.onNightTurn(callback);
 

@@ -136,12 +136,15 @@ public class VoyanteDAura extends Role {
     public void onCloseVoyanteAuraInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
         HumanEntity player = ev.getPlayer();
+        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
 
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)PlayerLG.createPlayerLG(player).getCache().get("unclosableInv")) {
+        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    playerLG.getCache().put("unclosableInv", false);
                     player.openInventory(inv);
+                    playerLG.getCache().put("unclosableInv", true);
                 }
             }.runTaskLater(LG.getInstance(), 1L);
         }

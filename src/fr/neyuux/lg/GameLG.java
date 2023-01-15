@@ -76,7 +76,7 @@ public class GameLG implements Listener {
 
     public void createGame() {
         Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
-        this.config = new GameConfig(this);
+        this.config = new GameConfig();
 
         this.resetGame();
     }
@@ -420,8 +420,8 @@ public class GameLG implements Listener {
                 if (playerlg.getRole() instanceof Soeur) s = s + "§d (avec §o" + ((Soeur)playerlg.getRole()).getSister().getName() + "§d)";
 
                 if (playerlg.getRole() instanceof Frere) {
-                    List<PlayerLG> brothers = ((Frere)playerlg.getRole()).getBrothers();
-                    s = s + "§d (avec §3§o" + brothers.get(0).getName() + "§d et §3§o" + brothers.get(1).getName() + "§d)";
+                    Iterator<PlayerLG> brothers = ((Frere)playerlg.getRole()).getBrothers().iterator();
+                    s = s + "§d (avec §3§o" + brothers.next().getName() + "§d et §3§o" + brothers.next().getName() + "§d)";
                 }
 
                 if (cache.has("servanteDevouee"))
@@ -508,7 +508,7 @@ public class GameLG implements Listener {
 
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
 
-        this.setConfig(new GameConfig(this));
+        this.setConfig(new GameConfig());
     }
 
     public void sendLobbySideScoreboardToAllPlayers() {
@@ -570,7 +570,7 @@ public class GameLG implements Listener {
                 }, (param1LGPlayer, param1Int) -> LG.getPrefix() + "§bLe Maire §3§l" + mayorLG.getName() + "§b choisit son successeur...", true);
 
                 mayorLG.getPlayer().setGameMode(GameMode.ADVENTURE);
-                mayorLG.getPlayer().teleport(mayorLG.getLocation());
+                mayorLG.getPlayer().teleport(mayorLG.getPlacement());
                 mayorLG.showAllPlayers();
 
                 if (this.getGameType().equals(GameType.MEETING)) {

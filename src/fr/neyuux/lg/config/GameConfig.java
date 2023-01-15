@@ -1,6 +1,5 @@
 package fr.neyuux.lg.config;
 
-import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.items.menus.config.parameters.*;
 import fr.neyuux.lg.roles.Role;
 
@@ -11,35 +10,29 @@ import java.util.List;
 
 public class GameConfig {
 
-    private final GameLG gameLG;
-
     private final List<Constructor<? extends Role>> addedRoles = new ArrayList<>();
 
-    private final Parameter dayCycle = new Parameter(true, ParameterType.GLOBAL);
+    private final Parameter dayCycle = new Parameter(true);
 
-    private final Parameter chatLG = new Parameter(true, ParameterType.GLOBAL);
+    private final Parameter chatLG = new Parameter(true);
 
-    private final Parameter mayor = new Parameter(true, ParameterType.GLOBAL);
+    private final Parameter mayor = new Parameter(true);
 
-    private final Parameter randomCouple = new Parameter(false, ParameterType.GLOBAL);
+    private final Parameter randomCouple = new Parameter(false);
 
-    private final Parameter mayorSuccession = new Parameter(MayorSuccession.CHOOSE, ParameterType.GLOBAL);
+    private final Parameter mayorSuccession = new Parameter(MayorSuccession.CHOOSE);
 
-    private final Parameter cupiWinWithCouple = new Parameter(false, ParameterType.ROLE);
+    private final Parameter cupiWinWithCouple = new Parameter(false);
 
-    private final Parameter comedianPowers = new Parameter(new ArrayList<>(Arrays.asList(ComedianPowers.VOYANTE, ComedianPowers.MONTREUR_D_OURS, ComedianPowers.ANCIEN)), ParameterType.ROLE);
+    private final Parameter comedianPowers = new Parameter(new ArrayList<>(Arrays.asList(ComedianPowers.VOYANTE, ComedianPowers.MONTREUR_D_OURS, ComedianPowers.ANCIEN)));
 
-    private final Parameter wildChildRandomModel = new Parameter(false, ParameterType.ROLE);
+    private final Parameter wildChildRandomModel = new Parameter(false);
 
-    private final Parameter cupiInCouple = new Parameter(false, ParameterType.ROLE);
+    private final Parameter cupiInCouple = new Parameter(false);
 
-    private final Parameter chamanChat = new Parameter(false, ParameterType.ROLE);
+    private final Parameter chamanChat = new Parameter(false);
 
-    private final Parameter chattyVoyante = new Parameter(false, ParameterType.ROLE);
-
-    public GameConfig(GameLG game) {
-        this.gameLG = game;
-    }
+    private final Parameter chattyVoyante = new Parameter(false);
 
 
     public Parameter getDayCycle() {

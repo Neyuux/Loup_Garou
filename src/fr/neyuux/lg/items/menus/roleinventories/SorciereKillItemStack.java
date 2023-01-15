@@ -9,6 +9,7 @@ import fr.neyuux.lg.items.menus.ReturnArrowItemStack;
 import fr.neyuux.lg.roles.classes.LoupGarou;
 import fr.neyuux.lg.roles.classes.Sorciere;
 import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -45,6 +46,8 @@ public class SorciereKillItemStack extends CustomItemStack {
     @Override
     public void use(HumanEntity player, Event event) {
         GameLG game = LG.getInstance().getGame();
+
+        Bukkit.broadcastMessage("§4" + playerLG);
 
         ChoosePlayerInv inv = new ChoosePlayerInv(this.getDisplayName(), this.playerLG, game.getAliveExcept(this.playerLG), new ChoosePlayerInv.ActionsGenerator() {
 

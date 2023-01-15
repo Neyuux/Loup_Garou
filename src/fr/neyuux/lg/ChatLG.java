@@ -46,13 +46,22 @@ public class ChatLG implements Listener {
         if (this.actors == null) return;
 
         ev.setCancelled(true);
-        if (this.textCode == null)
-            if (!Character.isAlphabetic(first) && !Character.isDigit(first))
-                return;
-        if ((this.textCode == null || this.textCode.compareTo(first) == 0) && this.actors.contains(PlayerLG.createPlayerLG(ev.getPlayer()))) {
-            this.actors.forEach(actorLG -> actorLG.sendMessage(namePrefix + PlayerLG.createPlayerLG(ev.getPlayer()).getNameWithAttributes(actorLG) + " §8§l» " + textColor + msg.substring(1).trim()));
-            this.spies.forEach(spyLG -> spyLG.sendMessage(namePrefix + "§kZIZITOUDUR" + " §8§l» " + textColor + msg.substring(1).trim()));
+
+        if (this.actors.contains(PlayerLG.createPlayerLG(ev.getPlayer()))) {
+            if (this.textCode == null) {
+                if (!Character.isAlphabetic(first) && !Character.isDigit(first))
+                    return;
+
+            } else {
+                if (this.textCode.compareTo(first) == 0) msg = msg.substring(1);
+                else return;
+            }
+            String finalMsg  = msg.trim();
+
+            this.actors.forEach(actorLG -> actorLG.sendMessage(namePrefix + PlayerLG.createPlayerLG(ev.getPlayer()).getNameWithAttributes(actorLG) + " §8§l» " + textColor + finalMsg));
+            this.spies.forEach(spyLG -> spyLG.sendMessage(namePrefix + "§kZIZITOUDUR" + " §8§l» " + textColor + finalMsg));
         }
+
     }
 
 }

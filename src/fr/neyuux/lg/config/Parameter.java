@@ -8,12 +8,9 @@ public class Parameter {
 
     private Object value;
 
-    private final ParameterType parameterType;
 
-
-    public Parameter(Object value, ParameterType parameterType) {
+    public Parameter(Object value) {
         this.value = value;
-        this.parameterType = parameterType;
     }
 
 
@@ -48,7 +45,3 @@ public class Parameter {
 
 }
 
-enum ParameterType {
-    ROLE,
-    GLOBAL
-}

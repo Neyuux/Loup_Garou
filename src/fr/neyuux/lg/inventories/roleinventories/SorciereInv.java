@@ -5,6 +5,7 @@ import fr.neyuux.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.SorciereKillItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.SorciereKilledItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.SorciereReviveItemStack;
+import fr.neyuux.lg.roles.classes.LoupGarou;
 import fr.neyuux.lg.roles.classes.Sorciere;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
@@ -44,8 +45,12 @@ public class SorciereInv {
             }
         }));
 
-        if (this.sorciere.hasHealPot()) inventory.setItem(0, new SorciereReviveItemStack(callback, playerLG, sorciere));
-        else inventory.setItem(0, new CustomItemStack(Material.BARRIER).setDisplayName("§cPlus de potion").setLore("§7Vous n'avez plus de potions de vie", "§7car vous avez déjà réssucité."));
+        if (LoupGarou.getLastTargetedByLG() != null) {
+            if (this.sorciere.hasHealPot())
+                inventory.setItem(0, new SorciereReviveItemStack(callback, playerLG, sorciere));
+            else
+                inventory.setItem(0, new CustomItemStack(Material.BARRIER).setDisplayName("§cPlus de potion").setLore("§7Vous n'avez plus de potions de vie", "§7car vous avez déjà réssucité."));
+        }
 
         if (this.sorciere.hasKillPot()) inventory.setItem(2, new SorciereKillItemStack(callback, playerLG, sorciere));
         else inventory.setItem(0, new CustomItemStack(Material.BARRIER).setDisplayName("§cPlus de potion").setLore("§7Vous n'avez plus de potions de mort.", "§7car vous avez déjà tué quelqu'un."));

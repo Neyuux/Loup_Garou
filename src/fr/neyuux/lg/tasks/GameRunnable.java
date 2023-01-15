@@ -14,6 +14,7 @@ import fr.neyuux.lg.event.NightStartEvent;
 import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.RoleNightOrder;
 import fr.neyuux.lg.roles.classes.Comedien;
+import fr.neyuux.lg.roles.classes.LoupGarou;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -32,25 +33,22 @@ public class GameRunnable extends BukkitRunnable {
 
     private BukkitTask deal;
 
-    private final GameLG game;
+    private final GameLG game = LG.getInstance().getGame();
 
     private final List<Role> rolesOrder = new ArrayList<>();
 
-    private final HashSet<List<Double>> usedLocations;
-    //TODO BUG
+    private final HashSet<Integer> usedLocations = new HashSet<>();
 
     private int timer = 7;
 
     public GameRunnable(BukkitTask deal) {
         this.deal = deal;
-        this.game = LG.getInstance().getGame();
-        this.usedLocations = new HashSet<>();
     }
 
 
     @Override
     public void run() {
-        if (!LG.getInstance().getGame().getGameState().equals(GameState.PLAYING)) {
+        if (!this.game.getGameState().equals(GameState.PLAYING)) {
             cancel();
             return;
         }
@@ -59,22 +57,24 @@ public class GameRunnable extends BukkitRunnable {
             this.checkSleep();
 
         if (deal != null && this.checkDealFinished()) {
-            for (PlayerLG playerLG : LG.getInstance().getGame().getAlive()) {
+            for (PlayerLG playerLG : this.game.getAlive()) {
                 playerLG.updateGamePlayerScoreboard();
 
                 FileConfiguration file = LG.getInstance().getConfig();
-                List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + LG.getInstance().getGame().getGameType());
-                List<Double> doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
-                if (this.usedLocations.contains(doubleList))
-                    while (this.usedLocations.contains(doubleList)) {
-                        doubleList = placementlists.get(new Random().nextInt(placementlists.size()));
+                Random random = new Random();
+                List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + this.game.getGameType());
+                int size = placementlists.size();
+                int index = random.nextInt(size);
+                List<Double> doubleList = placementlists.get(index);
+
+                if (this.usedLocations.contains(index))
+                    while (this.usedLocations.contains(index)) {
+                        index = random.nextInt(size);
                     }
 
-                Location placement = new Location(Bukkit.getWorld("LG"), doubleList.get(0) + 0.5, doubleList.get(1), doubleList.get(2) + 0.5, doubleList.get(3).floatValue(), doubleList.get(4).floatValue());
-
-                this.usedLocations.add(doubleList);
+                this.usedLocations.add(index);
                 System.out.println(this.usedLocations);
-                playerLG.setPlacement(placement);
+                playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), doubleList.get(0) + 0.5, doubleList.get(1), doubleList.get(2) + 0.5, doubleList.get(3).floatValue(), doubleList.get(4).floatValue()));
             }
 
             this.game.wait(6, this::nextNight, (playerLG, secondsLeft) -> LG.getPrefix() + "§9Début de la nuit dans §1§l" + secondsLeft + "§9 seconde" + LG.getPlurial(secondsLeft)  + ".", false);
@@ -97,8 +97,8 @@ public class GameRunnable extends BukkitRunnable {
 
 
     private boolean checkDealFinished() {
-        for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
-            if (playerLG.getRole() == null) return false;
+        for (PlayerLG playerLG : this.game.getAlive())
+            if (playerLG.getCamp() == null) return false;
 
         this.deal.cancel();
         this.deal = null;
@@ -250,12 +250,22 @@ public class GameRunnable extends BukkitRunnable {
 
     public void calculateRoleOrder() {
         System.out.println("rolesorder :");
-        for (RoleNightOrder order : RoleNightOrder.values())
-            for (Role role : this.game.getRolesAtStart())
-                if (role.getClass().getName().equals(order.getRoleClass().getName()))
-                    if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.game.getNight() % 2 == 0) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.game.getNight() == 1)) {
-                        this.rolesOrder.add(role);
-                         System.out.println("  " + role.getConfigName());
-                    }
+        for (RoleNightOrder order : RoleNightOrder.values()) {
+            if (order.equals(RoleNightOrder.LOUPGAROU)) {
+                game.getLGs(true).forEach(playerLG -> Bukkit.broadcastMessage("lg " + playerLG.getName()));
+
+                if (!game.getLGs(true).isEmpty()) {
+                    this.rolesOrder.add(new LoupGarou());
+                    System.out.println(" Loup-Garou");
+                }
+            } else {
+                for (Role role : this.game.getRolesAtStart())
+                    if (role.getClass().getName().equals(order.getRoleClass().getName()) && !this.rolesOrder.contains(role))
+                        if (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.EACH_NIGHT) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.ONE_OUT_OF_TWO) && this.game.getNight() % 2 == 0) || (order.getRecurrenceType().equals(RoleNightOrder.RecurrenceType.FIRST_NIGHT) && this.game.getNight() == 1)) {
+                            this.rolesOrder.add(role);
+                            System.out.println("  " + role.getConfigName());
+                        }
+            }
+        }
     }
 }

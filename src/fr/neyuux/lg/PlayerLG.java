@@ -151,9 +151,10 @@ public class PlayerLG {
         if (receiver.getRole() instanceof Soeur) {
             Soeur soeur = (Soeur) receiver.getRole();
 
-            if (soeur.getSister().equals(this))
+            if (soeur.getSister().equals(this)) {
                 name += "§d§lSoeur ";
-            lastcolor = "§d";
+                lastcolor = "§d";
+            }
         }
 
         if (receiver.getRole() instanceof Frere) {
@@ -392,7 +393,7 @@ public class PlayerLG {
 
         this.isSleeping = false;
 
-        if (game.getGameType().equals(GameType.FREE)) player.teleport(player.getBedSpawnLocation());
+        if (game.getGameType().equals(GameType.FREE)) player.teleport(this.getLocation().add(0, 0.5, 0));
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         for (PlayerLG playerLG : this.game.getAlive())
             player.showPlayer(playerLG.getPlayer());

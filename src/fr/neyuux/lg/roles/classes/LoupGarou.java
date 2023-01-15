@@ -65,15 +65,24 @@ public class LoupGarou extends Role {
     }
 
 
-    @Override
-    protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+    public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
+        List<PlayerLG> players = game.getLGs(true);
+
+        game.cancelWait();
+
+        if (players.isEmpty()) {
+            if (game.isNotThiefRole(this)) callback.run();
+            else LG.getInstance().getGame().wait(LoupGarou.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + LoupGarou.this.getDeterminingName(), true);
+            return;
+        }
+
         List<PlayerLG> voters = new ArrayList<>();
 
-        for (PlayerLG lg : game.getLGs(true))
+        for (PlayerLG lg : players)
             if (lg.canUsePowers()) {
                 voters.add(lg);
-                playerLG.setWake();
+                lg.setWake();
             }
 
         if ((boolean)game.getConfig().getChatLG().getValue()) CHAT.openChat(new HashSet<>(), new HashSet<>(voters));

@@ -21,6 +21,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.logging.Level;
 
 public class LG extends JavaPlugin {
@@ -106,6 +107,14 @@ public class LG extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (System.getProperties().containsKey("RELOAD")) {
+            if (System.getProperty("RELOAD").equals("TRUE"))
+                return;
+        } else {
+            Properties prop = new Properties(System.getProperties());
+            prop.put("RELOAD", "FALSE");
+        }
+
         INSTANCE = this;
 
         Bukkit.getLogger().log(Level.INFO, "LG enabling");

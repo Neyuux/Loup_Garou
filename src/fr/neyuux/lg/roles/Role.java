@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public abstract class Role implements Listener {
 
@@ -47,7 +46,7 @@ public abstract class Role implements Listener {
 
             }, (currentPlayer, secondsLeft) -> {
                 if (game.getVote() == null || !game.getVote().getVoters().contains(currentPlayer))
-                    return "§9§lAu tour " + Role.this.getDeterminingName();
+                    return LG.getPrefix() + "Au tour " + Role.this.getDeterminingName();
 
                 if (game.getVote() != null)
                     return null;
@@ -55,7 +54,7 @@ public abstract class Role implements Listener {
                     if (currentPlayer == playerLG)
                         return "§9§lA toi de jouer !";
                     else
-                        return "§9§lAu tour " + Role.this.getDeterminingName();
+                        return LG.getPrefix() + "Au tour " + Role.this.getDeterminingName();
                 }
             }, true);
 
@@ -73,6 +72,8 @@ public abstract class Role implements Listener {
 
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
         playerLG.stopChoosing();
+        if (playerLG.getCache().has("unclosableInv"))
+            playerLG.getCache().remove("unclosableInv");
         playerLG.getPlayer().closeInventory();
         playerLG.setSleep();
     }

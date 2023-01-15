@@ -86,7 +86,7 @@ public class Chasseur extends Role {
 
             playerLG.setWake();
             playerLG.getPlayer().setGameMode(GameMode.ADVENTURE);
-            playerLG.getPlayer().teleport(playerLG.getLocation());
+            playerLG.getPlayer().teleport(playerLG.getPlacement());
 
             game.wait(Chasseur.this.getTimeout(), () -> {
                 this.onPlayerTurnFinish(playerLG);

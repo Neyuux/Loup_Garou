@@ -12,6 +12,7 @@ import fr.neyuux.lg.roles.classes.Pyromane;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -45,12 +46,14 @@ public class PyromanePutOilItemStack extends CustomItemStack {
         pyromane.getOiledPlayers().forEach(oiledLG->((Player)player).hidePlayer(oiledLG.getPlayer()));
 
         if (game.getGameType().equals(GameType.MEETING)) {
-            playerLG.sendMessage(LG.getPrefix() + pyromane.getActionMessage());
+            playerLG.sendMessage(LG.getPrefix() + "§fVous avez §6" + ((Player)player).getLevel() + " §6secondes §fpour mettre de l'huile sur deux personnes.");
+            ((Player) player).playSound(player.getLocation(), Sound.FIRE_IGNITE, 8f, 1f);
 
             playerLG.getCache().put("unclosableInv", false);
+            player.closeInventory();
 
             playerLG.setChoosing(choosen -> {
-                if (choosen != null && choosen != playerLG) {
+                if (choosen != null && choosen != playerLG && !pyromane.getOiledPlayers().contains(choosen)) {
                     if (oil(choosen, playerLG, oilplayers[0])) {
                         pyromane.turnFinished(playerLG);
                         callback.run();
@@ -60,7 +63,7 @@ public class PyromanePutOilItemStack extends CustomItemStack {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            ChoosePlayerInv inv = new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG).stream().filter(oiledPlayerLG-> oiledPlayerLG.getCache().has("pyromaneOiled")).collect(Collectors.toList()), new ChoosePlayerInv.ActionsGenerator() {
+            ChoosePlayerInv inv = new ChoosePlayerInv(this.pyromane.getDisplayName() + " §chuiler", playerLG, game.getAliveExcept(playerLG).stream().filter(oiledPlayerLG-> oiledPlayerLG.getCache().has("pyromaneOiled")).collect(Collectors.toList()), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -79,6 +82,8 @@ public class PyromanePutOilItemStack extends CustomItemStack {
                 }
             });
             inv.setItem(inv.getSize() - 1, new ReturnArrowItemStack(lastInv));
+
+            playerLG.getCache().put("unclosableInv", false);
             inv.open(player);
             playerLG.getCache().put("unclosableInv", true);
         }

@@ -152,7 +152,7 @@ public class VilainGarcon extends Role {
 
 
     @EventHandler
-    public void onCloseDetectiveInv(InventoryCloseEvent ev) {
+    public void onCloseVilainGarconInv(InventoryCloseEvent ev) {
         Inventory inv = ev.getInventory();
         HumanEntity player = ev.getPlayer();
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);

@@ -38,6 +38,7 @@ public class SorciereInv {
 
             @Override
             public void doActionsAfterClick(PlayerLG choosenLG) {
+                playerLG.getCache().put("unclosableInv", false);
                 playerLG.getPlayer().closeInventory();
                 playerLG.setSleep();
                 callback.run();

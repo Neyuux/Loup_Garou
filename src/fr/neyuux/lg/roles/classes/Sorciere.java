@@ -18,7 +18,6 @@ public class Sorciere extends Role {
 
     private boolean hasHealPot = true;
     private boolean hasKillPot = true;
-    private BukkitTask checkInventory;
 
 
     @Override
@@ -69,23 +68,13 @@ public class Sorciere extends Role {
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
+        playerLG.getCache().put("unclosableInv", true);
         playerLG.getPlayer().openInventory(new SorciereInv(this, playerLG, callback).getInventory());
-
-        this.checkInventory = new BukkitRunnable() {
-            @Override
-            public void run() {
-                Player player = playerLG.getPlayer();
-
-                if (player.getOpenInventory() == null || player.getOpenInventory().getTopInventory() == null)
-                    player.openInventory(new SorciereInv(Sorciere.this, playerLG, callback).getInventory());
-            }
-        }.runTaskTimer(LG.getInstance(), 0L, 5L);
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        this.checkInventory.cancel();
-
+        playerLG.getCache().put("unclosableInv", false);
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
@@ -106,5 +95,24 @@ public class Sorciere extends Role {
 
     public void setKillPot(boolean hasKillPot) {
         this.hasKillPot = hasKillPot;
+    }
+
+
+    @EventHandler
+    public void onCloseSorciereInv(InventoryCloseEvent ev) {
+        Inventory inv = ev.getInventory();
+        HumanEntity player = ev.getPlayer();
+        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+        if (inv.getName().startsWith(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    playerLG.getCache().put("unclosableInv", false);
+                    player.openInventory(inv);
+                    playerLG.getCache().put("unclosableInv", true);
+                }
+            }.runTaskLater(LG.getInstance(), 1L);
+        }
     }
 }

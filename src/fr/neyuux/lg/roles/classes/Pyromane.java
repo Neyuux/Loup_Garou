@@ -114,7 +114,7 @@ public class Pyromane extends Role {
         HumanEntity player = ev.getPlayer();
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
 
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
+        if (inv.getName().startsWith(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {

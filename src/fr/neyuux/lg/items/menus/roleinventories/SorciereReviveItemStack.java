@@ -54,6 +54,7 @@ public class SorciereReviveItemStack extends CustomItemStack {
         LG.getInstance().getGame().getKilledPlayers().remove(this.targetLG);
         playerLG.sendMessage(LG.getPrefix() + "§aVous avez réssucité §e§l" + targetLG.getNameWithAttributes(playerLG) + " §aavec succès.");
         GameLG.playPositiveSound((Player) player);
+        playerLG.getCache().put("unclosableInv", false);
         player.openInventory(new SorciereInv(this.witch, playerLG, this.callback).getInventory());
 
         if (!this.witch.hasKillPot()) {

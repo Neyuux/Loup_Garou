@@ -53,7 +53,7 @@ public class SorciereKillItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         GameLG game = LG.getInstance().getGame();
 
-        ChoosePlayerInv inv = new ChoosePlayerInv(this.getDisplayName(), this.playerLG, game.getAliveExcept(this.playerLG), new ChoosePlayerInv.ActionsGenerator() {
+        ChoosePlayerInv inv = new ChoosePlayerInv(this.witch.getDisplayName() + " §cPotion de Mort", this.playerLG, game.getAliveExcept(this.playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -68,13 +68,16 @@ public class SorciereKillItemStack extends CustomItemStack {
                 playerLG.sendMessage(LG.getPrefix() + "§cVous avez empoisonné §e§l" + choosenLG.getNameWithAttributes(playerLG) + " §cavec succès.");
                 GameLG.playPositiveSound((Player) player);
 
+                playerLG.getCache().put("unclosableInv", false);
                 playerLG.getPlayer().closeInventory();
                 playerLG.setSleep();
                 callback.run();
             }
         });
 
+        playerLG.getCache().put("unclosableInv", false);
         inv.open(player);
+        playerLG.getCache().put("unclosableInv", true);
         player.getOpenInventory().getTopInventory().setItem(inv.getSize() - 1, new ReturnArrowItemStack(new SorciereInv(this.witch, this.playerLG, this.callback).getInventory()));
     }
 }

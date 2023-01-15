@@ -62,8 +62,6 @@ public class Assassin extends Role {
         return "§fVous avez §9" + this.getTimeout() + " secondes§f pour assassiner quelqu'un.";
     }
 
-    
-
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {

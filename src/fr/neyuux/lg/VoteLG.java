@@ -197,15 +197,15 @@ public class VoteLG {
                this.callback.run();
                return;
             }
-            builder.append(LG.getPrefix()).append(firstColor).append("Il y a égalité dans les votes ! ").append(secondColor).append(finalists.size()).append(firstColor).append(" joueurs ont obtenus le même nombre de votes :");
+            builder.append(LG.getPrefix()).append(firstColor).append("Il y a égalité dans les votes ! ").append(secondColor).append(finalists.size()).append(firstColor).append(" joueurs ont obtenus le même nombre de votes : ");
             for (PlayerLG finalist : finalists)
-                builder.append(secondColor).append(finalist.getName()).append(firstColor).append(",");
+                builder.append(secondColor).append(finalist.getName()).append(firstColor).append(", ");
             builder.deleteCharAt(builder.lastIndexOf(","));
             builder.append("\n");
 
             if (this.randomIfEqual) {
                 this.choosen = finalists.get(new Random().nextInt(finalists.size()));
-                builder.append("Un joueur va donc être chosi aléatoirement parmi ceux qui ont été le plus votés... \n").append(LG.getPrefix()).append(this.choosen.getDisplayName()).append(firstColor).append((" a été désigné pour être éliminer."));
+                builder.append("Un joueur va donc être chosi aléatoirement parmi ceux qui ont été le plus votés... \n").append(LG.getPrefix()).append(this.choosen.getDisplayName()).append(firstColor).append((" a été désigné."));
                 game.cancelWait();
                 this.callback.run();
 

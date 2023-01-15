@@ -5,6 +5,7 @@ import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.config.ComedianPowers;
 import fr.neyuux.lg.roles.Role;
+import fr.neyuux.lg.roles.RoleNightOrder;
 import fr.neyuux.lg.roles.classes.Comedien;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
@@ -19,7 +20,7 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
     private Role newRole = null;
 
     public ComedianPowerChoiceItemStack(ComedianPowers power, Runnable callback) {
-        super(Material.MAP, 1, power.getName());
+        super(Material.EMPTY_MAP, 1, power.getName());
 
         this.callback = callback;
         try {
@@ -46,12 +47,6 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
 
         game.getAliveRoles().add(newRole);
         game.getGameRunnable().calculateRoleOrder();
-        while (true) {
-            if (game.getGameRunnable().getRolesOrder().get(0) instanceof Comedien) {
-                game.getGameRunnable().getRolesOrder().remove(0);
-                break;
-            } else game.getGameRunnable().getRolesOrder().remove(0);
-        }
 
         playerLG.sendMessage(LG.getPrefix() + "§dPour cette nuit, vous obtenez le pouvoir " + newRole.getDeterminingName() + "§d.");
         GameLG.playPositiveSound((Player) player);

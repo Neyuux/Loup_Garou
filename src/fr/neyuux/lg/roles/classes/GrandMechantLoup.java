@@ -61,7 +61,7 @@ public class GrandMechantLoup extends Role {
 
     @Override
     public String getActionMessage() {
-        return "§fVous avez §4" + this.getDisplayName() + " secondes§f pour dévorer une deuxième personne.";
+        return "§fVous avez §4" + this.getTimeout() + " secondes§f pour dévorer une deuxième personne.";
     }
 
 

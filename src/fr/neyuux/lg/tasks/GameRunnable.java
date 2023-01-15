@@ -70,6 +70,7 @@ public class GameRunnable extends BukkitRunnable {
                 if (this.usedLocations.contains(index))
                     while (this.usedLocations.contains(index)) {
                         index = random.nextInt(size);
+                        doubleList = placementlists.get(index);
                     }
 
                 this.usedLocations.add(index);
@@ -186,7 +187,7 @@ public class GameRunnable extends BukkitRunnable {
             Bukkit.broadcastMessage(LG.getPrefix() + "§eC'est l'heure du Vote du Village ! A vous de voter avec minutie pour un joueur qui vous semble être un Loup-Garou. Le joueur qui obtiendra le plus de votes sera §céliminé§e de la partie.");
             Bukkit.broadcastMessage(LG.getPrefix() + "§eVous avez 3 minutes pour choisir qui éliminer aujourd'hui.");
 
-            VoteLG voteLG = new VoteLG("Vote du Village", 180, true, (playerLG, secondsLeft) -> {
+            VoteLG voteLG = new VoteLG("Vote du Village", 180, false, (playerLG, secondsLeft) -> {
                 if (playerLG.getCache().has("vote"))
                     if (playerLG.getCache().get("vote") == null)
                         return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
@@ -250,13 +251,15 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void calculateRoleOrder() {
+        this.rolesOrder.clear();
+
         System.out.println("rolesorder :");
         for (RoleNightOrder order : RoleNightOrder.values()) {
             if (order.equals(RoleNightOrder.LOUPGAROU)) {
 
                 if (!game.getLGs(true).isEmpty()) {
                     this.rolesOrder.add(new LoupGarou());
-                    System.out.println(" Loup-Garou");
+                    System.out.println("  Loup-Garou");
                 }
             } else {
                 for (Role role : this.game.getRolesAtStart())
@@ -265,6 +268,10 @@ public class GameRunnable extends BukkitRunnable {
                             this.rolesOrder.add(role);
                             System.out.println("  " + role.getConfigName());
                         }
+
+                for (PlayerLG playerLG : game.getAlive())
+                    if (playerLG.getCache().has("comedianpower"))
+                        this.rolesOrder.add(playerLG.getRole());
             }
         }
     }

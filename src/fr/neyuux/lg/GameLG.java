@@ -396,9 +396,13 @@ public class GameLG implements Listener {
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(LG.getPrefix() + "§eVictoire " + determingName +"§e !");
 
-        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 9f, 1f);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.playSound(player.getLocation(), Sound.ZOMBIE_REMEDY, 9f, 1f);
+            PlayerLG.createPlayerLG(player).setWake();
+        }
 
         this.setGameState(GameState.FINISHED);
+        this.cancelWait();
 
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage("§6Liste des §a§ljoueurs §e/ §6§lrôles §e: ");

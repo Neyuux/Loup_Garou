@@ -76,7 +76,7 @@ public class VoteLG {
         Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
     }
 
-    private void vote(PlayerLG voter, PlayerLG voted) {
+    public void vote(PlayerLG voter, PlayerLG voted) {
         GameLG game = LG.getInstance().getGame();
 
         if (!this.voters.contains(voter)) {
@@ -112,8 +112,8 @@ public class VoteLG {
             if (this.getVote(playerLG) != null)
                 votes++;
 
-        if (votes == this.getVoters().size() && game.getWaitTicksToSeconds() > timer / 6) {
-            game.wait(timer / 6, () -> this.end(false), timerMessage, true);
+        if (votes == this.getVoters().size() && game.getWaitTicksToSeconds() > timer / 8) {
+            game.wait(timer / 8, () -> this.end(false), timerMessage, true);
         }
 
         if (voter.getRole() instanceof Ankou && voter.isDead()) {

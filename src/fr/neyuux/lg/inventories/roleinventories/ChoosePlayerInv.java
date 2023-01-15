@@ -35,7 +35,7 @@ public class ChoosePlayerInv extends AbstractCustomInventory {
     }
 
     public interface ActionsGenerator {
-        String[] generateLore(PlayerLG paramPlayerLG);
-        void doActionsAfterClick(PlayerLG paramPlayerLG);
+        String[] generateLore(PlayerLG paramPlayerLG1);
+        void doActionsAfterClick(PlayerLG paramPlayerLG2);
     }
 }

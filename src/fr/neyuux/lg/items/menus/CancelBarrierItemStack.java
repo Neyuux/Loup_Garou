@@ -18,7 +18,7 @@ public class CancelBarrierItemStack extends CustomItemStack {
 
         this.actionsGenerator = actionsGenerator;
 
-        this.setLore("§7Annule l'action", "§7en cours.");
+        this.setLore("§7Annule l'action", "§7en cours.§0" + actionsGenerator.hashCode());
 
         if (!Arrays.equals(actionsGenerator.generateLore(null), new String[0]))
             this.setLore(actionsGenerator.generateLore(null));

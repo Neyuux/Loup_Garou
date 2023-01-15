@@ -4,6 +4,7 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.roles.Camps;
+import fr.neyuux.lg.roles.classes.LoupGarou;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -53,6 +54,7 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
             choosenLG.getPlayer().playSound(choosenLG.getLocation(), Sound.WOLF_GROWL, 8f, 1.3f);
 
             LG.getInstance().getGame().getKilledPlayers().remove(choosenLG);
+            LoupGarou.setLastTargetedByLG(null);
 
             LG.getInstance().getGame().getLGs(false).forEach(PlayerLG::updateGamePlayerScoreboard);
         }

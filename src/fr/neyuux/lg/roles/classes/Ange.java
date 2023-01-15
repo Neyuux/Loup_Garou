@@ -66,7 +66,7 @@ public class Ange extends Role {
         GameLG game = LG.getInstance().getGame();
         PlayerLG killedLG = ev.getKilledLG();
 
-        if (ev.getKilledLG().getRole() instanceof Ange && game.getDay() == 1)
+        if (ev.getKilledLG() != null && ev.getKilledLG().getRole() instanceof Ange && game.getDay() == 1)
             game.win(WinCamps.CUSTOM, Collections.singletonList(killedLG));
     }
 

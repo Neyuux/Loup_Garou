@@ -7,15 +7,18 @@ import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class Sorciere extends Role {
 
     private boolean hasHealPot = true;
     private boolean hasKillPot = true;
+    private BukkitTask checkInventory;
 
 
     @Override
@@ -67,33 +70,24 @@ public class Sorciere extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         playerLG.getPlayer().openInventory(new SorciereInv(this, playerLG, callback).getInventory());
-        playerLG.getCache().put("unclosableInv", true);
+
+        this.checkInventory = new BukkitRunnable() {
+            @Override
+            public void run() {
+                Player player = playerLG.getPlayer();
+
+                if (player.getOpenInventory() == null || player.getOpenInventory().getTopInventory() == null)
+                    player.openInventory(new SorciereInv(Sorciere.this, playerLG, callback).getInventory());
+            }
+        }.runTaskTimer(LG.getInstance(), 0L, 5L);
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        this.checkInventory.cancel();
+
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
-    }
-
-
-    @EventHandler
-    public void onCloseSorciereInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
     }
 
 

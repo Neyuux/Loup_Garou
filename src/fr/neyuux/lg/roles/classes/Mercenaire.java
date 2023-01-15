@@ -83,7 +83,7 @@ public class Mercenaire extends Role {
         GameLG game = LG.getInstance().getGame();
         PlayerLG killedLG = ev.getKilledLG();
 
-        if (ev.getKilledLG().getCache().has("mercenaireTarget"))
+        if (ev.getKilledLG() != null && ev.getKilledLG().getCache().has("mercenaireTarget"))
             game.win(WinCamps.CUSTOM, Collections.singletonList((PlayerLG)killedLG.getCache().get("mercenaireTarget")));
     }
 }

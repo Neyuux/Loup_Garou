@@ -30,6 +30,7 @@ import org.bukkit.scoreboard.Team;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerLG {
 
@@ -454,6 +455,7 @@ public class PlayerLG {
     }
 
     public void callbackChoice(PlayerLG playerLG) {
+        if (playerLG == null) return;
         this.callbackChoice.callback(playerLG);
     }
 
@@ -498,7 +500,7 @@ public class PlayerLG {
 
     public void joinCamp(Camps camp) {
         if (camp.equals(Camps.VAMPIRE) || camp.equals(Camps.LOUP_GAROU))
-            game.getAlive().forEach(playerLG -> playerLG.sendMessage(game.getPrefix() + this.getNameWithAttributes(playerLG) + "§c a rejoint votre camp !"));
+            game.getAlive().stream().filter(playerLG -> playerLG.getCamp().equals(camp)).collect(Collectors.toSet()).forEach(playerLG -> playerLG.sendMessage(game.getPrefix() + this.getNameWithAttributes(playerLG) + "§c a rejoint votre camp !"));
         this.setCamp(camp);
     }
 

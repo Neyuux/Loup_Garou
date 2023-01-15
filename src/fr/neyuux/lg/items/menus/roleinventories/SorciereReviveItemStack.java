@@ -3,6 +3,7 @@ package fr.neyuux.lg.items.menus.roleinventories;
 import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
+import fr.neyuux.lg.inventories.roleinventories.SorciereInv;
 import fr.neyuux.lg.roles.classes.LoupGarou;
 import fr.neyuux.lg.roles.classes.Sorciere;
 import fr.neyuux.lg.utils.CustomItemStack;
@@ -12,7 +13,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 public class SorciereReviveItemStack extends CustomItemStack {
 
@@ -27,11 +30,17 @@ public class SorciereReviveItemStack extends CustomItemStack {
         this.targetLG = LoupGarou.getLastTargetedByLG();
         this.witch = sorciere;
 
+        Potion potion = new Potion(1);
+
         this.setLore("§7Vous permet de soigner le corps de §e" + targetLG.getName() + "§7.", "§7Il ne saura pas que vous l'avez réssucité.", "§cVous ne pouvez utiliser ce pouvoir qu'une seule fois.");
+
         this.addGlowEffect();
-        PotionMeta meta = (PotionMeta) this.getItemMeta();
-        meta.setMainEffect(PotionEffectType.JUMP);
+
+        potion.setSplash(true);
+        potion.setType(PotionType.JUMP);
         this.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+
+        potion.apply(this);
 
         addItemInList(this);
     }
@@ -45,10 +54,9 @@ public class SorciereReviveItemStack extends CustomItemStack {
         LG.getInstance().getGame().getKilledPlayers().remove(this.targetLG);
         playerLG.sendMessage(LG.getPrefix() + "§aVous avez réssucité §e§l" + targetLG.getNameWithAttributes(playerLG) + " §aavec succès.");
         GameLG.playPositiveSound((Player) player);
-        player.getOpenInventory().getTopInventory().remove(this);
+        player.openInventory(new SorciereInv(this.witch, playerLG, this.callback).getInventory());
 
         if (!this.witch.hasKillPot()) {
-            playerLG.getCache().put("unclosableInv", false);
             playerLG.getPlayer().closeInventory();
             playerLG.setSleep();
             callback.run();

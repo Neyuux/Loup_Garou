@@ -36,7 +36,7 @@ public class VoteInv extends AbstractCustomInventory {
 
             @Override
             public void doActionsAfterClick(PlayerLG playerLG) {
-                playerLG.callbackChoice(null);
+                VoteInv.this.vote.vote(playerLG, null);
             }
         }));
 

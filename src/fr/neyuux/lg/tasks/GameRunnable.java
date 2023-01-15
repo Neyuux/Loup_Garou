@@ -178,7 +178,8 @@ public class GameRunnable extends BukkitRunnable {
 
             VoteLG mayorVote = game.getMayorVote();
             mayorVote.start(()-> {
-                mayorVote.getChoosen().setMayor();
+                PlayerLG choosen = mayorVote.getChoosen();
+                if (choosen != null) choosen.setMayor();
                 this.continueDay();
             });
         } else {
@@ -252,7 +253,6 @@ public class GameRunnable extends BukkitRunnable {
         System.out.println("rolesorder :");
         for (RoleNightOrder order : RoleNightOrder.values()) {
             if (order.equals(RoleNightOrder.LOUPGAROU)) {
-                game.getLGs(true).forEach(playerLG -> Bukkit.broadcastMessage("lg " + playerLG.getName()));
 
                 if (!game.getLGs(true).isEmpty()) {
                     this.rolesOrder.add(new LoupGarou());

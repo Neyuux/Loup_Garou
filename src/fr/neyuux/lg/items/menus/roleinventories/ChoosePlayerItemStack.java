@@ -11,10 +11,12 @@ import org.bukkit.inventory.Inventory;
 
 public class ChoosePlayerItemStack extends CustomItemStack {
 
+    private final PlayerLG playerLG;
     private final ChoosePlayerInv.ActionsGenerator generator;
 
     public ChoosePlayerItemStack(PlayerLG receiverLG, PlayerLG playerLG, ChoosePlayerInv.ActionsGenerator generator) {
         super(Material.SKULL_ITEM, 1, playerLG.getNameWithAttributes(receiverLG));
+        this.playerLG = playerLG;
 
         this.generator = generator;
 
@@ -30,6 +32,6 @@ public class ChoosePlayerItemStack extends CustomItemStack {
         Inventory chooseInv = player.getOpenInventory().getTopInventory();
         chooseInv.remove(this);
         chooseInv.setItem(chooseInv.getSize() - 1, new CancelBarrierItemStack(generator));
-        generator.doActionsAfterClick(PlayerLG.createPlayerLG(player));
+        generator.doActionsAfterClick(playerLG);
     }
 }

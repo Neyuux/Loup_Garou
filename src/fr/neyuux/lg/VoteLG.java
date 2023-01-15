@@ -219,7 +219,13 @@ public class VoteLG {
                         game.wait(30, () -> {
                             mayor.getCache().put("unclosableInv", false);
                             mayor.getPlayer().closeInventory();
-                            VoteLG.this.end(true);
+
+                            Bukkit.broadcastMessage(LG.getPrefix() + "§cLe Maire a mis trop de temps à choisir. Il n'y aura donc aucune exécution aujourd'hui.");
+
+                            Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
+                            game.cancelWait();
+                            this.callback.run();
+                            game.setVote(null);
                         },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + "§6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."), true);
 
                         mayor.setChoosing(choosen -> {
@@ -228,7 +234,14 @@ public class VoteLG {
                                     mayor.sendMessage(LG.getPrefix() + "§cCe joueur n'est pas concerné !");
                                     GameLG.playNegativeSound(mayor.getPlayer());
 
-                                } else VoteLG.this.choosen = choosen;
+                                } else {
+                                    this.setChoosen(choosen);
+
+                                    Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
+                                    game.cancelWait();
+                                    this.callback.run();
+                                    game.setVote(null);
+                                }
                         });
 
                     } else if (game.getGameType().equals(GameType.FREE)) {
@@ -243,11 +256,23 @@ public class VoteLG {
                             public void doActionsAfterClick(PlayerLG choosenLG) {
                                 mayor.getCache().put("unclosableInv", false);
                                 mayor.getPlayer().closeInventory();
-                                VoteLG.this.end(true);
+
+                                VoteLG.this.setChoosen(choosenLG);
+
+                                Bukkit.broadcastMessage(LG.getPrefix() + "§eLe Maire a porté son choix sur §6" + choosenLG.getName() + "§e.");
+
+                                Bukkit.getPluginManager().callEvent(new VoteEndEvent(VoteLG.this, VoteLG.this.choosen));
+                                game.cancelWait();
+                                VoteLG.this.callback.run();
+                                game.setVote(null);
                             }
                         });
                         mayor.getCache().put("unclosableInv", true);
                     }
+
+                    this.sendObserversMessage(builder.toString());
+                    return;
+
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
                     VoteLG secondVote = new VoteLG("Second vote du Village", 70, true, (playerLG, secondsLeft) -> {
@@ -281,6 +306,21 @@ public class VoteLG {
         game.cancelWait();
         this.sendObserversMessage(builder.toString());
         this.callback.run();
+        game.setVote(null);
+    }
+
+    public void forceStop() {
+        GameLG game = LG.getInstance().getGame();
+
+        for (PlayerLG playerLG : this.voters) {
+            game.getItemsManager().updateStartItems(playerLG);
+            playerLG.getCache().remove("vote");
+            playerLG.stopChoosing();
+        }
+
+        this.votable.forEach(playerLG -> playerLG.setArmorStand(null));
+
+        game.cancelWait();
         game.setVote(null);
     }
 

@@ -7,6 +7,7 @@ import fr.neyuux.lg.config.ComedianPowers;
 import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.RoleNightOrder;
 import fr.neyuux.lg.roles.classes.Comedien;
+import fr.neyuux.lg.tasks.GameRunnable;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -46,7 +47,7 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
         playerLG.setRole(newRole);
 
         game.getAliveRoles().add(newRole);
-        game.getGameRunnable().calculateRoleOrder();
+        game.getGameRunnable().updateRoleOrder(Comedien.class);
 
         playerLG.sendMessage(LG.getPrefix() + "§dPour cette nuit, vous obtenez le pouvoir " + newRole.getDeterminingName() + "§d.");
         GameLG.playPositiveSound((Player) player);

@@ -7,14 +7,12 @@ import fr.neyuux.lg.utils.AbstractCustomInventory;
 
 public class ChienLoupInv extends AbstractCustomInventory {
 
-    private final ChienLoup chienLoup;
     private final Runnable callback;
 
     public ChienLoupInv(ChienLoup chienloup, Runnable callback) {
         super(chienloup.getDisplayName(), 27);
 
         this.callback = callback;
-        this.chienLoup = chienloup;
     }
 
     @Override

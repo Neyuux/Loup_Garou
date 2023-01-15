@@ -35,6 +35,8 @@ public class ChienLoupWolfChoiceItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§eVous avez choisi le camp des §c§lLoups-Garous§e !");
         GameLG.playPositiveSound((Player) player);
 
+        LG.getInstance().getGame().getGameRunnable().updateRoleOrder(ChienLoup.class);
+
         playerLG.getCache().put("unclosableInv", false);
         player.closeInventory();
         playerLG.setSleep();

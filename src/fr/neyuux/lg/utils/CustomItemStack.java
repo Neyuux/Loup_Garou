@@ -142,6 +142,10 @@ public class CustomItemStack extends ItemStack {
         return this.getItemMeta().getDisplayName();
     }
 
+    public List<String> getLore() {
+        return this.getItemMeta().getLore();
+    }
+
     public CustomItemStack setLore(String... lore){
         return this.setLore(Arrays.asList(lore));
     }

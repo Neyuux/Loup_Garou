@@ -23,6 +23,7 @@ public class ChoosePlayerItemStack extends CustomItemStack {
         this.setDamage(3);
         this.setSkullOwner(playerLG.getName());
         this.setLore(generator.generateLore(playerLG));
+        this.setLoreLine(this.getLore().size() - 2, "§0" + this.hashCode());
 
         addItemInList(this);
     }

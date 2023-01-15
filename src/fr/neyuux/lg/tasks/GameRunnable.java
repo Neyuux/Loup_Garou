@@ -203,7 +203,6 @@ public class GameRunnable extends BukkitRunnable {
 
     public void endNight() {
         NightEndEvent event = new NightEndEvent();
-        Bukkit.getPluginManager().callEvent(event);
 
         Bukkit.broadcastMessage("");
 
@@ -211,9 +210,11 @@ public class GameRunnable extends BukkitRunnable {
             playerLG.eliminate();
         game.getKilledPlayers().clear();
 
+        Bukkit.getPluginManager().callEvent(event);
+
         game.getAlive().forEach(PlayerLG::setWake);
 
-        if (event.isCancelled()) return;
+        if (event.isCancelled() || game.getGameState().equals(GameState.FINISHED)) return;
 
         if (game.getMayor() != null && game.getMayor().isDead() && game.getMayor().getPlayer().isOnline()) {
             game.chooseNewMayor(DayCycle.NIGHT);
@@ -225,11 +226,12 @@ public class GameRunnable extends BukkitRunnable {
 
     public void endDay(PlayerLG killedLG) {
         DayEndEvent event = new DayEndEvent(killedLG);
-        Bukkit.getPluginManager().callEvent(event);
 
         if (killedLG != null) killedLG.eliminate();
 
-        if (event.isCancelled()) return;
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled() || game.getGameState().equals(GameState.FINISHED)) return;
 
         if (game.getMayor() != null && game.getMayor().isDead() && game.getMayor().getPlayer().isOnline()) {
             game.chooseNewMayor(DayCycle.DAY);
@@ -270,9 +272,15 @@ public class GameRunnable extends BukkitRunnable {
                         }
 
                 for (PlayerLG playerLG : game.getAlive())
-                    if (playerLG.getCache().has("comedianpower"))
+                    if (playerLG.getCache().has("comedianpower") && !this.rolesOrder.contains(playerLG.getRole()))
                         this.rolesOrder.add(playerLG.getRole());
             }
         }
+    }
+
+    public void updateRoleOrder(Class<? extends Role> roleClass) {
+        this.calculateRoleOrder();
+        while (this.getRolesOrder().get(0).getClass().equals(roleClass))
+            this.getRolesOrder().remove(0);
     }
 }

@@ -115,6 +115,11 @@ public class Dictateur extends Role {
             for (PlayerLG playerLG : vote.getVoters())
                 if (playerLG.getCache().has("dictateurCoupDEtat")) {
 
+                    vote.forceStop();
+
+                    Bukkit.broadcastMessage("");
+                    Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + this.getDisplayName() + " §c" + playerLG.getName() + " §eeffectue un coup d'état ! Il a une minute pour choisir la personne qu'il souhaite éliminer. S'il élimine un Villageois, il se suicidera le lendemain, sinon, il deviendra maire.");
+
                     VoteLG dictaVote = new VoteLG("Vote du Dictateur", 60, true, (voterLG, secondsLeft) -> {
                         if (voterLG.getCache().has("vote"))
                             if (voterLG.getCache().get("vote") == null)

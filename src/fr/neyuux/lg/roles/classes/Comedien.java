@@ -1,5 +1,6 @@
 package fr.neyuux.lg.roles.classes;
 
+import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.config.ComedianPowers;
@@ -112,10 +113,17 @@ public class Comedien extends Role {
 
     @EventHandler
     public void onNightEnd(NightEndEvent ev) {
-        for (PlayerLG playerLG : LG.getInstance().getGame().getAlive())
+        GameLG game = LG.getInstance().getGame();
+
+        for (PlayerLG playerLG : game.getAlive())
             if (playerLG.getCache().has("comedianpower")) {
+
+                game.getAliveRoles().remove(playerLG.getRole());
+
                 playerLG.setRole((Role) playerLG.getCache().get("comedianpower"));
                 playerLG.getCache().remove("comedianpower");
+
+                game.getAliveRoles().add(playerLG.getRole());
             }
     }
 

@@ -94,6 +94,7 @@ public class Chasseur extends Role {
 
             }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Chasseur.this.getDeterminingName(), true);
 
+            Bukkit.broadcastMessage("a");
             playerLG.sendMessage(LG.getPrefix() + Chasseur.this.getActionMessage());
             Chasseur.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
 
@@ -106,12 +107,15 @@ public class Chasseur extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(LG.getPrefix() + "§2Le " + this.getDisplayName() + "§2 s'apprête à tirer une balle pour se venger...");
+
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
                 if (choosen != null && !choosen.isDead()) {
                     fire(choosen, playerLG);
 
-                    super.onPlayerTurnFinish(playerLG);
+                    onPlayerTurnFinish(playerLG);
                     callback.run();
                 }
             });
@@ -127,9 +131,7 @@ public class Chasseur extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     fire(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
-                    playerLG.setSleep();
+                    onPlayerTurnFinish(playerLG);
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
@@ -141,7 +143,8 @@ public class Chasseur extends Role {
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
         playerLG.sendMessage(LG.getPrefix() + "§cVous avez mit trop de temps !");
         Bukkit.broadcastMessage(LG.getPrefix() + "§2Le " + this.getDisplayName() + " §2a décidé de ne pas tirer.");
-        super.onPlayerTurnFinish(playerLG);
+
+        playerLG.getPlayer().setGameMode(GameMode.SPECTATOR);
     }
 
 

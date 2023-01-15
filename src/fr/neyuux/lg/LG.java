@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -36,6 +38,8 @@ public class LG extends JavaPlugin {
     private ItemsManager itemsManager;
 
     private final HashMap<String, Constructor<? extends Role>> roles = new HashMap<>();
+
+    private final List<Role> listeningEventsRoles = new ArrayList<>();
 
     public static LG getInstance() {
         return INSTANCE;
@@ -214,6 +218,18 @@ public class LG extends JavaPlugin {
         } catch (NoSuchMethodException|SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    public void registerEvents(Role role) {
+        for (Role listeningEventsRole : listeningEventsRoles)
+            if (listeningEventsRole.getClass().equals(role.getClass()))
+                return;
+        Bukkit.getPluginManager().registerEvents(role, this);
+    }
+
+    public void unregisterAllListeners() {
+        listeningEventsRoles.forEach(HandlerList::unregisterAll);
+        listeningEventsRoles.clear();
     }
 
 

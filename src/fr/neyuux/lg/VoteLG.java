@@ -241,6 +241,7 @@ public class VoteLG {
                                     game.cancelWait();
                                     this.callback.run();
                                     game.setVote(null);
+                                    mayor.stopChoosing();
                                 }
                         });
 
@@ -271,7 +272,6 @@ public class VoteLG {
                     }
 
                     this.sendObserversMessage(builder.toString());
-                    return;
 
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
@@ -292,8 +292,8 @@ public class VoteLG {
                         this.callback.run();
                         game.setVote(null);
                     });
-                    return;
                 }
+                return;
             }
         } else {
             PlayerLG eliminated = finalists.get(0);

@@ -85,6 +85,7 @@ public class PreGameListener implements Listener {
         Frere.CHAT.closeChat();
         Bouffon.NEED_TO_PLAY.clear();
         Chasseur.NEED_TO_PLAY.clear();
+        LG.getInstance().unregisterAllListeners();
     }
 
     @EventHandler

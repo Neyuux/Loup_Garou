@@ -9,19 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="correct bugs (GrandMechantLoup text, Assassin, Comedien)">
+    <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="correct bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/LG.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/VoteLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/VoteLG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/inventories/roleinventories/ChienLoupInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/inventories/roleinventories/ChienLoupInv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ChoosePlayerItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ChoosePlayerItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/listeners/GameListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/listeners/GameListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/commands/LGCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/commands/LGCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/Role.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Chasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Chasseur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Comedien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Comedien.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Dictateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Dictateur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/tasks/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/tasks/GameRunnable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/utils/CustomItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/utils/CustomItemStack.java" afterDir="false" />
     </list>
     <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_01_2023_13_09__Non_Project_Files_1.xml" beforeDir="false" />
@@ -67,15 +61,13 @@
     <file path="$PROJECT_DIR$/.idea/workspace.xml">
       <ranges>
         <range start1="11" end1="12" start2="11" end2="12" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="13" end1="17" start2="13" end2="14" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="18" end1="20" start2="15" end2="15" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="21" end1="26" start2="16" end2="32" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="27" end1="28" start2="33" end2="33" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="59" end1="59" start2="64" end2="80" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="63" end1="66" start2="84" end2="84" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="281" end1="282" start2="299" end2="328" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="297" end1="300" start2="343" end2="343" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="321" end1="322" start2="364" end2="369" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
+        <range start1="14" end1="19" start2="14" end2="16" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
+        <range start1="20" end1="24" start2="17" end2="17" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
+        <range start1="69" end1="78" start2="62" end2="70" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
+        <range start1="85" end1="88" start2="77" end2="77" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
+        <range start1="302" end1="303" start2="291" end2="327" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
+        <range start1="318" end1="322" start2="342" end2="342" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
+        <range start1="342" end1="343" start2="362" end2="368" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
       </ranges>
     </file>
   </component>
@@ -300,7 +292,42 @@
       <option name="project" value="LOCAL" />
       <updated>1673096573442</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="correct many warnings">
+      <created>1673097899276</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1673097899276</updated>
+    </task>
+    <task id="LOCAL-00027" summary="correct bugs (ChatLG, LoupGarou, Salvateur, Placements, Soeur/Frere)">
+      <created>1673791092748</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1673791092748</updated>
+    </task>
+    <task id="LOCAL-00028" summary="correct bugs (ChoosePlayerCallback, Salvateur, Ange, Mercenaire)">
+      <created>1673796222663</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1673796222663</updated>
+    </task>
+    <task id="LOCAL-00029" summary="correct bugs (GrandMechantLoup text, Assassin, Comedien)">
+      <created>1673805657597</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1673805657598</updated>
+    </task>
+    <task id="LOCAL-00030" summary="correct bugs">
+      <created>1673823411522</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1673823411522</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -316,10 +343,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="start refont" />
-    <MESSAGE value="start few roles" />
-    <MESSAGE value="finish role bases" />
-    <MESSAGE value="changes roles" />
     <MESSAGE value="continuing roles" />
     <MESSAGE value="continuing roles 2" />
     <MESSAGE value="continuing roles 3" />
@@ -340,7 +363,12 @@
     <MESSAGE value="corrections merge" />
     <MESSAGE value="finalisation merge" />
     <MESSAGE value="alpha 2.0.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="alpha 2.0.2" />
+    <MESSAGE value="correct many warnings" />
+    <MESSAGE value="correct bugs (ChatLG, LoupGarou, Salvateur, Placements, Soeur/Frere)" />
+    <MESSAGE value="correct bugs (ChoosePlayerCallback, Salvateur, Ange, Mercenaire)" />
+    <MESSAGE value="correct bugs (GrandMechantLoup text, Assassin, Comedien)" />
+    <MESSAGE value="correct bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

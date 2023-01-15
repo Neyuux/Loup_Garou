@@ -94,7 +94,6 @@ public class Chasseur extends Role {
 
             }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Chasseur.this.getDeterminingName(), true);
 
-            Bukkit.broadcastMessage("a");
             playerLG.sendMessage(LG.getPrefix() + Chasseur.this.getActionMessage());
             Chasseur.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
 
@@ -115,7 +114,7 @@ public class Chasseur extends Role {
                 if (choosen != null && !choosen.isDead()) {
                     fire(choosen, playerLG);
 
-                    onPlayerTurnFinish(playerLG);
+                    playerLG.getPlayer().setGameMode(GameMode.SPECTATOR);
                     callback.run();
                 }
             });
@@ -131,7 +130,7 @@ public class Chasseur extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     fire(choosenLG, playerLG);
 
-                    onPlayerTurnFinish(playerLG);
+                    playerLG.getPlayer().setGameMode(GameMode.SPECTATOR);
                     callback.run();
                 }
             }).open(playerLG.getPlayer());

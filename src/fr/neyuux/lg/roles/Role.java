@@ -12,12 +12,6 @@ public abstract class Role implements Listener {
 
     public ArrayList<PlayerLG> players;
 
-
-    public Role() {
-        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
-    }
-
-
     public void newNightTurn(Runnable callback) {
         this.updatePlayers();
         this.onNightTurn(callback);

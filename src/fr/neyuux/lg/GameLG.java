@@ -303,6 +303,7 @@ public class GameLG implements Listener {
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
                 this.aliveRoles.add(role);
                 this.rolesAtStart.add(role);
+                LG.getInstance().registerEvents(role);
 
             }, 0, 13);
         } catch (Exception e) {

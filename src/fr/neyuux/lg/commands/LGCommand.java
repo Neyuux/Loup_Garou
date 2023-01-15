@@ -381,8 +381,6 @@ public class LGCommand implements CommandExecutor {
                         if (checkHuman(sender))
                             new ConfigurationInv().open((Player) sender);
 
-                        for (PlayerLG playerLG : game.getPlayersInGame())
-                            sender.sendMessage(LG.getPrefix() + playerLG.getDisplayName() + " §aPlacement : " + playerLG.getPlacement());
                     }
                 break;
 

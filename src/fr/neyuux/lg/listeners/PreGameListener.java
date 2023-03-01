@@ -79,6 +79,7 @@ public class PreGameListener implements Listener {
 
     @EventHandler
     public void onReset(ResetEvent ev) {
+        Voleur.removeRoles();
         LoupGarou.CHAT.closeChat();
         Cupidon.CHAT.closeChat();
         Soeur.CHAT.closeChat();

@@ -28,7 +28,7 @@ public class ServanteDevoueeInv extends AbstractCustomInventory {
         this.setAllCorners((byte)14);
 
         this.setItem(11, new ServanteDevoueeTakeRoleItemStack(choosen, callback));
-        this.setItem(13, new CustomItemStack(Material.SKULL_ITEM, 1, choosen.getNameWithAttributes(playerLG) + " §cva mourir.").setDamage(3).setSkullOwner(choosen.getName()).setLore("§eCe joueur va mourir car il a obtenu", "§ele plus de voix au vote du village. Vous", "§epouvez choisir de prendre son rôle avant qu'il ne meure.", "§eIl sera annoncé comme "+ this.getName() + " à sa mort.", "", "§a>>Cliquez sur le bouton §lVERT §apour prendre son rôle", "§c>>Cliquez sur le bouton rouge pour ne §lRIEN§c faire"));
+        this.setItem(13, new CustomItemStack(Material.SKULL_ITEM, 1, choosen.getNameWithAttributes(playerLG) + " §cva mourir.").setDamage(3).setSkullOwner(choosen.getName()).setLore("§eCe joueur va mourir car il a obtenu", "§ele plus de voix au vote du village. Vous", "§epouvez choisir de prendre son rôle avant qu'il ne meure.", "§eIl sera annoncé comme "+ this.getName() + "§e à sa mort.", "", "§a>>Cliquez sur le bouton VERT pour §lPRENDRE§a son rôle", "§c>>Cliquez sur le bouton rouge pour ne §lRIEN§c faire"));
         this.setItem(15, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {

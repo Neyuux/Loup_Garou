@@ -88,11 +88,12 @@ public class Pyromane extends Role {
 
         for (PlayerLG oiledPlayer : this.getOiledPlayers()) {
             oiledPlayer.sendMessage(LG.getPrefix() + "§6Tu es huilé !");
+            oiledPlayer.sendTitle("§6§lTu es huilé !", "§6Tu risques de mourir si tu ne trouves pas le Pyromane !", 20, 40, 20);
             oiledPlayer.getPlayer().playSound(oiledPlayer.getLocation(), Sound.WOLF_SHAKE, 6f, 1.2f);
             builder.append(oiledPlayer.getName()).append(", ");
         }
 
-        playerLG.sendMessage(builder.substring(2));
+        playerLG.sendMessage(builder.substring(0, 2));
 
         super.onPlayerTurnFinish(playerLG);
     }

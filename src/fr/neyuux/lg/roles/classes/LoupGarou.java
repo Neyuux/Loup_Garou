@@ -116,13 +116,13 @@ public class LoupGarou extends Role {
         GameLG game = LG.getInstance().getGame();
         RoleChoiceEvent roleChoiceEvent = new RoleChoiceEvent(this, choosen);
 
+        game.getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cVous avez dévoré §4" + choosen.getNameWithAttributes(playerLG) + "§c."));
+
         Bukkit.getPluginManager().callEvent(roleChoiceEvent);
         if (roleChoiceEvent.isCancelled()) return;
 
         game.kill(choosen);
         setLastTargetedByLG(choosen);
-
-        game.getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cVous avez dévoré §4" + choosen.getNameWithAttributes(playerLG) + "§c."));
     }
 
 

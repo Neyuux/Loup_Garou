@@ -80,10 +80,11 @@ public class Soeur extends Role {
 
     public void onPlayerJoin(PlayerLG playerLG) {
         super.onPlayerJoin(playerLG);
+        GameLG game = LG.getInstance().getGame();
 
         if (sister != null) {
 
-            if (LG.getInstance().getGame().getPlayersByRole(this.getClass()).contains(sister)) {
+            if (game.getPlayersByRole(this.getClass()).contains(sister)) {
                 playerLG.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + "§d est §a§l" + sister.getName());
                 sister.sendMessage(LG.getPrefix() + "§dVotre " + this.getDisplayName() + " §dest §a§l" + playerLG.getName());
             }
@@ -91,7 +92,7 @@ public class Soeur extends Role {
         } else {
             PlayerLG newsister = null;
             while (newsister == null) {
-                PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(new Random().nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
+                PlayerLG random = game.getPlayersInGame().get(new Random().nextInt(game.getPlayersInGame().size()));
 
                 if (random.getRole() == null) {
                     this.sister = random;
@@ -99,7 +100,7 @@ public class Soeur extends Role {
                     Soeur newRole = null;
 
                     try {
-                        for (Constructor<? extends Role> constructor : LG.getInstance().getGame().getConfig().getAddedRoles()) {
+                        for (Constructor<? extends Role> constructor : game.getConfig().getAddedRoles()) {
                             Role role = constructor.newInstance();
 
                             if (role.getConfigName().equals(this.getConfigName()) && !role.equals(this)) {
@@ -128,8 +129,6 @@ public class Soeur extends Role {
     @Override
     public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> players = game.getPlayersByRole(this.getClass());
-
         game.cancelWait();
 
         if (players.isEmpty()) {
@@ -140,6 +139,9 @@ public class Soeur extends Role {
 
         PlayerLG sisterLG1 = players.remove(0);
         Set<PlayerLG> sisters = new HashSet<>(Arrays.asList(sisterLG1, ((Soeur)sisterLG1.getRole()).getSister()));
+
+        if (!game.getGameRunnable().getRolesOrder().isEmpty())
+            game.getGameRunnable().getRolesOrder().remove(0);
 
         players.removeAll(sisters);
         sisters.removeIf(playerLG -> playerLG.isDead() || !playerLG.canUsePowers());
@@ -154,6 +156,7 @@ public class Soeur extends Role {
         for (PlayerLG sisterLG : sisters) {
             if (sisterLG.canUsePowers()) {
                 sisterLG.setWake();
+                game.getAliveExcept(sisters.toArray(new PlayerLG[0])).forEach(playerLG -> sisterLG.getPlayer().hidePlayer(playerLG.getPlayer()));
                 sisterLG.sendMessage(LG.getPrefix() + this.getActionMessage());
             }
         }

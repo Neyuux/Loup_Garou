@@ -4,6 +4,7 @@ import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
@@ -24,6 +25,8 @@ public class ChoosePlayerItemStack extends CustomItemStack {
         this.setSkullOwner(playerLG.getName());
         this.setLore(generator.generateLore(playerLG));
         this.setLoreLine(this.getLore().size() - 2, "§0" + this.hashCode());
+
+        //Bukkit.broadcastMessage(receiverLG.getName());
 
         addItemInList(this);
     }

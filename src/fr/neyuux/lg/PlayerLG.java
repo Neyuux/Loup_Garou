@@ -152,7 +152,7 @@ public class PlayerLG {
         if (receiver.getRole() instanceof Soeur) {
             Soeur soeur = (Soeur) receiver.getRole();
 
-            if (soeur.getSister().equals(this)) {
+            if (soeur.getSister().equals(this) || receiver == this) {
                 name += "§d§lSoeur ";
                 lastcolor = "§d";
             }
@@ -161,7 +161,7 @@ public class PlayerLG {
         if (receiver.getRole() instanceof Frere) {
             Frere brother = (Frere)receiver.getRole();
 
-            if (brother.getBrothers().contains(this)) {
+            if (brother.getBrothers().contains(this) || receiver == this) {
                 name += "§3§lFrère ";
                 lastcolor = "§d";
             }
@@ -424,6 +424,9 @@ public class PlayerLG {
         Bukkit.broadcastMessage(LG.getPrefix() + "§6Le village a perdu un de ses membres : §e" + this.getName() + "§6 est §nmort§6. Il était " + this.getRole().getDisplayName() + "§6.");
         this.sendMessage(LG.getPrefix() + "§9Le jeu a déjà démarré !");
         this.sendMessage(LG.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
+
+        for (Map.Entry<PlayerLG, String> messages : event.getMessagesToSend().entrySet())
+            messages.getKey().sendMessage(messages.getValue());
 
         if (this.isMayor) {
             this.removeMayor();

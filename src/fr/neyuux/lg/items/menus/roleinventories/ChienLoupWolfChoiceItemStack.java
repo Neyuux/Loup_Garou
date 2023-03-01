@@ -16,7 +16,7 @@ public class ChienLoupWolfChoiceItemStack extends CustomItemStack {
     private final Runnable callback;
 
     public ChienLoupWolfChoiceItemStack(Runnable callback) {
-        super(Material.STAINED_CLAY, 1, "§a§lChien");
+        super(Material.STAINED_CLAY, 1, "§c§lLoup");
 
         this.setLore("§eVous transforme en §c§lLoup§e.", "§eVous appartiendez donc au camp des Loups-Garous et devrez", "§eéliminer tous les villageois.", "", "§7>>Clique pour sélectionner");
         this.setDamage(14);

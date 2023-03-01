@@ -75,8 +75,15 @@ public class ChevalierALEpeeRouillee extends Role {
             for (String s : list) {
                 PlayerLG sickLG = PlayerLG.createPlayerLG(Bukkit.getPlayer(s));
 
-                if (!s.equals(playerLG.getName()) && sickLG.isLG())
+                if (!s.equals(playerLG.getName()) && sickLG.isLG()) {
                     sickLG.getCache().put("chevalierALEppeRouilleSick", playerLG);
+
+                    sickLG.sendTitle("§cVous êtes empoisonné !", "§6Vous avez été transpercé par l'épée du Chevalier à l'Epée Rouillée.", 20, 60, 20);
+                    ev.getMessagesToSend().put(sickLG, LG.getPrefix() + "§6En tuant le Chevalier à l'Epée Rouillée, vous vous êtes bléssé sur son arme. Vous mourrez prochain tour.");
+                    ev.getMessagesToSend().put(playerLG, LG.getPrefix() + "§6Vous avez empoisonné §c§l" + sickLG.getName() + " §6en vous débattant avant de mourir.");
+
+                    return;
+                }
             }
         }
     }

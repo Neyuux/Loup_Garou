@@ -7,6 +7,7 @@ import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.ChoosePlayerItemStack;
 import fr.neyuux.lg.utils.AbstractCustomInventory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 
 public class VoteInv extends AbstractCustomInventory {
@@ -51,6 +52,7 @@ public class VoteInv extends AbstractCustomInventory {
 
                         @Override
                         public void doActionsAfterClick(PlayerLG paramPlayerLG) {
+                            //Bukkit.broadcastMessage("§a" + receiverLG.getName());
                             receiverLG.callbackChoice(paramPlayerLG);
                         }
                     }));
@@ -61,6 +63,8 @@ public class VoteInv extends AbstractCustomInventory {
     @Override
     public void open(HumanEntity player) {
         this.receiverLG = PlayerLG.createPlayerLG(player);
+        //Bukkit.broadcastMessage("§e" + player.getName() + " / " + this.receiverLG.getName());
         super.open(player);
+        //Bukkit.broadcastMessage("§d" + receiverLG.getName());
     }
 }

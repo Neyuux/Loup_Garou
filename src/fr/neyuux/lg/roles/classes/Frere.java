@@ -74,13 +74,7 @@ public class Frere extends Role {
     public void onPlayerJoin(PlayerLG playerLG) {
         super.onPlayerJoin(playerLG);
 
-        if (!this.brothers.isEmpty()) {
-            playerLG.sendMessage(getBrothersMessage(playerLG, this.brothers));
-            for (PlayerLG brotherLG : this.brothers)
-                brotherLG.sendMessage(getBrothersMessage(brotherLG, ((Frere)brotherLG.getRole()).getBrothers()));
-
-        } else {
-
+        if (this.brothers.size() != 2) {
             while (this.brothers.size() != 2) {
                 PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(new Random().nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
 
@@ -102,12 +96,6 @@ public class Frere extends Role {
                         this.brothers.add(random);
                         System.out.println("add " + playerLG.getName() + " brother : " + random.getName());
 
-                        newRole.getBrothers().add(playerLG);
-
-                        for (PlayerLG brotherLG : this.brothers)
-                            if (!brotherLG.equals(random))
-                                newRole.getBrothers().add(brotherLG);
-
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
                         Bukkit.broadcastMessage(LG.getPrefix() + "§4[§cErreur§4] Impossible de déterminer le role du frere de §b" + playerLG.getName() + "§c Veuillez appeler Neyuux_ ou réessayer plus tard.");
@@ -115,14 +103,27 @@ public class Frere extends Role {
                     random.setRole(newRole);
                 }
             }
+
+            Iterator<PlayerLG> brothers = this.brothers.iterator();
+            PlayerLG brother1 = brothers.next();
+            PlayerLG brother2 = brothers.next();
+            Frere brother1Role = (Frere) brother1.getRole();
+            Frere brother2Role = (Frere) brother2.getRole();
+
+            brother1Role.getBrothers().add(playerLG);
+            brother2Role.getBrothers().add(playerLG);
+
+            brother1Role.getBrothers().add(brother2);
+            brother2Role.getBrothers().add(brother1);
+
         }
+        playerLG.sendMessage(getBrothersMessage(playerLG, this.brothers));
     }
 
     private static String getBrothersMessage(PlayerLG playerLG, HashSet<PlayerLG> brothers) {
         StringBuilder sb = new StringBuilder(LG.getPrefix() + "§3Vos " + playerLG.getRole().getDisplayName() + " §3sont §a§l");
         for (PlayerLG brotherLG : brothers)
-            sb.append(brotherLG.getName()).append("  ");
-        playerLG.sendMessage(sb.toString());
+            sb.append(brotherLG.getName()).append("§3, §a§l");
 
         return sb.toString();
     }
@@ -136,7 +137,6 @@ public class Frere extends Role {
     @Override
     public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
-        List<PlayerLG> players = game.getPlayersByRole(this.getClass());
 
         game.cancelWait();
 
@@ -146,11 +146,18 @@ public class Frere extends Role {
             return;
         }
 
-        PlayerLG brotherLG1 = players.remove(0);
-        Set<PlayerLG> playableBrothers = new HashSet<>(this.getBrothers());
+        PlayerLG brotherLG1 = players.get(0);
+        Set<PlayerLG> playableBrothers = new HashSet<>(((Frere)brotherLG1.getRole()).getBrothers());
         playableBrothers.add(brotherLG1);
 
-        players.removeIf(playerLG -> playerLG.isDead() || !playerLG.canUsePowers());
+        players.removeAll(playableBrothers);
+
+        if (!game.getGameRunnable().getRolesOrder().isEmpty())
+            game.getGameRunnable().getRolesOrder().remove(0);
+        if (!game.getGameRunnable().getRolesOrder().isEmpty())
+            game.getGameRunnable().getRolesOrder().remove(0);
+
+        playableBrothers.removeIf(playerLG -> playerLG.isDead() || !playerLG.canUsePowers());
 
         if (playableBrothers.isEmpty()) {
             game.wait(this.getTimeout(), () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
@@ -159,9 +166,10 @@ public class Frere extends Role {
 
         CHAT.openChat(new HashSet<>(), new HashSet<>(playableBrothers));
 
-        for (PlayerLG brotherLG : brothers) {
+        for (PlayerLG brotherLG : playableBrothers) {
             if (brotherLG.canUsePowers()) {
                 brotherLG.setWake();
+                game.getAliveExcept(playableBrothers.toArray(new PlayerLG[0])).forEach(playerLG -> brotherLG.getPlayer().hidePlayer(playerLG.getPlayer()));
                 brotherLG.sendMessage(LG.getPrefix() + this.getActionMessage());
             }
         }

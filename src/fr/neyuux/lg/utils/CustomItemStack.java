@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -41,6 +42,8 @@ public class CustomItemStack extends ItemStack {
     }
 
     public void use(HumanEntity player, Event event) {
+        if (event instanceof InventoryClickEvent)
+            ((InventoryClickEvent) event).setCancelled(true);
     }
 
     public CustomItemStack putAmount(int amount){

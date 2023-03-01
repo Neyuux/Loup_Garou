@@ -6,6 +6,7 @@ import fr.neyuux.lg.items.menus.roleinventories.VoleurGetNewRoleItemStack;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.classes.Voleur;
 import fr.neyuux.lg.utils.AbstractCustomInventory;
+import org.bukkit.Bukkit;
 
 public class VoleurInv extends AbstractCustomInventory {
 
@@ -25,11 +26,11 @@ public class VoleurInv extends AbstractCustomInventory {
     public void registerItems() {
         this.setAllCorners((byte)9);
 
-        this.setItem(11, new VoleurGetNewRoleItemStack(callback, voleur.role1, voleur));
+        this.setItem(11, new VoleurGetNewRoleItemStack(callback, Voleur.getRole1(), Voleur.getRole2(), voleur));
         this.setItem(13, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {
-                return new String[] {"§bVous pouvez choisir de garder le rôle " + voleur.getDisplayName(), "§bet de supprimer les rôles " + voleur.role1.getDisplayName(), "§bet " + voleur.role2.getDisplayName() +" §bde la partie.", "", "§7>>Clique pour choisir"};
+                return new String[] {"§bVous pouvez choisir de garder le rôle " + voleur.getDisplayName(), "§bet de supprimer les rôles " + Voleur.getRole1().getDisplayName(), "§bet " + Voleur.getRole2().getDisplayName() +" §bde la partie.", "", "§7>>Clique pour choisir"};
             }
 
             @Override
@@ -41,6 +42,6 @@ public class VoleurInv extends AbstractCustomInventory {
                 callback.run();
             }
         }));
-        this.setItem(15, new VoleurGetNewRoleItemStack(callback, voleur.role2, voleur));
+        this.setItem(15, new VoleurGetNewRoleItemStack(callback, Voleur.getRole2(), Voleur.getRole1(), voleur));
     }
 }

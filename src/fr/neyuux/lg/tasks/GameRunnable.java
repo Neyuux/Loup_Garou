@@ -110,9 +110,9 @@ public class GameRunnable extends BukkitRunnable {
     public void nextNight() {
         if (game.getGameState().equals(GameState.FINISHED)) return;
 
-        Bukkit.getPluginManager().callEvent(new NightStartEvent());
-
         game.addNight();
+
+        Bukkit.getPluginManager().callEvent(new NightStartEvent());
 
         game.setDayCycle(DayCycle.NIGHT);
 
@@ -123,6 +123,7 @@ public class GameRunnable extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
+        Bukkit.broadcastMessage("voleur ?");
         this.calculateRoleOrder();
 
         for (PlayerLG playerLG : this.game.getAlive())
@@ -279,8 +280,10 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void updateRoleOrder(Class<? extends Role> roleClass) {
+        Bukkit.broadcastMessage("voluer ? 2");
         this.calculateRoleOrder();
-        while (this.getRolesOrder().get(0).getClass().equals(roleClass))
+        while (!this.getRolesOrder().get(0).getClass().equals(roleClass))
             this.getRolesOrder().remove(0);
+        this.getRolesOrder().remove(0);
     }
 }

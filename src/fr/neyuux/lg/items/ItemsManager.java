@@ -8,6 +8,8 @@ import fr.neyuux.lg.items.hotbar.JoinGameEnderBallItemStack;
 import fr.neyuux.lg.items.hotbar.OpComparatorItemStack;
 import fr.neyuux.lg.items.hotbar.SpectatorTearItemStack;
 import fr.neyuux.lg.items.hotbar.VoteBookItemStack;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class ItemsManager {
@@ -30,6 +32,10 @@ public class ItemsManager {
         PlayerInventory playerInv = playerLG.getPlayer().getInventory();
 
         this.clearInventory(playerLG);
+
+        if (playerLG.isMayor())
+            playerInv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+
         /*if (playerLG.getRole() != null) {
             ItemStack it = null;
             ItemMeta itm = null;

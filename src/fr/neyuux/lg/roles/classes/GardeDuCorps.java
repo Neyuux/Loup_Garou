@@ -151,7 +151,7 @@ public class GardeDuCorps extends Role {
 
             ev.setCancelled(true);
             protectorLG.eliminate();
-            playerLG.sendMessage(LG.getPrefix() + "§7§l" + protectorLG.getName() + " §7vous a protégé !");
+            ev.getMessagesToSend().put(playerLG, LG.getPrefix() + "§7§l" + protectorLG.getName() + " §7vous a protégé !");
         }
     }
 

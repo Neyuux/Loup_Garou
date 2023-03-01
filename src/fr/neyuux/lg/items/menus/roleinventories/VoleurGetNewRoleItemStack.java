@@ -17,10 +17,10 @@ public class VoleurGetNewRoleItemStack extends CustomItemStack {
     private final Role role;
     private final Voleur voleur;
 
-    public VoleurGetNewRoleItemStack(Runnable callback, Role role, Voleur voleur) {
-        super(Material.DIAMOND_HOE, 1, "§2§lFaire un coup d'état");
+    public VoleurGetNewRoleItemStack(Runnable callback, Role role, Role otherRole, Voleur voleur) {
+        super(Material.EMPTY_MAP, 1, role.getDisplayName());
 
-        this.setLore("§eFaire un coup d'état vous permet", "§ed'être le seul à pouvoir voter.", "§eSi vous votez pour un §aVillageois§e,", "§evous vous suiciderez le lendemain.", "§eSinon, vous deviendrez maire du village.", "", "§7>>Clique pour sélectionner");
+        this.setLore("§bVous permet de sélectionner le rôle", role.getDisplayName() + "§b. Vous rejoindrez " + "§ble camp " + role.getBaseCamp().getColor() + role.getBaseCamp().getName() + "§b.", "", "§bVous supprimerez les rôles", otherRole.getDisplayName() + " §bet " + voleur.getDisplayName() + " §bde la partie.", "", "§7>>Clique pour sélectionner");
 
         this.callback = callback;
         this.role = role;
@@ -34,10 +34,13 @@ public class VoleurGetNewRoleItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
         Role role2;
-        if (this.role.equals(voleur.role1))
-            role2 = voleur.role2;
-        else
-            role2 = voleur.role1;
+        if (this.role.equals(Voleur.getRole1())) {
+            role2 = Voleur.getRole2();
+            Voleur.setRole1(voleur);
+        } else {
+            role2 = Voleur.getRole1();
+            Voleur.setRole2(voleur);
+        }
 
         playerLG.joinRole(this.role);
         playerLG.setCamp(this.role.getBaseCamp());

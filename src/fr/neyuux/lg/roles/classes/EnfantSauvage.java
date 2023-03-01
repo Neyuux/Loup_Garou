@@ -69,6 +69,7 @@ public class EnfantSauvage extends Role {
 
     @Override
     public void onPlayerJoin(PlayerLG playerLG) {
+        super.onPlayerJoin(playerLG);
         if ((boolean) LG.getInstance().getGame().getConfig().getWildChildRandomModel().getValue())
             playerLG.sendMessage(LG.getPrefix() + "§6§lRAPPEL : §6Le paramètre §a§lModèle Random§6 est activé et vous ne pourrez pas choisir votre modèle.");
     }
@@ -85,7 +86,7 @@ public class EnfantSauvage extends Role {
             return;
         }
 
-        PlayerLG playerLG = players.get(0);
+        PlayerLG playerLG = players.remove(0);
 
         if (playerLG.canUsePowers()) {
 
@@ -198,10 +199,10 @@ public class EnfantSauvage extends Role {
         if (choosen.getCache().has("enfantSauvageModel")) {
             PlayerLG esLG = (PlayerLG) choosen.getCache().get("enfantSauvageModel");
 
-            esLG.setCamp(Camps.LOUP_GAROU);
+            LG.getInstance().getGame().getLGs(true).forEach(playerLG -> ev.getMessagesToSend().put(playerLG, LG.getPrefix() + "§cUn joueur à rejoint votre camp !"));
+            ev.getMessagesToSend().put(esLG, LG.getPrefix() + "§cVotre Modèle est mort ! Vous devenez donc Loup-Garou.");
 
-            LG.getInstance().getGame().getLGs(true).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + "§cUn joueur à rejoint votre camp !"));
-            esLG.sendMessage(LG.getPrefix() + "§cVotre Modèle est mort ! Vous devenez donc Loup-Garou.");
+            esLG.setCamp(Camps.LOUP_GAROU);
         }
     }
 }

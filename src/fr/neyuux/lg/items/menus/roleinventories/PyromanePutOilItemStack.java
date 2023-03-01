@@ -100,6 +100,6 @@ public class PyromanePutOilItemStack extends CustomItemStack {
 
         playerLG.sendMessage(LG.getPrefix() + "§6Tu as huilé " + choosen.getNameWithAttributes(playerLG) + "§6.");
         GameLG.playPositiveSound(playerLG.getPlayer());
-        return count != 1;
+        return count == 1;
     }
 }

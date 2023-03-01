@@ -52,8 +52,6 @@ public class GameLG implements Listener {
 
     private BukkitTask waitTask;
 
-    private Runnable waitCallback;
-
     private GameRunnable gameRunnable;
 
     private VoteLG vote;
@@ -163,6 +161,9 @@ public class GameLG implements Listener {
 
         this.spectators.remove(playerLG);
 
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
+        if (player.isOp()) LG.getInstance().getGame().OP(playerLG);
+
         this.getItemsManager().updateSpawnItems(playerLG);
         player.setMaxHealth(20);
         player.setHealth(20);
@@ -176,8 +177,6 @@ public class GameLG implements Listener {
         player.sendMessage(this.getPrefix() + "§9Vous avez été retiré du mode Spectateur.");
         player.setGameMode(GameMode.ADVENTURE);
         player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
-
-        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
     }
 
     public boolean joinGame(PlayerLG playerLG) {
@@ -259,28 +258,45 @@ public class GameLG implements Listener {
             Constructor<? extends Role> thiefConstructor = LG.getInstance().getRoles().get("Voleur");
 
             if (this.config.getAddedRoles().contains(thiefConstructor)) {
-                Voleur thief = (Voleur) thiefConstructor.newInstance();
-
                 Role role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
                 while (role1.getConfigName().equals("Voleur")) role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
 
                 Role role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
-                while (role2.getConfigName().equals("Voleur")) role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+                while (role2.getConfigName().equals("Voleur") || role1.getClass().equals(role2.getClass())) role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
 
                 this.config.getAddedRoles().remove(role1.getClass().getConstructor());
                 this.config.getAddedRoles().remove(role2.getClass().getConstructor());
 
-                thief.role1 = role1;
-                thief.role2 = role2;
+                Voleur.setRole1(role1);
+                Voleur.setRole2(role2);
                 this.rolesAtStart.add(role1);
                 this.rolesAtStart.add(role2);
 
                 System.out.println("rolevoleur : " + role1.getConfigName());
                 System.out.println("rolevoleur : " + role2.getConfigName());
-            }
+                for (Constructor<? extends Role> constructor : this.config.getAddedRoles())
+                    toGive.add(constructor.newInstance());
+            } else {
+                int sistern = 0;
+                int brothern = 0;
 
-            for (Constructor<? extends Role> constructor : this.config.getAddedRoles())
-                toGive.add(constructor.newInstance());
+                for (Constructor<? extends Role> constructor : this.config.getAddedRoles()) {
+                    Role role = constructor.newInstance();
+
+                    if (role instanceof Soeur) {
+                        sistern++;
+                        if (sistern % 2 != 0)
+                            continue;
+                    }
+                    if (role instanceof Frere) {
+                        brothern++;
+                        if (brothern % 3 != 0)
+                            continue;
+                    }
+
+                    toGive.add(constructor.newInstance());
+                }
+            }
 
             return Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
                 if (waitedPlayers.isEmpty()) return;
@@ -293,7 +309,6 @@ public class GameLG implements Listener {
                     toGive.remove(role);
 
                 } else role = toGive.remove(random.nextInt(toGive.size()));
-
 
                 GameLG.sendActionBarToAllPlayers(LG.getPrefix() + "§eDealing role to §b" + playerLG.getName());
 
@@ -341,7 +356,6 @@ public class GameLG implements Listener {
 
         if (cancelOthers) cancelWait();
 
-        this.waitCallback = callback;
         this.waitTask = waitRunnable.runTaskTimer(LG.getInstance(), 0L, 1L);
     }
 
@@ -441,7 +455,7 @@ public class GameLG implements Listener {
 
                 if (cache.has("enchanted")) s = s + " §5§oCharmé";
 
-                if (cache.has("voleur")) s = s + " §3(" + roles.get("voleur").newInstance().getDisplayName() + "§3)";
+                if (cache.has("voleur")) s = s + " §3(" + roles.get("Voleur").newInstance().getDisplayName() + "§3)";
 
                 if (playerlg.isMayor()) s = s + " §b§oMaire";
 
@@ -455,13 +469,11 @@ public class GameLG implements Listener {
 
         for (Role role : rolesAtStart)
             if (role instanceof Voleur) {
-                Voleur voleur = (Voleur)role;
-
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("§3§lRôles §3non distribués :");
-            Bukkit.broadcastMessage(voleur.role1.getDisplayName());
-            Bukkit.broadcastMessage(voleur.role2.getDisplayName());
-        }
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage("§3§lRôles §3non distribués :");
+                Bukkit.broadcastMessage(Voleur.getRole1().getDisplayName());
+                Bukkit.broadcastMessage(Voleur.getRole2().getDisplayName());
+            }
 
         new LGStop().runTaskTimer(LG.getInstance(), 0, 20);
     }
@@ -482,6 +494,8 @@ public class GameLG implements Listener {
         this.aliveRoles.clear();
         this.rolesAtStart.clear();
         this.killedPlayers.clear();
+
+        this.setConfig(new GameConfig());
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerLG playerLG = PlayerLG.createPlayerLG(player);
@@ -512,8 +526,6 @@ public class GameLG implements Listener {
         Bukkit.getWorld("LG").setTime(0);
 
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
-
-        this.setConfig(new GameConfig());
     }
 
     public void sendLobbySideScoreboardToAllPlayers() {
@@ -749,15 +761,7 @@ public class GameLG implements Listener {
     }
 
     public boolean isNotThiefRole(Role role) {
-        for (Role roleatStart : this.rolesAtStart) {
-            if (roleatStart instanceof Voleur) {
-                Voleur thief = (Voleur)roleatStart;
-
-                if (thief.role1.equals(role) || thief.role2.equals(role))
-                    return false;
-            }
-        }
-        return true;
+        return Voleur.getRole1().equals(role) || Voleur.getRole2().equals(role);
     }
 
     public interface StringTimerMessage {

@@ -5,10 +5,13 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+import java.util.HashMap;
+
 public class PlayerEliminationEvent extends Event implements Cancellable {
 
     private final PlayerLG choosen;
     private boolean cancel;
+    private final HashMap<PlayerLG, String> messagesToSend = new HashMap<>();
 
     public PlayerEliminationEvent(PlayerLG choosenLG) {
         this.choosen = choosenLG;
@@ -36,5 +39,9 @@ public class PlayerEliminationEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
+    }
+
+    public HashMap<PlayerLG, String> getMessagesToSend() {
+        return messagesToSend;
     }
 }

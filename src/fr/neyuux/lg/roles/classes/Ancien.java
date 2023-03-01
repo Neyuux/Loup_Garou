@@ -4,6 +4,7 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.VoteLG;
+import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.event.VoteEndEvent;
 import fr.neyuux.lg.event.VoteStartEvent;
 import fr.neyuux.lg.roles.Camps;
@@ -68,7 +69,7 @@ public class Ancien extends Role {
         VoteLG vote = ev.getVote();
         PlayerLG choosen = ev.getChoosen();
 
-        if (vote.getName().equals("Vote du Village") && choosen.getRole() instanceof Ancien) {
+        if (vote.getName().equals("Vote du Village") && choosen != null && choosen.getRole() instanceof Ancien) {
             Bukkit.broadcastMessage(LG.getPrefix() + "§cLe Village a éliminé l'" + this.getDisplayName() + " §c! Tous les villageois perdent donc leurs pouvoirs.");
             for (Player p : Bukkit.getOnlinePlayers())
                 p.playSound(p.getLocation(), Sound.WITHER_HURT, 8f, 1.05f);
@@ -84,16 +85,16 @@ public class Ancien extends Role {
     }
 
     @EventHandler
-    public void onVoteStart(VoteStartEvent ev) {
-        VoteLG vote = ev.getVote();
-        for (PlayerLG playerLG : vote.getVoters())
-            if (playerLG.getCache().has("idiotDuVillageVoted")) {
-                vote.getVoters().remove(playerLG);
-                playerLG.sendMessage(LG.getPrefix() + "§cVous ne pouvez plus voter...");
-                playerLG.getCache().put("vote", null);
-                playerLG.stopChoosing();
-                playerLG.setArmorStand(null);
-                LG.getInstance().getItemsManager().updateVoteItems(playerLG);
-            }
+    public void onLGChoice(RoleChoiceEvent ev) {
+        PlayerLG playerLG = ev.getChoosen();
+
+        if (ev.getRole() instanceof LoupGarou && playerLG.getRole() instanceof Ancien && playerLG.canUsePowers()) {
+            ev.setCancelled(true);
+            playerLG.setCanUsePowers(false);
+
+            playerLG.sendMessage(LG.getPrefix() + "§cVous avez été attaqué par les Loups-Garous cette nuit. Grâce à votre expérience vous avez §asurvécu§c. Cependant, vous mourrez s'il décident de revenir.");
+            playerLG.sendTitle(LG.getPrefix() + "§aVous avez survécu !", "§cVous avez été attaqué par les Loups mais vous avez survécu.", 20, 60, 20);
+            GameLG.playPositiveSound(playerLG.getPlayer());
+        }
     }
 }

@@ -200,7 +200,7 @@ public class Bouffon extends Role {
     public void onVoteEnd(VoteEndEvent ev) {
         PlayerLG choosen = ev.getChoosen();
 
-        if (ev.getVote().getName().equals("Vote du Village") && choosen.getRole() != null && choosen.getRole() instanceof Bouffon) {
+        if (ev.getVote().getName().equals("Vote du Village") && choosen != null && choosen.getRole() instanceof Bouffon) {
             NEED_TO_PLAY.add(choosen);
             Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + "§a réussi son objectif !");
         }

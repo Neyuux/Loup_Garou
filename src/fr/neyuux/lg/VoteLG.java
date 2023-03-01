@@ -12,8 +12,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -52,8 +54,11 @@ public class VoteLG {
         this.voters = voters;
         this.observers = observers;
         this.name = name;
-        
-        this.observers.addAll(LG.getInstance().getGame().getSpectators());
+
+        List<PlayerLG> spectators = LG.getInstance().getGame().getSpectators();
+
+        this.observers.addAll(spectators);
+        this.voters.removeAll(spectators);
     }
 
 
@@ -66,14 +71,14 @@ public class VoteLG {
         game.wait(timer, () -> this.end(false), timerMessage, true);
         game.setVote(this);
 
+        Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
+
         for (PlayerLG voterLG : voters) {
             voterLG.getCache().put("vote", null);
             voterLG.setChoosing(choosen -> this.vote(voterLG, choosen));
             voterLG.setArmorStand(null);
             lg.getItemsManager().updateVoteItems(voterLG);
         }
-
-        Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
     }
 
     public void vote(PlayerLG voter, PlayerLG voted) {
@@ -146,6 +151,7 @@ public class VoteLG {
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> killers = null;
         List<PlayerLG> finalists = new ArrayList<>();
+        HashSet<PlayerLG> voted = new HashSet<>();
         StringBuilder builder = new StringBuilder();
 
         for (PlayerLG playerLG : this.votable) {
@@ -153,7 +159,7 @@ public class VoteLG {
 
             if (playerLG.getRole() instanceof Bouffon) playerLG.getCache().put("bouffonVoters", playerVoters);
 
-            if (playerVoters.size() > 0) finalists.add(playerLG);
+            if (playerVoters.size() > 0) voted.add(playerLG);
 
             playerLG.setArmorStand(null);
             for (PlayerLG voter : playerVoters)
@@ -163,18 +169,16 @@ public class VoteLG {
                 }
         }
 
-        while (finalists.size() > 1) {
-            Integer i1 = this.getVotesFor(finalists.get(0)).size();
-            int i2 = this.getVotesFor(finalists.get(1)).size();
-            int comparator = i1.compareTo(i2);
-
-            if (comparator > 0)
-                finalists.remove(1);
-            else if (comparator < 0)
-                finalists.remove(0);
+        for (PlayerLG playerLG : voted) {
+            if (finalists.isEmpty()) finalists.add(playerLG);
             else {
-                if (finalists.size() == 2)
-                    break;
+                int currentVotes = this.getVotesFor(finalists.get(0)).size();
+                int playerLGVotes = this.getVotesFor(playerLG).size();
+
+                if (currentVotes < playerLGVotes) {
+                    finalists.clear();
+                } else if (currentVotes <= playerLGVotes)
+                    finalists.add(playerLG);
             }
         }
 
@@ -184,8 +188,8 @@ public class VoteLG {
         if (finalists.isEmpty() || this.getVotesFor(finalists.get(0)).isEmpty())
             cancel = true;
 
-        for (PlayerLG playerLG : this.voters) {
-            playerLG.getCache().remove("vote");
+        for (PlayerLG playerLG : game.getPlayersInGame()) {
+            if (playerLG.getCache().has("vote")) playerLG.getCache().remove("vote");
             playerLG.stopChoosing();
         }
 
@@ -217,7 +221,7 @@ public class VoteLG {
 
                     if (game.getGameType().equals(GameType.MEETING)) {
                         game.wait(30, () -> {
-                            mayor.getCache().put("unclosableInv", false);
+                            mayor.stopChoosing();
                             mayor.getPlayer().closeInventory();
 
                             Bukkit.broadcastMessage(LG.getPrefix() + "§cLe Maire a mis trop de temps à choisir. Il n'y aura donc aucune exécution aujourd'hui.");
@@ -226,7 +230,7 @@ public class VoteLG {
                             game.cancelWait();
                             this.callback.run();
                             game.setVote(null);
-                        },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + "§6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."), true);
+                        },(player, secondsLeft) -> (mayor == player) ? (LG.getPrefix() + "§eTu as §6§l" + secondsLeft + " §6seconde" + LG.getPlurial(secondsLeft) + "§e pour faire ton choix !") : (LG.getPrefix() + "§eLe maire fait son choix..."), true);
 
                         mayor.setChoosing(choosen -> {
                             if (choosen != null)
@@ -272,6 +276,8 @@ public class VoteLG {
                     }
 
                     this.sendObserversMessage(builder.toString());
+                    for (PlayerLG playerLG : this.getVoters())
+                        game.getItemsManager().updateStartItems(playerLG);
 
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");

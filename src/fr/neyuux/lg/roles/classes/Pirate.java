@@ -150,7 +150,7 @@ public class Pirate extends Role {
             PlayerLG hostage = (PlayerLG) choosen.getCache().get("pirateHostage");
 
             vote.setChoosen(hostage);
-            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + this.getDisplayName() + " §e§l" + choosen.getName() + " §6possédait §c§l" + hostage.getName() + " §6en otage. Ce dernier sera donc pendy à la place du Pirate.");
+            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + this.getDisplayName() + " §e§l" + choosen.getName() + " §6possédait §c§l" + hostage.getName() + " §6en otage. Ce dernier sera donc pendu à la place du Pirate.");
         }
     }
 }

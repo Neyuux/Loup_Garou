@@ -39,7 +39,7 @@ public class Vampire extends Role {
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getDisplayName()+", votre but est d'éliminer tous les joueurs qui ne sont pas des Vampires. Chaque nuit vous vous réveillez pour §9mordre§f un joueur. Cette morsure §9transformera§f le joueur en Vampire une nuit sur deux, ou sinon §9tuera§f le joueur.";
+        return "§fVous êtes "+this.getDisplayName()+ "§r, votre but est d'éliminer tous les joueurs qui ne sont pas des Vampires. Chaque nuit vous vous réveillez pour §9mordre§f un joueur. Cette morsure §9transformera§f le joueur en Vampire une nuit sur deux, ou sinon §9tuera§f le joueur.";
     }
 
     @Override

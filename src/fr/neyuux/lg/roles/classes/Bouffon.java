@@ -202,7 +202,7 @@ public class Bouffon extends Role {
 
         if (ev.getVote().getName().equals("Vote du Village") && choosen != null && choosen.getRole() instanceof Bouffon) {
             NEED_TO_PLAY.add(choosen);
-            Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + "§a réussi son objectif !");
+            Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + "§d" + ev.getChoosen().getName() + " §a réussi son objectif !");
         }
     }
 

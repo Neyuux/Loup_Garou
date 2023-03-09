@@ -3,7 +3,6 @@ package fr.neyuux.lg.roles;
 import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
@@ -23,8 +22,9 @@ public abstract class Role implements Listener {
         game.cancelWait();
 
         if (players.isEmpty()) {
-            if (game.isNotThiefRole(this)) callback.run();
-            else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
+            if (game.isNotThiefRole(this)) {
+                callback.run();
+            } else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
             return;
         }
 

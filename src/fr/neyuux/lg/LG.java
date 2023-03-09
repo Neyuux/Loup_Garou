@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -39,7 +40,7 @@ public class LG extends JavaPlugin {
 
     private final HashMap<String, Constructor<? extends Role>> roles = new HashMap<>();
 
-    private final List<Role> listeningEventsRoles = new ArrayList<>();
+    private final List<Listener> listeningEventsRoles = new ArrayList<>();
 
     public static LG getInstance() {
         return INSTANCE;
@@ -220,13 +221,6 @@ public class LG extends JavaPlugin {
         }
     }
 
-    public void registerEvents(Role role) {
-        for (Role listeningEventsRole : listeningEventsRoles)
-            if (listeningEventsRole.getClass().equals(role.getClass()))
-                return;
-        Bukkit.getPluginManager().registerEvents(role, this);
-    }
-
     public void unregisterAllListeners() {
         listeningEventsRoles.forEach(HandlerList::unregisterAll);
         listeningEventsRoles.clear();
@@ -282,5 +276,9 @@ public class LG extends JavaPlugin {
 
     public HashMap<String, Constructor<? extends Role>> getRoles() {
         return roles;
+    }
+
+    public List<Listener> getListeningEventsRoles() {
+        return listeningEventsRoles;
     }
 }

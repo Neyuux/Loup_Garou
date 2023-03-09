@@ -25,7 +25,7 @@ public class ChatLG implements Listener {
     public void openChat(Set<PlayerLG> spies, Set<PlayerLG> actors) {
         this.spies = spies;
         this.actors = actors;
-        LG.getInstance().getServer().getPluginManager().registerEvents(this, LG.getInstance());
+        LG.getInstance().getGame().registerEvents(this);
     }
 
     public void closeChat() {

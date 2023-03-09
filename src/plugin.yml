@@ -1,5 +1,5 @@
 name: LG
-version: beta2.0.3
+version: beta2.0.4
 author: Neyuux_
 main: fr.neyuux.lg.LG
 softdepend: [NeyGin_Core]

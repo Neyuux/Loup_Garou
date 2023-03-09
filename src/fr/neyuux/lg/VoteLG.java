@@ -281,7 +281,7 @@ public class VoteLG {
 
                 } else {
                     builder.append("Un second vote va débuter pour départager les joueurs à égalité. \n");
-                    VoteLG secondVote = new VoteLG("Second vote du Village", 70, true, (playerLG, secondsLeft) -> {
+                    VoteLG secondVote = new VoteLG("Vote du Village", 70, true, (playerLG, secondsLeft) -> {
                         if (playerLG.getCache().has("vote"))
                             if (playerLG.getCache().get("vote") == null)
                                 return LG.getPrefix() + "§eVous ne votez pour §6§lpersonne§e.";
@@ -293,11 +293,12 @@ public class VoteLG {
 
                     secondVote.start(() -> {
                         VoteLG.this.choosen = secondVote.getChoosen();
-                        Bukkit.getPluginManager().callEvent(new VoteEndEvent(this, this.choosen));
                         game.cancelWait();
                         this.callback.run();
                         game.setVote(null);
                     });
+                    this.sendObserversMessage(builder.toString());
+                    this.observers.forEach(playerLG -> playerLG.sendTitle("§eSecond vote du Village !", "§6Départagez les joueurs à égalité.", 10, 90, 10));
                 }
                 return;
             }

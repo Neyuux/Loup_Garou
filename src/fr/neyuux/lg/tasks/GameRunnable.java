@@ -123,7 +123,6 @@ public class GameRunnable extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.AMBIENCE_CAVE, 4, 0.1f);
 
-        Bukkit.broadcastMessage("voleur ?");
         this.calculateRoleOrder();
 
         for (PlayerLG playerLG : this.game.getAlive())

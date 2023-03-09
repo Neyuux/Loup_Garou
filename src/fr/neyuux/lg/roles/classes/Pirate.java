@@ -42,7 +42,7 @@ public class Pirate extends Role {
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getDisplayName()+", votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Une fois dans la partie, vous pourrez prendre un joueur en otage. Cela vous permettra §9faire tuer§f votre otage à votre place si vous êtes visé par le vote du village.";
+        return "§fVous êtes "+this.getDisplayName()+"§r, votre but est d'éliminer tous les §c§lLoups-Garous §f(ou rôles solos). Une fois dans la partie, vous pourrez prendre un joueur en otage. Cela vous permettra §9faire tuer§f votre otage à votre place si vous êtes visé par le vote du village.";
     }
 
     @Override
@@ -150,7 +150,10 @@ public class Pirate extends Role {
             PlayerLG hostage = (PlayerLG) choosen.getCache().get("pirateHostage");
 
             vote.setChoosen(hostage);
-            Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + this.getDisplayName() + " §e§l" + choosen.getName() + " §6possédait §c§l" + hostage.getName() + " §6en otage. Ce dernier sera donc pendu à la place du Pirate.");
+            Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage(LG.getPrefix() + "§eLe " + Pirate.this.getDisplayName() + " §e§l" + choosen.getName() + " §6possédait §c§l" + hostage.getName() + " §6en otage. Ce dernier sera donc pendu à la place du Pirate.");
+            }, 1L);
         }
     }
 }

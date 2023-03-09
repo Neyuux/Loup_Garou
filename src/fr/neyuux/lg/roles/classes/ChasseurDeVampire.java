@@ -141,4 +141,22 @@ public class ChasseurDeVampire extends Role {
             }.runTaskLater(LG.getInstance(), 1L);
         }
     }
+
+    @EventHandler
+    public void onVampireDeath(RoleChoiceEvent ev) {
+        Role role = ev.getRole();
+
+        if (role instanceof Vampire && ev.getChoosen().getRole() instanceof ChasseurDeVampire) {
+            GameLG game = LG.getInstance().getGame();
+            PlayerLG lastVampire = Vampire.getLastVampire();
+
+            for (PlayerLG playerLG : game.getPlayersByRole(Vampire.class)) {
+                playerLG.sendMessage(LG.getPrefix() + "§cVous avez tenté d'éliminer un " + this.getDisplayName() + "§c. Étant expérimenté, il survit et élimine le plus jeune d'entre-vous, §5§l" + lastVampire.getName() + "§c.");
+                playerLG.sendTitle("§cMauvaise pioche !", "§cVous avez attaqué un " + this.getDisplayName()+ " §c!", 10, 90, 10);
+            }
+
+            game.kill(lastVampire);
+            ev.setCancelled(true);
+        }
+    }
 }

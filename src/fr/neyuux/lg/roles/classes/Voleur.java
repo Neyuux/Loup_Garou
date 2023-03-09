@@ -14,8 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Voleur extends Role {
 
-    private static Role role1;
-    private static Role role2;
+    private static Role role1 = null;
+    private static Role role2 = null;
 
     @Override
     public String getDisplayName() {

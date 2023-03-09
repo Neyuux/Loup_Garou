@@ -73,7 +73,7 @@ public class GameLG implements Listener {
 
 
     public void createGame() {
-        Bukkit.getPluginManager().registerEvents(this, LG.getInstance());
+        this.registerEvents(this);
         this.config = new GameConfig();
 
         this.resetGame();
@@ -318,7 +318,7 @@ public class GameLG implements Listener {
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
                 this.aliveRoles.add(role);
                 this.rolesAtStart.add(role);
-                LG.getInstance().registerEvents(role);
+                GameLG.this.registerEvents(role);
 
             }, 0, 13);
         } catch (Exception e) {
@@ -525,7 +525,19 @@ public class GameLG implements Listener {
         Bukkit.createWorld(new WorldCreator("LG"));
         Bukkit.getWorld("LG").setTime(0);
 
+        LG.getInstance().unregisterAllListeners();
         Bukkit.getScheduler().cancelTasks(LG.getInstance());
+    }
+
+    public void registerEvents(Listener listener) {
+        LG main = LG.getInstance();
+
+        for (Listener listeningEventsRole : main.getListeningEventsRoles())
+            if (listeningEventsRole.getClass().equals(listener.getClass()))
+                return;
+
+        Bukkit.getPluginManager().registerEvents(listener, main);
+        main.getListeningEventsRoles().add(listener);
     }
 
     public void sendLobbySideScoreboardToAllPlayers() {
@@ -761,7 +773,7 @@ public class GameLG implements Listener {
     }
 
     public boolean isNotThiefRole(Role role) {
-        return Voleur.getRole1().equals(role) || Voleur.getRole2().equals(role);
+        return Voleur.getRole1() != role && Voleur.getRole2() != role;
     }
 
     public interface StringTimerMessage {

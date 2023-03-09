@@ -1,6 +1,7 @@
 package fr.neyuux.lg.roles.classes;
 
 import fr.neyuux.lg.*;
+import fr.neyuux.lg.event.ResetEvent;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
@@ -8,6 +9,7 @@ import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +18,8 @@ import java.util.List;
 public class Vampire extends Role {
 
     private final static ChatLG CHAT = new ChatLG("§6", ChatColor.RED, null);
+
+    private static PlayerLG LAST_VAMPIRE = null;
 
     @Override
     public String getDisplayName() {
@@ -39,7 +43,7 @@ public class Vampire extends Role {
 
     @Override
     public String getDescription() {
-        return "§fVous êtes "+this.getDisplayName()+ "§r, votre but est d'éliminer tous les joueurs qui ne sont pas des Vampires. Chaque nuit vous vous réveillez pour §9mordre§f un joueur. Cette morsure §9transformera§f le joueur en Vampire une nuit sur deux, ou sinon §9tuera§f le joueur.";
+        return "§fVous êtes "+this.getDisplayName() + "§r, votre but est d'éliminer tous les joueurs qui ne sont pas des Vampires. Chaque nuit vous vous réveillez pour §9mordre§f un joueur. Cette morsure §9transformera§f le joueur en Vampire une nuit sur deux, ou sinon §9tuera§f le joueur.";
     }
 
     @Override
@@ -62,6 +66,12 @@ public class Vampire extends Role {
         return "§fVous avez §d" + this.getTimeout() + " secondes §fpour voter pour choisir qui mordre.";
     }
 
+
+    @Override
+    public void onPlayerJoin(PlayerLG playerLG) {
+        super.onPlayerJoin(playerLG);
+        LAST_VAMPIRE = playerLG;
+    }
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
@@ -112,12 +122,23 @@ public class Vampire extends Role {
 
         if (game.getNight() % 2 == 0) game.kill(choosen);
         else {
-            game.getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §d a rejoint le camp des Vampires !"));
+            game.getPlayersByRole(this.getClass()).forEach(playerLG -> playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + " §da rejoint le camp des Vampires !"));
             choosen.getCache().put("vampireInfected", choosen.getRole());
             choosen.joinRole(new Vampire());
             choosen.setCamp(Camps.VAMPIRE);
             choosen.sendMessage(LG.getPrefix() + "§5Vous avez été infecté par un vampire ! Vous devenez l'un d'entre eux et perdez vos pouvoirs.");
             choosen.getPlayer().playSound(choosen.getLocation(), Sound.ENDERDRAGON_WINGS, 8f, 1.6f);
         }
+    }
+
+
+    @EventHandler
+    public void onReset(ResetEvent ev) {
+        LAST_VAMPIRE = null;
+    }
+
+
+    public static PlayerLG getLastVampire() {
+        return LAST_VAMPIRE;
     }
 }

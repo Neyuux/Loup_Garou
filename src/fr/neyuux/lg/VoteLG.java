@@ -71,14 +71,14 @@ public class VoteLG {
         game.wait(timer, () -> this.end(false), timerMessage, true);
         game.setVote(this);
 
-        Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
-
         for (PlayerLG voterLG : voters) {
             voterLG.getCache().put("vote", null);
             voterLG.setChoosing(choosen -> this.vote(voterLG, choosen));
             voterLG.setArmorStand(null);
             lg.getItemsManager().updateVoteItems(voterLG);
         }
+
+        Bukkit.getPluginManager().callEvent(new VoteStartEvent(this));
     }
 
     public void vote(PlayerLG voter, PlayerLG voted) {

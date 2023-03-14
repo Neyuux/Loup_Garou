@@ -4,6 +4,7 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.enums.GameType;
+import fr.neyuux.lg.event.PlayerEliminationEvent;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.roles.Camps;
@@ -15,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
 
 public class Jumeau extends Role {
 
@@ -107,7 +110,7 @@ public class Jumeau extends Role {
         Bukkit.getPluginManager().callEvent(roleChoiceEvent);
         if (roleChoiceEvent.isCancelled()) return;
 
-        choosen.getCache().put("jumeau", playerLG);
+        playerLG.getCache().put("jumeau", choosen);
 
         playerLG.sendMessage(LG.getPrefix() + "§5Tu as choisi " + choosen.getNameWithAttributes(playerLG) + "§5 comme modèle.");
         GameLG.playPositiveSound(playerLG.getPlayer());
@@ -138,4 +141,31 @@ public class Jumeau extends Role {
             }.runTaskLater(LG.getInstance(), 1L);
         }
     }
+
+     @EventHandler
+    public void onJumeauDeath(PlayerEliminationEvent ev) {
+        PlayerLG dead = ev.getEliminated();
+        LG main = LG.getInstance();
+        GameLG game = main.getGame();
+
+        for (PlayerLG playerLG : game.getPlayersByRole(Jumeau.class)) {
+            if (playerLG.getCache().has("jumeau") && playerLG.getCache().get("jumeau").equals(dead)) {
+                playerLG.setRole(dead.getRole());
+                
+                Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+                    playerLG.sendMessage(LG.getPrefix() + "§5Votre jumeau est mort ! Vous reprenez donc son rôle et ses attributs.");
+                    playerLG.joinRole(dead.getRole());
+
+                    if (dead.getCache().has("infected")) {
+                        playerLG.getCache().put("infected", new Object());
+
+                        playerLG.joinCamp(Camps.LOUP_GAROU);
+                        playerLG.sendMessage(LG.getPrefix() + "§cEn reprenant le rôle de votre Jumeau, vous vous rendez compte qu'il était infecté. Vous passez donc dans le camp des Loups-Garou.");
+                        LG.getInstance().getGame().getLGs(false).forEach(PlayerLG::updateGamePlayerScoreboard);
+                    }
+                }, 1L);
+
+            }
+        }
+     }
 }

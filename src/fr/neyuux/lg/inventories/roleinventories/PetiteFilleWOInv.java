@@ -1,10 +1,13 @@
 package fr.neyuux.lg.inventories.roleinventories;
 
+import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.PetiteFilleWOInspectionItemStack;
 import fr.neyuux.lg.roles.classes.PetiteFilleWO;
 import fr.neyuux.lg.utils.AbstractCustomInventory;
+import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Material;
 
 public class PetiteFilleWOInv extends AbstractCustomInventory {
 
@@ -37,5 +40,9 @@ public class PetiteFilleWOInv extends AbstractCustomInventory {
                 callback.run();
             }
         }));
+
+        if (LG.getInstance().getGame().getLGs(true).size() == 0) {
+            this.setItem(11, new CustomItemStack(Material.BARRIER, 1, "§c§lPlus de Loups-Garou").addLore("§fIl n'y a plus de Loups à trouver.").addGlowEffect());
+        }
     }
 }

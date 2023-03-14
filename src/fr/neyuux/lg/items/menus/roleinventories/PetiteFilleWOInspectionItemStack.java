@@ -4,6 +4,7 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
@@ -34,11 +35,11 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> lgs = game.getLGs(true);
         Random random = new Random();
-        int findLG = random.nextInt(4);
-        int getKilled = random.nextInt(19);
+        boolean findLG = random.nextDouble() * 100 <= 20;
+        boolean getKilled = random.nextDouble() * 100 <= 5;
 
-        if (findLG == 0 || getKilled == 0) {
-            if (findLG == 0) {
+        if (findLG || getKilled) {
+            if (findLG) {
                 PlayerLG foundLG = lgs.get(random.nextInt(lgs.size()));
 
                 playerLG.sendTitle("§e§l" + foundLG.getName() + "§c est §lLoup-Garou§c !", "§bVous avez trouvé un loup.", 10, 80, 10);
@@ -46,7 +47,7 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
                 ((Player) player).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 8f, 1.1f);
             }
 
-            if (getKilled == 0) {
+            if (getKilled) {
                 game.kill(playerLG);
 
                 playerLG.sendTitle("§c§lLes Loups-Garous vous ont trouvé !", "§cVous mourrez ce soir...", 10, 90, 10);

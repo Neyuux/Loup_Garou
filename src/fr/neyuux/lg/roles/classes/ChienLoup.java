@@ -63,6 +63,7 @@ public class ChienLoup extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         new ChienLoupInv(this, callback).open(playerLG.getPlayer());
+        //TODO bug onReset? others roles cannot play
         playerLG.getCache().put("unclosableInv", true);
     }
 

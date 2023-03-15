@@ -69,7 +69,6 @@ public class President extends Role {
 
         if (LG.getInstance().getGame().getConfig().getMayor().getValue().equals(true)) {
             playerLG.setMayor();
-            Bukkit.broadcastMessage("§a§l" + playerLG.getName() + " §best désormais maire du village !");
         }
     }
 

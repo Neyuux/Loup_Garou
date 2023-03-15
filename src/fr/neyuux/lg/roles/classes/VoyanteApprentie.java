@@ -68,7 +68,7 @@ public class VoyanteApprentie extends Role {
                 Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
                     newVoyanteLG.joinRole(playerLG.getRole());
 
-                    Bukkit.broadcastMessage(LG.getPrefix() + "§dLa " + playerLG.getRole().getDisplayName() + " §deest morte ! Une " + this.getDisplayName() + " §dprend donc sa relève.");
+                    Bukkit.broadcastMessage(LG.getPrefix() + "§dLa " + playerLG.getRole().getDisplayName() + " §dest morte ! Une " + this.getDisplayName() + " §dprend donc sa relève.");
                     newVoyanteLG.sendMessage(LG.getPrefix() + "§aLa " + playerLG.getRole().getDisplayName() + " §aest morte ! Vous prenez donc vos responsabilités et prenez sa relève. Vous êtes désormais Voyante également.");
                     newVoyanteLG.sendTitle("§aVous devenez §d§lVoyante §a!", "§dVous prenez la relève de §e" + playerLG.getName() + "§d.", 20, 60, 20);
                 }, 2L);

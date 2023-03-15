@@ -91,6 +91,7 @@ public class CustomItemStack extends ItemStack {
     public CustomItemStack addLore(String text) {
         ItemMeta meta = this.getItemMeta();
         List<String> lore = meta.getLore();
+        if (lore == null) lore = new ArrayList<>();
         lore.add(text);
         meta.setLore(lore);
         this.setItemMeta(meta);

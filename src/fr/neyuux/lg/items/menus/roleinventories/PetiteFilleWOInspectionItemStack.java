@@ -54,6 +54,10 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
                 player.sendMessage(LG.getPrefix() + "§cLes Loups-Garous vous ont trouvé ! Vous ne survivez pas cette nuit.");
                 GameLG.playNegativeSound((Player) player);
             }
+        } else {
+            playerLG.sendTitle("§a§lRien.", "§bVous n'avez rien trouvé ce soir.", 10, 90, 10);
+            player.sendMessage(LG.getPrefix() + "§bLors de votre escapade nocturne, vous n'avez rien aperçu.");
+            GameLG.playPositiveSound((Player) player);
         }
 
         playerLG.getCache().put("unclosableInv", false);

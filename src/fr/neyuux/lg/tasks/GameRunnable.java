@@ -279,7 +279,6 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void updateRoleOrder(Class<? extends Role> roleClass) {
-        Bukkit.broadcastMessage("voluer ? 2");
         this.calculateRoleOrder();
         while (!this.getRolesOrder().get(0).getClass().equals(roleClass))
             this.getRolesOrder().remove(0);

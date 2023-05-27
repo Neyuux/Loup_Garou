@@ -1,30 +1,31 @@
 package fr.neyuux.lg;
 
 import fr.neyuux.lg.commands.LGCommand;
+import fr.neyuux.lg.config.GameConfig;
+import fr.neyuux.lg.enums.DayCycle;
+import fr.neyuux.lg.enums.GameState;
 import fr.neyuux.lg.enums.GameType;
+import fr.neyuux.lg.event.ResetEvent;
 import fr.neyuux.lg.items.ItemsManager;
 import fr.neyuux.lg.listeners.GameListener;
 import fr.neyuux.lg.listeners.PreGameListener;
 import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.classes.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 
 public class LG extends JavaPlugin {
@@ -221,9 +222,56 @@ public class LG extends JavaPlugin {
         }
     }
 
+    public void resetGame() {
+        Bukkit.getPluginManager().callEvent(new ResetEvent());
+
+        GameLG game = new GameLG();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
+
+            player.setExp(0f);
+            player.setLevel(0);
+            player.setMaxHealth(20);
+            player.setHealth(20);
+            for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
+            addNightVision(playerLG);
+            addSaturation(playerLG);
+            player.setGameMode(GameMode.ADVENTURE);
+            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
+
+            PlayerLG.removePlayerLG(player);
+            PlayerLG.createPlayerLG(player);
+
+            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+            LG.setPlayerInScoreboardTeam("Players", player);
+            if (player.isOp()) game.OP(playerLG);
+            this.getItemsManager().updateSpawnItems(playerLG);
+
+            playerLG.sendLobbySideScoreboard();
+            playerLG.showAllPlayers();
+
+            game.createGame();
+        }
+
+        Bukkit.createWorld(new WorldCreator("LG"));
+        Bukkit.getWorld("LG").setTime(0);
+
+        LG.getInstance().unregisterAllListeners();
+        Bukkit.getScheduler().cancelTasks(LG.getInstance());
+    }
+
     public void unregisterAllListeners() {
         listeningEventsRoles.forEach(HandlerList::unregisterAll);
         listeningEventsRoles.clear();
+    }
+
+    public static void addNightVision(PlayerLG playerLG) {
+        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+    }
+
+    public static void addSaturation(PlayerLG playerLG) {
+        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false));
     }
 
 

@@ -23,7 +23,7 @@ public class YesResetMapItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        LG.getInstance().getGame().resetGame();
+        LG.getInstance().resetGame();
         Bukkit.broadcastMessage(LG.getPrefix() + "§b" + player.getName() + " §ea reset la partie !");
         GameLG.playPositiveSound((Player) player);
     }

@@ -381,14 +381,14 @@ public class LGCommand implements CommandExecutor {
                 case "stop":
                     if (sender.isOp()) {
                         Bukkit.broadcastMessage(LG.getPrefix() + "§b" + sender.getName() + " §ea reset le jeu !");
-                        game.resetGame();
+                        LG.getInstance().resetGame();
                     } else
                         sender.sendMessage(LG.getPrefix() + "§cVous devez être OP pour effectuer cette commande.");
                 break;
                 case "admin":
                     if (sender.isOp()) {
                         if (checkHuman(sender))
-                            new ConfigurationInv().open((Player) sender);
+                            new ConfigurationInv().open((Player)sender);
                     }
                 break;
 

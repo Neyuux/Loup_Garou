@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/LG.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/src/fr/neyuux/refont/old/lg/role/Roles.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/GameLG.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/LG.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/VoteLG.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/commands/LGCommand.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ChangeGameTypeInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ConfigurationInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/players/ListPlayersInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/players/PlayerConfigInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RolesListRolesInv.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/ReturnArrowItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ChangeGameTypeItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/OpListItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ParametersItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/PlayersMenuItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ResetGameItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/RolesFirstMenuItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/players/PlayerConfigItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/players/SetPlayerToSpectatorItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/reset/NoResetMapItemStack.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/fr/neyuux/lg/listeners/PreGameListener.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="windows-1252" />
   </component>
 </project>

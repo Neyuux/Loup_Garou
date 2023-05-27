@@ -152,6 +152,8 @@ public class Corbeau extends Role {
     public void onVoteStart(VoteStartEvent ev) {
         VoteLG vote = ev.getVote();
 
+        if (!vote.getName().equals("Vote du Village")) return;
+
         for (PlayerLG playerLG : vote.getVotable())
             if (playerLG.getCache().has("corbeauTargeted")) {
 

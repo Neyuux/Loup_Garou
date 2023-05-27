@@ -56,7 +56,7 @@ public class PetiteFilleWO extends Role {
 
     @Override
     public String getActionMessage() {
-        return "§fVous avez §b" + this.getDisplayName() + " secondes§f pour choisir d'aller espionner ou non.";
+        return "§fVous avez §b" + this.getTimeout() + " secondes§f pour choisir d'aller espionner ou non.";
     }
 
 

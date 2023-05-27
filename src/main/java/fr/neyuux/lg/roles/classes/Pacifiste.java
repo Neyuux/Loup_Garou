@@ -5,6 +5,7 @@ import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.VoteLG;
 import fr.neyuux.lg.enums.GameType;
+import fr.neyuux.lg.event.ResetEvent;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.event.VoteStartEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class Pacifiste extends Role {
 
-    private final List<PlayerLG> toReveal = new ArrayList<>();
+    private static final List<PlayerLG> TO_REVEAL = new ArrayList<>();
 
     @Override
     public String getDisplayName() {
@@ -114,10 +115,10 @@ public class Pacifiste extends Role {
         Bukkit.getPluginManager().callEvent(roleChoiceEvent);
         if (roleChoiceEvent.isCancelled()) return;
 
-        this.toReveal.add(choosen);
+        TO_REVEAL.add(choosen);
         playerLG.setCanUsePowers(false);
 
-        playerLG.sendMessage(LG.getPrefix() + "§dLe rôle de " + choosen.getNameWithAttributes(playerLG) + "§dsera révélé au lever du soleil.");
+        playerLG.sendMessage(LG.getPrefix() + "§dLe rôle de " + choosen.getNameWithAttributes(playerLG) + " §dsera révélé au lever du soleil.");
         GameLG.playPositiveSound(playerLG.getPlayer());
     }
 
@@ -150,21 +151,36 @@ public class Pacifiste extends Role {
     @EventHandler
     public void onVoteStart(VoteStartEvent ev) {
         VoteLG vote = ev.getVote();
-        GameLG game = LG.getInstance().getGame();
 
-        if (vote.getName().equals("Vote du Village") && !this.toReveal.isEmpty()) {
-            int seconds = 0;
-            for (int i = 0; i < this.toReveal.size(); i++) {
-                seconds = i * 3;
-                PlayerLG revealed = this.toReveal.get(i);
+        if (vote.getName().equals("Vote du Village") && !TO_REVEAL.isEmpty()) {
+            int seconds = TO_REVEAL.size() * 3;
+            int currentseconds = 0;
 
-                game.wait(seconds, () -> GameLG.sendTitleToAllPlayers("§e§l" + revealed.getDisplayName() + " §fest " + revealed.getRole().getDisplayName() + "§f !", "§fLe " + this.getDisplayName() + " §fa révélé son rôle !", 6, 48, 6), (playerLG, secondsLeft) -> "", false);
+            vote.getVoters().clear();
+
+            for (PlayerLG revealed : TO_REVEAL) {
+
+                Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+
+                    Bukkit.broadcastMessage("");
+                    GameLG.sendTitleToAllPlayers("§d§l" + revealed.getName() + " §fest " + revealed.getRole().getDisplayName() + "§f !", "§fLe " + this.getDisplayName() + " §fa révélé son rôle !", 6, 48, 6);
+                    Bukkit.broadcastMessage(LG.getPrefix() + "§fLe " + this.getDisplayName() + " §fa révélé le rôlé de §e§l" + revealed.getName() + "§f, il est " + revealed.getRole().getDisplayName() + "§f.");
+                }, currentseconds * 20L + 1L);
+
+                currentseconds += 3;
             }
 
-            game.wait(seconds + 3, () -> {
-                Bukkit.broadcastMessage("§cL'utilisation de ce pouvoir requiert cependant l'annulation des votes.");
+            Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage(LG.getPrefix() + "§cL'utilisation du pouvoir du " + this.getDisplayName() + " §crequiert cependant l'annulation des votes.");
                 vote.end(true);
-            }, (playerLG, secondsLeft) -> "", false);
+                TO_REVEAL.clear();
+            }, seconds * 20L + 5L);
         }
+    }
+
+    @EventHandler
+    public void onReset(ResetEvent ev) {
+        TO_REVEAL.clear();
     }
 }

@@ -150,6 +150,7 @@ public class MamieGrincheuse extends Role {
         for (PlayerLG playerLG : vote.getVoters())
             if (vote.getName().equals("Vote du Village") && playerLG.getCache().has("mamieGrincheuseCancelVote")) {
                 vote.getVoters().remove(playerLG);
+                playerLG.sendTitle("§cPas de vote !", "§fLa " + this.getDisplayName() + "§f a annulé votre droit de vote.", 10, 90, 10);
                 playerLG.sendMessage(LG.getPrefix() + "§cLa " + this.getDisplayName() + " §ca annulé votre droit de vote pour ce tour.");
                 playerLG.getCache().put("vote", null);
                 playerLG.stopChoosing();

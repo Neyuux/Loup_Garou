@@ -115,6 +115,7 @@ public class FilleDeJoie extends Role {
         if (LG.getInstance().getGame().getLGs(true).contains(choosen)) {
             playerLG.sendMessage(LG.getPrefix() + "§cEn allant chez lui, tu t'aperçois qu'il est Loup-Garou. Vous ne survivrez pas cette nuit");
             choosen.sendMessage(LG.getPrefix() + "§dTu découvres §e" + playerLG.getNameWithAttributes(choosen) + "§d qui s'introduit chez toi pour passer du bon temps. Tu décides donc de le tuer.");
+            LG.getInstance().getGame().kill(playerLG);
         }
     }
 

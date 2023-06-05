@@ -50,7 +50,7 @@ public class PreGameListener implements Listener {
             if (player.isOp()) LG.getInstance().getGame().OP(playerLG);
 
             playerLG.showAllPlayers();
-            game.addSaturation(playerLG);
+            lg.addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
             player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
             lg.getItemsManager().updateSpawnItems(playerLG);

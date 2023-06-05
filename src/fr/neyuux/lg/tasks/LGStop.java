@@ -49,7 +49,7 @@ public class LGStop extends BukkitRunnable {
         }
 
         if (timer == 0) {
-            game.resetGame();
+            LG.getInstance().newGame();
             cancel();
         }
 

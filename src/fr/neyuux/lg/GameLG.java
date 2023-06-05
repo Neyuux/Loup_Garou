@@ -6,7 +6,6 @@ import fr.neyuux.lg.enums.DayCycle;
 import fr.neyuux.lg.enums.GameState;
 import fr.neyuux.lg.enums.GameType;
 import fr.neyuux.lg.enums.WinCamps;
-import fr.neyuux.lg.event.ResetEvent;
 import fr.neyuux.lg.event.TryStartGameEvent;
 import fr.neyuux.lg.event.WinEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
@@ -24,7 +23,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -34,7 +32,7 @@ import java.util.*;
 
 public class GameLG implements Listener {
 
-    private GameConfig config;
+    private final GameConfig config;
 
     private GameState gameState = GameState.WAITING;
 
@@ -71,13 +69,10 @@ public class GameLG implements Listener {
     private final ArrayList<PlayerLG> killedPlayers = new ArrayList<>();
 
 
-
-    public void createGame() {
-        this.registerEvents(this);
+    public GameLG() {
         this.config = new GameConfig();
-
-        this.resetGame();
     }
+
 
     public void sendMessage(Class<? extends Role> role, String msg) {
         for (PlayerLG playerLG : this.getAlive()) {
@@ -169,8 +164,8 @@ public class GameLG implements Listener {
         player.setHealth(20);
 
         for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
-        this.addSaturation(playerLG);
-        this.addNightVision(playerLG);
+        LG.getInstance().addSaturation(playerLG);
+        LG.getInstance().addNightVision(playerLG);
 
         player.setDisplayName(player.getName());
         player.setPlayerListName(player.getName());
@@ -214,13 +209,6 @@ public class GameLG implements Listener {
         this.sendLobbySideScoreboardToAllPlayers();
     }
 
-    public void addNightVision(PlayerLG playerLG) {
-        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-    }
-
-    public void addSaturation(PlayerLG playerLG) {
-        playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false));
-    }
 
     public static void playNegativeSound(Player player) {
         player.playSound(player.getLocation(), Sound.DOOR_CLOSE, 8, 2);
@@ -247,7 +235,7 @@ public class GameLG implements Listener {
         BukkitTask deal = this.dealRoles();
 
         this.gameRunnable = new GameRunnable(deal);
-        this.gameRunnable.runTaskTimer(LG.getInstance(), 0, 20L);
+        this.gameRunnable.getMainLoop().runTaskTimer(LG.getInstance(), 0, 20L);
     }
 
     public BukkitTask dealRoles() {
@@ -476,57 +464,6 @@ public class GameLG implements Listener {
             }
 
         new LGStop().runTaskTimer(LG.getInstance(), 0, 20);
-    }
-
-    public void resetGame() {
-        Bukkit.getPluginManager().callEvent(new ResetEvent());
-
-        this.setGameState(GameState.WAITING);
-        this.setGameType(GameType.NONE);
-        this.setDayCycle(DayCycle.NONE);
-
-        this.playersInGame.clear();
-        this.waitedPlayers.clear();
-        this.spectators.clear();
-        this.day = 0;
-        this.night = 0;
-        this.mayor = null;
-        this.aliveRoles.clear();
-        this.rolesAtStart.clear();
-        this.killedPlayers.clear();
-
-        this.setConfig(new GameConfig());
-
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-            player.setExp(0f);
-            player.setLevel(0);
-            player.setMaxHealth(20);
-            player.setHealth(20);
-            for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
-            this.addNightVision(playerLG);
-            this.addSaturation(playerLG);
-            player.setGameMode(GameMode.ADVENTURE);
-            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
-
-            PlayerLG.removePlayerLG(player);
-            PlayerLG.createPlayerLG(player);
-
-            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-            LG.setPlayerInScoreboardTeam("Players", player);
-            if (player.isOp()) this.OP(playerLG);
-            this.getItemsManager().updateSpawnItems(playerLG);
-
-            playerLG.sendLobbySideScoreboard();
-            playerLG.showAllPlayers();
-        }
-
-        Bukkit.createWorld(new WorldCreator("LG"));
-        Bukkit.getWorld("LG").setTime(0);
-
-        LG.getInstance().unregisterAllListeners();
-        Bukkit.getScheduler().cancelTasks(LG.getInstance());
     }
 
     public void registerEvents(Listener listener) {
@@ -762,10 +699,6 @@ public class GameLG implements Listener {
 
     public GameConfig getConfig() {
         return config;
-    }
-
-    private void setConfig(GameConfig config) {
-        this.config = config;
     }
 
     public int getWaitTicksToSeconds() {

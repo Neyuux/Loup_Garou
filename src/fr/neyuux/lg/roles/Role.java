@@ -3,6 +3,7 @@ package fr.neyuux.lg.roles;
 import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
@@ -14,23 +15,30 @@ public abstract class Role implements Listener {
     public void newNightTurn(Runnable callback) {
         this.updatePlayers();
         this.onNightTurn(callback);
+        Bukkit.broadcastMessage("§d" + LG.getInstance().getGame().getGameRunnable().getRolesOrder().toString());
     }
 
     public void onNightTurn(Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
         game.cancelWait();
-
+        Bukkit.broadcastMessage("a §b" + this.getDisplayName());
         if (players.isEmpty()) {
+            Bukkit.broadcastMessage("b");
             if (game.isNotThiefRole(this)) {
                 callback.run();
+                Bukkit.broadcastMessage("c §5" + LG.getInstance().getGame().getGameRunnable().getRolesOrder().toString());
+                Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> Bukkit.broadcastMessage("§1" + LG.getInstance().getGame().getGameRunnable().getRolesOrder().toString()), 0L, 1L);
             } else LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, callback, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
             return;
         }
 
+        Bukkit.broadcastMessage("d");
+
         PlayerLG playerLG = players.remove(0);
 
         if (playerLG.canUsePowers()) {
+            Bukkit.broadcastMessage("e");
 
             playerLG.setWake();
 
@@ -57,6 +65,7 @@ public abstract class Role implements Listener {
 
         } else {
             LG.getInstance().getGame().wait(Role.this.getTimeout() / 4, () -> onNightTurn(callback), (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + Role.this.getDeterminingName(), true);
+            Bukkit.broadcastMessage("f");
         }
     }
 

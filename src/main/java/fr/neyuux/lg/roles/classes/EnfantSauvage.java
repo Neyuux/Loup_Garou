@@ -11,13 +11,7 @@ import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.Random;
 
 public class EnfantSauvage extends Role {
 
@@ -92,7 +86,7 @@ public class EnfantSauvage extends Role {
 
             if ((boolean)game.getConfig().getWildChildRandomModel().getValue()) {
                 game.wait(EnfantSauvage.this.getTimeout() / 4, () -> {
-                    model(game.getAliveExcept(playerLG).get(new Random().nextInt(game.getAliveExcept(playerLG).size())), playerLG);
+                    model(game.getAliveExcept(playerLG).get(LG.RANDOM.nextInt(game.getAliveExcept(playerLG).size())), playerLG);
                     callback.run();
                 }, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
 
@@ -105,7 +99,7 @@ public class EnfantSauvage extends Role {
                     this.onPlayerTurnFinish(playerLG);
                     this.onNightTurn(callback);
 
-                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + EnfantSauvage.this.getDeterminingName(), true);
+                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + EnfantSauvage.this.getDeterminingName(), true);
 
                 playerLG.sendMessage(LG.getPrefix() + EnfantSauvage.this.getActionMessage());
                 EnfantSauvage.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
@@ -121,6 +115,8 @@ public class EnfantSauvage extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        super.onPlayerNightTurn(playerLG, callback);
+
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
                 if (choosen != null && choosen != playerLG) {
@@ -132,7 +128,7 @@ public class EnfantSauvage extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -143,13 +139,13 @@ public class EnfantSauvage extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     model(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
+                    
+                    LG.closeSmartInv(playerLG.getPlayer());
                     playerLG.setSleep();
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -168,29 +164,11 @@ public class EnfantSauvage extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
-
-
-    @EventHandler
-    public void onCloseEnfantSauvageInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
+    
 
     @EventHandler
     public void onElimination(PlayerEliminationEvent ev) {

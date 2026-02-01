@@ -31,7 +31,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.Random;
 
 public class PreGameListener implements Listener {
 
@@ -46,15 +45,16 @@ public class PreGameListener implements Listener {
 
         if (!game.getGameState().equals(GameState.PLAYING)) {
 
-            LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) LG.getInstance().getGame().OP(playerLG);
 
             playerLG.showAllPlayers();
             LG.addSaturation(playerLG);
+            LG.addNightVision(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
-            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
+            player.teleport(new Location(Bukkit.getWorld("LG"), LG.RANDOM.nextInt(16) + 120, 16.5, LG.RANDOM.nextInt(16) + 371));
             lg.getItemsManager().updateSpawnItems(playerLG);
             game.sendLobbySideScoreboardToAllPlayers();
+            game.updatePlayersScoreboard();
         }
     }
 
@@ -65,6 +65,7 @@ public class PreGameListener implements Listener {
         GameLG game = LG.getInstance().getGame();
 
         game.getOPs().remove(player);
+        game.getSpectators().remove(playerLG);
 
         if (!game.getGameState().equals(GameState.PLAYING)) {
 
@@ -86,6 +87,7 @@ public class PreGameListener implements Listener {
         Frere.CHAT.closeChat();
         Bouffon.NEED_TO_PLAY.clear();
         Chasseur.NEED_TO_PLAY.clear();
+        CustomItemStack.getItemList().clear();
     }
 
     @EventHandler
@@ -100,6 +102,7 @@ public class PreGameListener implements Listener {
                 if (customitem.isCustomSimilar(item)) {
                     event.setCancelled(true);
                     customitem.use(player, event);
+                    return;
                 }
         } catch (ConcurrentModificationException ignored) {
 
@@ -182,7 +185,7 @@ public class PreGameListener implements Listener {
     public void onJoinGame(TryStartGameEvent ev) {
         GameLG game = LG.getInstance().getGame();
 
-        if (game.getPlayersInGame().size() == Bukkit.getOnlinePlayers().size() - game.getSpectators().size() && game.getPlayersInGame().size() > 0 && game.getGameState().equals(GameState.WAITING)) {
+        if (game.getPlayersInGame().size() == Bukkit.getOnlinePlayers().size() - game.getSpectators().size() && !game.getPlayersInGame().isEmpty() && game.getGameState().equals(GameState.WAITING)) {
             if (game.getConfig().getAddedRoles().size() >= game.getPlayersInGame().size()) {
                 LG.getInstance().getGame().setGameState(GameState.STARTING);
                 new LGStart(game).runTaskTimer(LG.getInstance(), 0, 20);
@@ -205,6 +208,28 @@ public class PreGameListener implements Listener {
 
                 LG.getInstance().saveConfig();
                 player.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée ! §e§o(" + block.getType() + ")");
+            } else {
+                player.sendMessage(LG.getPrefix() + "§cVous devez choisir le type de jeu avant de créer des emplacements !");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInteractEmplacement(PlayerInteractEvent ev) {
+        Player player = ev.getPlayer();
+
+        if(player.getItemInHand() == null || ev.getClickedBlock() != null) return;
+
+        if (player.getItemInHand().getType().equals(Material.STONE_HOE) && player.isOp()) {
+            ev.setCancelled(true);
+            if (LG.getInstance().getGame().getGameType() != GameType.NONE) {
+                Location loc = player.getLocation();
+                List<Object> list = (List<Object>) LG.getInstance().getConfig().getList("spawns." + LG.getInstance().getGame().getGameType());
+
+                list.add(Arrays.asList(loc.getX(), loc.getY(), loc.getZ(), (double) loc.getYaw(), (double) loc.getPitch()));
+
+                LG.getInstance().saveConfig();
+                player.sendMessage(LG.getPrefix() + "§aLa position a bien été ajoutée ! §e§o(" + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ() + ")");
             } else {
                 player.sendMessage(LG.getPrefix() + "§cVous devez choisir le type de jeu avant de créer des emplacements !");
             }

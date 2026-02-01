@@ -2,6 +2,7 @@ package fr.neyuux.lg;
 
 import fr.neyuux.lg.config.ComedianPowers;
 import fr.neyuux.lg.config.MayorSuccession;
+import fr.neyuux.lg.enums.GameState;
 import fr.neyuux.lg.enums.GameType;
 import fr.neyuux.lg.event.PlayerEliminationEvent;
 import fr.neyuux.lg.roles.Camps;
@@ -9,6 +10,8 @@ import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.classes.*;
 import fr.neyuux.lg.utils.CacheLG;
 import fr.neyuux.lg.utils.SimpleScoreboard;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -41,10 +44,13 @@ public class PlayerLG {
     public PlayerLG(HumanEntity human) {
         this.human = human;
         this.game = LG.getInstance().getGame();
+        this.updateGamePlayerScoreboard();
     }
 
     private final HumanEntity human;
 
+    @Setter
+    @Getter
     private Role role;
 
     private final CacheLG cache = new CacheLG();
@@ -144,8 +150,35 @@ public class PlayerLG {
         String name = "";
         String lastcolor = "§e";
 
+        if (receiver.isSpectator() && receiver.getPlayer() != null && receiver.getPlayer().getGameMode() == GameMode.SPECTATOR && this.game.getRolesAtStart().stream().noneMatch(role1 -> role1 instanceof Necromancien)) {
+
+            name = this.getRole().getDisplayName() + " ";
+            lastcolor = this.getCamp().getColor();
+
+            name += lastcolor + this.human.getName();
+
+            if (this.getCache().has("couple"))
+                name += "§d \u2764";
+
+            return name;
+        }
+
+        if (this.isSpectator()) {
+            return "§8[§7Spectateur§8] §7" + this.getName();
+        }
+
+        if (this.game.getGameState() != GameState.PLAYING) {
+            if (this.isOP()) return "§5§lOP §c" + this.getName();
+            else return "§e" + this.getName();
+        }
+
+        if (this.getRole() instanceof President) {
+            name += "§e§lPrésident ";
+            lastcolor = "§6";
+        }
+
         if (this.isLG() && receiver.isLG()) {
-            name = "§c§lLG ";
+            name += "§c§lLG ";
             lastcolor = "§c";
         }
 
@@ -173,7 +206,7 @@ public class PlayerLG {
         }
 
         if (this.getRole() instanceof VillageoisVillageois) {
-            name += name + "§a§lV§e-§a§lV ";
+            name += "§a§lV§e-§a§lV ";
             lastcolor = "§a";
         }
 
@@ -216,14 +249,14 @@ public class PlayerLG {
         if (game.getGameType().equals(GameType.FREE)) {
             List<String> list = game.getAliveAlphabecticlySorted();
 
-            if (addself) nearbys.add(1, this);
-
             int j = list.indexOf(this.getName());
 
             if (j - 1 > -1)
                 nearbys.add(0, PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(j - 1))));
             else
                 nearbys.add(0, PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(list.size() - 1))));
+
+            if (addself) nearbys.add(this);
 
             PlayerLG playerLG;
             if (j + 1 < list.size())
@@ -232,16 +265,18 @@ public class PlayerLG {
                 playerLG = PlayerLG.createPlayerLG(Bukkit.getPlayer(list.get(0)));
 
             if (!nearbys.contains(playerLG))
-                nearbys.add(2, playerLG);
+                nearbys.add(playerLG);
 
         } else if (game.getGameType().equals(GameType.MEETING)) {
             PlayerLG closest1 = this.getClosestPlayer(game.getAliveExcept(this));
 
             nearbys.add(0, closest1);
 
+            if (addself) nearbys.add(this);
+
             PlayerLG closest2 = this.getClosestPlayer(game.getAliveExcept(nearbys.get(0), this));
             if (closest2 != null && !nearbys.contains(closest2))
-                nearbys.add(2, closest2);
+                nearbys.add(closest2);
         }
 
         return nearbys;
@@ -284,20 +319,6 @@ public class PlayerLG {
         return null;
     }
 
-    public void createScoreboard() {
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Scoreboard main = Bukkit.getScoreboardManager().getMainScoreboard();
-
-        LG.registerBaseTeams(scoreboard);
-        for (Team team : main.getTeams()) {
-            Team newteam = scoreboard.getTeam(team.getName());
-            if (newteam != null)
-                for (String entry : team.getEntries())
-                    newteam.addEntry(entry);
-        }
-        this.getPlayer().setScoreboard(scoreboard);
-    }
-
     public void updateGamePlayerScoreboard() {
         Scoreboard scoreboard = this.getPlayer().getScoreboard();
 
@@ -312,9 +333,14 @@ public class PlayerLG {
             Team team = scoreboard.registerNewTeam(targetLG.getName());
             String[] prefixsuffix = targetLG.getNameWithAttributes(this).split(targetLG.getName());
 
-            team.setPrefix(prefixsuffix[0]);
-            if (prefixsuffix.length > 1)team.setSuffix(prefixsuffix[1]);
+            String prefix = prefixsuffix[0];
+            team.setPrefix(prefix.substring(0, Math.min(16, prefix.length())));
+            if (prefixsuffix.length > 1) {
+                String suffix = prefixsuffix[1];
+                team.setSuffix(suffix.substring(0, Math.min(16, suffix.length())));
+            }
             team.addEntry(targetLG.getName());
+            this.getPlayer().setScoreboard(this.getPlayer().getScoreboard());
         }
     }
 
@@ -401,6 +427,8 @@ public class PlayerLG {
     }
 
     public void eliminate() {
+        if (this.isDead) return;
+
         PlayerEliminationEvent event = new PlayerEliminationEvent(this);
         Bukkit.getPluginManager().callEvent(event);
 
@@ -411,18 +439,16 @@ public class PlayerLG {
         this.setWake();
         game.getSpectators().add(this);
         this.getPlayer().setGameMode(GameMode.SPECTATOR);
-        this.getPlayer().setPlayerListName("§8[§7Spectateur§8] §7" + this.getName());
-        this.getPlayer().setDisplayName(this.getPlayer().getPlayerListName());
 
         Bukkit.getWorld("LG").strikeLightningEffect(this.getLocation());
 
         game.getAliveRoles().remove(this.getRole());
         game.sendListRolesSideScoreboardToAllPlayers();
+        game.updatePlayersScoreboard();
 
         this.showAllPlayers();
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§6Le village a perdu un de ses membres : §e" + this.getName() + "§6 est §nmort§6. Il était " + this.getRole().getDisplayName() + "§6.");
-        this.sendMessage(LG.getPrefix() + "§9Le jeu a déjà démarré !");
         this.sendMessage(LG.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
 
         for (Map.Entry<PlayerLG, String> messages : event.getMessagesToSend().entrySet())
@@ -433,7 +459,7 @@ public class PlayerLG {
 
             switch ((MayorSuccession)game.getConfig().getMayorSuccession().getValue()) {
                 case RANDOM:
-                    game.getAlive().get(new Random().nextInt(game.getAlive().size())).setMayor();
+                    game.getAlive().get(LG.RANDOM.nextInt(game.getAlive().size())).setMayor();
                 break;
 
                 case CHOOSE:
@@ -484,17 +510,9 @@ public class PlayerLG {
         return this.game.getPlayersInGame().contains(this);
     }
 
-    public Role getRole() {
-        return role;
-    }
-
     public void joinRole(Role role) {
         this.setRole(role);
         role.onPlayerJoin(this);
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public boolean isLG () {
@@ -528,10 +546,13 @@ public class PlayerLG {
     }
 
     public void setMayor() {
+        if (game.getMayor() != null)
+            game.getMayor().removeMayor();
         this.isMayor = true;
         game.setMayor(this);
         Bukkit.broadcastMessage(LG.getPrefix() + "§3§l" + this.getName() + " §ba été choisi comme nouveau maire !");
         this.getPlayer().getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        game.updatePlayersScoreboard();
     }
 
     public void removeMayor() {

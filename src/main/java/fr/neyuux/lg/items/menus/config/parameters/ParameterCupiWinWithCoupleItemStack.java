@@ -18,8 +18,6 @@ public class ParameterCupiWinWithCoupleItemStack extends CustomItemStack {
         this.cupiWinWithCouple = LG.getInstance().getGame().getConfig().getCupiWinWithCouple();
 
         this.setLore("§fActive ou non le fait que", "§fCupidon peut gagner avec son couple", "", "§bValeur : " + cupiWinWithCouple.getVisibleValue(), "", "§7>>Clique pour modifier");
-
-        addItemInList(this);
     }
 
     @Override

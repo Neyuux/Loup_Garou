@@ -27,8 +27,6 @@ public class RoleAddingItemStack extends CustomItemStack {
         this.role = role;
 
         this.updateMeta();
-
-        addItemInList(this);
     }
 
     @Override

@@ -19,8 +19,6 @@ public class DictateurDoRebellionItemStack extends CustomItemStack {
         this.setLore("§eFaire un coup d'état vous permet", "§ed'être le seul à pouvoir voter.", "§eSi vous votez pour un §aVillageois§e,", "§evous vous suiciderez le lendemain.", "§eSinon, vous deviendrez maire du village.", "", "§7>>Clique pour sélectionner");
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
 
@@ -32,8 +30,8 @@ public class DictateurDoRebellionItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§2Vous effectuerez un coup d'état au prochain tour !");
         GameLG.playPositiveSound((Player) player);
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

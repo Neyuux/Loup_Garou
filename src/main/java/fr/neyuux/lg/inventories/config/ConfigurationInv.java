@@ -56,17 +56,17 @@ public class ConfigurationInv implements InventoryProvider {
         contents.set(3, 5, ClickableItem.of(new CustomItemStack(Material.BARRIER, 1)
                         .setDisplayName("§bReset la Map")
                         .setLore("§fPermet de reset", "§fla map.")
-                , onClick -> ResetInv.INVENTORY.open(onClick.getWhoClicked())));
+                , onClick -> ResetInv.INVENTORY.open(player)));
 
         contents.set(1, 4, ClickableItem.of(new CustomItemStack(Material.APPLE, 1)
                         .setDisplayName("§f§lParamètres de la Partie")
                         .setLore("§fPermet de changer les", "§foptions de la partie.")
-                , onClick -> ParametersInv.INVENTORY.open(onClick.getWhoClicked())));
+                , onClick -> ParametersInv.INVENTORY.open(player)));
 
         contents.set(1, 6, ClickableItem.of(new CustomItemStack(Material.EMPTY_MAP, 1)
                         .setDisplayName("§6§lRôles")
                         .setLore("§fPermet de gérer les", "§frôles de la partie.")
-                , onClick -> RoleDecksInv.INVENTORY.open(onClick.getWhoClicked())));
+                , onClick -> RoleDecksInv.INVENTORY.open(player)));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ConfigurationInv implements InventoryProvider {
         contents.set(1, 2, ClickableItem.of(new CustomItemStack(Material.ITEM_FRAME, 1)
                         .setDisplayName("§2Changer le §lType §2de jeu")
                         .setLore("§fPermet de changer le", "§ftype de jeu de la partie.", "", "§eActuel : §c§l" + LG.getInstance().getGame().getGameType().getName())
-                , onClick -> ChangeGameTypeInv.INVENTORY.open(onClick.getWhoClicked())));
+                , onClick -> ChangeGameTypeInv.INVENTORY.open(player)));
     }
 
 }

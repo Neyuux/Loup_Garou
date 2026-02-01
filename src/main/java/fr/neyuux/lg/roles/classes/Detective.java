@@ -10,11 +10,6 @@ import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
@@ -75,6 +70,8 @@ public class Detective extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        super.onPlayerNightTurn(playerLG, callback);
+
         if (game.getGameType().equals(GameType.MEETING)) {
             new Runnable() {
                 @Override
@@ -93,7 +90,7 @@ public class Detective extends Role {
             }.run();
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).toArray(new PlayerLG[0])), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAliveExcept(((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).toArray(new PlayerLG[0])), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -103,14 +100,14 @@ public class Detective extends Role {
                 @Override
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     if (investigate(choosenLG, playerLG)) {
-                        playerLG.getCache().put("unclosableInv", false);
-                        playerLG.getPlayer().closeInventory();
+                        
+                        LG.closeSmartInv(playerLG.getPlayer());
                         playerLG.setSleep();
                         callback.run();
                     }
                 }
             });
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -131,6 +128,9 @@ public class Detective extends Role {
         if (playerLG.getCache().has("detectiveFirstChoice")) {
             PlayerLG firstChoiceLG = (PlayerLG) playerLG.getCache().get("detectiveFirstChoice");
 
+            if (firstChoiceLG.equals(choosen))
+                return false;
+
             if (firstChoiceLG.getCamp().equals(choosen.getCamp()) && choosen.getCamp() != Camps.AUTRE) {
                 playerLG.sendMessage(LG.getPrefix() + choosen.getNameWithAttributes(playerLG) + "§a et " + firstChoiceLG.getNameWithAttributes(playerLG) + "§a sont du même camp !");
                 GameLG.playPositiveSound(playerLG.getPlayer());
@@ -141,6 +141,7 @@ public class Detective extends Role {
 
             ((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).add(firstChoiceLG);
             ((ArrayList<PlayerLG>)playerLG.getCache().get("deteciveAleardyInvestigated")).add(choosen);
+            playerLG.getCache().remove("detectiveFirstChoice");
 
             return true;
         } else {
@@ -151,27 +152,9 @@ public class Detective extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
-
-
-    @EventHandler
-    public void onCloseDetectiveInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
+    
 }

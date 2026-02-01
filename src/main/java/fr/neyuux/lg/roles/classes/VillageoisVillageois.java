@@ -61,6 +61,5 @@ public class VillageoisVillageois extends Role {
         super.onPlayerJoin(playerLG);
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + " §ade la partie est §e§l" + playerLG.getName());
-        LG.setPlayerInScoreboardTeam("RVillageois", playerLG.getPlayer());
     }
 }

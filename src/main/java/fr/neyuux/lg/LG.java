@@ -1,9 +1,7 @@
 package fr.neyuux.lg;
 
+import fr.minuskube.inv.SmartInvsPlugin;
 import fr.neyuux.lg.commands.LGCommand;
-import fr.neyuux.lg.config.GameConfig;
-import fr.neyuux.lg.enums.DayCycle;
-import fr.neyuux.lg.enums.GameState;
 import fr.neyuux.lg.enums.GameType;
 import fr.neyuux.lg.event.ResetEvent;
 import fr.neyuux.lg.items.ItemsManager;
@@ -11,12 +9,12 @@ import fr.neyuux.lg.listeners.GameListener;
 import fr.neyuux.lg.listeners.PreGameListener;
 import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.classes.*;
-import org.bukkit.*;
 import io.github.pr0methean.betterrandom.prng.adapter.SplittableRandomAdapter;
 import io.github.pr0methean.betterrandom.seed.BufferedSeedGenerator;
 import io.github.pr0methean.betterrandom.seed.DevRandomSeedGenerator;
 import io.github.pr0methean.betterrandom.seed.SecureRandomSeedGenerator;
 import io.github.pr0methean.betterrandom.seed.SeedGeneratorPreferenceList;
+import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -25,9 +23,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -38,6 +33,7 @@ public class LG extends JavaPlugin {
 
     private static LG INSTANCE;
 
+    @Getter
     private static final String prefix = "§c§lLoups§e§l-§6§lGarous §8§l» §r";
 
     public static final Random RANDOM = new SplittableRandomAdapter(new SeedGeneratorPreferenceList(false,
@@ -47,18 +43,17 @@ public class LG extends JavaPlugin {
 
     private GameLG gameLG;
 
+    @Getter
     private ItemsManager itemsManager;
 
+    @Getter
     private final HashMap<String, Constructor<? extends Role>> roles = new HashMap<>();
 
+    @Getter
     private final List<Listener> listeningEventsRoles = new ArrayList<>();
 
     public static LG getInstance() {
         return INSTANCE;
-    }
-
-    public static String getPrefix() {
-        return prefix;
     }
 
     public static String getPlurial(int i) {
@@ -69,6 +64,17 @@ public class LG extends JavaPlugin {
     public static String getStringBoolean(boolean b) {
         if (b) return "§aOui";
         else return "§cNon";
+    }
+
+    public static int adaptIntToInvSize(int i) {
+        int newsize = Math.max(i, 5);
+
+        if (i < 36) newsize = 4;
+        if (i < 27) newsize = 3;
+        if (i < 18) newsize = 2;
+        if (i < 9) newsize = 1;
+
+        return newsize;
     }
 
     public static byte translateChatColorToByte(ChatColor chatColor) {
@@ -134,8 +140,6 @@ public class LG extends JavaPlugin {
         INSTANCE = this;
 
         Bukkit.getLogger().log(Level.INFO, "LG enabling");
-
-        registerBaseTeams(Bukkit.getScoreboardManager().getMainScoreboard());
 
         if (!(new File(getDataFolder(), "config.yml")).exists()) {
             FileConfiguration config = getConfig();
@@ -244,44 +248,11 @@ public class LG extends JavaPlugin {
         playerLG.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, true, false));
     }
 
-
-    
-    public static void registerBaseTeams(Scoreboard scoreboard) {
-        for (Team t : scoreboard.getTeams())
-            if (!t.getDisplayName().startsWith("Kits"))
-                t.unregister();
-
-        for (Objective ob : scoreboard.getObjectives())
-            ob.unregister();
-
-        Team op = scoreboard.registerNewTeam("AOP");
-        Team players = scoreboard.registerNewTeam("Players");
-        Team villager = scoreboard.registerNewTeam("RVillageois");
-        Team president = scoreboard.registerNewTeam("RPresident");
-
-        op.setPrefix("§5§lOP §c");
-        op.setSuffix("§r");
-
-        players.setDisplayName("Joueurs");
-        players.setPrefix("§e");
-        players.setSuffix("§r");
-
-        villager.setDisplayName("Villageois-Villageois");
-        villager.setPrefix("§a§lV§e-§a§lV §a");
-        villager.setSuffix("§r");
-
-        president.setDisplayName("Prédident");
-        president.setPrefix("§e§lPrésident §6");
-        president.setSuffix("§r");
+    public static void closeSmartInv(Player player) {
+        SmartInvsPlugin.manager().getInventory(player).ifPresent(smartInventory -> smartInventory.close(player));
     }
 
-    public static void setPlayerInScoreboardTeam(String teamname, Player player) {
-        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(teamname);
 
-        team.addEntry(player.getName());
-        player.setDisplayName(team.getPrefix() + player.getName() + team.getSuffix());
-        player.setPlayerListName(player.getDisplayName());
-    }
 
 
     public GameLG getGame() {
@@ -294,6 +265,7 @@ public class LG extends JavaPlugin {
         Bukkit.getPluginManager().callEvent(new ResetEvent());
 
         for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerLG.removePlayerLG(player);
             PlayerLG playerLG = PlayerLG.createPlayerLG(player);
 
             player.setExp(0f);
@@ -304,17 +276,13 @@ public class LG extends JavaPlugin {
             addNightVision(playerLG);
             addSaturation(playerLG);
             player.setGameMode(GameMode.ADVENTURE);
-            player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
+            player.teleport(new Location(Bukkit.getWorld("LG"), LG.RANDOM.nextInt(16) + 120, 16.5, LG.RANDOM.nextInt(16) + 371));
 
-            PlayerLG.removePlayerLG(player);
-            PlayerLG.createPlayerLG(player);
 
             player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-            LG.setPlayerInScoreboardTeam("Players", player);
             if (player.isOp()) this.gameLG.OP(playerLG);
             this.getItemsManager().updateSpawnItems(playerLG);
 
-            playerLG.sendLobbySideScoreboard();
             playerLG.showAllPlayers();
         }
 
@@ -324,22 +292,10 @@ public class LG extends JavaPlugin {
         LG.getInstance().unregisterAllListeners();
         Bukkit.getScheduler().cancelTasks(this);
 
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            Bukkit.broadcastMessage("§4" + this.gameLG);
-        }, 0L, 40L);
-
         this.gameLG.registerEvents(this.gameLG);
+
+        gameLG.sendLobbySideScoreboardToAllPlayers();
+        gameLG.updatePlayersScoreboard();
     }
 
-    public ItemsManager getItemsManager()  {
-        return itemsManager;
-    }
-
-    public HashMap<String, Constructor<? extends Role>> getRoles() {
-        return roles;
-    }
-
-    public List<Listener> getListeningEventsRoles() {
-        return listeningEventsRoles;
-    }
 }

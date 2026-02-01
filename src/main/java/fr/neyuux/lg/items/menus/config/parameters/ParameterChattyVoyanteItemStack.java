@@ -18,8 +18,6 @@ public class ParameterChattyVoyanteItemStack extends CustomItemStack {
         this.chattyVoyante = LG.getInstance().getGame().getConfig().getChattyVoyante();
 
         this.setLore("§fActive ou non le message dans le", "§fchat le rôle de la personne qui a été vue.", "", "§bValeur : " + chattyVoyante.getVisibleValue(), "", "§7>>Clique pour modifier");
-
-        addItemInList(this);
     }
 
     @Override

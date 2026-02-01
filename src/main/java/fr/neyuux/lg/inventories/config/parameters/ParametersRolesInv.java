@@ -1,26 +1,68 @@
 package fr.neyuux.lg.inventories.config.parameters;
 
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.InventoryProvider;
 import fr.neyuux.lg.items.menus.ReturnArrowItemStack;
 import fr.neyuux.lg.items.menus.config.parameters.*;
-import fr.neyuux.lg.utils.AbstractCustomInventory;
+import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
-public class ParametersRolesInv extends AbstractCustomInventory {
-    public ParametersRolesInv() {
-        super("§f§lParamètres §6§ldes Rôles", 36);
+public class ParametersRolesInv implements InventoryProvider {
+
+    public static final ClickableItem GLASS_PANE = ClickableItem.empty(new CustomItemStack(Material.STAINED_GLASS_PANE, 1, (byte)13).setDisplayName("§f"));
+
+    @Override
+    public void init(Player player, InventoryContents contents) {
+        contents.set(0, 0, GLASS_PANE);
+        contents.set(0, 1, GLASS_PANE);
+        contents.set(0, 7, GLASS_PANE);
+        contents.set(0, 8, GLASS_PANE);
+
+        contents.set(1, 0, GLASS_PANE);
+        contents.set(1, 8, GLASS_PANE);
+
+        contents.set(2, 0, GLASS_PANE);
+        contents.set(2, 8, GLASS_PANE);
+
+        contents.set(3, 0, GLASS_PANE);
+        contents.set(3, 1, GLASS_PANE);
+        contents.set(3, 7, GLASS_PANE);
+
+        contents.set(3, 8, ClickableItem.of(new ReturnArrowItemStack(), ev -> ParametersInv.INVENTORY.open((Player) ev.getWhoClicked())));
     }
 
     @Override
-    public void registerItems() {
-        this.setAllCorners((byte)13);
-        this.setItem(35, new ReturnArrowItemStack(new ParametersInv()));
+    public void update(Player player, InventoryContents contents) {
+        ParameterCupiWinWithCoupleItemStack winWithCoupleItemStack = new ParameterCupiWinWithCoupleItemStack();
+        contents.set(1, 2, ClickableItem.of(winWithCoupleItemStack, ev -> winWithCoupleItemStack.use(ev.getWhoClicked(), ev)));
 
-        //items 11 -> 15 / 20 -> 24
-        this.setItem(11, new ParameterCupiWinWithCoupleItemStack());
-        this.setItem(12, new ParameterComedianPowersItemStack());
-        this.setItem(13, new ParameterWildChildRandomModelItemStack());
-        this.setItem(14, new ParameterCupiInCoupleItemStack());
-        this.setItem(15, new ParameterChamanChatItemStack());
-        this.setItem(22, new ParameterChattyVoyanteItemStack());
+        ParameterComedianPowersItemStack comedianPowersItemStack = new ParameterComedianPowersItemStack();
+        contents.set(1, 3, ClickableItem.of(comedianPowersItemStack, ev -> comedianPowersItemStack.use(ev.getWhoClicked(), ev)));
+
+        ParameterWildChildRandomModelItemStack randomModelItemStack = new ParameterWildChildRandomModelItemStack();
+        contents.set(1, 4, ClickableItem.of(randomModelItemStack, ev -> randomModelItemStack.use(ev.getWhoClicked(), ev)));
+
+        ParameterCupiInCoupleItemStack cupiInCoupleItemStack = new ParameterCupiInCoupleItemStack();
+        contents.set(1, 5, ClickableItem.of(cupiInCoupleItemStack, ev -> cupiInCoupleItemStack.use(ev.getWhoClicked(), ev)));
+
+        ParameterChamanChatItemStack chamanChatItemStack = new ParameterChamanChatItemStack();
+        contents.set(1, 6, ClickableItem.of(chamanChatItemStack, ev -> chamanChatItemStack.use(ev.getWhoClicked(), ev)));
+
+        ParameterChattyVoyanteItemStack chattyVoyanteItemStack = new ParameterChattyVoyanteItemStack();
+        contents.set(2, 4, ClickableItem.of(chattyVoyanteItemStack, ev -> chattyVoyanteItemStack.use(ev.getWhoClicked(), ev)));
     }
+
+
+    public static final SmartInventory INVENTORY = SmartInventory.builder()
+            .id("config_roles_parameters")
+            .provider(new ParametersRolesInv())
+            .size(4, 9)
+            .title("§f§lParamètres §6§ldes Rôles")
+            .closeable(true)
+            .build();
+
 }

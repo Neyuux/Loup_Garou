@@ -36,9 +36,9 @@ public class GameListener implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
+                    
                     player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
+                    
                 }
             }.runTaskLater(LG.getInstance(), 1L);
         }
@@ -104,8 +104,6 @@ public class GameListener implements Listener {
 
         if (game.getGameState().equals(GameState.PLAYING)) {
             player.setGameMode(GameMode.SPECTATOR);
-            player.setPlayerListName("§8[§7Spectateur§8] §7" + player.getName());
-            player.setDisplayName(player.getPlayerListName());
 
             player.resetMaxHealth();
             player.setHealth(player.getMaxHealth());
@@ -133,16 +131,27 @@ public class GameListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent ev) {
         GameLG game = LG.getInstance().getGame();
+        PlayerLG playerLG = PlayerLG.createPlayerLG(ev.getPlayer());
+        String displayName = ev.getPlayer().getDisplayName();
+        String msg = ev.getMessage().trim();
 
         if (!game.getGameState().equals(GameState.PLAYING)) return;
 
-        if (game.getDayCycle().equals(DayCycle.DAY)) {
-            ev.setFormat(ev.getPlayer().getDisplayName() + " §8§l» §f" + ev.getMessage().trim());
-        } else {
+        if (playerLG.isSpectator()) {
+
             ev.setCancelled(true);
+            game.getSpectators().forEach(specLG -> specLG.sendMessage(displayName + " §7§l» §7" + msg));
+
+        } else {
+
+            if (game.getDayCycle().equals(DayCycle.DAY)) {
+                ev.setFormat("§e" + displayName + " §8§l» §f" + msg);
+            } else {
+                ev.setCancelled(true);
+            }
         }
     }
 

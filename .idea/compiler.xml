@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Les Loups-Garous de Thiercelieux" />
+        <module name="LG" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

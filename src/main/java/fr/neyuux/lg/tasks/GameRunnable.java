@@ -66,7 +66,7 @@ public class GameRunnable {
                         playerLG.updateGamePlayerScoreboard();
 
                         FileConfiguration file = LG.getInstance().getConfig();
-                        Random random = new Random();
+                        Random random = LG.RANDOM;
                         List<List<Double>> placementlists = (List<List<Double>>) file.getList("spawns." + GameRunnable.this.game.getGameType());
                         int size = placementlists.size();
                         int index = random.nextInt(size);
@@ -80,25 +80,20 @@ public class GameRunnable {
 
                         GameRunnable.this.usedLocations.add(index);
                         System.out.println(GameRunnable.this.usedLocations);
-                        playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), doubleList.get(0) + 0.5, doubleList.get(1), doubleList.get(2) + 0.5, doubleList.get(3).floatValue(), doubleList.get(4).floatValue()));
+                        playerLG.setPlacement(new Location(Bukkit.getWorld("LG"), doubleList.get(0), doubleList.get(1), doubleList.get(2), doubleList.get(3).floatValue(), doubleList.get(4).floatValue()));
                     }
 
                     GameRunnable.this.game.wait(6, GameRunnable.this::nextNight, (playerLG, secondsLeft) -> LG.getPrefix() + "§9Début de la nuit dans §1§l" + secondsLeft + "§9 seconde" + LG.getPlurial(secondsLeft)  + ".", false);
                 }
 
-                if (timer == 0 && game.getDayCycle() != DayCycle.NONE) {
-                    timer = 14;
-                    if (game.getPlayersByRole(Comedien.class).isEmpty())
-                        game.sendListRolesSideScoreboardToAllPlayers();
-                    else
+                if (game.getDayCycle() == DayCycle.NONE) {
+                    if (!game.getPlayersByRole(Comedien.class).isEmpty() && timer % 14 == 0)
                         game.sendComedianPowersSideScoreboardToAllPlayers();
+                    else if (timer % 7 == 0)
+                        game.sendListRolesSideScoreboardToAllPlayers();
                 }
 
-                if (timer == 7 && game.getDayCycle() != DayCycle.NONE) {
-                    game.sendListRolesSideScoreboardToAllPlayers();
-                }
-
-                timer--;
+                timer++;
             }
         };
     }
@@ -146,16 +141,13 @@ public class GameRunnable {
 
                     public void run() {
 
-                        Bukkit.broadcastMessage("§a" + GameRunnable.this.rolesOrder.toString());
-                        Bukkit.broadcastMessage("§2" + LG.getInstance().getGame().getGameRunnable() + "  /  §3" + this + "   /  §8" + GameRunnable.this.game);
-
                         if (GameRunnable.this.getRolesOrder().isEmpty()) {
                             GameRunnable.this.endNight();
                             System.out.println("endnight");
                             return;
                         }
 
-                        Bukkit.broadcastMessage("§4remove " + GameRunnable.this.rolesOrder.get(0).getConfigName());
+                        GameRunnable.this.game.getAlive().forEach(PlayerLG::updateGamePlayerScoreboard);
                         GameRunnable.this.getRolesOrder().remove(0).newNightTurn(callback);
 
                     }
@@ -269,7 +261,6 @@ public class GameRunnable {
     }
 
     public void calculateRoleOrder() {
-        Bukkit.broadcastMessage("§4clear");
         this.rolesOrder.clear();
 
         System.out.println("rolesorder :");
@@ -296,13 +287,10 @@ public class GameRunnable {
     }
 
     public void updateRoleOrder(Class<? extends Role> roleClass) {
-        Bukkit.broadcastMessage("§cupdate");
         this.calculateRoleOrder();
         while (!this.getRolesOrder().get(0).getClass().equals(roleClass)) {
-            Bukkit.broadcastMessage("§c" + this.getRolesOrder().get(0).getConfigName());
             this.getRolesOrder().remove(0);
         }
-        Bukkit.broadcastMessage("§c 2 " + this.getRolesOrder().get(0).getConfigName());
         this.getRolesOrder().remove(0);
     }
 }

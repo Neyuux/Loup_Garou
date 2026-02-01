@@ -19,6 +19,9 @@ import java.util.*;
 
 public class CustomItemStack extends ItemStack {
 
+    private static final List<CustomItemStack> USE_LIST = new ArrayList<>();
+
+
     public CustomItemStack(Material m){
         super(m);
     }
@@ -202,5 +205,14 @@ public class CustomItemStack extends ItemStack {
                 slot = i;
         }
         return slot;
+    }
+
+
+    public static void addItemInList(CustomItemStack item) {
+        USE_LIST.add(item);
+    }
+
+    public static List<CustomItemStack> getItemList() {
+        return USE_LIST;
     }
 }

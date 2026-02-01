@@ -30,8 +30,6 @@ public class ComedianPowerGlassItemStack extends CustomItemStack {
 
 
         this.setItemMetas(this.isActivated());
-
-        addItemInList(this);
     }
 
     @Override

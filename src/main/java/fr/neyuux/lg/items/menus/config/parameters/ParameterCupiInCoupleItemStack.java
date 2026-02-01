@@ -18,8 +18,6 @@ public class ParameterCupiInCoupleItemStack extends CustomItemStack {
         this.cupiInCouple = LG.getInstance().getGame().getConfig().getCupiInCouple();
 
         this.setLore("§fActive ou non l'obligation", "§fdu Cupidon à faire partie du couple.", "", "§bValeur : " + cupiInCouple.getVisibleValue(), "", "§7>>Clique pour modifier");
-
-        addItemInList(this);
     }
 
     @Override

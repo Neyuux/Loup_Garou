@@ -12,12 +12,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 public class VoteLG {
 
@@ -159,7 +157,7 @@ public class VoteLG {
 
             if (playerLG.getRole() instanceof Bouffon) playerLG.getCache().put("bouffonVoters", playerVoters);
 
-            if (playerVoters.size() > 0) voted.add(playerLG);
+            if (!playerVoters.isEmpty()) voted.add(playerLG);
 
             playerLG.setArmorStand(null);
             for (PlayerLG voter : playerVoters)
@@ -170,15 +168,18 @@ public class VoteLG {
         }
 
         for (PlayerLG playerLG : voted) {
-            if (finalists.isEmpty()) finalists.add(playerLG);
-            else {
+            if (finalists.isEmpty()) {
+                finalists.add(playerLG);
+            } else {
                 int currentVotes = this.getVotesFor(finalists.get(0)).size();
                 int playerLGVotes = this.getVotesFor(playerLG).size();
 
-                if (currentVotes < playerLGVotes) {
+                if (playerLGVotes > currentVotes) {
                     finalists.clear();
-                } else if (currentVotes <= playerLGVotes)
                     finalists.add(playerLG);
+                } else if (playerLGVotes == currentVotes) {
+                    finalists.add(playerLG);
+                }
             }
         }
 
@@ -191,6 +192,7 @@ public class VoteLG {
         for (PlayerLG playerLG : game.getPlayersInGame()) {
             if (playerLG.getCache().has("vote")) playerLG.getCache().remove("vote");
             playerLG.stopChoosing();
+            LG.getInstance().getItemsManager().updateVoteItems(playerLG);
         }
 
         if (finalists.size() != 1) {
@@ -208,7 +210,7 @@ public class VoteLG {
             builder.append("\n");
 
             if (this.randomIfEqual) {
-                this.choosen = finalists.get(new Random().nextInt(finalists.size()));
+                this.choosen = finalists.get(LG.RANDOM.nextInt(finalists.size()));
                 builder.append("Un joueur va donc être chosi aléatoirement parmi ceux qui ont été le plus votés... \n").append(LG.getPrefix()).append(this.choosen.getDisplayName()).append(firstColor).append((" a été désigné."));
                 game.cancelWait();
                 this.callback.run();
@@ -250,7 +252,7 @@ public class VoteLG {
                         });
 
                     } else if (game.getGameType().equals(GameType.FREE)) {
-                        new ChoosePlayerInv("§eDépartager les Votes", mayor, finalists, new ChoosePlayerInv.ActionsGenerator() {
+                        ChoosePlayerInv.getInventory("§eDépartager les Votes", mayor, finalists, new ChoosePlayerInv.ActionsGenerator() {
 
                             @Override
                             public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -336,13 +338,13 @@ public class VoteLG {
         return (PlayerLG) voter.getCache().get("vote");
     }
 
-    private List<PlayerLG> getVotesFor(PlayerLG target) {
+    public List<PlayerLG> getVotesFor(PlayerLG target) {
         List<PlayerLG> voters = new ArrayList<>();
         for (PlayerLG playerLG : this.getVoters())
             if (playerLG.getCache().has("vote") && playerLG.getCache().get("vote") != null && playerLG.getCache().get("vote").equals(target))
                 voters.add(playerLG);
 
-        if (target.getCache().has("corbeauTargeted")) {
+        if (target.getCache().has("corbeauTargeted") && this.name.equals("Vote du Village")) {
             voters.add(null);
             voters.add(null);
         }

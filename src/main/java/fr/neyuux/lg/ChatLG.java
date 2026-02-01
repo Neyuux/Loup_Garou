@@ -40,7 +40,7 @@ public class ChatLG implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent ev) {
-        String msg = ev.getMessage();
+        String msg = ev.getMessage().trim();
         char first = msg.charAt(0);
 
         if (this.actors == null) return;
@@ -56,7 +56,7 @@ public class ChatLG implements Listener {
                 if (this.textCode.compareTo(first) == 0) msg = msg.substring(1);
                 else return;
             }
-            String finalMsg  = msg.trim();
+            String finalMsg = msg;
 
             this.actors.forEach(actorLG -> actorLG.sendMessage(namePrefix + PlayerLG.createPlayerLG(ev.getPlayer()).getNameWithAttributes(actorLG) + " §8§l» " + textColor + finalMsg));
             this.spies.forEach(spyLG -> spyLG.sendMessage(namePrefix + "§kZIZITOUDUR" + " §8§l» " + textColor + finalMsg));

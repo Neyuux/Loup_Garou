@@ -13,7 +13,7 @@ public class OpComparatorItemStack extends CustomItemStack {
 
     public OpComparatorItemStack() {
         super(Material.REDSTONE_COMPARATOR);
-        this.setDisplayName("ï¿½cï¿½lConfiguration de la Partie");
+        this.setDisplayName("§c§lConfiguration de la Partie");
         this.addGlowEffect();
 
         addItemInList(this);

@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Mercenaire extends Role {
 
@@ -69,7 +68,7 @@ public class Mercenaire extends Role {
         List<PlayerLG> choosable = game.getAlive();
 
         for (PlayerLG playerLG : game.getPlayersByRole(this.getClass())) {
-            PlayerLG targetLG = choosable.get(new Random().nextInt(choosable.size()));
+            PlayerLG targetLG = choosable.get(LG.RANDOM.nextInt(choosable.size()));
 
             choosable.remove(targetLG);
             playerLG.sendTitle("§c§l" + targetLG.getNameWithAttributes(playerLG), "§c§lest votre cible pour ce vote !", 10, 50, 10);
@@ -78,7 +77,7 @@ public class Mercenaire extends Role {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDayEndElimination(DayEndEvent ev) {
         GameLG game = LG.getInstance().getGame();
         PlayerLG killedLG = ev.getKilledLG();

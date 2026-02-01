@@ -6,15 +6,13 @@ import fr.neyuux.lg.inventories.roleinventories.VoleurInv;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
+import lombok.Getter;
 
 public class Voleur extends Role {
 
+    @Getter
     private static Role role1 = null;
+    @Getter
     private static Role role2 = null;
 
     @Override
@@ -65,44 +63,18 @@ public class Voleur extends Role {
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
-        new VoleurInv(this, playerLG, callback).open(playerLG.getPlayer());
-        playerLG.getCache().put("unclosableInv", true);
+        super.onPlayerNightTurn(playerLG, callback);
+        VoleurInv.getInventory(this, playerLG, callback).open(playerLG.getPlayer());
+        
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
 
-
-    @EventHandler
-    public void onCloseVoleurInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
-
-
-    public static Role getRole1() {
-        return role1;
-    }
-
-    public static Role getRole2() {
-        return role2;
-    }
 
     public static void setRole1(Role role1) {
         Voleur.role1 = role1;

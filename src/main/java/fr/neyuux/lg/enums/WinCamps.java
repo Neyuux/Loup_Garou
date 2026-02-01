@@ -1,7 +1,9 @@
 package fr.neyuux.lg.enums;
 
 import fr.neyuux.lg.GameLG;
+import lombok.Getter;
 
+@Getter
 public enum WinCamps {
 
     VILLAGE("§edu §lVillage", winners -> "§6§l§nNombre de survivants§f : §e" + winners.size()),
@@ -11,7 +13,8 @@ public enum WinCamps {
         winners.forEach(playerLG -> builder.append("§e§l").append(playerLG.getName()).append("§f, "));
         return builder.substring(0, builder.length() - 2);
     }),
-    CUSTOM("", winners -> "§6§l§nBravo à§f : §e§l" + winners.get(0).getName());
+    CUSTOM("", winners -> "§6§l§nBravo à§f : §e§l" + winners.get(0).getName()),
+    NONE("§4de la §lMort", winners -> "§cVa falloir recruter pour reconstruire...");
 
     private final String determingName;
     private final GameLG.StringVictoryTitle victoryTitle;
@@ -21,11 +24,4 @@ public enum WinCamps {
         this.victoryTitle = victoryTitle;
     }
 
-    public String getDetermingName() {
-        return determingName;
-    }
-
-    public GameLG.StringVictoryTitle getVictoryTitle() {
-        return victoryTitle;
-    }
 }

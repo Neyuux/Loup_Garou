@@ -4,7 +4,6 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.roles.Camps;
-import fr.neyuux.lg.roles.classes.ChienLoup;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -22,8 +21,6 @@ public class ChienLoupDogChoiceItemStack extends CustomItemStack {
         this.setDamage(5);
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
 
@@ -35,8 +32,7 @@ public class ChienLoupDogChoiceItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§eVous avez choisi le camp du §a§lVillage§e !");
         GameLG.playPositiveSound((Player) player);
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

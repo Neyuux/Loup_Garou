@@ -4,7 +4,6 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.utils.CustomItemStack;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
@@ -24,8 +23,6 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
         this.setLore("§9Se réveille pour chercher des Loups-Garous.", "§9Il y a 20% de chance que vous en §atrouviez §9un.", "§9Cependant, vous avez également 5% de chance de §cmourir§9.", "", "§7>>Clique pour sélectionner");
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
 
@@ -34,7 +31,7 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
         GameLG game = LG.getInstance().getGame();
         List<PlayerLG> lgs = game.getLGs(true);
-        Random random = new Random();
+        Random random = LG.RANDOM;
         boolean findLG = random.nextDouble() * 100 <= 20;
         boolean getKilled = random.nextDouble() * 100 <= 5;
 
@@ -60,8 +57,8 @@ public class PetiteFilleWOInspectionItemStack extends CustomItemStack {
             GameLG.playPositiveSound((Player) player);
         }
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

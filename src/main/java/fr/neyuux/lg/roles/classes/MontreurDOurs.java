@@ -73,6 +73,7 @@ public class MontreurDOurs extends Role {
                         player.playSound(player.getLocation(), Sound.WOLF_GROWL, 7f, 1.1f);
 
                     Bukkit.getLogger().log(Level.INFO, "Montreur " + playerLG.getName() + " growl " + nearLG.getName());
+                    break;
                 }
         }
     }

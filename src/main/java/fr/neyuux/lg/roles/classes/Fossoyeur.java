@@ -19,7 +19,6 @@ import org.bukkit.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Fossoyeur extends Role {
 
@@ -95,7 +94,7 @@ public class Fossoyeur extends Role {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Fossoyeur.this.getDeterminingName(), true);
+            }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + Fossoyeur.this.getDeterminingName(), true);
 
             playerLG.sendMessage(LG.getPrefix() + Fossoyeur.this.getActionMessage());
             Fossoyeur.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
@@ -109,6 +108,8 @@ public class Fossoyeur extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        super.onPlayerNightTurn(playerLG, callback);
+
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
                 if (choosen != null && !choosen.isDead()) {
@@ -119,7 +120,7 @@ public class Fossoyeur extends Role {
                 }
             });
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -130,13 +131,13 @@ public class Fossoyeur extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     dig(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
+                    
+                    LG.closeSmartInv(playerLG.getPlayer());
                     playerLG.setSleep();
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -155,7 +156,7 @@ public class Fossoyeur extends Role {
         if (roleChoiceEvent.isCancelled()) return;
 
         List<PlayerLG> aliveexcept = LG.getInstance().getGame().getAliveExcept(choosen, playerLG);
-        PlayerLG randomLG = aliveexcept.get(new Random().nextInt(aliveexcept.size()));
+        PlayerLG randomLG = aliveexcept.get(LG.RANDOM.nextInt(aliveexcept.size()));
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§8Dans un dernier souffle, le " + this.getDisplayName() + " §b" + playerLG.getName() + " §8a creuse la tombe de §e" + choosen.getName() + "§8 et §e" + randomLG.getName() + "§8.");
 

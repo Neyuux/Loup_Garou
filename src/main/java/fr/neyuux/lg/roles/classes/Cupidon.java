@@ -5,6 +5,7 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.enums.GameType;
+import fr.neyuux.lg.event.DayEndEvent;
 import fr.neyuux.lg.event.PlayerEliminationEvent;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
@@ -13,11 +14,8 @@ import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.event.EventPriority;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -102,7 +100,7 @@ public class Cupidon extends Role {
 
             if ((boolean)game.getConfig().getRandomCouple().getValue()) {
                 game.wait(Cupidon.this.getTimeout() / 4, () -> {
-                    Random random = new Random();
+                    Random random = LG.RANDOM;
                     while (!couple(game.getAlive().get(random.nextInt(game.getAlive().size())), playerLG)) {
                         couple(game.getAlive().get(random.nextInt(game.getAlive().size())), playerLG);
                     }
@@ -118,7 +116,7 @@ public class Cupidon extends Role {
                     this.onPlayerTurnFinish(playerLG);
                     callback.run();
 
-                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Cupidon.this.getDeterminingName(), true);
+                }, (currentPlayer, secondsLeft) -> (currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + Cupidon.this.getDeterminingName(), true);
 
                 playerLG.sendMessage(LG.getPrefix() + Cupidon.this.getActionMessage());
                 Cupidon.this.onPlayerNightTurn(playerLG, callback);
@@ -132,6 +130,8 @@ public class Cupidon extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
+
+        super.onPlayerNightTurn(playerLG, callback);
 
         if (game.getGameType().equals(GameType.MEETING)) {
             new Runnable() {
@@ -153,7 +153,7 @@ public class Cupidon extends Role {
 
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
+            ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -163,14 +163,14 @@ public class Cupidon extends Role {
                 @Override
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     if (couple(choosenLG, playerLG)) {
-                        playerLG.getCache().put("unclosableInv", false);
-                        playerLG.getPlayer().closeInventory();
+                        
+                        LG.closeSmartInv(playerLG.getPlayer());
                         playerLG.setSleep();
                         callback.run();
                     }
                 }
             });
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -217,29 +217,11 @@ public class Cupidon extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
 
-
-    @EventHandler
-    public void onCloseCupidonInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
 
     @EventHandler
     public void onCoupleElimination(PlayerEliminationEvent ev) {
@@ -258,6 +240,24 @@ public class Cupidon extends Role {
 
                 Bukkit.broadcastMessage(LG.getPrefix() + "§d§l\u2764 §e" + playerLG.getName() + " §det §e" + coupleLG.getName() + " §détaient en Couple ! §d§l\u2764");
             }, 1L);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onDayEnd(DayEndEvent ev) {
+        PlayerLG killedLG = ev.getKilledLG();
+
+        if (killedLG == null)
+            return;
+
+        if (killedLG.getCache().has("couple")) {
+            PlayerLG coupleLG = (PlayerLG) killedLG.getCache().get("couple");
+            GameLG game = LG.getInstance().getGame();
+
+            if (!coupleLG.isDead()) {
+                ev.setCancelled(true);
+                game.wait(1, () -> game.getGameRunnable().endDay(killedLG), (playerLG, timer) -> "", true);
+            }
         }
     }
 }

@@ -1,16 +1,13 @@
 package fr.neyuux.lg.roles.classes;
 
+import fr.minuskube.inv.SmartInventory;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.inventories.roleinventories.ChienLoupInv;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.entity.Player;
 
 public class ChienLoup extends Role {
 
@@ -62,34 +59,19 @@ public class ChienLoup extends Role {
 
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
-        new ChienLoupInv(this, callback).open(playerLG.getPlayer());
+        Player player = playerLG.getPlayer();
+        SmartInventory inventory = ChienLoupInv.getInventory(this, callback);
+
+        super.onPlayerNightTurn(playerLG, callback);
+
+        inventory.open(player);
         //TODO bug onReset? others roles cannot play
-        playerLG.getCache().put("unclosableInv", true);
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
 
-
-    @EventHandler
-    public void onCloseCLInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
 }

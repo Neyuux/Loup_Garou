@@ -92,7 +92,7 @@ public class Chasseur extends Role {
                 this.onPlayerTurnFinish(playerLG);
                 this.onNightTurn(callback);
 
-            }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + Chasseur.this.getDeterminingName(), true);
+            }, (currentPlayer, secondsLeft) ->(currentPlayer == playerLG) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + Chasseur.this.getDeterminingName(), true);
 
             playerLG.sendMessage(LG.getPrefix() + Chasseur.this.getActionMessage());
             Chasseur.this.onPlayerNightTurn(playerLG, () -> this.onNightTurn(callback));
@@ -119,7 +119,7 @@ public class Chasseur extends Role {
                 }
             });
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -134,7 +134,7 @@ public class Chasseur extends Role {
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -171,13 +171,13 @@ public class Chasseur extends Role {
     public void onDayEnd(DayEndEvent ev) {
         if (!NEED_TO_PLAY.isEmpty()) {
             ev.setCancelled(true);
-            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().endDay(null));
+            this.onNightTurn(() -> LG.getInstance().getGame().getGameRunnable().endDay(ev.getKilledLG()));
         }
     }
 
     @EventHandler
     public void onElimination(PlayerEliminationEvent ev) {
-        if (ev.getEliminated().getRole() instanceof Chasseur)
+        if (ev.getEliminated().getRole() instanceof Chasseur && !ev.isCancelled())
             NEED_TO_PLAY.add(ev.getEliminated());
     }
 }

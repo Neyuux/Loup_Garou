@@ -5,9 +5,7 @@ import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.config.ComedianPowers;
 import fr.neyuux.lg.roles.Role;
-import fr.neyuux.lg.roles.RoleNightOrder;
 import fr.neyuux.lg.roles.classes.Comedien;
-import fr.neyuux.lg.tasks.GameRunnable;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,8 +31,6 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
 
         this.setDisplayName(newRole.getDisplayName());
         this.setLore("§dVous donne le pouvoir du rôle " + newRole.getDisplayName(), "§dpour ce tour. Vous ne pourrez donc plus l'utiliser.", "", "§7>>Clique pour sélectionner");
-
-        addItemInList(this);
     }
 
 
@@ -52,9 +48,9 @@ public class ComedianPowerChoiceItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§dPour cette nuit, vous obtenez le pouvoir " + newRole.getDeterminingName() + "§d.");
         GameLG.playPositiveSound((Player) player);
 
-        playerLG.getCache().put("unclosableInv", false);
+        
 
-        player.closeInventory();
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

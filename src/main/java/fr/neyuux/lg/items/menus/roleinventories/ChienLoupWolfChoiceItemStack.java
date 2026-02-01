@@ -22,8 +22,6 @@ public class ChienLoupWolfChoiceItemStack extends CustomItemStack {
         this.setDamage(14);
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
 
@@ -37,8 +35,7 @@ public class ChienLoupWolfChoiceItemStack extends CustomItemStack {
 
         LG.getInstance().getGame().getGameRunnable().updateRoleOrder(ChienLoup.class);
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         this.callback.run();
     }

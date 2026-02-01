@@ -4,19 +4,18 @@ import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.enums.GameType;
+import fr.neyuux.lg.event.DayStartEvent;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class Salvateur extends Role {
+
+    private PlayerLG choosen;
 
     @Override
     public String getDisplayName() {
@@ -68,9 +67,11 @@ public class Salvateur extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        super.onPlayerNightTurn(playerLG, callback);
+
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
-                if (choosen != null && choosen != playerLG) {
+                if (choosen != null) {
                     protect(choosen, playerLG);
 
                     super.onPlayerTurnFinish(playerLG);
@@ -79,7 +80,7 @@ public class Salvateur extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -90,13 +91,13 @@ public class Salvateur extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     protect(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
+                    
+                    LG.closeSmartInv(playerLG.getPlayer());
                     playerLG.setSleep();
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -108,6 +109,7 @@ public class Salvateur extends Role {
         if (roleChoiceEvent.isCancelled()) return;
 
         choosen.getCache().put("salvateurProtected", playerLG);
+        this.choosen = choosen;
 
         playerLG.sendMessage(LG.getPrefix() + "§eTu as protégé " + choosen.getNameWithAttributes(playerLG) + "§e.");
         GameLG.playPositiveSound(playerLG.getPlayer());
@@ -115,36 +117,25 @@ public class Salvateur extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
-
-
-    @EventHandler
-    public void onCloseSalvateurInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
+    
 
     @EventHandler
     public void onLGChoose(RoleChoiceEvent ev) {
         PlayerLG choosenLG = ev.getChoosen();
         if (ev.getRole().getClass().equals(LoupGarou.class) && choosenLG.getCache().has("salvateurProtected")) {
-            choosenLG.getCache().remove("salvateurProtected");
             ev.setCancelled(true);
         }
+        if (choosen != null)this.choosen.getCache().remove("salvateurProtected");
+        this.choosen = null;
+    }
+
+    @EventHandler
+    public void onDayS(DayStartEvent ev) {
+        if (choosen != null)this.choosen.getCache().remove("salvateurProtected");
+        this.choosen = null;
     }
 }

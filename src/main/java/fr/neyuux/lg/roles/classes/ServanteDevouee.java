@@ -72,7 +72,7 @@ public class ServanteDevouee extends Role {
 
         if (vote.getName().equals("Vote du Village") && choosen != null && !choosen.getRole().getClass().equals(this.getClass()) && servante.canUsePowers()) {
             vote.setCallback(() -> {
-                new ServanteDevoueeInv(this, servante, choosen, previousCallback).open(servante.getPlayer());
+                ServanteDevoueeInv.getInventory(this, servante, choosen, previousCallback).open(servante.getPlayer());
                 game.wait(35, () -> {
                     servante.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps.");
                     previousCallback.run();

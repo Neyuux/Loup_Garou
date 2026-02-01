@@ -7,7 +7,6 @@ import fr.neyuux.lg.enums.GameType;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.inventories.roleinventories.PyromaneInv;
-import fr.neyuux.lg.items.menus.ReturnArrowItemStack;
 import fr.neyuux.lg.roles.classes.Pyromane;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
@@ -26,15 +25,13 @@ public class PyromanePutOilItemStack extends CustomItemStack {
     private final PyromaneInv lastInv;
 
     public PyromanePutOilItemStack(Pyromane pyromane, Runnable callback, PyromaneInv lastInv) {
-        super(Material.LAVA_BUCKET, 1, "�6�lMettre de l'huile sur 2 joueurs");
+        super(Material.LAVA_BUCKET, 1, "§6§lMettre de l'huile sur 2 joueurs");
         this.pyromane = pyromane;
         this.lastInv = lastInv;
 
-        this.setLore("�eMettre de huile sur un joueur", "�eL'ajoutera � la liste des joueurs que.", "�evous pourrez br�ler au prochain tour.", "", "�7>>Clique pour s�lectionner");
+        this.setLore("§eMettre de huile sur un joueur", "§eL'ajoutera § la liste des joueurs que.", "§evous pourrez br§ler au prochain tour.", "", "§7>>Clique pour s§lectionner");
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
     @Override
@@ -46,11 +43,11 @@ public class PyromanePutOilItemStack extends CustomItemStack {
         pyromane.getOiledPlayers().forEach(oiledLG->((Player)player).hidePlayer(oiledLG.getPlayer()));
 
         if (game.getGameType().equals(GameType.MEETING)) {
-            playerLG.sendMessage(LG.getPrefix() + "�fVous avez �6" + ((Player)player).getLevel() + " �6secondes �fpour mettre de l'huile sur deux personnes.");
+            playerLG.sendMessage(LG.getPrefix() + "§fVous avez §6" + ((Player)player).getLevel() + " §6secondes §fpour mettre de l'huile sur deux personnes.");
             ((Player) player).playSound(player.getLocation(), Sound.FIRE_IGNITE, 8f, 1f);
 
-            playerLG.getCache().put("unclosableInv", false);
-            player.closeInventory();
+            
+            LG.closeSmartInv((Player) player);
 
             playerLG.setChoosing(choosen -> {
                 if (choosen != null && choosen != playerLG && !pyromane.getOiledPlayers().contains(choosen)) {
@@ -63,29 +60,33 @@ public class PyromanePutOilItemStack extends CustomItemStack {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            ChoosePlayerInv inv = new ChoosePlayerInv(this.pyromane.getDisplayName() + " �chuiler", playerLG, game.getAliveExcept(playerLG).stream().filter(oiledPlayerLG-> oiledPlayerLG.getCache().has("pyromaneOiled")).collect(Collectors.toList()), new ChoosePlayerInv.ActionsGenerator() {
+            
+            ChoosePlayerInv.getInventory(
+                    this.pyromane.getDisplayName() + " §chuiler",
+                    playerLG,
+                    game.getAliveExcept(playerLG).stream().filter(oiledPlayerLG-> oiledPlayerLG.getCache().has("pyromaneOiled")).collect(Collectors.toList()),
+                    new ChoosePlayerInv.ActionsGenerator() {
 
-                @Override
-                public String[] generateLore(PlayerLG paramPlayerLG) {
-                    return new String[] {"�6Voulez-vous mettre de l'huile sur " + paramPlayerLG.getNameWithAttributes(playerLG) + "�6 ?", "�9Il sera ajout� � la liste des huil�s.", "", "�7>>Clique pour choisir"};
-                }
+                        @Override
+                        public String[] generateLore(PlayerLG paramPlayerLG) {
+                            return new String[] {"§6Voulez-vous mettre de l'huile sur " + paramPlayerLG.getNameWithAttributes(playerLG) + "§6 ?", "§9Il sera ajout§ § la liste des huil§s.", "", "§7>>Clique pour choisir"};
+                        }
 
-                @Override
-                public void doActionsAfterClick(PlayerLG choosenLG) {
-                    if(oil(choosenLG, playerLG, oilplayers[0])) {
-                        playerLG.getCache().put("unclosableInv", false);
-                        playerLG.getPlayer().closeInventory();
-                        playerLG.setSleep();
-                        callback.run();
+                        @Override
+                        public void doActionsAfterClick(PlayerLG choosenLG) {
+                            if(oil(choosenLG, playerLG, oilplayers[0])) {
+                                
+                                LG.closeSmartInv(playerLG.getPlayer());
+                                playerLG.setSleep();
+                                callback.run();
 
-                    } else oilplayers[0]++;
-                }
-            });
-            inv.setItem(inv.getSize() - 1, new ReturnArrowItemStack());
+                            } else oilplayers[0]++;
+                        }
+                    },
+                    PyromaneInv.getInventory(pyromane, playerLG, callback)
+            ).open((Player) player);
+            
 
-            playerLG.getCache().put("unclosableInv", false);
-            inv.open(player);
-            playerLG.getCache().put("unclosableInv", true);
         }
     }
 
@@ -98,7 +99,7 @@ public class PyromanePutOilItemStack extends CustomItemStack {
 
         choosen.getCache().put("pyromaneOiled", playerLG);
 
-        playerLG.sendMessage(LG.getPrefix() + "�6Tu as huil� " + choosen.getNameWithAttributes(playerLG) + "�6.");
+        playerLG.sendMessage(LG.getPrefix() + "§6Tu as huilé " + choosen.getNameWithAttributes(playerLG) + "§6.");
         GameLG.playPositiveSound(playerLG.getPlayer());
         return count == 1;
     }

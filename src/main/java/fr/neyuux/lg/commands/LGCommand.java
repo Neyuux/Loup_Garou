@@ -11,7 +11,6 @@ import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import fr.neyuux.lg.roles.classes.Ankou;
-import fr.neyuux.lg.roles.classes.Voleur;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -24,7 +23,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,6 +130,7 @@ public class LGCommand implements CommandExecutor {
                         sender.sendMessage(LG.getPrefix() + "§eListe des rôles présents dans la composition :");
 
                         for (Camps camp : Camps.values()) {
+
                             sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
 
                             for (Decks decks : Decks.values())
@@ -149,19 +148,17 @@ public class LGCommand implements CommandExecutor {
                     } else {
                         sender.sendMessage(LG.getPrefix() + "§eListe des rôles encore présents dans la partie :");
 
-                        List<Role> roles = new ArrayList<>(LG.getInstance().getGame().getAliveRoles());
-                        if (Voleur.getRole1() != null) {
-                            roles.add(Voleur.getRole1());
-                            roles.add(Voleur.getRole2());
-                            Collections.shuffle(roles);
-                        }
-
+                        boolean b = false;
                         for (Camps camp : Camps.values()) {
-                            sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
 
-                            for (Role role : roles)
-                                if (role.getBaseCamp().equals(camp))
+                            for (Role role : LG.getInstance().getGame().getAliveRoles())
+                                if (role.getBaseCamp().equals(camp)) {
+                                    if (!b) {
+                                        sender.sendMessage(" §0§l\u25a0 " + camp.getColor() + "§l" + camp.getName() + " §7 :");
+                                        b = true;
+                                    }
                                     sender.sendMessage("  " + camp.getColor() + "§l- " + role.getDisplayName());
+                                }
 
                             sender.sendMessage(" ");
                         }
@@ -388,7 +385,7 @@ public class LGCommand implements CommandExecutor {
                 case "admin":
                     if (sender.isOp()) {
                         if (checkHuman(sender))
-                            new ConfigurationInv().open((Player) sender);
+                            ConfigurationInv.INVENTORY.open((Player) sender);
                     }
                 break;
 

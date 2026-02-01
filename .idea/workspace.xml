@@ -10,21 +10,214 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a869ff5-b9ea-409c-9f34-4ab3032932d5" name="Default Changelist" comment="correct bugs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/LG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/VoteLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/VoteLG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/commands/LGCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/commands/LGCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Chasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/neyuux/lg/roles/classes/Chasseur.java" afterDir="false" />
-    </list>
-    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/players/PlayerConfigInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_2_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_3_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_29_0_jre.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_minuskube_inv_smart_invs_1_2_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_minuskube_netherboard_bukkit_1_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_minuskube_netherboard_core_1_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_pr0methean_betterrandom_BetterRandom_5_6_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_persistence_persistence_api_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_api_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_key_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_nbt_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_api_4_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_bukkit_4_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_facet_4_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_viaversion_4_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_bungeecord_4_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_legacy_impl_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_legacy_4_13_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_examination_api_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_examination_string_1_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_8_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_aether_provider_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_artifact_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_core_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_model_builder_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_plugin_api_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_repository_metadata_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_settings_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_maven_settings_builder_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_plugins_maven_deploy_plugin_maven_plugin_3_0_0_M1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_shared_maven_artifact_transfer_0_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_shared_maven_common_artifact_filters_3_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_shared_maven_shared_utils_3_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_avaje_ebean_2_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_2_11_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_classworlds_2_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_component_annotations_1_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_interpolation_1_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_plexus_plexus_utils_3_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_24_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_26.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_aether_aether_api_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_aether_aether_impl_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_aether_aether_spi_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_aether_aether_util_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_plexus_plexus_cipher_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_plexus_plexus_sec_dispatcher_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_sisu_sisu_guice_noaop_2_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_sisu_sisu_inject_bean_1_4_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_sonatype_sisu_sisu_inject_plexus_1_4_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_1_8_8_R0_1_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_8_8_R0_1_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_15.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_01_2023_13_09__Non_Project_Files_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_01_2023_13_09__old_bin_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15__Default_Changelist_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_07_01_2023_13_15__Non_Project_Files_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_01_2023_13_29__Non_Project_Files_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Les Loups-Garous de Thiercelieux.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/ChatLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/ChatLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/GameLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/GameLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/LG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/LG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/PlayerLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/PlayerLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/VoteLG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/VoteLG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/commands/LGCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/commands/LGCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/enums/WinCamps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/enums/WinCamps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/event/PlayerEliminationEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/event/PlayerEliminationEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ChangeGameTypeInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ChangeGameTypeInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ConfigurationInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ConfigurationInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ResetInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/ResetInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParameterComedianPowersInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParameterComedianPowersInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersGlobalInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersGlobalInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersRolesInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/parameters/ParametersRolesInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/players/ListPlayersInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/players/ListPlayersInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RoleDecksInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RoleDecksInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RolesCampChooseInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RolesCampChooseInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RolesListRolesInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/config/roles/RolesListRolesInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/gameinventories/VoteInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/gameinventories/VoteInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ChienLoupInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ChienLoupInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ChoosePlayerInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ChoosePlayerInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ComedienInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ComedienInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/DictateurInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/DictateurInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/InfectPereDesLoupsInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/InfectPereDesLoupsInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/PetiteFilleWOInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/PetiteFilleWOInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/PyromaneInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/PyromaneInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ServanteDevoueeInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/ServanteDevoueeInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/SorciereInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/SorciereInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/VoleurInv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/inventories/roleinventories/VoleurInv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/ItemsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/ItemsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/hotbar/OpComparatorItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/hotbar/OpComparatorItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/hotbar/VoteBookItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/hotbar/VoteBookItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/CancelBarrierItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/CancelBarrierItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/ReturnArrowItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/ReturnArrowItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/changegametypeinv/ChangeGameTypeToFreeItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/changegametypeinv/ChangeGameTypeToFreeItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/changegametypeinv/ChangeGameTypeToMeetingItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/changegametypeinv/ChangeGameTypeToMeetingItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ChangeGameTypeItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ParametersItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/PlayersMenuItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/ResetGameItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/mainmenu/RolesFirstMenuItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ComedianPowerGlassItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ComedianPowerGlassItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterChamanChatItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterChamanChatItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterChattyVoyanteItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterChattyVoyanteItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterComedianPowersItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterComedianPowersItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterCupiInCoupleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterCupiInCoupleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterCupiWinWithCoupleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterCupiWinWithCoupleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterDayCycleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterDayCycleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterLGChatItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterLGChatItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterMayorItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterMayorItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterMayorSuccessionItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterMayorSuccessionItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterRandomCoupleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterRandomCoupleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterWildChildRandomModelItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParameterWildChildRandomModelItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParametersGlobalItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParametersGlobalItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParametersRolesItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/parameters/ParametersRolesItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/players/PlayerConfigItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/players/SetPlayerToSpectatorItemStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/reset/NoResetMapItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/reset/NoResetMapItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/reset/YesResetMapItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/reset/YesResetMapItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/CampChooseItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/CampChooseItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/DecksItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/DecksItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/RoleAddingItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/config/roles/RoleAddingItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChienLoupDogChoiceItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChienLoupWolfChoiceItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChoosePlayerItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ChoosePlayerItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ComedianPowerChoiceItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/DictateurDoRebellionItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/DictateurDoRebellionItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/InfectPereDesLoupsInfectItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/InfectPereDesLoupsInfectItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PetiteFilleWOInspectionItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PetiteFilleWOInspectionItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PyromaneKillItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PyromaneKillItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PyromanePutOilItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/PyromanePutOilItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ServanteDevoueeTakeRoleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/ServanteDevoueeTakeRoleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/SorciereKillItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/SorciereKillItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/SorciereReviveItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/SorciereReviveItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/VoleurGetNewRoleItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/items/menus/roleinventories/VoleurGetNewRoleItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/listeners/GameListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/listeners/GameListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/listeners/PreGameListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/listeners/PreGameListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Ange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Ange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Assassin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Assassin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Bouffon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Bouffon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Chasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Chasseur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ChasseurDeVampire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ChasseurDeVampire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ChienLoup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ChienLoup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Comedien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Comedien.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Corbeau.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Corbeau.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Cupidon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Cupidon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Detective.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Detective.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Dictateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Dictateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/EnfantSauvage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/EnfantSauvage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/FilleDeJoie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/FilleDeJoie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Fossoyeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Fossoyeur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Frere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Frere.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/GardeDuCorps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/GardeDuCorps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/GrandMechantLoup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/GrandMechantLoup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/InfectPereDesLoups.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/InfectPereDesLoups.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/JoueurDeFlute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/JoueurDeFlute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Jumeau.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Jumeau.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/LoupGarou.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/LoupGarou.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/LoupGarouBlanc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/LoupGarouBlanc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/MamieGrincheuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/MamieGrincheuse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Mercenaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Mercenaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/MontreurDOurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/MontreurDOurs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Necromancien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Necromancien.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Noctambule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Noctambule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pacifiste.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pacifiste.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/PetiteFille.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/PetiteFille.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/PetiteFilleWO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/PetiteFilleWO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pirate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pirate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/President.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/President.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pretre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pretre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pronostiqueur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pronostiqueur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pyromane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Pyromane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Renard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Renard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Salvateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Salvateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ServanteDevouee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/ServanteDevouee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Soeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Soeur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Sorciere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Sorciere.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VilainGarcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VilainGarcon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VillageoisVillageois.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VillageoisVillageois.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Voleur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Voleur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Voyante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/Voyante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VoyanteDAura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/roles/classes/VoyanteDAura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/tasks/GameRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/tasks/GameRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/utils/AbstractCustomInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/utils/CustomItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/neyuux/lg/utils/CustomItemStack.java" afterDir="false" />
     </list>
+    <list id="dd080d8a-92b5-4065-838c-f66cdce9e7f6" name="Non Project Files" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +239,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Neyuux&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -54,22 +253,14 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Neyuux/Loup_Garou.git&quot;,
+    &quot;accountId&quot;: &quot;ca854dbf-fd88-45f6-8b32-ea00f31a0a93&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$PROJECT_DIR$/../../Serv/spigot.jar!/org/bukkit/potion/PotionEffect.class" root0="SKIP_INSPECTION" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="11" end1="12" start2="11" end2="12" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="14" end1="19" start2="14" end2="16" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="20" end1="24" start2="17" end2="17" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="69" end1="78" start2="62" end2="70" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="85" end1="88" start2="77" end2="77" changelist="dd080d8a-92b5-4065-838c-f66cdce9e7f6" />
-        <range start1="302" end1="303" start2="291" end2="327" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="318" end1="322" start2="342" end2="342" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-        <range start1="342" end1="343" start2="362" end2="368" changelist="7a869ff5-b9ea-409c-9f34-4ab3032932d5" />
-      </ranges>
-    </file>
   </component>
   <component name="NamedScopeManager">
     <scope name="Libraries" pattern="lib:fr.leomelki.*" />
@@ -78,23 +269,26 @@
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="2" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="1hCBbxVkGi0SQmu8HWgKXe1Bw9Z" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/fr/neyuux/refont/lg" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Serv/spigot.jar" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.LG [clean,install,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.LG [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Documents/Java/Plugins/Loup_Garou&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;0d570cb2-96df-43cc-80da-7f777e6d0afe&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="fr.neyuux.refont.lg.utils" />
@@ -106,6 +300,12 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="fr.neyuux.refont.lg.utils" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install -U" />
+      <command value="mvn clean install" />
+    </option>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -340,7 +540,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="continuing roles" />

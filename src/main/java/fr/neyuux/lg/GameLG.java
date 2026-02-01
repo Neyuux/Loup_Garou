@@ -127,13 +127,12 @@ public class GameLG implements Listener {
     public void OP(PlayerLG playerLG) {
         if (!opList.contains(playerLG.getPlayer())) this.opList.add(playerLG.getPlayer());
         playerLG.getPlayer().getInventory().setItem(6, new OpComparatorItemStack());
-        LG.setPlayerInScoreboardTeam("AOP", playerLG.getPlayer());
+
     }
 
     public void unOP(PlayerLG playerLG) {
         this.opList.remove(playerLG.getPlayer());
         playerLG.getPlayer().getInventory().remove(new OpComparatorItemStack());
-        LG.setPlayerInScoreboardTeam("Players", playerLG.getPlayer());
     }
 
     public void setSpectator(PlayerLG playerLG) {
@@ -144,8 +143,6 @@ public class GameLG implements Listener {
 
         this.getItemsManager().updateSpawnItems(playerLG);
         player.setGameMode(GameMode.SPECTATOR);
-        player.setDisplayName("§8[§7Spectateur§8]" + player.getName());
-        player.setPlayerListName(player.getDisplayName());
         player.sendMessage(this.getPrefix() + "§9Votre mode de jeu a été établi en §7spectateur§9.");
         player.sendMessage("§cPour se retirer du mode §7spectateur §c, faire la commande : §e§l/lg spec off§c.");
         this.sendLobbySideScoreboardToAllPlayers();
@@ -156,7 +153,6 @@ public class GameLG implements Listener {
 
         this.spectators.remove(playerLG);
 
-        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("Players").addEntry(player.getName());
         if (player.isOp()) LG.getInstance().getGame().OP(playerLG);
 
         this.getItemsManager().updateSpawnItems(playerLG);
@@ -164,16 +160,12 @@ public class GameLG implements Listener {
         player.setHealth(20);
 
         for (PotionEffect pe : player.getActivePotionEffects()) player.removePotionEffect(pe.getType());
-        LG.getInstance().addSaturation(playerLG);
-        LG.getInstance().addNightVision(playerLG);
         LG.addSaturation(playerLG);
         LG.addNightVision(playerLG);
 
-        player.setDisplayName(player.getName());
-        player.setPlayerListName(player.getName());
         player.sendMessage(this.getPrefix() + "§9Vous avez été retiré du mode Spectateur.");
         player.setGameMode(GameMode.ADVENTURE);
-        player.teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
+        player.teleport(new Location(Bukkit.getWorld("LG"), LG.RANDOM.nextInt(16) + 120, 16.5, LG.RANDOM.nextInt(16) + 371));
     }
 
     public boolean joinGame(PlayerLG playerLG) {
@@ -205,7 +197,7 @@ public class GameLG implements Listener {
         if (playersInGame.contains(playerLG)) this.playersInGame.remove(playerLG);
 
         LG.getInstance().getItemsManager().updateSpawnItems(playerLG);
-        playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), new Random().nextInt(16) + 120, 16.5, new Random().nextInt(16) + 371));
+        playerLG.getPlayer().teleport(new Location(Bukkit.getWorld("LG"), LG.RANDOM.nextInt(16) + 120, 16.5, LG.RANDOM.nextInt(16) + 371));
         playerLG.sendTitle("§c§lVous avez été retiré de la partie !", "§6Pas de pot.", 20, 60, 20);
         playNegativeSound(playerLG.getPlayer());
         this.sendLobbySideScoreboardToAllPlayers();
@@ -231,7 +223,6 @@ public class GameLG implements Listener {
             p.setTotalExperience(0);
             p.setGameMode(GameMode.ADVENTURE);
 
-            LG.setPlayerInScoreboardTeam("Players", p);
         }
 
         BukkitTask deal = this.dealRoles();
@@ -243,34 +234,37 @@ public class GameLG implements Listener {
     public BukkitTask dealRoles() {
        this.waitedPlayers = (ArrayList<PlayerLG>) this.playersInGame.clone();
         ArrayList<Role> toGive = new ArrayList<>();
-        Random random = new Random();
+        Random random = LG.RANDOM;
         try {
             Constructor<? extends Role> thiefConstructor = LG.getInstance().getRoles().get("Voleur");
+            List<Constructor<? extends Role>> addedRoles = this.config.getAddedRoles();
 
-            if (this.config.getAddedRoles().contains(thiefConstructor)) {
-                Role role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
-                while (role1.getConfigName().equals("Voleur")) role1 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+            if (addedRoles.contains(thiefConstructor)) {
+                Role role1 = addedRoles.get(random.nextInt(addedRoles.size())).newInstance();
+                while (role1.getConfigName().equals("Voleur")) role1 = addedRoles.get(random.nextInt(addedRoles.size())).newInstance();
 
-                Role role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
-                while (role2.getConfigName().equals("Voleur") || role1.getClass().equals(role2.getClass())) role2 = this.config.getAddedRoles().get(random.nextInt(this.config.getAddedRoles().size())).newInstance();
+                Role role2 = addedRoles.get(random.nextInt(addedRoles.size())).newInstance();
+                while (role2.getConfigName().equals("Voleur") || role1.getClass().equals(role2.getClass())) role2 = addedRoles.get(random.nextInt(addedRoles.size())).newInstance();
 
-                this.config.getAddedRoles().remove(role1.getClass().getConstructor());
-                this.config.getAddedRoles().remove(role2.getClass().getConstructor());
+                addedRoles.remove(role1.getClass().getConstructor());
+                addedRoles.remove(role2.getClass().getConstructor());
 
                 Voleur.setRole1(role1);
                 Voleur.setRole2(role2);
                 this.rolesAtStart.add(role1);
                 this.rolesAtStart.add(role2);
+                this.aliveRoles.add(role1);
+                this.aliveRoles.add(role2);
 
                 System.out.println("rolevoleur : " + role1.getConfigName());
                 System.out.println("rolevoleur : " + role2.getConfigName());
-                for (Constructor<? extends Role> constructor : this.config.getAddedRoles())
+                for (Constructor<? extends Role> constructor : addedRoles)
                     toGive.add(constructor.newInstance());
             } else {
                 int sistern = 0;
                 int brothern = 0;
 
-                for (Constructor<? extends Role> constructor : this.config.getAddedRoles()) {
+                for (Constructor<? extends Role> constructor : addedRoles) {
                     Role role = constructor.newInstance();
 
                     if (role instanceof Soeur) {
@@ -289,7 +283,9 @@ public class GameLG implements Listener {
             }
 
             return Bukkit.getScheduler().runTaskTimer(LG.getInstance(), () -> {
-                if (waitedPlayers.isEmpty()) return;
+                if (waitedPlayers.isEmpty()) {
+                    return;
+                }
                 PlayerLG playerLG = this.waitedPlayers.remove(random.nextInt(this.waitedPlayers.size()));
                 Role role;
 
@@ -304,7 +300,6 @@ public class GameLG implements Listener {
 
                 playerLG.joinRole(role);
                 playerLG.setCamp(role.getBaseCamp());
-                playerLG.createScoreboard();
                 LG.getInstance().getItemsManager().updateStartItems(playerLG);
                 this.aliveRoles.add(role);
                 this.rolesAtStart.add(role);
@@ -363,8 +358,8 @@ public class GameLG implements Listener {
 
         if (this.getAlive().size() == 1) {
             pm.callEvent(new WinEvent(WinCamps.CUSTOM));
-        } else if (this.getAlive().size() == 0) {
-            pm.callEvent(new WinEvent(null));
+        } else if (this.getAlive().isEmpty()) {
+            pm.callEvent(new WinEvent(WinCamps.NONE));
         } else {
             int lgalive = 0;
             int villagealive = 0;
@@ -380,7 +375,7 @@ public class GameLG implements Listener {
                     couplealive++;
             }
 
-            if (JoueurDeFlute.getNonEnchantedPlayers().size() == 0)
+            if (JoueurDeFlute.getNonEnchantedPlayers().isEmpty())
                 win(WinCamps.CUSTOM, Collections.singletonList(this.getPlayersByRole(JoueurDeFlute.class).get(0)));
             else if (couplealive == this.getAlive().size())
                 pm.callEvent(new WinEvent(WinCamps.COUPLE));
@@ -491,6 +486,10 @@ public class GameLG implements Listener {
         Bukkit.getOnlinePlayers().forEach(player -> PlayerLG.createPlayerLG(player).sendComedianPowersSideScoreboard());
     }
 
+    public void updatePlayersScoreboard() {
+        Bukkit.getOnlinePlayers().forEach(player -> PlayerLG.createPlayerLG(player).updateGamePlayerScoreboard());
+    }
+
     public ArrayList<PlayerLG> getPlayersByRole(Class<? extends Role> classRole) {
         ArrayList<PlayerLG> players = new ArrayList<>();
 
@@ -553,7 +552,7 @@ public class GameLG implements Listener {
                     });
 
                 } else if (this.getGameType().equals(GameType.FREE)) {
-                    new ChoosePlayerInv("§bChoix du §3§lSuccesseur", mayorLG, this.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
+                    ChoosePlayerInv.getInventory("§bChoix du §3§lSuccesseur", mayorLG, this.getAlive(), new ChoosePlayerInv.ActionsGenerator() {
 
                         @Override
                         public String[] generateLore(PlayerLG paramPlayerLG) {

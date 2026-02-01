@@ -50,8 +50,8 @@ public class ServanteDevoueeTakeRoleItemStack extends CustomItemStack {
         GameLG.playPositiveSound((Player) player);
         playerLG.getCache().put("servanteDevouee", role1);
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        
+        LG.closeSmartInv((Player) player);
         LG.getInstance().getGame().cancelWait();
         callback.run();
     }

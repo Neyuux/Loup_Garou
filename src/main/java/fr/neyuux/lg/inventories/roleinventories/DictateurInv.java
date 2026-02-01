@@ -1,29 +1,53 @@
 package fr.neyuux.lg.inventories.roleinventories;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.InventoryProvider;
+import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.items.menus.CancelBarrierItemStack;
 import fr.neyuux.lg.items.menus.roleinventories.DictateurDoRebellionItemStack;
 import fr.neyuux.lg.roles.classes.Dictateur;
-import fr.neyuux.lg.utils.AbstractCustomInventory;
+import fr.neyuux.lg.utils.CustomItemStack;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
-public class DictateurInv extends AbstractCustomInventory {
+public class DictateurInv implements InventoryProvider {
+
+    public static final ClickableItem GLASS_PANE = ClickableItem.empty(new CustomItemStack(Material.STAINED_GLASS_PANE, 1, (byte)14).setDisplayName("§f"));
+
 
     private final Runnable callback;
     private final PlayerLG playerLG;
 
-    public DictateurInv(Dictateur dictateur, PlayerLG playerLG, Runnable callback) {
-        super(dictateur.getDisplayName(), 27);
-
+    public DictateurInv(PlayerLG playerLG, Runnable callback) {
         this.callback = callback;
         this.playerLG = playerLG;
     }
 
     @Override
-    public void registerItems() {
-        this.setAllCorners((byte)14);
+    public void init(Player player, InventoryContents contents) {
+        contents.set(0, 0, GLASS_PANE);
+        contents.set(0, 1, GLASS_PANE);
+        contents.set(0, 7, GLASS_PANE);
+        contents.set(0, 8, GLASS_PANE);
 
-        this.setItem(11, new DictateurDoRebellionItemStack(callback));
-        this.setItem(15, new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
+        contents.set(1, 0, GLASS_PANE);
+        contents.set(1, 8, GLASS_PANE);
+
+        contents.set(2, 0, GLASS_PANE);
+        contents.set(2, 1, GLASS_PANE);
+        contents.set(2, 7, GLASS_PANE);
+        contents.set(2, 8, GLASS_PANE);
+    }
+
+    @Override
+    public void update(Player player, InventoryContents contents) {
+        DictateurDoRebellionItemStack rebellion = new DictateurDoRebellionItemStack(callback);
+        contents.set(1, 2, ClickableItem.of(rebellion, ev -> rebellion.use(ev.getWhoClicked(), ev)));
+
+        CancelBarrierItemStack cancel = new CancelBarrierItemStack(new ChoosePlayerInv.ActionsGenerator() {
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {
                 return new String[0];
@@ -31,11 +55,24 @@ public class DictateurInv extends AbstractCustomInventory {
 
             @Override
             public void doActionsAfterClick(PlayerLG choosenLG) {
-                playerLG.getCache().put("unclosableInv", false);
-                playerLG.getPlayer().closeInventory();
+                
+                LG.closeSmartInv(playerLG.getPlayer());
                 playerLG.setSleep();
                 callback.run();
             }
-        }));
+        });
+        contents.set(1, 6, ClickableItem.of(cancel, ev -> cancel.use(ev.getWhoClicked(), ev)));
+
+    }
+
+
+    public static SmartInventory getInventory(Dictateur dictateur, PlayerLG playerLG, Runnable callback) {
+        return SmartInventory.builder()
+                .id("roleinv_dictateur")
+                .provider(new DictateurInv(playerLG, callback))
+                .size(3, 9)
+                .title(dictateur.getDisplayName())
+                .closeable(false)
+                .build();
     }
 }

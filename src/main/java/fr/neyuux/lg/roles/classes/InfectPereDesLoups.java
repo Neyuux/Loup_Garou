@@ -6,13 +6,13 @@ import fr.neyuux.lg.inventories.roleinventories.InfectPereDesLoupsInv;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
+import lombok.Setter;
+import org.bukkit.Bukkit;
 
 public class InfectPereDesLoups extends Role {
+
+    @Setter
+    private boolean infect;
 
     @Override
     public String getDisplayName() {
@@ -61,34 +61,36 @@ public class InfectPereDesLoups extends Role {
 
 
     @Override
+    public void onNightTurn(Runnable callback) {
+        if (this.hasInfected()) {
+            LG.getInstance().getGame().wait(this.getTimeout(), () -> {
+
+            }, (currentPlayer, secondsLeft) -> LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
+            Bukkit.getScheduler().runTaskLater(LG.getInstance(), () -> {
+                LG.getInstance().getGame().cancelWait();
+                callback.run();
+            }, (LG.RANDOM.nextInt(7) + 5) * 20L);
+        } else {
+            super.onNightTurn(callback);
+        }
+    }
+
+    @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
-        new InfectPereDesLoupsInv(this, playerLG, callback).open(playerLG.getPlayer());
-        playerLG.getCache().put("unclosableInv", true);
+        super.onPlayerNightTurn(playerLG, callback);
+        InfectPereDesLoupsInv.getInventory(this, playerLG, callback).open(playerLG.getPlayer());
+        
     }
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
     }
 
-
-    @EventHandler
-    public void onCloseInfectPereDesLoupsInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
+    public boolean hasInfected() {
+        return this.infect;
     }
+
 }

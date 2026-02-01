@@ -65,7 +65,6 @@ public class President extends Role {
         super.onPlayerJoin(playerLG);
 
         Bukkit.broadcastMessage(LG.getPrefix() + "§aLe " + this.getDisplayName() + " §ade la partie est §e§l" + playerLG.getName());
-        LG.setPlayerInScoreboardTeam("RPresident", playerLG.getPlayer());
 
         if (LG.getInstance().getGame().getConfig().getMayor().getValue().equals(true)) {
             playerLG.setMayor();

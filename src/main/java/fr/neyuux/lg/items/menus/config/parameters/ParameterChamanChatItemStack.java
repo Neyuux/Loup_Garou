@@ -18,8 +18,6 @@ public class ParameterChamanChatItemStack extends CustomItemStack {
         this.chamanChat = LG.getInstance().getGame().getConfig().getChamanChat();
 
         this.setLore("§fSi cette option est activée, le", "§fChaman pourra envoyer des message aux morts",  "§f(en plus de les recevoir).", "§fSinon il pourra juste recevoir les messages des morts.", "", "§bValeur : §l" + chamanChat.getVisibleValue(), "", "§7>>Clique pour modifier");
-
-        addItemInList(this);
     }
 
     @Override

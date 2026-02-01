@@ -12,8 +12,9 @@ import org.bukkit.ChatColor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Soeur extends Role {
 
@@ -92,7 +93,7 @@ public class Soeur extends Role {
         } else {
             PlayerLG newsister = null;
             while (newsister == null) {
-                PlayerLG random = game.getPlayersInGame().get(new Random().nextInt(game.getPlayersInGame().size()));
+                PlayerLG random = game.getPlayersInGame().get(LG.RANDOM.nextInt(game.getPlayersInGame().size()));
 
                 if (random.getRole() == null) {
                     this.sister = random;
@@ -168,6 +169,6 @@ public class Soeur extends Role {
             CHAT.closeChat();
             this.onNightTurn(callback);
 
-        }, (currentPlayer, secondsLeft) -> (sisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
+        }, (currentPlayer, secondsLeft) -> (sisters.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
     }
 }

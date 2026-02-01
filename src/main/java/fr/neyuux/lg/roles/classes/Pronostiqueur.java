@@ -10,13 +10,7 @@ import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Random;
 import java.util.logging.Level;
 
 public class Pronostiqueur extends Role {
@@ -71,7 +65,7 @@ public class Pronostiqueur extends Role {
     public void onPlayerJoin(PlayerLG playerLG) {
         super.onPlayerJoin(playerLG);
 
-        boolean WR = new Random().nextBoolean();
+        boolean WR = LG.RANDOM.nextBoolean();
 
         playerLG.getCache().put("pronostiqueurWR", WR);
         Bukkit.getLogger().log(Level.INFO, "pronostiqueur " + playerLG.getName() + " " + WR);
@@ -81,6 +75,8 @@ public class Pronostiqueur extends Role {
     @Override
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
+
+        super.onPlayerNightTurn(playerLG, callback);
 
         if (game.getGameType().equals(GameType.MEETING)) {
             playerLG.setChoosing(choosen -> {
@@ -93,7 +89,7 @@ public class Pronostiqueur extends Role {
             });
 
         } else if (game.getGameType().equals(GameType.FREE)) {
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
+           ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getAliveExcept(playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -104,13 +100,13 @@ public class Pronostiqueur extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     analyse(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
+                    
+                    LG.closeSmartInv(playerLG.getPlayer());
                     playerLG.setSleep();
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -139,27 +135,8 @@ public class Pronostiqueur extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
-    }
-
-
-    @EventHandler
-    public void onCloseAssassinInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
     }
 }

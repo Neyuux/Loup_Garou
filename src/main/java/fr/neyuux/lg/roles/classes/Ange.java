@@ -61,7 +61,7 @@ public class Ange extends Role {
     }
 
     
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDayEndElimination(DayEndEvent ev) {
         GameLG game = LG.getInstance().getGame();
         PlayerLG killedLG = ev.getKilledLG();

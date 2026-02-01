@@ -20,7 +20,7 @@ public class PetiteFille extends Role {
 
     @Override
     public String getConfigName() {
-        return "Petite FIlle";
+        return "Petite Fille";
     }
 
     @Override

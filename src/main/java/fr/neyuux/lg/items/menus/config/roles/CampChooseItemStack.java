@@ -36,20 +36,15 @@ public class CampChooseItemStack extends CustomItemStack {
             this.setLore("§eAffiche les rôles qui ne", "§esont ni du village ni des loups.", "§7>>Cliquer pour afficher.");
         }
 
-        addItemInList(this);
     }
 
     @Override
     public void use(HumanEntity player, Event event) {
-        RolesListRolesInv newInv = new RolesListRolesInv(deck, camp);
-        newInv.registerItems();
-
-        if (newInv.getItemsMap().size() == 1) {
+        if (RolesListRolesInv.getRolesInDeckCamp(deck, camp).isEmpty()) {
             GameLG.playNegativeSound((Player) player);
             player.sendMessage(LG.getPrefix() + "§cLe deck §b" + deck.getName() + " §cne contient pas de rôle du camp " + camp.getColor() + "§l" + camp.getName() + " §c!");
         } else {
-            newInv.getItemsMap().clear();
-            newInv.open(player);
+            RolesListRolesInv.getInventory(deck, camp).open(((Player) player));
         }
     }
 

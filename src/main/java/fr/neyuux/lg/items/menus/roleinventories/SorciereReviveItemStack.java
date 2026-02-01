@@ -12,9 +12,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class SorciereReviveItemStack extends CustomItemStack {
@@ -54,11 +52,11 @@ public class SorciereReviveItemStack extends CustomItemStack {
         LG.getInstance().getGame().getKilledPlayers().remove(this.targetLG);
         playerLG.sendMessage(LG.getPrefix() + "§aVous avez réssucité §e§l" + targetLG.getNameWithAttributes(playerLG) + " §aavec succès.");
         GameLG.playPositiveSound((Player) player);
-        playerLG.getCache().put("unclosableInv", false);
-        player.openInventory(new SorciereInv(this.witch, playerLG, this.callback).getInventory());
+        
+        SorciereInv.getInventory(this.witch, playerLG, this.callback).open((Player) player);
 
         if (!this.witch.hasKillPot()) {
-            playerLG.getPlayer().closeInventory();
+            LG.closeSmartInv(playerLG.getPlayer());
             playerLG.setSleep();
             callback.run();
         }

@@ -83,6 +83,7 @@ public class LoupGarou extends Role {
             if (lg.canUsePowers()) {
                 voters.add(lg);
                 lg.setWake();
+                super.onPlayerNightTurn(lg, callback);
             }
 
         if ((boolean)game.getConfig().getChatLG().getValue()) CHAT.openChat(new HashSet<>(), new HashSet<>(voters));
@@ -103,7 +104,7 @@ public class LoupGarou extends Role {
             CHAT.closeChat();
 
             for (PlayerLG lg : game.getLGs(true)) {
-                lg.getPlayer().closeInventory();
+                LG.closeSmartInv(lg.getPlayer());
                 lg.setSleep();
             }
             callback.run();

@@ -21,12 +21,8 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -90,6 +86,8 @@ public class Necromancien extends Role {
     protected void onPlayerNightTurn(PlayerLG playerLG, Runnable callback) {
         GameLG game = LG.getInstance().getGame();
 
+        super.onPlayerNightTurn(playerLG, callback);
+
         if (game.getGameType().equals(GameType.MEETING)) {
 
             for (PlayerLG choosableLG : game.getPlayersInGame()) {
@@ -148,7 +146,7 @@ public class Necromancien extends Role {
 
         } else if (game.getGameType().equals(GameType.FREE)) {
 
-            new ChoosePlayerInv(this.getDisplayName(), playerLG, game.getPlayersInGame().stream().filter(inGameLG -> inGameLG.getPlayer() != null && inGameLG.getPlayer().isOnline() && inGameLG.isDead() && inGameLG.getCamp().equals(Camps.VILLAGE) && inGameLG.isSpectator()).collect(Collectors.toList()), new ChoosePlayerInv.ActionsGenerator() {
+            ChoosePlayerInv.getInventory(this.getDisplayName(), playerLG, game.getPlayersInGame().stream().filter(inGameLG -> inGameLG.getPlayer() != null && inGameLG.getPlayer().isOnline() && inGameLG.isDead() && inGameLG.getCamp().equals(Camps.VILLAGE) && inGameLG.isSpectator()).collect(Collectors.toList()), new ChoosePlayerInv.ActionsGenerator() {
 
                 @Override
                 public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -164,13 +162,13 @@ public class Necromancien extends Role {
                 public void doActionsAfterClick(PlayerLG choosenLG) {
                     setReviving(choosenLG, playerLG);
 
-                    playerLG.getCache().put("unclosableInv", false);
-                    playerLG.getPlayer().closeInventory();
+                    
+                    LG.closeSmartInv(playerLG.getPlayer());
                     playerLG.setSleep();
                     callback.run();
                 }
             }).open(playerLG.getPlayer());
-            playerLG.getCache().put("unclosableInv", true);
+            
         }
     }
 
@@ -190,31 +188,12 @@ public class Necromancien extends Role {
 
     @Override
     protected void onPlayerTurnFinish(PlayerLG playerLG) {
-        playerLG.getCache().put("unclosableInv", false);
+        
         super.onPlayerTurnFinish(playerLG);
         playerLG.sendMessage(LG.getPrefix() + "§cTu as mis trop de temps à choisir !");
         this.removeFakePlayers(playerLG.getPlayer());
     }
-
-
-    @EventHandler
-    public void onCloseNecromancienInv(InventoryCloseEvent ev) {
-        Inventory inv = ev.getInventory();
-        HumanEntity player = ev.getPlayer();
-        PlayerLG playerLG = PlayerLG.createPlayerLG(player);
-
-        if (inv.getName().equals(this.getDisplayName()) && (boolean)playerLG.getCache().get("unclosableInv")) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    playerLG.getCache().put("unclosableInv", false);
-                    player.openInventory(inv);
-                    playerLG.getCache().put("unclosableInv", true);
-                }
-            }.runTaskLater(LG.getInstance(), 1L);
-        }
-    }
-
+    
     @EventHandler
     public void onDayStart(NightEndEvent ev) {
         for (PlayerLG playerLG : toRevive) {
@@ -266,8 +245,6 @@ public class Necromancien extends Role {
             playerLG.setCamp(Camps.VILLAGE);
             playerLG.getCache().clear();
 
-            player.setDisplayName(player.getName());
-            player.setPlayerListName(player.getDisplayName());
             player.setGameMode(GameMode.ADVENTURE);
             player.teleport(playerLG.getPlacement());
 

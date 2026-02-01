@@ -8,6 +8,7 @@ import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 import java.lang.reflect.Constructor;
@@ -33,13 +34,11 @@ public class DecksItemStack extends CustomItemStack {
         }
 
         this.setLore("§fPermet de gérer les", "§frôles de la partie.");
-
-        addItemInList(this);
     }
 
     @Override
     public void use(HumanEntity player, Event event) {
-        new RolesCampChooseInv(deck).open(player);
+        RolesCampChooseInv.getInventory(deck).open((Player) player);
     }
 
 

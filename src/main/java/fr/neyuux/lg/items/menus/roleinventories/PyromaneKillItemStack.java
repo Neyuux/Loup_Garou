@@ -22,8 +22,6 @@ public class PyromaneKillItemStack extends CustomItemStack {
         this.setLore("§eMettre le feu permet de faire", "§ebrûler tous les joueurs huilés.", "", "§7>>Clique pour sélectionner");
 
         this.callback = callback;
-
-        addItemInList(this);
     }
 
 
@@ -36,8 +34,8 @@ public class PyromaneKillItemStack extends CustomItemStack {
         playerLG.sendMessage(LG.getPrefix() + "§cVous avez éliminé tous les joueurs huilés !");
         GameLG.playPositiveSound((Player) player);
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

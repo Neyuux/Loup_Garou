@@ -12,8 +12,9 @@ import org.bukkit.ChatColor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Frere extends Role {
 
@@ -76,7 +77,7 @@ public class Frere extends Role {
 
         if (this.brothers.size() != 2) {
             while (this.brothers.size() != 2) {
-                PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(new Random().nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
+                PlayerLG random = LG.getInstance().getGame().getPlayersInGame().get(LG.RANDOM.nextInt(LG.getInstance().getGame().getPlayersInGame().size()));
 
                 if (random.getRole() == null) {
                     Frere newRole = null;
@@ -179,6 +180,6 @@ public class Frere extends Role {
             CHAT.closeChat();
             this.onNightTurn(callback);
 
-        }, (currentPlayer, secondsLeft) -> (playableBrothers.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "§9§lAu tour " + this.getDeterminingName(), true);
+        }, (currentPlayer, secondsLeft) -> (playableBrothers.contains(currentPlayer)) ? "§9§lA toi de jouer !" : LG.getPrefix() + "Au tour " + this.getDeterminingName(), true);
     }
 }

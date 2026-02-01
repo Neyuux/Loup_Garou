@@ -1,10 +1,7 @@
 package fr.neyuux.lg.items.menus.config.parameters;
 
-import fr.neyuux.lg.inventories.config.parameters.ParametersGlobalInv;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.Event;
 
 public class ParametersGlobalItemStack extends CustomItemStack {
 
@@ -13,11 +10,6 @@ public class ParametersGlobalItemStack extends CustomItemStack {
 
         this.setLore("§fPermet de changer les", "§foptions globalles de la partie.");
 
-        addItemInList(this);
     }
 
-    @Override
-    public void use(HumanEntity player, Event event) {
-        new ParametersGlobalInv().open(player);
-    }
 }

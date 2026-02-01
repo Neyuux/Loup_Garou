@@ -70,9 +70,9 @@ public class ItemsManager {
     public void updateVoteItems(PlayerLG playerLG) {
         VoteLG vote = LG.getInstance().getGame().getVote();
 
-        if (vote.getVoters().contains(playerLG)) {
+        if (vote != null && vote.getVoters().contains(playerLG)) {
             playerLG.getPlayer().getInventory().setItem(2, new VoteBookItemStack(vote));
-        }
+        } else playerLG.getPlayer().getInventory().remove(Material.BOOK);
     }
 
     public void clearInventory(PlayerLG playerLG) {

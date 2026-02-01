@@ -14,8 +14,6 @@ public class NoResetMapItemStack extends CustomItemStack {
         this.setDamage(14);
 
         this.setLore("§7Revenir au menu", "§7précédent.");
-
-        addItemInList(this);
     }
 
 

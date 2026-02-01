@@ -22,8 +22,6 @@ public class CancelBarrierItemStack extends CustomItemStack {
 
         if (!Arrays.equals(actionsGenerator.generateLore(null), new String[0]))
             this.setLore(actionsGenerator.generateLore(null));
-
-        addItemInList(this);
     }
 
     @Override

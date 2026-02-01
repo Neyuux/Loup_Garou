@@ -1,23 +1,19 @@
 package fr.neyuux.lg.items.menus.roleinventories;
 
+import fr.minuskube.inv.SmartInventory;
 import fr.neyuux.lg.GameLG;
 import fr.neyuux.lg.LG;
 import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.inventories.roleinventories.ChoosePlayerInv;
 import fr.neyuux.lg.inventories.roleinventories.SorciereInv;
-import fr.neyuux.lg.items.menus.ReturnArrowItemStack;
-import fr.neyuux.lg.roles.classes.LoupGarou;
 import fr.neyuux.lg.roles.classes.Sorciere;
 import fr.neyuux.lg.utils.CustomItemStack;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class SorciereKillItemStack extends CustomItemStack {
@@ -44,8 +40,6 @@ public class SorciereKillItemStack extends CustomItemStack {
         this.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
         potion.apply(this);
-
-        addItemInList(this);
     }
 
 
@@ -53,7 +47,7 @@ public class SorciereKillItemStack extends CustomItemStack {
     public void use(HumanEntity player, Event event) {
         GameLG game = LG.getInstance().getGame();
 
-        ChoosePlayerInv inv = new ChoosePlayerInv(this.witch.getDisplayName() + " §cPotion de Mort", this.playerLG, game.getAliveExcept(this.playerLG), new ChoosePlayerInv.ActionsGenerator() {
+        SmartInventory inv = ChoosePlayerInv.getInventory(this.witch.getDisplayName() + " §cPotion de Mort", this.playerLG, game.getAliveExcept(this.playerLG), new ChoosePlayerInv.ActionsGenerator() {
 
             @Override
             public String[] generateLore(PlayerLG paramPlayerLG) {
@@ -68,16 +62,15 @@ public class SorciereKillItemStack extends CustomItemStack {
                 playerLG.sendMessage(LG.getPrefix() + "§cVous avez empoisonné §e§l" + choosenLG.getNameWithAttributes(playerLG) + " §cavec succès.");
                 GameLG.playPositiveSound((Player) player);
 
-                playerLG.getCache().put("unclosableInv", false);
-                playerLG.getPlayer().closeInventory();
+                
+                LG.closeSmartInv(playerLG.getPlayer());
                 playerLG.setSleep();
                 callback.run();
             }
-        });
+        }, SorciereInv.getInventory(this.witch, this.playerLG, this.callback));
 
-        playerLG.getCache().put("unclosableInv", false);
-        inv.open(player);
-        playerLG.getCache().put("unclosableInv", true);
-        player.getOpenInventory().getTopInventory().setItem(inv.getSize() - 1, new ReturnArrowItemStack(new SorciereInv(this.witch, this.playerLG, this.callback).getInventory()));
+        
+        inv.open((Player) player);
+        
     }
 }

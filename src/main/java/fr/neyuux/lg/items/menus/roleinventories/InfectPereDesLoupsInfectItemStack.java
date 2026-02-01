@@ -34,8 +34,6 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
 
         this.callback = callback;
         this.choosenLG = choosenLG;
-
-        addItemInList(this);
     }
 
 
@@ -44,7 +42,6 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
         PlayerLG playerLG = PlayerLG.createPlayerLG(player);
         if (choosenLG != null) {
 
-            playerLG.setCanUsePowers(false);
             playerLG.sendMessage(LG.getPrefix() + "§2Vous avez §4infecté §2" + choosenLG.getNameWithAttributes(playerLG) + " !");
             GameLG.playPositiveSound((Player) player);
 
@@ -59,8 +56,8 @@ public class InfectPereDesLoupsInfectItemStack extends CustomItemStack {
             LG.getInstance().getGame().getLGs(false).forEach(PlayerLG::updateGamePlayerScoreboard);
         }
 
-        playerLG.getCache().put("unclosableInv", false);
-        player.closeInventory();
+        
+        LG.closeSmartInv((Player) player);
         playerLG.setSleep();
         callback.run();
     }

@@ -1,6 +1,7 @@
 package fr.neyuux.lg.event;
 
 import fr.neyuux.lg.PlayerLG;
+import lombok.Getter;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -11,6 +12,7 @@ public class PlayerEliminationEvent extends Event implements Cancellable {
 
     private final PlayerLG choosen;
     private boolean cancel;
+    @Getter
     private final HashMap<PlayerLG, String> messagesToSend = new HashMap<>();
 
     public PlayerEliminationEvent(PlayerLG choosenLG) {
@@ -41,7 +43,4 @@ public class PlayerEliminationEvent extends Event implements Cancellable {
         this.cancel = cancel;
     }
 
-    public HashMap<PlayerLG, String> getMessagesToSend() {
-        return messagesToSend;
-    }
 }

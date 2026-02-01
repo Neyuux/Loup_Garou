@@ -5,6 +5,7 @@ import fr.neyuux.lg.inventories.gameinventories.VoteInv;
 import fr.neyuux.lg.utils.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 public class VoteBookItemStack extends CustomItemStack {
@@ -24,6 +25,6 @@ public class VoteBookItemStack extends CustomItemStack {
 
     @Override
     public void use(HumanEntity player, Event event) {
-        new VoteInv(vote).open(player);
+        VoteInv.getInventory(vote).open((Player) player);
     }
 }

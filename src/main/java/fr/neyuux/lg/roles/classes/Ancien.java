@@ -6,7 +6,6 @@ import fr.neyuux.lg.PlayerLG;
 import fr.neyuux.lg.VoteLG;
 import fr.neyuux.lg.event.RoleChoiceEvent;
 import fr.neyuux.lg.event.VoteEndEvent;
-import fr.neyuux.lg.event.VoteStartEvent;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;

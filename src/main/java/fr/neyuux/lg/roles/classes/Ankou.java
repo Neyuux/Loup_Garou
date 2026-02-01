@@ -7,7 +7,6 @@ import fr.neyuux.lg.event.VoteStartEvent;
 import fr.neyuux.lg.roles.Camps;
 import fr.neyuux.lg.roles.Decks;
 import fr.neyuux.lg.roles.Role;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 
 public class Ankou extends Role {
